@@ -45,13 +45,6 @@ struct DartsView: View {
                             .frame(width: dartsVM.bullEyeRadius.x2)
                             .position(center)
                         
-//                        ForEach(0..<AppSettings.wireRadiusesCount, id: \.self) { radiusIdx in
-//                            Circle()
-//                                .stroke(appSettings.wireColor, lineWidth: dartsVM.wireLineWidth)
-//                                .frame(width: dartsVM.getRadius(radiusIdx).x2)
-//                                .position(center)
-//                        }
-                        
                         dartsNumbers(at: center)
                         
                         ForEach(dartsVM.darts) { dart in
