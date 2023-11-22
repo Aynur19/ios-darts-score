@@ -14,6 +14,12 @@
 		A88776292B0DEF03005B746B /* DartsScoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88776282B0DEF03005B746B /* DartsScoreTests.swift */; };
 		A88776332B0DEF03005B746B /* DartsScoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88776322B0DEF03005B746B /* DartsScoreUITests.swift */; };
 		A88776352B0DEF03005B746B /* DartsScoreUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88776342B0DEF03005B746B /* DartsScoreUITestsLaunchTests.swift */; };
+		A8C12F3C2B0E08B100940A64 /* TimerStringFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */; };
+		A8C12F3E2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3D2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift */; };
+		A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */; };
+		A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F422B0E0D5F00940A64 /* IntExt.swift */; };
+		A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */; };
+		A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,12 @@
 		A887762E2B0DEF03005B746B /* DartsScoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DartsScoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88776322B0DEF03005B746B /* DartsScoreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsScoreUITests.swift; sourceTree = "<group>"; };
 		A88776342B0DEF03005B746B /* DartsScoreUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsScoreUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStringFormat.swift; sourceTree = "<group>"; };
+		A8C12F3D2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerCircleProgressBarOptions.swift; sourceTree = "<group>"; };
+		A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerViewModel.swift; sourceTree = "<group>"; };
+		A8C12F422B0E0D5F00940A64 /* IntExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExt.swift; sourceTree = "<group>"; };
+		A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt64Ext.swift; sourceTree = "<group>"; };
+		A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerCircleProgressBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +106,8 @@
 		A88776162B0DEEFF005B746B /* DartsScore */ = {
 			isa = PBXGroup;
 			children = (
+				A8C12F412B0E0D3100940A64 /* Extensions */,
+				A8C12F3A2B0E088E00940A64 /* CountdownTimer */,
 				A88776172B0DEEFF005B746B /* DartsScoreApp.swift */,
 				A88776192B0DEEFF005B746B /* ContentView.swift */,
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
@@ -125,6 +139,26 @@
 				A88776342B0DEF03005B746B /* DartsScoreUITestsLaunchTests.swift */,
 			);
 			path = DartsScoreUITests;
+			sourceTree = "<group>";
+		};
+		A8C12F3A2B0E088E00940A64 /* CountdownTimer */ = {
+			isa = PBXGroup;
+			children = (
+				A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */,
+				A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */,
+				A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */,
+				A8C12F3D2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift */,
+			);
+			path = CountdownTimer;
+			sourceTree = "<group>";
+		};
+		A8C12F412B0E0D3100940A64 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A8C12F422B0E0D5F00940A64 /* IntExt.swift */,
+				A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,8 +312,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8C12F3C2B0E08B100940A64 /* TimerStringFormat.swift in Sources */,
+				A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */,
+				A8C12F3E2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift in Sources */,
+				A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */,
 				A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */,
 				A88776182B0DEEFF005B746B /* DartsScoreApp.swift in Sources */,
+				A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */,
+				A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
