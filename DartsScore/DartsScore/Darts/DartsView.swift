@@ -45,12 +45,12 @@ struct DartsView: View {
                             .frame(width: dartsVM.bullEyeRadius.x2)
                             .position(center)
                         
-                        ForEach(0..<AppSettings.wireRadiusesCount, id: \.self) { radiusIdx in
-                            Circle()
-                                .stroke(appSettings.wireColor, lineWidth: dartsVM.wireLineWidth)
-                                .frame(width: dartsVM.getRadius(radiusIdx).x2)
-                                .position(center)
-                        }
+//                        ForEach(0..<AppSettings.wireRadiusesCount, id: \.self) { radiusIdx in
+//                            Circle()
+//                                .stroke(appSettings.wireColor, lineWidth: dartsVM.wireLineWidth)
+//                                .frame(width: dartsVM.getRadius(radiusIdx).x2)
+//                                .position(center)
+//                        }
                         
                         dartsNumbers(at: center)
                         
@@ -189,16 +189,80 @@ struct DartsView: View {
     
     // MARK: Wire Line View
     private func wireLineView(in center: CGPoint) -> some View {
-        ForEach(dartsVM.dartTargetSectors.indices, id: \.self) { sectorIdx in
-            let angle = sectorIdx == 0
-            ? dartsVM.dartTargetSectors[sectorIdx].maxAngle
-            : dartsVM.dartTargetSectors[sectorIdx].minAngle
-            
-            wireLinePath(in: center, radius: dartsVM.wireRadius, angle: angle)
-                .stroke(appSettings.wireColor, lineWidth: dartsVM.wireLineWidth)
-        }
+        wirePath(in: center)
+            .stroke(appSettings.wireColor, lineWidth: dartsVM.wireLineWidth)
     }
     
+    private func wirePath(in center: CGPoint) -> Path {
+        var path = Path()
+        var angle = dartsVM.dartTargetSectors[0].maxAngle
+        
+        for radiusIdx in 0..<AppSettings.wireRadiusesCount {
+            path.addPath(
+                wireCirclePath(
+                    in: center,
+                    radius: dartsVM.getRadius(radiusIdx),
+                    startAngle: dartsVM.dartTargetSectors[0].minAngle,
+                    endAngle: dartsVM.dartTargetSectors[0].maxAngle,
+                    withReverce: true
+                )
+            )
+        }
+        
+        path.addPath(
+            wireLinePath(
+                in: center,
+                radius: dartsVM.wireRadius,
+                angle: angle
+            )
+        )
+        
+        for sectorIdx in 1..<dartsVM.dartTargetSectors.count {
+            angle = dartsVM.dartTargetSectors[sectorIdx].minAngle
+            path.addPath(
+                wireLinePath(
+                    in: center,
+                    radius: dartsVM.wireRadius,
+                    angle: angle
+                )
+            )
+        }
+        
+        return path
+    }
+    
+    private func wireCirclePath(
+        in center: CGPoint,
+        radius: CGFloat,
+        startAngle: Angle,
+        endAngle: Angle,
+        withReverce: Bool = false
+    ) -> Path {
+        Path { path in
+            path.move(to: center)
+            
+            path.addArc(
+                center: center,
+                radius: radius,
+                startAngle: startAngle,
+                endAngle: endAngle,
+                clockwise: false
+            )
+            
+            if withReverce {
+                path.move(to: center)
+                
+                path.addArc(
+                    center: center,
+                    radius: radius,
+                    startAngle: startAngle,
+                    endAngle: endAngle,
+                    clockwise: true
+                )
+            }
+        }
+    }
+
     private func wireLinePath(in center: CGPoint, radius: CGFloat, angle: Angle) -> Path {
         let point = CGPoint.radiusPoint(center: center, radius: radius, angle: angle)
         
