@@ -138,9 +138,9 @@ struct DartsView: View {
     }
     
     private func wireLinePath(in center: CGPoint, radius: CGFloat, angle: Angle) -> Path {
-        let point = CGPoint(x: center.x + cos(angle.radians) * radius,
-                            y: center.y + sin(angle.radians) * radius)
-        
+//        let point = CGPoint(x: center.x + cos(angle.radians) * radius,
+//                            y: center.y + cos(angle.radians) * radius)
+        let point = CGPoint.radiusPoint(center: center, radius: radius, angle: angle)
         return Path { path in
             path.move(to: center)
             path.addLine(to: point)

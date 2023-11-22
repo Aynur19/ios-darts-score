@@ -9,7 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        DartsView(.init())
+        TabView {
+            DartsGameView()
+                .tabItem {
+                    Image(systemName: "gamecontroller")
+                }
+            
+            DartsGameStatsView()
+                .tabItem {
+                    Image(systemName: "trophy")
+                }
+        }
     }
 }
 

@@ -29,6 +29,11 @@ extension CGPoint {
         sqrt(pow(end.x - start.x, 2) + pow(end.y - start.y, 2))
     }
     
+    static func radiusPoint(center: CGPoint, radius: CGFloat, angle: Angle) -> Self {
+        .init(x: center.x + CoreGraphics.cos(angle.radians) * radius,
+              y: center.y + CoreGraphics.sin(angle.radians) * radius)
+    }
+    
     func toStr(_ format: String = "%.02f") -> String {
         "(x: \(String(format: format, self.x)); y: \(String(format: format, self.y)))"
     }

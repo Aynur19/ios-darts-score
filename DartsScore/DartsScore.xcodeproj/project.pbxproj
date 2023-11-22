@@ -11,6 +11,7 @@
 		A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */; };
 		A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F962B0E7A470026E07F /* JsonCache.swift */; };
 		A8742F992B0E7A650026E07F /* DataCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F982B0E7A650026E07F /* DataCacheError.swift */; };
+		A8742F9C2B0E87EC0026E07F /* DartsGameStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F9B2B0E87EC0026E07F /* DartsGameStatsView.swift */; };
 		A88776182B0DEEFF005B746B /* DartsScoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88776172B0DEEFF005B746B /* DartsScoreApp.swift */; };
 		A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88776192B0DEEFF005B746B /* ContentView.swift */; };
 		A887761C2B0DEF02005B746B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A887761B2B0DEF02005B746B /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameViewModel.swift; sourceTree = "<group>"; };
 		A8742F962B0E7A470026E07F /* JsonCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCache.swift; sourceTree = "<group>"; };
 		A8742F982B0E7A650026E07F /* DataCacheError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCacheError.swift; sourceTree = "<group>"; };
+		A8742F9B2B0E87EC0026E07F /* DartsGameStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameStatsView.swift; sourceTree = "<group>"; };
 		A88776142B0DEEFF005B746B /* DartsScore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DartsScore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88776172B0DEEFF005B746B /* DartsScoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsScoreApp.swift; sourceTree = "<group>"; };
 		A88776192B0DEEFF005B746B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -135,6 +137,14 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
+		A8742F9A2B0E87BB0026E07F /* DartsGameStats */ = {
+			isa = PBXGroup;
+			children = (
+				A8742F9B2B0E87EC0026E07F /* DartsGameStatsView.swift */,
+			);
+			path = DartsGameStats;
+			sourceTree = "<group>";
+		};
 		A887760B2B0DEEFF005B746B = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +178,7 @@
 				A8C12F3A2B0E088E00940A64 /* CountdownTimer */,
 				A8A8273C2B0E4EAF00AD1BD0 /* Darts */,
 				A8742F902B0E79B70026E07F /* DartsGame */,
+				A8742F9A2B0E87BB0026E07F /* DartsGameStats */,
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
 			);
@@ -402,6 +413,7 @@
 				A8A827272B0E433200AD1BD0 /* DartsConstants.swift in Sources */,
 				A8742F922B0E79E50026E07F /* DartsGameView.swift in Sources */,
 				A8C12F3C2B0E08B100940A64 /* TimerStringFormat.swift in Sources */,
+				A8742F9C2B0E87EC0026E07F /* DartsGameStatsView.swift in Sources */,
 				A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */,
 				A8A827252B0E42D600AD1BD0 /* DartsSector.swift in Sources */,
 				A8C12F3E2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift in Sources */,
@@ -600,6 +612,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.koteika19.DartsScore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -631,6 +646,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.koteika19.DartsScore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
