@@ -2,3 +2,4 @@
 disabled_rules: # rule identifiers turned on by default to exclude from running
   - trailing_whitespace
   - switch_case_alignment
+  - identifier_name
