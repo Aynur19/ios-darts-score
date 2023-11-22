@@ -5,7 +5,7 @@
 //  Created by Aynur Nasybullin on 2023.11.22.
 //
 
-import Foundation
+import SwiftUI
 
 enum DartImageSystemName: String {
     case xmark
@@ -18,31 +18,44 @@ class AppSettings: ObservableObject {
     
     static let standardTimeForAnswer = 60
     static let statsMaxCount = 50
+    static let wireRadiusesCount = 6
     
-//    let wireRadiusesCount = 6
-//    private(set) var dartsFrameWidth: CGFloat = 350
-//    private(set) var dartsCount = 3
+    private(set) var dartsFrameWidth: CGFloat = 350
+    private(set) var dartsCount = 3
+    
+    @Published private(set) var points25Color: Color = .green
+    @Published private(set) var bullEyeColor: Color = .red
+    @Published private(set) var wireColor: Color = .gray
+    @Published private(set) var baseColors: [Color] = [.white, .black]
+    @Published private(set) var xColors: [Color] = [.red, .green]
+    
+    @Published private(set) var dartImageSize: CGFloat = 16
+    @Published private(set) var dartImageName: DartImageSystemName = .xmark
+    @Published private(set) var dartImageColor: Color = .blue
+    
+    @Published private(set) var dartsSectorNumberColor: Color = .white
+    
+    func getSectorColor(for sectorIdx: Int, _ isBaseSector: Bool = true) -> Color {
+        isBaseSector ? baseColors[sectorIdx % 2] : xColors[sectorIdx % 2]
+    }
+    
 //    private(set) var timeForAnswer = 60  // in ms
 //    
 //    
 //    // MARK: Colors
 //    @Published private(set) var baseColors: [Color] = [.white, .black]
-//    @Published private(set) var xColors: [Color] = [.red, .green]
-//    @Published private(set) var bullEyeColor: Color = .red
+//
+//
 //    @Published private(set) var points25Color: Color = .green
 //    @Published private(set) var wireColor: Color = .gray
 //    
 //    
 //    // MARK: Dart
-//    @Published private(set) var dartImageSize: CGFloat = 16
-//    @Published private(set) var dartImageName: DartImageSystemName = .xmark
-//    @Published private(set) var dartImageColor: Color = .blue
+
 //    
-//    @Published private(set) var dartsSectorNumberColor: Color = .white
+//
 //    
-//    func getSectorColor(for sectorIdx: Int, _ isBaseSector: Bool = true) -> Color {
-//        isBaseSector ? baseColors[sectorIdx % 2] : xColors[sectorIdx % 2]
-//    }
+
 //    
 //    @Published private(set) var attempts = 10
 //    @Published private(set) var answersCount = 5

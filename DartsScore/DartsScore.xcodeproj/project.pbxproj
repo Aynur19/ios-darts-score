@@ -25,6 +25,8 @@
 		A8A827352B0E4AD200AD1BD0 /* DartsGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A827342B0E4AD200AD1BD0 /* DartsGame.swift */; };
 		A8A827372B0E4B0200AD1BD0 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A827362B0E4B0200AD1BD0 /* AppSettings.swift */; };
 		A8A827392B0E4B9E00AD1BD0 /* DartsGameStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A827382B0E4B9E00AD1BD0 /* DartsGameStats.swift */; };
+		A8A8273B2B0E4EA200AD1BD0 /* DartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8273A2B0E4EA200AD1BD0 /* DartsView.swift */; };
+		A8A8273E2B0E4ED500AD1BD0 /* DartsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8273D2B0E4ED500AD1BD0 /* DartsViewModel.swift */; };
 		A8C12F3C2B0E08B100940A64 /* TimerStringFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */; };
 		A8C12F3E2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3D2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift */; };
 		A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */; };
@@ -72,6 +74,8 @@
 		A8A827342B0E4AD200AD1BD0 /* DartsGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGame.swift; sourceTree = "<group>"; };
 		A8A827362B0E4B0200AD1BD0 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		A8A827382B0E4B9E00AD1BD0 /* DartsGameStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameStats.swift; sourceTree = "<group>"; };
+		A8A8273A2B0E4EA200AD1BD0 /* DartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsView.swift; sourceTree = "<group>"; };
+		A8A8273D2B0E4ED500AD1BD0 /* DartsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsViewModel.swift; sourceTree = "<group>"; };
 		A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStringFormat.swift; sourceTree = "<group>"; };
 		A8C12F3D2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerCircleProgressBarOptions.swift; sourceTree = "<group>"; };
 		A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerViewModel.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				A8A827232B0E42C900AD1BD0 /* Models */,
 				A8C12F412B0E0D3100940A64 /* Extensions */,
 				A8C12F3A2B0E088E00940A64 /* CountdownTimer */,
+				A8A8273C2B0E4EAF00AD1BD0 /* Darts */,
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
 			);
@@ -177,6 +182,15 @@
 				A8A827382B0E4B9E00AD1BD0 /* DartsGameStats.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		A8A8273C2B0E4EAF00AD1BD0 /* Darts */ = {
+			isa = PBXGroup;
+			children = (
+				A8A8273A2B0E4EA200AD1BD0 /* DartsView.swift */,
+				A8A8273D2B0E4ED500AD1BD0 /* DartsViewModel.swift */,
+			);
+			path = Darts;
 			sourceTree = "<group>";
 		};
 		A8C12F3A2B0E088E00940A64 /* CountdownTimer */ = {
@@ -360,9 +374,11 @@
 				A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */,
 				A8A827252B0E42D600AD1BD0 /* DartsSector.swift in Sources */,
 				A8C12F3E2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift in Sources */,
+				A8A8273B2B0E4EA200AD1BD0 /* DartsView.swift in Sources */,
 				A8A8272B2B0E43E900AD1BD0 /* AngleExt.swift in Sources */,
 				A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */,
 				A8A827312B0E49CD00AD1BD0 /* CGPointExt.swift in Sources */,
+				A8A8273E2B0E4ED500AD1BD0 /* DartsViewModel.swift in Sources */,
 				A8A827392B0E4B9E00AD1BD0 /* DartsGameStats.swift in Sources */,
 				A8A8272F2B0E49AB00AD1BD0 /* Dart.swift in Sources */,
 				A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */,
