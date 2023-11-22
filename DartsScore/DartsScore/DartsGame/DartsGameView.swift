@@ -136,7 +136,7 @@ struct DartsGameView: View {
         ZStack {
             DartsView(dartsVM)
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
-                .animation(.linear(duration: Constants.opacityAnimationDuration),
+                .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
                            value: rotation)
                 .opacity(dartsViewOpacity1)
             
@@ -167,7 +167,7 @@ struct DartsGameView: View {
                     .onTapGesture {
                         onAnswered(answer)
                     }
-                    .id(UUID())
+//                    .id(UUID())
                 
             }
         }

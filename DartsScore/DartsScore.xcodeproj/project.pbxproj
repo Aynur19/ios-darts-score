@@ -12,6 +12,7 @@
 		A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F962B0E7A470026E07F /* JsonCache.swift */; };
 		A8742F992B0E7A650026E07F /* DataCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F982B0E7A650026E07F /* DataCacheError.swift */; };
 		A8742F9C2B0E87EC0026E07F /* DartsGameStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F9B2B0E87EC0026E07F /* DartsGameStatsView.swift */; };
+		A8742F9E2B0EA55D0026E07F /* DartsSectorPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F9D2B0EA55D0026E07F /* DartsSectorPath.swift */; };
 		A88776182B0DEEFF005B746B /* DartsScoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88776172B0DEEFF005B746B /* DartsScoreApp.swift */; };
 		A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88776192B0DEEFF005B746B /* ContentView.swift */; };
 		A887761C2B0DEF02005B746B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A887761B2B0DEF02005B746B /* Assets.xcassets */; };
@@ -63,6 +64,7 @@
 		A8742F962B0E7A470026E07F /* JsonCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCache.swift; sourceTree = "<group>"; };
 		A8742F982B0E7A650026E07F /* DataCacheError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCacheError.swift; sourceTree = "<group>"; };
 		A8742F9B2B0E87EC0026E07F /* DartsGameStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameStatsView.swift; sourceTree = "<group>"; };
+		A8742F9D2B0EA55D0026E07F /* DartsSectorPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsSectorPath.swift; sourceTree = "<group>"; };
 		A88776142B0DEEFF005B746B /* DartsScore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DartsScore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88776172B0DEEFF005B746B /* DartsScoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsScoreApp.swift; sourceTree = "<group>"; };
 		A88776192B0DEEFF005B746B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			children = (
 				A8A8273A2B0E4EA200AD1BD0 /* DartsView.swift */,
 				A8A8273D2B0E4ED500AD1BD0 /* DartsViewModel.swift */,
+				A8742F9D2B0EA55D0026E07F /* DartsSectorPath.swift */,
 			);
 			path = Darts;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8742F9E2B0EA55D0026E07F /* DartsSectorPath.swift in Sources */,
 				A8742F992B0E7A650026E07F /* DataCacheError.swift in Sources */,
 				A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */,
 				A8A8272D2B0E496B00AD1BD0 /* DartsTargetSector.swift in Sources */,

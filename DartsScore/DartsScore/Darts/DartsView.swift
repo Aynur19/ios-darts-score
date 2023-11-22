@@ -27,7 +27,12 @@ struct DartsView: View {
                     ZStack {
                         let center = CGPoint.getCenter(from: geometry)
                         
+                        sector(in: center, isBaseSector: false)
+                        sector(in: center, isEven: false, isBaseSector: false)
+                        
                         sector(in: center)
+                        sector(in: center, isEven: false)
+                        
                         wireLineView(in: center)
                         
                         Circle()
@@ -79,50 +84,107 @@ struct DartsView: View {
     }
     
     // MARK: Sector View
-    private func sector(in center: CGPoint) -> some View {
-        ZStack {
-            ForEach(dartsVM.dartTargetSectors.indices, id: \.self) { sectorIdx in
-                sectorPath(in: center,
-                           radius: dartsVM.x2Radius,
-                           sector: dartsVM.dartTargetSectors[sectorIdx])
-                .fill(appSettings.getSectorColor(for: sectorIdx, false))
-                
-                sectorPath(in: center,
-                           radius: dartsVM.baseBigRadius,
-                           sector: dartsVM.dartTargetSectors[sectorIdx])
-                .fill(appSettings.getSectorColor(for: sectorIdx))
+    private func sector(
+        in center: CGPoint,
+        isEven: Bool = true,
+        isBaseSector: Bool = true
+    ) -> some View {
+        let checkNumber = isEven ? 0 : 1
+        
+        let innerRadius1 = isBaseSector ? dartsVM.points25Radius : dartsVM.baseSmallRadius
+        let outherRadius1 = isBaseSector ? dartsVM.baseSmallRadius : dartsVM.x3Radius
+        
+        let innerRadius2 = isBaseSector ? dartsVM.x3Radius : dartsVM.baseBigRadius
+        let outherRadius2 = isBaseSector ? dartsVM.baseBigRadius : dartsVM.x2Radius
+        
+        return ZStack {
+            Path { path in
+                if isEven {
+                    path.addPath(
+                        sectorPath(
+                            in: center,
+                            startAngle: -dartsVM.dartTargetSectors[0].minAngle,
+                            endAngle: dartsVM.dartTargetSectors[0].minAngle,
+                            innerRadius: innerRadius1,
+                            outerRadius: outherRadius1
+                        )
+                    )
                     
-                sectorPath(in: center,
-                           radius: dartsVM.x3Radius,
-                           sector: dartsVM.dartTargetSectors[sectorIdx])
-                .fill(appSettings.getSectorColor(for: sectorIdx, false))
-                  
-                sectorPath(in: center,
-                           radius: dartsVM.baseSmallRadius,
-                           sector: dartsVM.dartTargetSectors[sectorIdx])
-                .fill(appSettings.getSectorColor(for: sectorIdx))
-            }
+                    path.addPath(
+                        sectorPath(
+                            in: center,
+                            startAngle: -dartsVM.dartTargetSectors[0].minAngle,
+                            endAngle: dartsVM.dartTargetSectors[0].minAngle,
+                            innerRadius: innerRadius2,
+                            outerRadius: outherRadius2
+                        )
+                    )
+                }
+                
+                for sectorIdx in 1..<dartsVM.dartTargetSectors.count
+                where sectorIdx % 2 == checkNumber {
+                    path.addPath(
+                        sectorPath(
+                            in: center,
+                            startAngle: dartsVM.dartTargetSectors[sectorIdx].minAngle,
+                            endAngle: dartsVM.dartTargetSectors[sectorIdx].maxAngle,
+                            innerRadius: innerRadius1,
+                            outerRadius: outherRadius1
+                        )
+                    )
+                    
+                    path.addPath(
+                        sectorPath(
+                            in: center,
+                            startAngle: dartsVM.dartTargetSectors[sectorIdx].minAngle,
+                            endAngle: dartsVM.dartTargetSectors[sectorIdx].maxAngle,
+                            innerRadius: innerRadius2,
+                            outerRadius: outherRadius2
+                        )
+                    )
+                }
+            }.fill(appSettings.getSectorColor(for: checkNumber, isBaseSector))
         }
     }
     
-    private func sectorPath(in center: CGPoint, radius: CGFloat, sector: DartsTargetSector) -> Path {
-        return Path { path in
-            path.move(to: center)
-            
-            if let points = DartsConstants.points.first, sector.points != points {
-                path.addArc(center: center,
-                            radius: radius,
-                            startAngle: sector.minAngle,
-                            endAngle: sector.maxAngle,
-                            clockwise: false)
-            } else {
-                path.addArc(center: center,
-                            radius: radius,
-                            startAngle: -sector.minAngle,
-                            endAngle: sector.minAngle,
-                            clockwise: false)
-            }
-        }
+    private func sectorPath(
+        in center: CGPoint,
+        startAngle: Angle,
+        endAngle: Angle,
+        innerRadius: CGFloat,
+        outerRadius: CGFloat
+    ) -> Path {
+        var path = Path()
+        
+        path.move(to: .radiusPoint(
+            center: center,
+            radius: innerRadius,
+            angle: startAngle
+        ))
+        
+        path.addArc(
+            center: center,
+            radius: outerRadius,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            clockwise: false
+        )
+        
+        path.addLine(to: .radiusPoint(
+            center: center,
+            radius: outerRadius,
+            angle: endAngle
+        ))
+        
+        path.addArc(
+            center: center,
+            radius: innerRadius,
+            startAngle: endAngle,
+            endAngle: startAngle,
+            clockwise: true
+        )
+        
+        return path
     }
     
     // MARK: Wire Line View
@@ -138,9 +200,8 @@ struct DartsView: View {
     }
     
     private func wireLinePath(in center: CGPoint, radius: CGFloat, angle: Angle) -> Path {
-//        let point = CGPoint(x: center.x + cos(angle.radians) * radius,
-//                            y: center.y + cos(angle.radians) * radius)
         let point = CGPoint.radiusPoint(center: center, radius: radius, angle: angle)
+        
         return Path { path in
             path.move(to: center)
             path.addLine(to: point)
