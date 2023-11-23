@@ -30,6 +30,24 @@ struct DartsGame: Identifiable {
         self.timeForAnswer = timeForAnswer
     }
     
+    // TODO: for mock data
+    init(
+        attempts: Int,
+        timeForAnswer: Int,
+        successCount: Int,
+        score: Int,
+        answers: [AnswerSnapshot],
+        remainingTimeForAnswer: Int
+    ) {
+        self.id = UUID().uuidString
+        self.attempts = attempts
+        self.timeForAnswer = timeForAnswer
+        self.successCount = successCount
+        self.score = score
+        self.answers = answers
+        self.remainingTimeForAnswer = remainingTimeForAnswer
+    }
+    
     mutating func answer(
         from answers: [Int],
         for time: Int,
