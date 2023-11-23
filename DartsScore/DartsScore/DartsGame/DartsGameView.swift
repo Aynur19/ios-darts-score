@@ -105,18 +105,6 @@ struct DartsGameView: View {
         .onDisappear { stopGame() }
     }
     
-    //    private var gameView: some View {
-    //        VStack {
-    //            topView
-    //            dartsView
-    //                .frame(width: appSettings.dartsFrameWidth,
-    //                       height: appSettings.dartsFrameWidth)
-    //        }
-    //        .opacity(gameViewOpacity)
-    //        .animation(.linear(duration: appSettings.gameOpacityAnimationDuration),
-    //                   value: gameViewOpacity)
-    //    }
-    
     private var topView: some View {
         HStack {
             Text("Осталось попыток: \(gameVM.remainingAttempts)")
@@ -153,22 +141,11 @@ struct DartsGameView: View {
     }
     
     private var answers: some View {
-        HStack {
+        HStack(spacing: 10) {
             ForEach(gameVM.currentAnswers, id: \.self) { answer in
-                Circle()
-                    .stroke(Color.blue, lineWidth: 2)
-                    .shadow(radius: 5)
-                    .frame(width: 64)
-                    .overlay {
-                        Text(String(answer))
-                            .foregroundColor(.blue)
-                            .bold()
-                    }
-                    .onTapGesture {
-                        onAnswered(answer)
-                    }
-//                    .id(UUID())
-                
+                DartsGameAnswerView(score: answer) {
+                    onAnswered(answer)
+                }
             }
         }
         .opacity(answersOpacity)
@@ -234,7 +211,8 @@ extension DartsGameView {
         timerVM.reset(appSettings.timeForAnswer)
         
         showView(for: .answersView, false)
-        showView(for: .dartsView1)
+//        showView(for: .dartsView1)
+        showDartsSide()
         showView(for: .topView)
         showView(for: .dartsView)
         
@@ -288,8 +266,9 @@ extension DartsGameView {
         Task {
             try? await Task.sleep(nanoseconds: 500_000_000)
             
-            showView(for: .dartsView1, isDarts1)
-            showView(for: .dartsView2, !isDarts1)
+//            showView(for: .dartsView1, isDarts1)
+//            showView(for: .dartsView2, !isDarts1)
+            showDartsSide()
             
             await MainActor.run {
                 updateAnswers()
@@ -297,6 +276,11 @@ extension DartsGameView {
         }
         
         timerVM.start(appSettings.timeForAnswer)
+    }
+    
+    private func showDartsSide() {
+        showView(for: .dartsView1, isDarts1)
+        showView(for: .dartsView2, !isDarts1)
     }
     
     private func stopGame() {

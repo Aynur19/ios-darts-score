@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A82D6CF12B0F4A64006CF50A /* DartsGameAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */; };
 		A8742F922B0E79E50026E07F /* DartsGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F912B0E79E50026E07F /* DartsGameView.swift */; };
 		A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */; };
 		A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F962B0E7A470026E07F /* JsonCache.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameAnswerView.swift; sourceTree = "<group>"; };
 		A8742F912B0E79E50026E07F /* DartsGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameView.swift; sourceTree = "<group>"; };
 		A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameViewModel.swift; sourceTree = "<group>"; };
 		A8742F962B0E7A470026E07F /* JsonCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCache.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				A8742F9A2B0E87BB0026E07F /* DartsGameStats */,
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
+				A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */,
 			);
 			path = DartsScore;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */,
 				A88776182B0DEEFF005B746B /* DartsScoreApp.swift in Sources */,
 				A8A827292B0E436C00AD1BD0 /* CGFloatExt.swift in Sources */,
+				A82D6CF12B0F4A64006CF50A /* DartsGameAnswerView.swift in Sources */,
 				A8A827372B0E4B0200AD1BD0 /* AppSettings.swift in Sources */,
 				A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */,
 				A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */,
