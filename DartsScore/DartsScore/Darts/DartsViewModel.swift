@@ -8,45 +8,26 @@
 import SwiftUI
 
 class DartsViewModel: ObservableObject {
-    private let distanceWithoutScore: CGFloat
-    private let maxDartRadius: CGFloat
-    
-    let wireLineWidth: CGFloat
-    let rotationAngle: Angle
-    
-    let bullEyeRadius: CGFloat
-    let points25Radius: CGFloat
-    let x3Radius: CGFloat
-    let x2Radius: CGFloat
-    let baseSmallRadius: CGFloat
-    let baseBigRadius: CGFloat
-    let wireRadius: CGFloat
-    let appSettings: AppSettings
+    let appSettings: AppSettings = .shared
+    let options: TargetViewOptions
     
     // MARK: Variables
     @Published private(set) var darts = [Dart]()
     @Published private(set) var score: Int = .zero
     
-    private(set) var dartTargetSectors = [DartsTargetSector]()
+//    private(set) var dartTargetSectors = [DartsTargetSector]()
     
     // MARK: Init
-    init() {
-        appSettings = AppSettings.shared
+    init(options: TargetViewOptions = .init()) {
+        self.options = options
         
-        self.wireLineWidth = DartsConstants.getWireLineWidth(appSettings.dartsFrameWidth)
-        self.rotationAngle = DartsConstants.getRotationAngle(for: DartsConstants.points.count)
-        self.distanceWithoutScore = wireLineWidth.x2
-        self.maxDartRadius = appSettings.dartsFrameWidth.half
-        
-        self.bullEyeRadius = DartsConstants.getRadius(appSettings.dartsFrameWidth, .bullEye)
-        self.points25Radius = DartsConstants.getRadius(appSettings.dartsFrameWidth, .points25)
-        self.x3Radius = DartsConstants.getRadius(appSettings.dartsFrameWidth, .x3)
-        self.x2Radius = DartsConstants.getRadius(appSettings.dartsFrameWidth, .x2)
-        self.baseSmallRadius = DartsConstants.getRadius(appSettings.dartsFrameWidth, .baseSmall)
-        self.baseBigRadius = DartsConstants.getRadius(appSettings.dartsFrameWidth, .baseBig)
-        self.wireRadius = DartsConstants.getRadius(appSettings.dartsFrameWidth, .wire)
-        
-        prepareDartsTargetSectors()
+//        prepareDartsTargetSectors()
+    }
+    
+    init(options: TargetViewOptions = .init(), darts: [Dart], score: Int) {
+        self.options = options
+        self.darts.append(contentsOf: darts)
+        self.score = score
     }
     
     func reset() {
@@ -54,35 +35,32 @@ class DartsViewModel: ObservableObject {
         score = .zero
     }
     
-    func updateDarts() {
+    func updateDarts(_ darts: [Dart] = []) {
+        if !darts.isEmpty {
+            self.darts.removeAll()
+            self.darts.append(contentsOf: darts)
+            return
+        }
+        
         generateDarts()
         updateScore()
     }
     
-    func getRadius(_ idx: Int) -> CGFloat {
-        switch idx {
-            case 0: return x2Radius
-            case 1: return baseBigRadius
-            case 2: return x3Radius
-            case 3: return baseSmallRadius
-            case 4: return points25Radius
-            default: return bullEyeRadius
-        }
-    }
-    
-    private func prepareDartsTargetSectors() {
-        var minAngle = rotationAngle
-        var maxAngle = Angle.circle - rotationAngle
-        
-        for points in DartsConstants.points {
-            dartTargetSectors.append(.init(from: minAngle, to: maxAngle, points: points))
-            
-            if dartTargetSectors.count == 1 { maxAngle = minAngle }
-            
-            minAngle = maxAngle
-            maxAngle = minAngle + rotationAngle + rotationAngle
-        }
-    }
+//    private func prepareDartsTargetSectors() {
+//        let rotationAngle = options.rotationAngle
+//        
+//        var minAngle = rotationAngle
+//        var maxAngle = Angle.circle - rotationAngle
+//        
+//        for points in DartsConstants.points {
+//            dartTargetSectors.append(.init(from: minAngle, to: maxAngle, points: points))
+//            
+//            if dartTargetSectors.count == 1 { maxAngle = minAngle }
+//            
+//            minAngle = maxAngle
+//            maxAngle = minAngle + rotationAngle + rotationAngle
+//        }
+//    }
     
     private func generateDarts() {
         darts.removeAll()
@@ -97,7 +75,7 @@ class DartsViewModel: ObservableObject {
         
         while sector.area == .wire {
             let angle = CGFloat(Angle.randomCircleSector().degrees)
-            let distance = CGFloat.random(in: 0...maxDartRadius)
+            let distance = CGFloat.random(in: 0...options.maxDartRadius)
             
             position = CGPoint.init(x: distance * cos(angle),
                                     y: distance * sin(angle))
@@ -121,7 +99,7 @@ class DartsViewModel: ObservableObject {
         var isWireLineTouched = false
         var sector: DartsSector = .init(.outOfPoints)
         
-        isOutSectors = checkOutOfSectors(distance: distance)
+        isOutSectors = options.checkOutOfSectors(distance: distance)
         if isOutSectors { return sector }
         
         sector = getCircleSector(distance: distance)
@@ -134,17 +112,13 @@ class DartsViewModel: ObservableObject {
         return sector
     }
     
-    private func checkOutOfSectors(distance: CGFloat) -> Bool {
-        distance > x2Radius + distanceWithoutScore
-    }
-    
     private func getCircleSector(distance: CGFloat) -> DartsSector {
-        if distance <= bullEyeRadius - wireLineWidth {
+        if distance <= options.bullEyeRadius - options.wireLineWidth {
             return .init(.bullEye)
         }
         
-        if distance > bullEyeRadius + wireLineWidth,
-           distance < points25Radius - wireLineWidth {
+        if distance > options.bullEyeRadius + options.wireLineWidth,
+           distance < options.points25Radius - options.wireLineWidth {
             return .init(.points25)
         }
         
@@ -153,53 +127,46 @@ class DartsViewModel: ObservableObject {
     
     private func checkTouchedOfWire(at touchPoint: CGPoint, angle: Angle, distance: CGFloat) -> Bool {
         for radiusIdx in 0..<AppSettings.wireRadiusesCount 
-        where abs(distance - getRadius(radiusIdx)) <= distanceWithoutScore { return true }
+        where abs(distance - options.getRadius(radiusIdx)) <= options.distanceWithoutScore { return true }
         
-        for sector in dartTargetSectors {
-            let angle = CGFloat(sector.maxAngle.radians)
+//        for sector in dartTargetSectors {
+        for idx in DartsConstants.points.indices {
+            let angle = CGFloat((Angle.circleSector(idx: idx, from: DartsConstants.points.count) + options.rotationAngle).radians)// CGFloat(sector.maxAngle.radians)
             let wirePoint = CGPoint.init(x: distance * cos(angle),
                                          y: distance * sin(angle))
             let distanceToWire = CGPoint.distance(from: wirePoint, to: touchPoint)
             
-            if distanceToWire <= distanceWithoutScore { return true }
+            if distanceToWire <= options.distanceWithoutScore { return true }
         }
         
         return false
     }
     
     private func getSector(angle: Angle, distance: CGFloat) -> DartsSector {
-        let xScore = getXScore(distance)
-        let angle2 = angle.trigonometric
+        let xScore = options.getXScore(distance)
+        let angle = angle.trigonometric
         
-        for idx in dartTargetSectors.indices {
+        for idx in DartsConstants.points.indices {//dartTargetSectors.indices {
             let isInSector: Bool
-            let sector = dartTargetSectors[idx]
+            let sectorMinAngle: Angle
+            let sectorMaxAngle: Angle
+//            let sector = dartTargetSectors[idx]
             
             if idx == 0 {
-                isInSector = angle2 < sector.minAngle || angle2 > sector.maxAngle
+                sectorMinAngle = options.rotationAngle
+                sectorMaxAngle = Angle.circle - options.rotationAngle
+                isInSector = angle < sectorMinAngle || angle > sectorMaxAngle
             } else {
-                isInSector = sector.minAngle < angle2 && sector.maxAngle > angle2
+                sectorMinAngle = Angle.circleSector(idx: idx - 1, from: DartsConstants.points.count) + options.rotationAngle
+                sectorMaxAngle = Angle.circleSector(idx: idx, from: DartsConstants.points.count) + options.rotationAngle
+                isInSector = sectorMinAngle < angle && sectorMaxAngle > angle
             }
             
             if isInSector {
-                return .init(points: dartTargetSectors[idx].points, xScore: xScore)
+                return .init(points: DartsConstants.points[idx], xScore: xScore)
             }
         }
         
         return .init(.wire)
-    }
-    
-    private func getXScore(_ distance: CGFloat) -> Int {
-        if distance > baseSmallRadius + distanceWithoutScore,
-           distance < x3Radius - distanceWithoutScore {
-            return DartsConstants.x3Score
-        }
-        
-        if distance > baseBigRadius + distanceWithoutScore,
-           distance < x2Radius - distanceWithoutScore {
-            return DartsConstants.x2Score
-        }
-        
-        return DartsConstants.x1Score
     }
 }

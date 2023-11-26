@@ -12,12 +12,12 @@ struct ContentView: View {
         TabView {
             DartsGameView()
                 .tabItem {
-                    Image(systemName: "gamecontroller")
+                    Label("Дартс", systemImage: "gamecontroller")
                 }
             
             DartsGameStatsView()
                 .tabItem {
-                    Image(systemName: "trophy")
+                    Label("Статистика", systemImage: "trophy")
                 }
         }
     }

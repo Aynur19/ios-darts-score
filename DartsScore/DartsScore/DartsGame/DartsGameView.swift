@@ -78,17 +78,24 @@ struct DartsGameView: View {
                     dartsView
                         .frame(width: appSettings.dartsFrameWidth,
                                height: appSettings.dartsFrameWidth)
+                        .opacity(dartsOpacity)
+                        .animation(.linear(duration: Constants.opacityAnimationDuration),
+                                   value: dartsOpacity)
+//                        .background(Color.orange)
                     
-                    Spacer()
+//                    Spacer()
+                    
+                    VStack {
+//                        Spacer()
+                        gameOverView
+//                        Spacer()
+                        answers
+                        Spacer()
+                    }
                 }
+                .padding()
                 
-                VStack {
-                    Spacer()
-                    gameOverView
-                    Spacer()
-                    answers
-                    Spacer()
-                }
+                
                     
                 VStack(spacing: 20) {
                     Spacer(minLength: 600)
@@ -122,28 +129,25 @@ struct DartsGameView: View {
     
     private var dartsView: some View {
         ZStack {
-            DartsView(dartsVM)
-                .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
-                .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
-                           value: rotation)
-                .opacity(dartsViewOpacity1)
-            
-            DartsView(dartsVM)
-                .rotation3DEffect(.degrees(180), axis: Constants.darts3DRotationAxis)
-                .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
-                .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
-                           value: rotation)
-                .opacity(dartsViewOpacity2)
+//            DartsTargetView(dartsVM)
+//                .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
+//                .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
+//                           value: rotation)
+//                .opacity(dartsViewOpacity1)
+//            
+//            DartsTargetView(dartsVM)
+//                .rotation3DEffect(.degrees(180), axis: Constants.darts3DRotationAxis)
+//                .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
+//                .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
+//                           value: rotation)
+//                .opacity(dartsViewOpacity2)
         }
-        .opacity(dartsOpacity)
-        .animation(.linear(duration: Constants.opacityAnimationDuration),
-                   value: dartsOpacity)
     }
     
     private var answers: some View {
         HStack(spacing: 10) {
             ForEach(gameVM.currentAnswers, id: \.self) { answer in
-                DartsGameAnswerView(score: answer) {
+                GameAnswerView(answer) {
                     onAnswered(answer)
                 }
             }

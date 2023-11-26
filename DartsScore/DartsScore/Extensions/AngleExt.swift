@@ -14,6 +14,10 @@ extension Angle {
         .degrees(360 / by)
     }
     
+    static func circleSector(idx: Int, from count: Int) -> Self {
+        .degrees(360 / Double(count) * Double(idx))
+    }
+    
     static func randomCircleSector() -> Self {
         .degrees(Double.random(in: 0...360))
     }

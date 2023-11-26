@@ -4,3 +4,4 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - switch_case_alignment
   - identifier_name
   - large_tuple
+  - vertical_parameter_alignment

@@ -15,12 +15,14 @@ class DartsGameStatsViewModel: ObservableObject {
     }
     
     func refresh() {
-//        model = (try? JsonCache<DartsGameStats>.load(from: AppSettings.statsJsonFileName)) ?? .init()
-        model = MockData.getDartsGameStats()
+        model = (try? JsonCache<DartsGameStats>.load(from: AppSettings.statsJsonFileName))
+        ?? MockData.getDartsGameStats()
+//        model = MockData.getDartsGameStats()
     }
 }
 
 struct DartsGameStatsView: View {
+    @State private var path = NavigationPath()
     @ObservedObject var statsVM: DartsGameStatsViewModel
     
     init(statsVM: DartsGameStatsViewModel = .init()) {
@@ -28,41 +30,106 @@ struct DartsGameStatsView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             ZStack {
-                VStack {
+                ScrollView {
                     HStack {
                         Text("Очки")
-                        Spacer()
+                            .bold()
+                            .frame(maxWidth: .infinity)
                         Text("Попытки")
-                        Spacer()
-                        Text("Время на ответ")
+                            .frame(maxWidth: .infinity)
+                        Text("Время")
+                            .frame(maxWidth: .infinity)
+                        Spacer(minLength: 32)
                     }
                     .padding(.horizontal, 32)
                     
-                    List(statsVM.model.items) { gameStats in
-                        HStack {
-                            Text(String(gameStats.score))
-                            Spacer()
-                            Text("\(gameStats.successCount)/\(gameStats.attempts)")
-                            Spacer()
-                            Spacer()
-                            Text("\(gameStats.timeForAnswer) сек.")
-                        }
+                    ForEach(statsVM.model.items) { game in
+                        Button(action: {
+                            path.append(game.id)
+                        }, label: {
+                            HStack {
+                                Text(String(game.score))
+                                    .bold()
+                                    .frame(maxWidth: .infinity)
+                                Text("\(game.successCount)/\(game.attempts)")
+                                    .frame(maxWidth: .infinity)
+                                Text("\(game.timeForAnswer) сек.")
+                                    .frame(maxWidth: .infinity)
+                                Image(systemName: "chevron.right")
+                            }
+                        })
+                        .foregroundStyle(Color.black)
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 4)
                     }
-                }
+                }.frame(maxWidth: .infinity)
+                
+//                VStack {
+//                    HStack {
+//                        Text("Очки")
+//                        Spacer()
+//                        Text("Попытки")
+//                        Spacer()
+//                        Text("Время на ответ")
+//                    }
+//                    .padding(.horizontal, 32)
+                    
+//                    Table(statsVM.model.items) {
+//                        TableColumn("Очки") { item in
+//                            Text(String(item.score))
+//                        }
+//                        TableColumn("Очки2") { item in
+//                            Text(String(item.attempts))
+//                        }
+//                    }
+//                    Table(statsVM.model.items) {
+////                        TableColumn("Очки") { item in
+////                            Text(String(item.score))
+////                        }
+//                        
+//                        TableColumn("Попытки") { item2 in
+//                            Text("\(item2.successCount)")
+//                        }
+//                    }
+//                    List(statsVM.model.items) { gameStats in
+//                        HStack {
+//                            Text(String(gameStats.score))
+//                            Spacer()
+//                            Text("\(gameStats.successCount)/\(gameStats.attempts)")
+//                            Spacer()
+//                            Spacer()
+//                            Text("\(gameStats.timeForAnswer) сек.")
+//                        }
+//                    }
+//                }
                 .onAppear {
                     statsVM.refresh()
                 }
             }
             .navigationTitle("Статистика")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: String.self) { gameIdx in
+                if let game = getGame(gameIdx) {
+                    GameAnswersView(game)
+                }
+//                if view == "NewView" {
+//                    Text("This is NewView")
+//                }
+            }
         }
+    }
+    
+    private func getGame(_ idx: String) -> DartsGame? {
+        statsVM.model.items.first { $0.id == idx }
     }
 }
 
 #Preview {
-    DartsGameStatsView()
+    NavigationStack {
+        DartsGameStatsView()
+    }
 }
 
 struct MockData {
@@ -77,7 +144,29 @@ struct MockData {
                     timeForAnswer: 60,
                     successCount: 4,
                     score: 218,
-                    answers: [],
+                    answers: [
+                        .init(
+                            expected: 46,
+                            actual: 113,
+                            answers: [100, 171, 113, 46, 131],
+                            darts: [
+                                .init(
+                                    for: .init(x: -74.68731142673033, y: 7.5668327770026425),
+                                    in: .init(points: 11, xScore: 3)
+                                ),
+                                .init(
+                                    for: .init(x: -114.41818603506827, y: -121.26699838960911),
+                                    in: .init(.outOfPoints)
+                                ),
+                                .init(
+                                    for: .init(x: 47.69048522948828, y: 10.236433758896286),
+                                    in: .init(points: 13, xScore: 1)
+                                )
+                            ], 
+                            time: 1100,
+                            score: 0
+                        )
+                    ],
                     remainingTimeForAnswer: 0
                 ),
                 .init(
@@ -92,74 +181,6 @@ struct MockData {
         )
     }
 //              ▿ darts : 3 elements
-//                ▿ 0 : Dart:
-//      position: (x: 27.57; y: 121.40)
-//      sector: 1x2
-//                  - id : "3C7903BF-11E7-4B03-8AAD-62E176EB66D8"
-//                  ▿ position : (27.574356300339733, 121.39608207805125)
-//                    - x : 27.574356300339733
-//                    - y : 121.39608207805125
-//                  ▿ sector : 1x2
-//                    - points : 1
-//                    - xScore : 2
-//                    - area : DartsScore.DartsSectorArea.points
-//                ▿ 1 : Dart:
-//      position: (x: -99.67; y: -138.54)
-//      sector: Out of Points
-//                  - id : "31AC7CA6-E6E1-4794-B7FB-142FA9F48A8E"
-//                  ▿ position : (-99.66662643792401, -138.5366803645167)
-//                    - x : -99.66662643792401
-//                    - y : -138.5366803645167
-//                  ▿ sector : Out of Points
-//                    - points : 0
-//                    - xScore : 0
-//                    - area : DartsScore.DartsSectorArea.outOfPoints
-//                ▿ 2 : Dart:
-//      position: (x: -166.32; y: -19.58)
-//      sector: Out of Points
-//                  - id : "62DA914E-0DA6-4807-B95E-19857933F162"
-//                  ▿ position : (-166.3227773634899, -19.57888706000153)
-//                    - x : -166.3227773634899
-//                    - y : -19.57888706000153
-//                  ▿ sector : Out of Points
-//                    - points : 0
-//                    - xScore : 0
-//                    - area : DartsScore.DartsSectorArea.outOfPoints
-//              - time : 1000
-//              - score : 60
-//            ▿ 1 : AnswerSnapshot
-//              - id : "690D497F-4968-4DA1-8723-D852A833A874"
-//              - expected : 46
-//              - actual : 113
-//              ▿ answers : 5 elements
-//                - 0 : 100
-//                - 1 : 171
-//                - 2 : 113
-//                - 3 : 46
-//                - 4 : 131
-//              ▿ darts : 3 elements
-//                ▿ 0 : Dart:
-//      position: (x: -74.69; y: 7.57)
-//      sector: 11x3
-//                  - id : "C91EB36B-8252-4BC5-AA0C-508C8ED40F1A"
-//                  ▿ position : (-74.68731142673033, 7.5668327770026425)
-//                    - x : -74.68731142673033
-//                    - y : 7.5668327770026425
-//                  ▿ sector : 11x3
-//                    - points : 11
-//                    - xScore : 3
-//                    - area : DartsScore.DartsSectorArea.points
-//                ▿ 1 : Dart:
-//      position: (x: -114.42; y: -121.27)
-//      sector: Out of Points
-//                  - id : "3562BAEC-66B4-4BEC-B8FF-F32B6DD74C4B"
-//                  ▿ position : (-114.41818603506827, -121.26699838960911)
-//                    - x : -114.41818603506827
-//                    - y : -121.26699838960911
-//                  ▿ sector : Out of Points
-//                    - points : 0
-//                    - xScore : 0
-//                    - area : DartsScore.DartsSectorArea.outOfPoints
 //                ▿ 2 : Dart:
 //      position: (x: 47.69; y: 10.24)
 //      sector: 13x1
