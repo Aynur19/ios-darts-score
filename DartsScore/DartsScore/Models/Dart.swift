@@ -39,10 +39,10 @@ extension Dart: Codable {
     }
 }
 
-extension Dart: CustomStringConvertible {
-    var description: String {
-        "Dart:\n" +
-        "  position: \(position.toStr())\n" +
-        "  sector: \(sector)"
-    }
-}
+//extension Dart: CustomStringConvertible {
+//    var description: String {
+//        "Dart:\n" +
+//        "  position: \(position.toStr())\n" +
+//        "  sector: \(sector)"
+//    }
+//}

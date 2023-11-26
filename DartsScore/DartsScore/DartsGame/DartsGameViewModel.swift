@@ -24,11 +24,11 @@ final class DartsGameViewModel: ObservableObject {
     @Published private(set) var currentAnswers = [Int]()
     
     init(
-        _ model: DartsGame,
         appSettings: AppSettings = .shared
     ) {
-        self.model = model
         self.appSettings = appSettings
+        self.model = .init(attempts: self.appSettings.attempts,
+                           timeForAnswer: self.appSettings.timeForAnswer)
     }
     
     var remainingAttempts: Int {

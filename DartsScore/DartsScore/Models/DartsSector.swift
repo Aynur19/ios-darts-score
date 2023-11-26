@@ -63,14 +63,14 @@ extension DartsSector: Codable {
     }
 }
 
-extension DartsSector: CustomStringConvertible {
-    var description: String {
-        switch area {
-            case .points:       return "\(points)x\(xScore)"
-            case .wire:         return "Wire"
-            case .outOfPoints:  return "Out of Points"
-            case .bullEye:      return "Bull Eye (50)"
-            case .points25:     return "25 Points"
-        }
-    }
-}
+//extension DartsSector: CustomStringConvertible {
+//    var description: String {
+//        switch area {
+//            case .points:       return "\(points)x\(xScore)"
+//            case .wire:         return "Wire"
+//            case .outOfPoints:  return "Out of Points"
+//            case .bullEye:      return "Bull Eye (50)"
+//            case .points25:     return "25 Points"
+//        }
+//    }
+//}

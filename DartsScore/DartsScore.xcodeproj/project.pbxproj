@@ -27,7 +27,6 @@
 		A8A827272B0E433200AD1BD0 /* DartsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A827262B0E433200AD1BD0 /* DartsConstants.swift */; };
 		A8A827292B0E436C00AD1BD0 /* CGFloatExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A827282B0E436C00AD1BD0 /* CGFloatExt.swift */; };
 		A8A8272B2B0E43E900AD1BD0 /* AngleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8272A2B0E43E900AD1BD0 /* AngleExt.swift */; };
-		A8A8272D2B0E496B00AD1BD0 /* DartsTargetSector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8272C2B0E496B00AD1BD0 /* DartsTargetSector.swift */; };
 		A8A8272F2B0E49AB00AD1BD0 /* Dart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8272E2B0E49AB00AD1BD0 /* Dart.swift */; };
 		A8A827312B0E49CD00AD1BD0 /* CGPointExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A827302B0E49CD00AD1BD0 /* CGPointExt.swift */; };
 		A8A827332B0E4A8500AD1BD0 /* DartsGameSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A827322B0E4A8500AD1BD0 /* DartsGameSnapshot.swift */; };
@@ -85,7 +84,6 @@
 		A8A827262B0E433200AD1BD0 /* DartsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsConstants.swift; sourceTree = "<group>"; };
 		A8A827282B0E436C00AD1BD0 /* CGFloatExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExt.swift; sourceTree = "<group>"; };
 		A8A8272A2B0E43E900AD1BD0 /* AngleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AngleExt.swift; sourceTree = "<group>"; };
-		A8A8272C2B0E496B00AD1BD0 /* DartsTargetSector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsTargetSector.swift; sourceTree = "<group>"; };
 		A8A8272E2B0E49AB00AD1BD0 /* Dart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dart.swift; sourceTree = "<group>"; };
 		A8A827302B0E49CD00AD1BD0 /* CGPointExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPointExt.swift; sourceTree = "<group>"; };
 		A8A827322B0E4A8500AD1BD0 /* DartsGameSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameSnapshot.swift; sourceTree = "<group>"; };
@@ -155,13 +153,13 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
-		A8742F9A2B0E87BB0026E07F /* DartsGameStats */ = {
+		A8742F9A2B0E87BB0026E07F /* DartsGameHistory */ = {
 			isa = PBXGroup;
 			children = (
 				A8742F9B2B0E87EC0026E07F /* DartsGameStatsView.swift */,
 				A82D6CF22B0FC16B006CF50A /* DartsGameAnswersView.swift */,
 			);
-			path = DartsGameStats;
+			path = DartsGameHistory;
 			sourceTree = "<group>";
 		};
 		A887760B2B0DEEFF005B746B = {
@@ -197,7 +195,7 @@
 				A8C12F3A2B0E088E00940A64 /* CountdownTimer */,
 				A8A8273C2B0E4EAF00AD1BD0 /* DartsTarget */,
 				A8742F902B0E79B70026E07F /* DartsGame */,
-				A8742F9A2B0E87BB0026E07F /* DartsGameStats */,
+				A8742F9A2B0E87BB0026E07F /* DartsGameHistory */,
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A82D6CF82B13AFC2006CF50A /* Subviews */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
@@ -238,7 +236,6 @@
 				A8A827342B0E4AD200AD1BD0 /* DartsGame.swift */,
 				A8A827322B0E4A8500AD1BD0 /* DartsGameSnapshot.swift */,
 				A8A827382B0E4B9E00AD1BD0 /* DartsGameHistory.swift */,
-				A8A8272C2B0E496B00AD1BD0 /* DartsTargetSector.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -428,7 +425,6 @@
 			files = (
 				A8742F992B0E7A650026E07F /* DataCacheError.swift in Sources */,
 				A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */,
-				A8A8272D2B0E496B00AD1BD0 /* DartsTargetSector.swift in Sources */,
 				A82D6CF72B12722D006CF50A /* DartsTargetViewOptions.swift in Sources */,
 				A8A827352B0E4AD200AD1BD0 /* DartsGame.swift in Sources */,
 				A82D6CF32B0FC16C006CF50A /* DartsGameAnswersView.swift in Sources */,

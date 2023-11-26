@@ -18,11 +18,11 @@ struct DartsGame: Identifiable {
     private(set) var answers = [DartsGameSnapshot]()
     private(set) var remainingTimeForAnswer: Int = .zero
     
-    init() {
-        self.id = UUID().uuidString
-        self.attempts = .zero
-        self.timeForAnswer = .zero
-    }
+//    init() {
+//        self.id = UUID().uuidString
+//        self.attempts = .zero
+//        self.timeForAnswer = .zero
+//    }
     
     init(attempts: Int, timeForAnswer: Int) {
         self.id = UUID().uuidString

@@ -30,13 +30,13 @@ private struct DartsGameViewConstants {
 struct DartsGameView: View {
     private typealias Constants = DartsGameViewConstants
     
-    @ObservedObject var dartsVM = DartsHitsViewModel(.init())
-    @ObservedObject var timerVM = CountdownTimerViewModel()
-    @ObservedObject var gameVM = DartsGameViewModel(.init())
-    
-    @ObservedObject var appSettings: AppSettings = .shared
+    @ObservedObject var dartsHitsVM: DartsHitsViewModel
+    @ObservedObject var timerVM: CountdownTimerViewModel
+    @ObservedObject var gameVM: DartsGameViewModel
     
     private var timerOptions: CountdownTimerCircleProgressBarOptions = .init()
+    
+    private let appSettings: AppSettings
     
     @State private var isDarts1 = true
     @State private var rotation: Double = .zero
@@ -54,7 +54,9 @@ struct DartsGameView: View {
     @State private var resumeBtnOpacity: CGFloat = .zero
     @State private var restartBtnOpacity: CGFloat = .zero
     
-    init() {
+    init(_ appSettings: AppSettings = .shared) {
+        self.appSettings = appSettings
+        
         timerOptions = CountdownTimerCircleProgressBarOptions(
             circleLineWidth: appSettings.timerCircleLineWidth,
             circleDownColor: appSettings.timerCircleDownColor,
@@ -68,6 +70,10 @@ struct DartsGameView: View {
             textIsBold: appSettings.timerTextIsBold,
             textFormat: appSettings.timerTextFormat
         )
+        
+        dartsHitsVM = .init(.init(appSettings))
+        gameVM = .init(appSettings: appSettings)
+        timerVM = .init()
     }
     
     var body: some View {
@@ -124,7 +130,7 @@ struct DartsGameView: View {
         ZStack {
             DartsTargetView(.init(), appSettings: appSettings)
                 .overlay {
-                    DartsHitsView(dartsVM.darts, appSettings: appSettings)
+                    DartsHitsView(dartsHitsVM.darts, appSettings: appSettings)
                 }
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
                 .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
@@ -133,7 +139,7 @@ struct DartsGameView: View {
 
             DartsTargetView(.init(), appSettings: appSettings)
                 .overlay {
-                    DartsHitsView(dartsVM.darts, appSettings: appSettings)
+                    DartsHitsView(dartsHitsVM.darts, appSettings: appSettings)
                 }
                 .rotation3DEffect(.degrees(180), axis: Constants.darts3DRotationAxis)
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
@@ -210,7 +216,7 @@ extension DartsGameView {
     
     private func resetGame(isRestart: Bool = false) {
         gameVM.reset(isRestart: isRestart)
-        dartsVM.reset()
+        dartsHitsVM.reset()
         timerVM.reset(appSettings.timeForAnswer)
         
         showView(for: .answersView, false)
@@ -237,17 +243,17 @@ extension DartsGameView {
     }
     
     private func updateAnswers() {
-        dartsVM.updateDarts()
-        gameVM.generateAnswers(dartsVM.score)
+        dartsHitsVM.updateDarts()
+        gameVM.generateAnswers(dartsHitsVM.score)
         showView(for: .answersView)
     }
     
     private func onAnswered(_ answer: Int) {
         gameVM.onAnswered(
             answer,
-            expectedScore: dartsVM.score,
+            expectedScore: dartsHitsVM.score,
             time: timerVM.counter,
-            darts: dartsVM.darts
+            darts: dartsHitsVM.darts
         )
         
         rotateDarts()
