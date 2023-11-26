@@ -1,5 +1,5 @@
 //
-//  DartsViewModel.swift
+//  DartsHitsViewModel.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 2023.11.22.
@@ -7,27 +7,23 @@
 
 import SwiftUI
 
-class DartsViewModel: ObservableObject {
-    let appSettings: AppSettings = .shared
-    let options: TargetViewOptions
+class DartsHitsViewModel: ObservableObject {
+    let appSettings: AppSettings
+    let options: DartsTargetViewOptions
+    let sectorsCount = DartsConstants.points.count
+    let rotationAngle = DartsConstants.rotationAngle
     
     // MARK: Variables
     @Published private(set) var darts = [Dart]()
     @Published private(set) var score: Int = .zero
     
-//    private(set) var dartTargetSectors = [DartsTargetSector]()
-    
     // MARK: Init
-    init(options: TargetViewOptions = .init()) {
+    init(
+        _ options: DartsTargetViewOptions,
+        appSettings: AppSettings = .shared
+    ) {
         self.options = options
-        
-//        prepareDartsTargetSectors()
-    }
-    
-    init(options: TargetViewOptions = .init(), darts: [Dart], score: Int) {
-        self.options = options
-        self.darts.append(contentsOf: darts)
-        self.score = score
+        self.appSettings = appSettings
     }
     
     func reset() {
@@ -45,22 +41,6 @@ class DartsViewModel: ObservableObject {
         generateDarts()
         updateScore()
     }
-    
-//    private func prepareDartsTargetSectors() {
-//        let rotationAngle = options.rotationAngle
-//        
-//        var minAngle = rotationAngle
-//        var maxAngle = Angle.circle - rotationAngle
-//        
-//        for points in DartsConstants.points {
-//            dartTargetSectors.append(.init(from: minAngle, to: maxAngle, points: points))
-//            
-//            if dartTargetSectors.count == 1 { maxAngle = minAngle }
-//            
-//            minAngle = maxAngle
-//            maxAngle = minAngle + rotationAngle + rotationAngle
-//        }
-//    }
     
     private func generateDarts() {
         darts.removeAll()
@@ -129,9 +109,8 @@ class DartsViewModel: ObservableObject {
         for radiusIdx in 0..<AppSettings.wireRadiusesCount 
         where abs(distance - options.getRadius(radiusIdx)) <= options.distanceWithoutScore { return true }
         
-//        for sector in dartTargetSectors {
         for idx in DartsConstants.points.indices {
-            let angle = CGFloat((Angle.circleSector(idx: idx, from: DartsConstants.points.count) + options.rotationAngle).radians)// CGFloat(sector.maxAngle.radians)
+            let angle = CGFloat((Angle.circleSector(idx: idx, from: sectorsCount) + rotationAngle).radians)
             let wirePoint = CGPoint.init(x: distance * cos(angle),
                                          y: distance * sin(angle))
             let distanceToWire = CGPoint.distance(from: wirePoint, to: touchPoint)
@@ -146,19 +125,18 @@ class DartsViewModel: ObservableObject {
         let xScore = options.getXScore(distance)
         let angle = angle.trigonometric
         
-        for idx in DartsConstants.points.indices {//dartTargetSectors.indices {
+        for idx in DartsConstants.points.indices {
             let isInSector: Bool
             let sectorMinAngle: Angle
             let sectorMaxAngle: Angle
-//            let sector = dartTargetSectors[idx]
             
             if idx == 0 {
-                sectorMinAngle = options.rotationAngle
-                sectorMaxAngle = Angle.circle - options.rotationAngle
+                sectorMinAngle = rotationAngle
+                sectorMaxAngle = Angle.circle - rotationAngle
                 isInSector = angle < sectorMinAngle || angle > sectorMaxAngle
             } else {
-                sectorMinAngle = Angle.circleSector(idx: idx - 1, from: DartsConstants.points.count) + options.rotationAngle
-                sectorMaxAngle = Angle.circleSector(idx: idx, from: DartsConstants.points.count) + options.rotationAngle
+                sectorMinAngle = Angle.circleSector(idx: idx, from: sectorsCount) - rotationAngle
+                sectorMaxAngle = sectorMinAngle + rotationAngle + rotationAngle
                 isInSector = sectorMinAngle < angle && sectorMaxAngle > angle
             }
             

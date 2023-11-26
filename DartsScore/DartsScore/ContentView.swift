@@ -17,7 +17,7 @@ struct ContentView: View {
             
             DartsGameStatsView()
                 .tabItem {
-                    Label("Статистика", systemImage: "trophy")
+                    Label("История", systemImage: "trophy")
                 }
         }
     }

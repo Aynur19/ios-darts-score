@@ -1,5 +1,5 @@
 //
-//  DartsView.swift
+//  DartsHitsView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 25.11.2023.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct DartHitsView: View {
+struct DartsHitsView: View {
     private let darts: [Dart]
     private let appSettings: AppSettings
     
     init(
-        _ darts: [Dart] = [],
-        appSettings: AppSettings = .shared
+        _ darts: [Dart],
+        appSettings: AppSettings
     ) {
         self.darts = darts
         self.appSettings = appSettings
@@ -37,10 +37,8 @@ struct DartHitsView: View {
 }
 
 #Preview {
-    DartHitsView(
-        MockData.getDartsGameStats()
-            .items[0]
-            .answers[0]
-            .darts
+    DartsHitsView(
+        MockData.getDartsGameStats().items[0].answers[0].darts,
+        appSettings: .shared
     )
 }

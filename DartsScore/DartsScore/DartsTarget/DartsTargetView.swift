@@ -1,5 +1,5 @@
 //
-//  DartsView.swift
+//  DartsTargetView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 2023.11.22.
@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct TargetView: View {
-    @StateObject var appSettings = AppSettings.shared
-    private let options: TargetViewOptions
+struct DartsTargetView: View {
+    private let appSettings: AppSettings
+    private let options: DartsTargetViewOptions
     
-    init(_ options: TargetViewOptions) {
+    init(
+        _ options: DartsTargetViewOptions,
+        appSettings: AppSettings = .shared
+    ) {
+        self.appSettings = appSettings
         self.options = options
     }
     
@@ -202,5 +206,5 @@ struct TargetView: View {
 }
 
 #Preview {
-    TargetView(.init())
+    DartsTargetView(.init())
 }

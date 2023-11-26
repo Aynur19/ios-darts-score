@@ -1,5 +1,5 @@
 //
-//  AnswerSnapshot.swift
+//  DartsGameSnapshot.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 2023.11.22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AnswerSnapshot: Identifiable {
+struct DartsGameSnapshot: Identifiable {
     let id: String
     let expected: Int
     let actual: Int
@@ -34,7 +34,7 @@ struct AnswerSnapshot: Identifiable {
     }
 }
 
-extension AnswerSnapshot: Codable {
+extension DartsGameSnapshot: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 

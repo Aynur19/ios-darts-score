@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TargetViewOptions {
+struct DartsTargetViewOptions {
     let distanceWithoutScore: CGFloat
     let maxDartRadius: CGFloat
     

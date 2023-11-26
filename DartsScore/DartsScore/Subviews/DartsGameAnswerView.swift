@@ -1,5 +1,5 @@
 //
-//  GameAnswerView.swift
+//  DartsGameAnswerView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 23.11.2023.
@@ -13,7 +13,7 @@ private struct DartsGameAnswerViewConstants {
     static let lineWidth: CGFloat = 4
 }
 
-struct GameAnswerView: View {
+struct DartsGameAnswerView: View {
     private typealias Constants = DartsGameAnswerViewConstants
     
     let score: Int
@@ -48,5 +48,5 @@ struct GameAnswerView: View {
 }
 
 #Preview {
-    GameAnswerView(180)
+    DartsGameAnswerView(180)
 }

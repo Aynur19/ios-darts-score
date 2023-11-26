@@ -15,12 +15,21 @@ final class DartsGameViewModel: ObservableObject {
         case finished
     }
     
-    private let appSettings: AppSettings = .shared
+    private let appSettings: AppSettings
     private var attempts: Int = .zero
     
-    @Published private(set) var model: DartsGame = .init()
+    @Published private(set) var model: DartsGame
+    
     @Published private(set) var state: GameState = .idle
     @Published private(set) var currentAnswers = [Int]()
+    
+    init(
+        _ model: DartsGame,
+        appSettings: AppSettings = .shared
+    ) {
+        self.model = model
+        self.appSettings = appSettings
+    }
     
     var remainingAttempts: Int {
         model.attempts - attempts
@@ -91,11 +100,11 @@ final class DartsGameViewModel: ObservableObject {
     private func saveGameToStats() {
         do {
             let jsonName = AppSettings.statsJsonFileName
-            var context = (try? JsonCache<DartsGameStats>.load(from: jsonName)) ?? .init()
+            var context = (try? JsonCache<DartsGameHistory>.load(from: jsonName)) ?? .init()
             
             context.add(model)
-            try JsonCache<DartsGameStats>.save(context, to: jsonName)
-            JsonCache<DartsGameStats>.deleteFile(name: AppSettings.gameJsonFileName)
+            try JsonCache<DartsGameHistory>.save(context, to: jsonName)
+            JsonCache<DartsGameHistory>.deleteFile(name: AppSettings.gameJsonFileName)
         } catch {
             print("*******************************************************")
             print(#function)

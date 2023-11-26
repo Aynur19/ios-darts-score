@@ -15,7 +15,7 @@ struct DartsGame: Identifiable {
     private(set) var dateTime: Date = .now
     private(set) var successCount: Int = .zero
     private(set) var score: Int = .zero
-    private(set) var answers = [AnswerSnapshot]()
+    private(set) var answers = [DartsGameSnapshot]()
     private(set) var remainingTimeForAnswer: Int = .zero
     
     init() {
@@ -36,7 +36,7 @@ struct DartsGame: Identifiable {
         timeForAnswer: Int,
         successCount: Int,
         score: Int,
-        answers: [AnswerSnapshot],
+        answers: [DartsGameSnapshot],
         remainingTimeForAnswer: Int
     ) {
         self.id = UUID().uuidString
@@ -63,7 +63,7 @@ struct DartsGame: Identifiable {
             time: timeForCurrentAnswer
         )
         
-        let userAnswer = AnswerSnapshot(
+        let userAnswer = DartsGameSnapshot(
             expected: expected,
             actual: actual,
             answers: answers,
@@ -101,7 +101,7 @@ extension DartsGame: Codable {
         self.dateTime = try dateDecodingStrategy.date(from: container.decode(String.self, forKey: .dateTime)) ?? Date()
         self.successCount = try container.decode(Int.self, forKey: .successCount)
         self.score = try container.decode(Int.self, forKey: .score)
-        self.answers = try container.decode([AnswerSnapshot].self, forKey: .answers)
+        self.answers = try container.decode([DartsGameSnapshot].self, forKey: .answers)
     }
 
     private enum CodingKeys: String, CodingKey {

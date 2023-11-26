@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DartsGameStats: Identifiable {
+struct DartsGameHistory: Identifiable {
     let id: String
     let createdOn: Date
     var updatedOn: Date
@@ -36,7 +36,7 @@ struct DartsGameStats: Identifiable {
     }
 }
 
-extension DartsGameStats: Codable {
+extension DartsGameHistory: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)

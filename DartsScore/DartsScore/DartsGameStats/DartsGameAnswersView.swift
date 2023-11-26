@@ -8,9 +8,9 @@
 import SwiftUI
 
 final class DartsGameAnswersViewModel: ObservableObject {
-    @Published private(set) var model: DartsGameStats
+    @Published private(set) var model: DartsGameHistory
     
-    init(model: DartsGameStats) {
+    init(model: DartsGameHistory) {
         self.model = model
     }
 }
@@ -27,9 +27,9 @@ struct GameAnswersView: View {
         ZStack {
             VStack(spacing: 20) {
                 
-                TargetView(.init())
+                DartsTargetView(.init())
                     .overlay {
-                        DartHitsView(game.answers[0].darts)
+                        DartsHitsView(game.answers[0].darts, appSettings: .shared)
                     }
                 
                 HStack(spacing: 20) {
@@ -38,7 +38,7 @@ struct GameAnswersView: View {
                                                          actual: game.answers[0].actual,
                                                          expected: game.answers[0].expected)
                         
-                        GameAnswerView(answer, color: answerColor)
+                        DartsGameAnswerView(answer, color: answerColor)
                     }
                 }
             }

@@ -38,6 +38,8 @@ struct DartsConstants {
     static let wireRadius: CGFloat = 185                // Максимальный радиус проволки
     static let symbolsDistanceCoef: CGFloat = 0.87
     
+    static let rotationAngle = Angle.degrees(Double(360 / points.count / 2))
+    
     static func getRotationAngle(for count: Int) -> Angle {
         .circleSector(devided: Double(count * 2))
     }

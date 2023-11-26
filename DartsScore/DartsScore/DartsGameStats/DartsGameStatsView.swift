@@ -8,14 +8,14 @@
 import SwiftUI
 
 class DartsGameStatsViewModel: ObservableObject {
-    @Published private(set) var model: DartsGameStats = .init()
+    @Published private(set) var model: DartsGameHistory = .init()
     
     init() {
         refresh()
     }
     
     func refresh() {
-        model = (try? JsonCache<DartsGameStats>.load(from: AppSettings.statsJsonFileName))
+        model = (try? JsonCache<DartsGameHistory>.load(from: AppSettings.statsJsonFileName))
         ?? MockData.getDartsGameStats()
 //        model = MockData.getDartsGameStats()
     }
@@ -134,7 +134,7 @@ struct DartsGameStatsView: View {
 
 struct MockData {
     
-    static func getDartsGameStats() -> DartsGameStats {
+    static func getDartsGameStats() -> DartsGameHistory {
         .init(
             createdOn: .now,
             updatedOn: .now,
