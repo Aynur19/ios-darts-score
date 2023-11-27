@@ -16,7 +16,7 @@ class AppSettings: ObservableObject {
     
     private init() {}
     
-    static let standardTimeForAnswer = 60
+    static let standardTimeForAnswer = 60.secToMs
     static let statsMaxCount = 50
     static let wireRadiusesCount = 6
     
@@ -40,7 +40,7 @@ class AppSettings: ObservableObject {
     @Published private(set) var dartsSectorNumberColor: Color = .white
     
     @Published private(set) var attempts = 10
-    @Published private(set) var timeForAnswer = 60
+    @Published private(set) var timeForAnswer = 60.msToSec
     
     func getSectorColor(for sectorIdx: Int, _ isBaseSector: Bool = true) -> Color {
         isBaseSector ? baseColors[sectorIdx % 2] : xColors[sectorIdx % 2]

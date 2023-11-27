@@ -27,9 +27,9 @@ extension Dart: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.position = try container.decode(CGPoint.self, forKey: .position)
-        self.sector = try container.decode(DartsSector.self, forKey: .sector)
+        self.id         = try container.decode(String.self, forKey: .id)
+        self.position   = try container.decode(CGPoint.self, forKey: .position)
+        self.sector     = try container.decode(DartsSector.self, forKey: .sector)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -38,11 +38,3 @@ extension Dart: Codable {
         case sector
     }
 }
-
-//extension Dart: CustomStringConvertible {
-//    var description: String {
-//        "Dart:\n" +
-//        "  position: \(position.toStr())\n" +
-//        "  sector: \(sector)"
-//    }
-//}

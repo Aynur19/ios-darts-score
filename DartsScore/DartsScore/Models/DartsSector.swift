@@ -30,11 +30,8 @@ struct DartsSector {
             case .points25:
                 points = DartsConstants.points25
                 xScore = DartsConstants.x1Score
-            case .points:
-                assertionFailure("Logic error!")
-                points = .zero
-                xScore = .zero
             default:
+                if area == .points { assertionFailure("Logic error!") }
                 points = .zero
                 xScore = .zero
         }
@@ -45,6 +42,10 @@ struct DartsSector {
         self.xScore = xScore
         self.area = .points
     }
+    
+    var description: String {
+        points > 0 ? "\(points)x\(xScore)" : "Мимо"
+    }
 }
 
 extension DartsSector: Codable {
@@ -53,7 +54,7 @@ extension DartsSector: Codable {
 
         self.points = try container.decode(Int.self, forKey: .points)
         self.xScore = try container.decode(Int.self, forKey: .xScore)
-        self.area = try container.decode(DartsSectorArea.self, forKey: .area)
+        self.area   = try container.decode(DartsSectorArea.self, forKey: .area)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -62,15 +63,3 @@ extension DartsSector: Codable {
         case area
     }
 }
-
-//extension DartsSector: CustomStringConvertible {
-//    var description: String {
-//        switch area {
-//            case .points:       return "\(points)x\(xScore)"
-//            case .wire:         return "Wire"
-//            case .outOfPoints:  return "Out of Points"
-//            case .bullEye:      return "Bull Eye (50)"
-//            case .points25:     return "25 Points"
-//        }
-//    }
-//}

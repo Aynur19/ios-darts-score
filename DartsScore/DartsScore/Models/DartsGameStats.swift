@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DartsGameHistory: Identifiable {
+struct DartsGameStats: Identifiable {
     let id: String
     let createdOn: Date
     var updatedOn: Date
@@ -24,23 +24,31 @@ struct DartsGameHistory: Identifiable {
         self.items = items
     }
     
-    mutating func add(_ item: DartsGame) {
+    mutating func add(_ item: DartsGame) -> Bool {
+        var isAdded = true
         if items.count < AppSettings.statsMaxCount {
             items.append(item)
         } else {
             items.sort { $0.score > $1.score }
-            items[items.count - 1] = item
+            
+            if let score = items.last?.score, score < item.score {
+                items[items.count - 1] = item
+                items.sort { $0.score > $1.score }
+                updatedOn = .now
+            } else {
+                isAdded = false
+            }
         }
         
-        items.sort { $0.score > $1.score }
+        return isAdded
     }
 }
 
-extension DartsGameHistory: Codable {
+extension DartsGameStats: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(String.self, forKey: .id)
-        self.items = try container.decode([DartsGame].self, forKey: .items)
+        self.id     = try container.decode(String.self, forKey: .id)
+        self.items  = try container.decode([DartsGame].self, forKey: .items)
 
         let dateDecodingStrategy = ISO8601DateFormatter()
         self.createdOn = (try? dateDecodingStrategy

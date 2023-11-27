@@ -8,7 +8,7 @@
 import Foundation
 
 struct DartsGameSnapshot: Identifiable {
-    let id: String
+    let id: Int
     let expected: Int
     let actual: Int
     let answers: [Int]
@@ -17,6 +17,7 @@ struct DartsGameSnapshot: Identifiable {
     let score: Int
     
     init(
+        id: Int,
         expected: Int,
         actual: Int,
         answers: [Int],
@@ -24,7 +25,7 @@ struct DartsGameSnapshot: Identifiable {
         time: Int,
         score: Int
     ) {
-        self.id = UUID().uuidString
+        self.id =  id
         self.expected = expected
         self.actual = actual
         self.answers = answers
@@ -38,13 +39,13 @@ extension DartsGameSnapshot: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.id = try container.decode(String.self, forKey: .id)
-        self.expected = try container.decode(Int.self, forKey: .expected)
-        self.actual = try container.decode(Int.self, forKey: .actual)
-        self.answers = try container.decode([Int].self, forKey: .answers)
-        self.darts = try container.decode([Dart].self, forKey: .darts)
-        self.time = try container.decode(Int.self, forKey: .time)
-        self.score = try container.decode(Int.self, forKey: .score)
+        self.id         = try container.decode(Int.self, forKey: .id)
+        self.expected   = try container.decode(Int.self, forKey: .expected)
+        self.actual     = try container.decode(Int.self, forKey: .actual)
+        self.answers    = try container.decode([Int].self, forKey: .answers)
+        self.darts      = try container.decode([Dart].self, forKey: .darts)
+        self.time       = try container.decode(Int.self, forKey: .time)
+        self.score      = try container.decode(Int.self, forKey: .score)
     }
 
     private enum CodingKeys: String, CodingKey {

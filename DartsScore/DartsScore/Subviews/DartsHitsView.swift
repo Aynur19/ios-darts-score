@@ -36,9 +36,9 @@ struct DartsHitsView: View {
     }
 }
 
-#Preview {
-    DartsHitsView(
-        MockData.getDartsGameStats().items[0].answers[0].darts,
-        appSettings: .shared
-    )
-}
+//#Preview {
+//    DartsHitsView(
+//        MockData.getDartsGameStats().items[0][0].darts,
+//        appSettings: .shared
+//    )
+//}

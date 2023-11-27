@@ -8,39 +8,70 @@
 import SwiftUI
 
 final class DartsGameAnswersViewModel: ObservableObject {
-    @Published private(set) var model: DartsGameHistory
+    @Published private(set) var model: DartsGameStats
     
-    init(model: DartsGameHistory) {
+    init(model: DartsGameStats) {
         self.model = model
     }
 }
 
 struct GameAnswersView: View {
     private let game: DartsGame
+    private let stats: DartsGameSnapshotsList
 //    let game = MockData.getDartsGameStats().items[0]
+    @State private var index = 0
     
-    init(_ game: DartsGame) {
+    init(_ game: DartsGame, stats: DartsGameSnapshotsList) {
         self.game = game
+        self.stats = stats
     }
     
     var body: some View {
         ZStack {
             VStack(spacing: 20) {
                 
-                DartsTargetView(.init())
-                    .overlay {
-                        DartsHitsView(game.answers[0].darts, appSettings: .shared)
-                    }
-                
-                HStack(spacing: 20) {
-                    ForEach(game.answers[0].answers, id: \.self) { answer in
-                        let answerColor = getAnswerColor(answer,
-                                                         actual: game.answers[0].actual,
-                                                         expected: game.answers[0].expected)
-                        
-                        DartsGameAnswerView(answer, color: answerColor)
+                TabView(selection: $index) {
+                    ForEach(stats.snapshots) { snapshot in
+                        VStack(spacing: 60) {
+                            DartsTargetView(.init(.shared), appSettings: .shared)
+                                .overlay { DartsHitsView(snapshot.darts, appSettings: .shared) }
+                            
+                            HStack {
+                                ForEach(snapshot.answers, id: \.self) { answer in
+                                    let answerColor = getAnswerColor(answer,
+                                                                     actual: snapshot.actual,
+                                                                     expected: snapshot.expected)
+    
+                                    DartsGameAnswerView(answer, color: answerColor)
+                                }
+                            }.padding(.horizontal, 16)
+                            
+                            HStack {
+                                ForEach(snapshot.darts) { dart in
+                                    Text(dart.sector.description)
+                                }
+                            }
+                        }
                     }
                 }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                
+                
+                HStack(spacing: 4) {
+                    ForEach(0..<stats.snapshots.count, id: \.self) { index in
+                        Circle()
+                            .fill(getTabIndexColor(index))
+                            .frame(width: 12)
+
+                    }
+                }
+                .padding()
+//                DartsTargetView(.init())
+//                    .overlay {
+//                        DartsHitsView(game.answers[0].darts, appSettings: .shared)
+//                    }
+                
+
             }
         }
         .navigationTitle("История игры: \(game.id)")
@@ -55,10 +86,15 @@ struct GameAnswersView: View {
             .blue
         }
     }
+    
+    private func getTabIndexColor(_ index: Int) -> Color {
+        self.index == index ? .blue : .blue.opacity(0.5)
+    }
 }
 
 #Preview {
-    GameAnswersView(MockData.getDartsGameStats().items[0])
+    GameAnswersView(MockData.getDartsGameStats().items[0],
+                    stats: MockData.getDartsGameSnapshotsList())
 }
 
 //struct DartsGameAnswersView: View {

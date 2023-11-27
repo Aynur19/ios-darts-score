@@ -30,9 +30,9 @@ private struct DartsGameViewConstants {
 struct DartsGameView: View {
     private typealias Constants = DartsGameViewConstants
     
-    @ObservedObject var dartsHitsVM: DartsHitsViewModel
     @ObservedObject var timerVM: CountdownTimerViewModel
     @ObservedObject var gameVM: DartsGameViewModel
+    @ObservedObject var dartsHitsVM: DartsHitsViewModel
     
     private var timerOptions: CountdownTimerCircleProgressBarOptions = .init()
     
@@ -71,9 +71,9 @@ struct DartsGameView: View {
             textFormat: appSettings.timerTextFormat
         )
         
-        dartsHitsVM = .init(.init(appSettings))
-        gameVM = .init(appSettings: appSettings)
         timerVM = .init()
+        gameVM = .init(appSettings: appSettings)
+        dartsHitsVM = .init(.init(appSettings))
     }
     
     var body: some View {
@@ -197,9 +197,10 @@ struct DartsGameView: View {
     
     private var gameOverView: some View {
         VStack(spacing: 20) {
-            Text("Всего попыток: \(gameVM.model.attempts)")
-            Text("Правильных ответов: \(gameVM.model.successCount)")
-            Text("Заработано очков: \(gameVM.model.score)")
+            Text("Всего попыток: \(gameVM.game.attempts)")
+            Text("Правильных ответов: \(gameVM.game.successAttempts)")
+            Text("Заработано очков: \(gameVM.game.score)")
+            Text("Затрачено времени: \(TimerStringFormat.secMs.msStr( gameVM.game.timeSpent))")
         }
         .font(.title2)
         .opacity(gameOverViewOpacity)
@@ -220,7 +221,6 @@ extension DartsGameView {
         timerVM.reset(appSettings.timeForAnswer)
         
         showView(for: .answersView, false)
-//        showView(for: .dartsView1)
         showDartsSide()
         showView(for: .topView)
         showView(for: .dartsView)
@@ -250,11 +250,17 @@ extension DartsGameView {
     
     private func onAnswered(_ answer: Int) {
         gameVM.onAnswered(
-            answer,
-            expectedScore: dartsHitsVM.score,
-            time: timerVM.counter,
+            for: timerVM.counter,
+            expected: dartsHitsVM.score,
+            actual: answer,
             darts: dartsHitsVM.darts
         )
+//        gameVM.onAnswered(
+//            answer,
+//            expectedScore: dartsHitsVM.score,
+//            time: timerVM.counter,
+//            darts: dartsHitsVM.darts
+//        )
         
         rotateDarts()
         showView(for: .answersView, false)

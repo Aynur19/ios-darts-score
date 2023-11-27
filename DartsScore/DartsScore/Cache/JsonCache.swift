@@ -11,8 +11,8 @@ enum DataStoreType: String {
     case json
 }
 
-final class JsonCache<T: Codable> {
-    static func load(from name: String) throws -> T? {
+final class JsonCache {
+    static func load<T: Codable>(from name: String) throws -> T? {
         let jsonUrl = try getURL(with: name)
         let json = try String(contentsOf: jsonUrl, encoding: .utf8)
         
@@ -26,7 +26,7 @@ final class JsonCache<T: Codable> {
         return nil
     }
     
-    static func save(_ context: T, to name: String) throws {
+    static func save<T: Codable>(_ context: T, to name: String) throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         encoder.dateEncodingStrategy = .iso8601
@@ -77,5 +77,56 @@ final class JsonCache<T: Codable> {
     
     private static func hasFile(with name: String) -> Bool {
         (try? getURL(with: name)) != nil
+    }
+}
+
+extension JsonCache {
+    static func loadGame(from jsonName: String, appSettings: AppSettings = .shared) -> DartsGame {
+        (try? JsonCache.load(from: jsonName))
+        ?? .init(attempts: appSettings.attempts, timeForAnswer: appSettings.timeForAnswer)
+    }
+    
+    static func saveGame(_ game: DartsGame, to jsonName: String) {
+        do {
+            try JsonCache.save(game, to: jsonName)
+            print("Saved Game!")
+        } catch {
+            print("*******************************************************")
+            print(#function)
+            print(error.localizedDescription)
+            print("*******************************************************")
+        }
+    }
+    
+    static func loadGameSnapshotsList(from jsonName: String, gameId: String) -> DartsGameSnapshotsList {
+        (try? JsonCache.load(from: jsonName)) ?? .init(gameId)
+    }
+    
+    static func saveGameSnapshotsList(_ snapshots: DartsGameSnapshotsList, to jsonName: String) {
+        do {
+            try JsonCache.save(snapshots, to: jsonName)
+            print("Saved Game Snapshots!")
+        } catch {
+            print("*******************************************************")
+            print(#function)
+            print(error.localizedDescription)
+            print("*******************************************************")
+        }
+    }
+
+    static func loadDartsGameStats(from jsonName: String) -> DartsGameStats {
+        (try? JsonCache.load(from: jsonName)) ?? .init()
+    }
+    
+    static func saveDartsGameStats(_ context: DartsGameStats, to jsonName: String) {
+        do {
+            try JsonCache.save(context, to: jsonName)
+            print("Saved Game Stats!")
+        } catch {
+            print("*******************************************************")
+            print(#function)
+            print(error.localizedDescription)
+            print("*******************************************************")
+        }
     }
 }
