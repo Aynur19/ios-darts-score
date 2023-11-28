@@ -12,10 +12,10 @@ struct CountdownTimerCircleProgressBar: View {
     private let options: CountdownTimerCircleProgressBarOptions
     
     init(
-        _ seconds: Int,
+        _ milliseconds: Int,
         options: CountdownTimerCircleProgressBarOptions = .init()
     ) {
-        self.timerVM = .init(seconds)
+        self.timerVM = .init(milliseconds)
         self.options = options
     }
     
@@ -49,8 +49,7 @@ struct CountdownTimerCircleProgressBar: View {
     }
 }
 
-struct CountdownTimerCircleProgressBar_Previews: PreviewProvider {
-    static var previews: some View {
-        CountdownTimerCircleProgressBar(47)
-    }
+#Preview {
+//        CountdownTimerCircleProgressBar(47.secToMs)
+    CountdownTimerCircleProgressBar(timerVM: .init(43.secToMs))
 }

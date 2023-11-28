@@ -9,16 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        TabView {
-            DartsGameView()
-                .tabItem {
-                    Label("Дартс", systemImage: "gamecontroller")
-                }
-            
-            DartsGameStatsView()
-                .tabItem {
-                    Label("История", systemImage: "trophy")
-                }
+        ZStack {
+            TabView {
+                DartsGameView()
+                    .tabItem {
+                        Label("Дартс", systemImage: "gamecontroller")
+                    }
+                
+                DartsGameStatsView()
+                    .tabItem {
+                        Label("История", systemImage: "trophy")
+                    }
+            }
         }
     }
 }

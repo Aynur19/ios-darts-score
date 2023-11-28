@@ -7,109 +7,41 @@
 
 import SwiftUI
 
-//struct DartsGameHistoryView: View {
-//    
-//}
-
-//class DartsGameStatsViewModel: ObservableObject {
-//    @Published private(set) var stats: DartsGameStats
-//    
-//    init() {
-////        stats = JsonCache.loadDartsGameStats(from: AppSettings.statsJsonFileName)
-//        stats = MockData.getDartsGameStats()
-//    }
-//    
-//    func refresh() {
-////        stats = JsonCache.loadDartsGameStats(from: AppSettings.statsJsonFileName)
-//        stats = MockData.getDartsGameStats()
-//    }
-//}
+private struct DartsGameStatsViewConstants {
+    static let pointsLabel = "Очки"
+    static let attemptsLabel = "Попытки"
+    static let timeLabel = "Время"
+    
+    static let chevronName = "chevron.right"
+}
 
 struct DartsGameStatsView: View {
+    private typealias Constants = DartsGameStatsViewConstants
+    
     @State private var path = NavigationPath()
     @State private var stats: DartsGameStats = MockData.getDartsGameStats()
-//    @ObservedObject var statsVM: DartsGameStatsViewModel
-    
-//    init(statsVM: DartsGameStatsViewModel = .init()) {
-//        self.statsVM = statsVM
-//        
-//    }
-//    
+
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
+                Color.offWhite.ignoresSafeArea(.all)
+                
                 ScrollView {
-                    HStack {
-                        Text("Очки")
-                            .bold()
-                            .frame(maxWidth: .infinity)
-                        Text("Попытки")
-                            .frame(maxWidth: .infinity)
-                        Text("Время")
-                            .frame(maxWidth: .infinity)
-                        Spacer(minLength: 32)
-                    }
-                    .padding(.horizontal, 32)
+                    headers
+                        .padding(.horizontal, 32)
                     
                     ForEach(stats.items) { game in
                         Button(action: {
                             path.append(game.id)
                         }, label: {
-                            HStack {
-                                Text(String(game.score))
-                                    .bold()
-                                    .frame(maxWidth: .infinity)
-                                Text("\(game.successAttempts)/\(game.attempts)")
-                                    .frame(maxWidth: .infinity)
-                                Text("\(game.timeForAnswer) сек.")
-                                    .frame(maxWidth: .infinity)
-                                Image(systemName: "chevron.right")
-                            }
+                            row(game)
+                                
                         })
                         .foregroundStyle(Color.black)
-                        .padding(.horizontal, 32)
-                        .padding(.vertical, 4)
+                        .padding(.horizontal, 16)
+//                        .padding(.vertical, 4)
                     }
                 }.frame(maxWidth: .infinity)
-                
-//                VStack {
-//                    HStack {
-//                        Text("Очки")
-//                        Spacer()
-//                        Text("Попытки")
-//                        Spacer()
-//                        Text("Время на ответ")
-//                    }
-//                    .padding(.horizontal, 32)
-                    
-//                    Table(statsVM.model.items) {
-//                        TableColumn("Очки") { item in
-//                            Text(String(item.score))
-//                        }
-//                        TableColumn("Очки2") { item in
-//                            Text(String(item.attempts))
-//                        }
-//                    }
-//                    Table(statsVM.model.items) {
-////                        TableColumn("Очки") { item in
-////                            Text(String(item.score))
-////                        }
-//                        
-//                        TableColumn("Попытки") { item2 in
-//                            Text("\(item2.successCount)")
-//                        }
-//                    }
-//                    List(statsVM.model.items) { gameStats in
-//                        HStack {
-//                            Text(String(gameStats.score))
-//                            Spacer()
-//                            Text("\(gameStats.successCount)/\(gameStats.attempts)")
-//                            Spacer()
-//                            Spacer()
-//                            Text("\(gameStats.timeForAnswer) сек.")
-//                        }
-//                    }
-//                }
                 .onAppear {
                     refresh()
                 }
@@ -119,13 +51,50 @@ struct DartsGameStatsView: View {
             .navigationDestination(for: String.self) { gameIdx in
                 if let game = getGame(gameIdx) {
                     GameAnswersView(game, stats: MockData.getDartsGameSnapshotsList())
-//                    GameAnswersView(game)
                 }
-//                if view == "NewView" {
-//                    Text("This is NewView")
-//                }
             }
         }
+    }
+    
+    private var headers: some View {
+        HStack {
+            Text(Constants.pointsLabel)
+                .bold()
+                .frame(maxWidth: .infinity)
+            Text(Constants.attemptsLabel)
+                .frame(maxWidth: .infinity)
+            Text(Constants.timeLabel)
+                .frame(maxWidth: .infinity)
+            Spacer(minLength: 32)
+        }
+    }
+    
+    private func row(_ game: DartsGame) -> some View {
+        HStack {
+            Text(String(game.score))
+                .bold()
+                .frame(maxWidth: .infinity)
+            Text(attemptsStr(game.attempts, success: game.successAttempts))
+                .frame(maxWidth: .infinity)
+            Text(timeStr(game.timeForAnswer))
+                .frame(maxWidth: .infinity)
+            Image(systemName: Constants.chevronName)
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal)
+        .background(Color.offWhite)
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 10, y: 10)
+        .shadow(color: Color.white.opacity(0.7), radius: 10, x: -5, y: -5)
+//        .shadow(color: .gray, radius: 5)
+    }
+    
+    private func attemptsStr(_ allAttempts: Int, success: Int) -> String {
+        "\(success)/\(allAttempts)"
+    }
+    
+    private func timeStr(_ time: Int) -> String {
+        TimerStringFormat.secMs.msStr(time) + " сек."
     }
     
     private func refresh() {
@@ -137,9 +106,7 @@ struct DartsGameStatsView: View {
     }
 }
 
-//#Preview {
-//    NavigationStack {
-//        DartsGameStatsView()
-//    }
-//}
+#Preview {
+    DartsGameStatsView()
+}
 

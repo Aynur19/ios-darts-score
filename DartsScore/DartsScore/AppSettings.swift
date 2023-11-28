@@ -16,6 +16,8 @@ class AppSettings: ObservableObject {
     
     private init() {}
     
+    @Published private(set) var pallet: PalletColor = .dark1
+    
     static let standardTimeForAnswer = 60.secToMs
     static let statsMaxCount = 50
     static let wireRadiusesCount = 6
@@ -40,7 +42,7 @@ class AppSettings: ObservableObject {
     @Published private(set) var dartsSectorNumberColor: Color = .white
     
     @Published private(set) var attempts = 10
-    @Published private(set) var timeForAnswer = 60.msToSec
+    @Published private(set) var timeForAnswer = 60000
     
     func getSectorColor(for sectorIdx: Int, _ isBaseSector: Bool = true) -> Color {
         isBaseSector ? baseColors[sectorIdx % 2] : xColors[sectorIdx % 2]
@@ -61,37 +63,4 @@ class AppSettings: ObservableObject {
     let timerTextColor: Color = .green
     let timerTextIsBold: Bool = true
     let timerTextFormat: TimerStringFormat = .secMs
-    
-//    private(set) var timeForAnswer = 60  // in ms
-//    
-//    
-//    // MARK: Colors
-//    @Published private(set) var baseColors: [Color] = [.white, .black]
-//
-//
-//    @Published private(set) var points25Color: Color = .green
-//    @Published private(set) var wireColor: Color = .gray
-//    
-//    
-//    // MARK: Dart
-
-//    
-//
-//    
-
-//    
-//
-//    @Published private(set) var answersCount = 5
-////    let scoreMultiplier: CGFloat = 100
-//    
-//    
-//    
-
-//    
-//    let gameOpacityAnimationDuration: CGFloat = 0.5
-//    
-//    
-//    static let statsMaxCount = 50
-//    static let statsJsonFileName = "DartsGameStats"
-//    static let gameJsonFileName = "DartsGame"
 }

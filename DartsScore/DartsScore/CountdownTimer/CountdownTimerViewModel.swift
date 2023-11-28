@@ -26,27 +26,27 @@ class CountdownTimerViewModel: ObservableObject {
     
     @Published private(set) var progress: CGFloat = Constants.progressFull
     @Published private(set) var counter: Int = .zero
-    @Published private(set) var timeOfMs: Int = .zero
+    @Published private(set) var time: Int = .zero
     @Published private(set) var state: CountdownTimerState = .idle
     
     private var timer: Timer?
 
-    init(_ seconds: Int? = .none) {
-        reset(seconds)
+    init(_ milliseconds: Int? = .none) {
+        reset(milliseconds)
     }
     
-    func reset(_ seconds: Int?) {
+    func reset(_ milliseconds: Int?) {
         timer?.invalidate()
-        if let seconds = seconds {
-            timeOfMs = seconds.secToMs
+        if let timeOfMs = milliseconds {
+            time = timeOfMs
         }
-        counter = timeOfMs
+        counter = time
         progress = Constants.progressFull
         state = .idle
     }
     
-    func start(_ seconds: Int?) {
-        reset(seconds)
+    func start(_ milliseconds: Int?) {
+        reset(milliseconds)
         startTimer()
     }
     
@@ -58,23 +58,23 @@ class CountdownTimerViewModel: ObservableObject {
         startTimer()
     }
     
-    private func restartTimer() {
-        progress = Constants.progressFull
-        counter = timeOfMs
-        
-        Task {
-            timer?.invalidate()
-
-            if timer != nil {
-                try? await Task.sleep(nanoseconds: Constants.restartSleep)
-            }
-            
-            await MainActor.run {
-                progress = getProgress()
-                startTimer()
-            }
-        }
-    }
+//    private func restartTimer() {
+//        progress = Constants.progressFull
+//        counter = time
+//        
+//        Task {
+//            timer?.invalidate()
+//
+//            if timer != nil {
+//                try? await Task.sleep(nanoseconds: Constants.restartSleep)
+//            }
+//            
+//            await MainActor.run {
+//                progress = getProgress()
+//                startTimer()
+//            }
+//        }
+//    }
     
     private func resumeTimer() {
         timer?.invalidate()
@@ -102,7 +102,7 @@ class CountdownTimerViewModel: ObservableObject {
     }
     
     private func getProgress() -> CGFloat {
-        CGFloat(counter) / CGFloat(timeOfMs)
+        CGFloat(counter) / CGFloat(time)
     }
     
     deinit {

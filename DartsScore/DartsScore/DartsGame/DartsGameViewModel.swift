@@ -40,7 +40,6 @@ final class DartsGameViewModel: ObservableObject {
         if !isRestart {
             game = JsonCache.loadGame(from: AppSettings.gameJsonFileName)
             snapshots = JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
-//            loadGameStats(from: game.statsJsonName, gameId: game.id)
         } else {
             restart()
         }

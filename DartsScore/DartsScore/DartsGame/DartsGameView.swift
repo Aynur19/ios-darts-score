@@ -7,24 +7,13 @@
 
 import SwiftUI
 
-private enum DartsGameSubview {
-    case topView
-    
-    case dartsView
-    case dartsView1
-    case dartsView2
-    
-    case gameOverView
-    case answersView
-    
-    case startBtnView
-    case resumeBtnView
-    case restartBtnView
-}
-
 private struct DartsGameViewConstants {
+    static let title = "Дартс"
+    static let attemptsRemainingLabel = "Осталось попыток: "
     static let opacityAnimationDuration: CGFloat = 0.5
     static let darts3DRotationAxis: (x: CGFloat, y: CGFloat, z: CGFloat) = (x: 0, y: 1, z: 0)
+    static let background = Color(UIColor(red: 0.11, green: 0.72, blue: 1, alpha: 1))
+    //Color = Color(UIColor(red: 0.34, green: 0.43, blue: 0.9, alpha: 1))
 }
 
 struct DartsGameView: View {
@@ -38,21 +27,20 @@ struct DartsGameView: View {
     
     private let appSettings: AppSettings
     
-    @State private var isDarts1 = true
+    @State private var isDartsTargetSide1 = true
     @State private var rotation: Double = .zero
     
-    @State private var topViewOpacity: CGFloat = .zero
-    @State private var dartsOpacity: CGFloat = .zero
-    @State private var dartsViewOpacity1: CGFloat = .zero
-    @State private var dartsViewOpacity2: CGFloat = .zero
+    @State private var topViewIsShow = false
+    @State private var dartsTargetIsShow = false
+    @State private var dartsTargetSide1IsShow = false
+    @State private var dartsTargetSide2IsShow = false
     
-    @State private var answersOpacity: CGFloat = .zero
+    @State private var answersIsShow = false
+    @State private var gameOverViewIsShow = false
     
-    @State private var gameOverViewOpacity: CGFloat = .zero
-    
-    @State private var startBtnOpacity: CGFloat = .zero
-    @State private var resumeBtnOpacity: CGFloat = .zero
-    @State private var restartBtnOpacity: CGFloat = .zero
+    @State private var startBtnIsShow = false
+    @State private var resumeBtnIsShow = false
+    @State private var restartBtnIsShow = false
     
     init(_ appSettings: AppSettings = .shared) {
         self.appSettings = appSettings
@@ -61,7 +49,7 @@ struct DartsGameView: View {
             circleLineWidth: appSettings.timerCircleLineWidth,
             circleDownColor: appSettings.timerCircleDownColor,
             ciclreDownOpacity: appSettings.timerCiclreDownOpacity,
-            circleUpColor: appSettings.timerCircleUpColor,
+            circleUpColor: Color(UIColor.systemIndigo),// appSettings.timerCircleUpColor,
             ciclreUpOpacity: appSettings.timerCiclreUpOpacity,
             circleUpRotation: appSettings.timerCircleUpRotation,
             animationDuration: appSettings.timerAnimationDuration,
@@ -71,7 +59,7 @@ struct DartsGameView: View {
             textFormat: appSettings.timerTextFormat
         )
         
-        timerVM = .init()
+        timerVM = .init(appSettings.timeForAnswer)
         gameVM = .init(appSettings: appSettings)
         dartsHitsVM = .init(.init(appSettings))
     }
@@ -79,14 +67,16 @@ struct DartsGameView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                appSettings.pallet.background.ignoresSafeArea()
+                
                 VStack {
                     topView
                     dartsView
                         .frame(width: appSettings.dartsFrameWidth,
                                height: appSettings.dartsFrameWidth)
-                        .opacity(dartsOpacity)
+                        .opacity(dartsTargetIsShow ? 1 : 0)
                         .animation(.linear(duration: Constants.opacityAnimationDuration),
-                                   value: dartsOpacity)
+                                   value: dartsTargetIsShow)
                     
                     VStack {
                         gameOverView
@@ -96,34 +86,36 @@ struct DartsGameView: View {
                 }
                 .padding()
                     
-                VStack(spacing: 20) {
+                VStack {
                     Spacer(minLength: 600)
                     startButton
                     resumeButton
                     restartButton
                     Spacer()
+                }.padding(.horizontal, 64)
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    viewTitle(Constants.title)
                 }
             }
-            .navigationTitle("Дартс")
-            .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear { resetGame() }
         .onDisappear { stopGame() }
+        .background()
     }
     
     private var topView: some View {
         HStack {
-            Text("Осталось попыток: \(gameVM.remainingAttempts)")
-                .font(.headline)
+            attemptsLabel
             Spacer()
-            CountdownTimerCircleProgressBar(timerVM: timerVM,
-                                            options: timerOptions)
-            .frame(width: 64)
+            CountdownTimerCircleProgressBar(timerVM: timerVM, options: timerOptions)
+                .frame(width: 64)
         }
         .padding(.horizontal, 32)
-        .opacity(topViewOpacity)
-        .animation(.linear(duration: Constants.opacityAnimationDuration),
-                   value: topViewOpacity)
+        .opacity(topViewIsShow ? 1 : 0)
+        .animation(.linear(duration: Constants.opacityAnimationDuration), value: topViewIsShow)
     }
     
     private var dartsView: some View {
@@ -135,7 +127,7 @@ struct DartsGameView: View {
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
                 .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
                            value: rotation)
-                .opacity(dartsViewOpacity1)
+                .opacity(dartsTargetSide1IsShow ? 1 : 0)
 
             DartsTargetView(.init(), appSettings: appSettings)
                 .overlay {
@@ -145,7 +137,7 @@ struct DartsGameView: View {
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
                 .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
                            value: rotation)
-                .opacity(dartsViewOpacity2)
+                .opacity(dartsTargetSide2IsShow ? 1 : 0)
         }
     }
     
@@ -157,42 +149,26 @@ struct DartsGameView: View {
                 }
             }
         }
-        .opacity(answersOpacity)
-        .animation(.linear(duration: Constants.opacityAnimationDuration),
-                   value: answersOpacity)
+        .opacity(answersIsShow ? 1 : 0)
+        .animation(.linear(duration: Constants.opacityAnimationDuration), value: answersIsShow)
     }
     
     private var startButton: some View {
-        Button {
-            startGame()
-        } label: {
-            Text("НАЧАТЬ")
-        }
-        .opacity(startBtnOpacity)
-        .animation(.linear(duration: Constants.opacityAnimationDuration),
-                   value: startBtnOpacity)
+        PrimaryButton("НАЧАТЬ") { startGame() }
+            .opacity(startBtnIsShow ? 1 : 0)
+            .animation(.linear(duration: Constants.opacityAnimationDuration), value: startBtnIsShow)
     }
     
     private var resumeButton: some View {
-        Button {
-            startGame()
-        } label: {
-            Text("ПРОДОЛЖИТЬ")
-        }
-        .opacity(resumeBtnOpacity)
-        .animation(.linear(duration: Constants.opacityAnimationDuration),
-                   value: resumeBtnOpacity)
+        PrimaryButton("ПРОДОЛЖИТЬ") { startGame() }
+            .opacity(resumeBtnIsShow ? 1 : 0)
+            .animation(.linear(duration: Constants.opacityAnimationDuration), value: resumeBtnIsShow)
     }
     
     private var restartButton: some View {
-        Button {
-            restartGame()
-        } label: {
-            Text("ЗАНОВО")
-        }
-        .opacity(restartBtnOpacity)
-        .animation(.linear(duration: Constants.opacityAnimationDuration),
-                   value: restartBtnOpacity)
+        PrimaryButton("ЗАНОВО") { restartGame() }
+            .opacity(restartBtnIsShow ? 1 : 0)
+            .animation(.linear(duration: Constants.opacityAnimationDuration), value: restartBtnIsShow)
     }
     
     private var gameOverView: some View {
@@ -203,11 +179,13 @@ struct DartsGameView: View {
             Text("Затрачено времени: \(TimerStringFormat.secMs.msStr( gameVM.game.timeSpent))")
         }
         .font(.title2)
-        .opacity(gameOverViewOpacity)
-        .animation(.linear(duration: Constants.opacityAnimationDuration),
-                   value: gameOverViewOpacity)
+        .opacity(gameOverViewIsShow ? 1 : 0)
+        .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameOverViewIsShow)
     }
     
+    private var attemptsLabel: some View {
+        label("\(Constants.attemptsRemainingLabel) \(gameVM.remainingAttempts)")
+    }
 }
 
 extension DartsGameView {
@@ -220,16 +198,16 @@ extension DartsGameView {
         dartsHitsVM.reset()
         timerVM.reset(appSettings.timeForAnswer)
         
-        showView(for: .answersView, false)
+        answersIsShow = false
         showDartsSide()
-        showView(for: .topView)
-        showView(for: .dartsView)
+        topViewIsShow = true
+        dartsTargetIsShow = true
         
-        showView(for: .gameOverView, false)
+        gameOverViewIsShow = false
         
-        showView(for: .startBtnView, gameVM.state == .idle)
-        showView(for: .resumeBtnView, gameVM.state == .stoped)
-        showView(for: .restartBtnView, gameVM.state == .stoped)
+        startBtnIsShow = gameVM.state == .idle
+        resumeBtnIsShow = gameVM.state == .stoped
+        restartBtnIsShow = gameVM.state == .stoped
     }
     
     private func startGame() {
@@ -237,15 +215,15 @@ extension DartsGameView {
         timerVM.start(appSettings.timeForAnswer)
         
         updateAnswers()
-        showView(for: .startBtnView, false)
-        showView(for: .resumeBtnView, false)
-        showView(for: .restartBtnView, false)
+        startBtnIsShow = false
+        resumeBtnIsShow = false
+        restartBtnIsShow = false
     }
     
     private func updateAnswers() {
         dartsHitsVM.updateDarts()
         gameVM.generateAnswers(dartsHitsVM.score)
-        showView(for: .answersView)
+        answersIsShow = true
     }
     
     private func onAnswered(_ answer: Int) {
@@ -263,7 +241,7 @@ extension DartsGameView {
 //        )
         
         rotateDarts()
-        showView(for: .answersView, false)
+        answersIsShow = false
         
         if gameVM.state == .processing {
             continueGame()
@@ -273,7 +251,7 @@ extension DartsGameView {
     }
     
     private func rotateDarts() {
-        isDarts1.toggle()
+        isDartsTargetSide1.toggle()
         rotation += 180
     }
     
@@ -294,8 +272,8 @@ extension DartsGameView {
     }
     
     private func showDartsSide() {
-        showView(for: .dartsView1, isDarts1)
-        showView(for: .dartsView2, !isDarts1)
+        dartsTargetSide1IsShow = isDartsTargetSide1
+        dartsTargetSide2IsShow = !isDartsTargetSide1
     }
     
     private func stopGame() {
@@ -308,42 +286,15 @@ extension DartsGameView {
     private func finishGame() {
         timerVM.stop()
         
-        showView(for: .answersView, false)
-        showView(for: .dartsView, false)
-        showView(for: .topView, false)
+        answersIsShow = false
+        dartsTargetIsShow = false
+        topViewIsShow = false
         
-        showView(for: .gameOverView)
+        gameOverViewIsShow = true
         
-        showView(for: .startBtnView, false)
-        showView(for: .resumeBtnView, false)
-        showView(for: .restartBtnView)
-    }
-    
-    private func showView(for subview: DartsGameSubview, _ isShow: Bool = true) {
-        let opacity: CGFloat = isShow ? 1 : .zero
-        switch subview {
-            case .topView:
-                topViewOpacity = opacity
-            case .dartsView:
-                dartsOpacity = opacity
-            case .dartsView1:
-                dartsViewOpacity1 = opacity
-            case .dartsView2:
-                dartsViewOpacity2 = opacity
-                
-            case .answersView:
-                answersOpacity = opacity
-                
-            case .gameOverView:
-                gameOverViewOpacity = opacity
-                
-            case .startBtnView:
-                startBtnOpacity = opacity
-            case .resumeBtnView:
-                resumeBtnOpacity = opacity
-            case .restartBtnView:
-                restartBtnOpacity = opacity
-        }
+        startBtnIsShow = false
+        resumeBtnIsShow = false
+        restartBtnIsShow = false
     }
 }
 
