@@ -114,35 +114,16 @@ final class DartsGameViewModel: ObservableObject {
         return .zero
     }
     
-//    func onAnswered(_ answer: Int, expectedScore: Int, time: Int, darts: [Dart]) {
-//        model.answer(
-//            from: currentAnswers,
-//            for: time,
-//            expected: expectedScore,
-//            actual: answer,
-//            darts: darts
-//        )
-//        
-//        attempts += 1
-//        
-//        if model.attempts == attempts {
-//            state = .finished
-//            gameOver()
-//        }
-//    }
-    
     func stop() {
         if state == .processing {
             JsonCache.saveGameSnapshotsList(snapshots, to: game.snapshotsJsonName)
             JsonCache.saveGame(game, to: AppSettings.gameJsonFileName)
-//            saveGameStats(to: game.id)
-//            saveGame()
         }
+        
+        state = .stoped
     }
     
     func gameOver() {
-//        JsonCache.saveGameSnapshotsList(snapshots, to: game.snapshotsJsonName)
-        
         var context = JsonCache.loadDartsGameStats(from: AppSettings.statsJsonFileName)
         
         if context.add(game) {
@@ -153,71 +134,3 @@ final class DartsGameViewModel: ObservableObject {
         JsonCache.deleteFile(name: AppSettings.gameJsonFileName)
     }
 }
-
-// Save and load
-//extension DartsGameViewModel {
-//    private func loadGame() {
-//        let jsonName = AppSettings.gameJsonFileName
-//        game = (try? JsonCache<DartsGame>.load(from: jsonName))
-//                ?? .init(attempts: appSettings.attempts, timeForAnswer: appSettings.timeForAnswer)
-//    }
-//    
-//    private func saveGame() {
-//        do {
-//            let jsonName = AppSettings.gameJsonFileName
-//            try JsonCache<DartsGame>.save(game, to: jsonName)
-//            
-//            print("Saved Game!")
-//        } catch {
-//            print("*******************************************************")
-//            print(#function)
-//            print(error.localizedDescription)
-//            print("*******************************************************")
-//        }
-//    }
-//    
-//    private func loadGameStats(from jsonName: String, gameId: String) {
-//        snapshots = (try? JsonCache<DartsGameSnaphotsList>.load(from: jsonName)) ?? .init(gameId)
-////        
-////        snapshots.removeAll()
-////        
-////        if let loadedSnapshots = try? JsonCache<[DartsGameSnapshot]>.load(from: jsonName) {
-////            snapshots.append(contentsOf: loadedSnapshots)
-////        }
-//    }
-//    
-//    private func saveGameStats(to jsonName: String) {
-//        do {
-//            try JsonCache<DartsGameSnaphotsList>.save(snapshots, to: jsonName)
-//            
-//            print("Saved Game Snapshots!")
-//        } catch {
-//            print("*******************************************************")
-//            print(#function)
-//            print(error.localizedDescription)
-//            print("*******************************************************")
-//        }
-//    }
-//
-//    private func loadDartsGameHistory() -> DartsGameStats {
-//        let jsonName = AppSettings.historyJsonFileName
-//        return (try? JsonCache<DartsGameStats>.load(from: jsonName)) ?? .init()
-//    }
-//    
-//    private func saveDartsGameHistory() {
-//        do {
-//            var context = loadDartsGameHistory()
-//            
-//            context.add(game)
-//            try JsonCache<DartsGameStats>.save(context, to: AppSettings.historyJsonFileName)
-//            JsonCache<DartsGame>.deleteFile(name: AppSettings.gameJsonFileName)
-//            
-//            print("Saved Game Stats!")
-//        } catch {
-//            print("*******************************************************")
-//            print(#function)
-//            print(error.localizedDescription)
-//            print("*******************************************************")
-//        }
-//    }
-//}

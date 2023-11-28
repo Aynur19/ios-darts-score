@@ -206,6 +206,7 @@
 				A8A827262B0E433200AD1BD0 /* DartsConstants.swift */,
 				A8A827362B0E4B0200AD1BD0 /* AppSettings.swift */,
 				A8EA84932B14C521009FBDB5 /* MockData.swift */,
+				A8DB72712B161402001145BF /* PalletColor.swift */,
 				A8A827232B0E42C900AD1BD0 /* Models */,
 				A8C12F412B0E0D3100940A64 /* Extensions */,
 				A8742F952B0E7A0C0026E07F /* Cache */,
@@ -216,7 +217,6 @@
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A82D6CF82B13AFC2006CF50A /* Subviews */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
-				A8DB72712B161402001145BF /* PalletColor.swift */,
 			);
 			path = DartsScore;
 			sourceTree = "<group>";

@@ -9,11 +9,13 @@ import SwiftUI
 
 private struct DartsGameViewConstants {
     static let title = "Дартс"
+    static let startBtnLabel = "НАЧАТЬ"
+    static let resumeBtnLabel = "ПРОДОЛЖИТЬ"
+    static let restartBtnLabel = "ЗАНОВО"
     static let attemptsRemainingLabel = "Осталось попыток: "
     static let opacityAnimationDuration: CGFloat = 0.5
     static let darts3DRotationAxis: (x: CGFloat, y: CGFloat, z: CGFloat) = (x: 0, y: 1, z: 0)
     static let background = Color(UIColor(red: 0.11, green: 0.72, blue: 1, alpha: 1))
-    //Color = Color(UIColor(red: 0.34, green: 0.43, blue: 0.9, alpha: 1))
 }
 
 struct DartsGameView: View {
@@ -30,17 +32,16 @@ struct DartsGameView: View {
     @State private var isDartsTargetSide1 = true
     @State private var rotation: Double = .zero
     
-    @State private var topViewIsShow = false
-    @State private var dartsTargetIsShow = false
+    @State private var gameViewIsShow = false
+    @State private var gameStopedViewIsShow = false
+    @State private var gameOverViewIsShow = false
+    
     @State private var dartsTargetSide1IsShow = false
     @State private var dartsTargetSide2IsShow = false
     
-    @State private var answersIsShow = false
-    @State private var gameOverViewIsShow = false
+    @State private var answersIsShow = true
     
-    @State private var startBtnIsShow = false
-    @State private var resumeBtnIsShow = false
-    @State private var restartBtnIsShow = false
+    @State private var startBtnIsShow = true
     
     init(_ appSettings: AppSettings = .shared) {
         self.appSettings = appSettings
@@ -67,32 +68,10 @@ struct DartsGameView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                appSettings.pallet.background.ignoresSafeArea()
-                
-                VStack {
-                    topView
-                    dartsView
-                        .frame(width: appSettings.dartsFrameWidth,
-                               height: appSettings.dartsFrameWidth)
-                        .opacity(dartsTargetIsShow ? 1 : 0)
-                        .animation(.linear(duration: Constants.opacityAnimationDuration),
-                                   value: dartsTargetIsShow)
-                    
-                    VStack {
-                        gameOverView
-                        answers
-                        Spacer()
-                    }
-                }
-                .padding()
-                    
-                VStack {
-                    Spacer(minLength: 600)
-                    startButton
-                    resumeButton
-                    restartButton
-                    Spacer()
-                }.padding(.horizontal, 64)
+                appSettings.pallet.background
+                    .ignoresSafeArea()
+                gameView
+                gameOverView
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -103,7 +82,31 @@ struct DartsGameView: View {
         }
         .onAppear { resetGame() }
         .onDisappear { stopGame() }
+        .onReceive(gameVM.$state) { gameState in
+            showUI(gameState)
+        }
         .background()
+    }
+    
+    private var gameView: some View {
+        ZStack {
+            VStack {
+                topView
+                dartsView
+                    .frame(width: appSettings.dartsFrameWidth,
+                           height: appSettings.dartsFrameWidth)
+                
+                
+                ZStack {
+                    gameViewButtons
+                    gameStopedViewButtons
+                }
+                
+                Spacer()
+            }
+        }
+        .opacity(gameViewIsShow ? 1 : 0)
+        .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameViewIsShow)
     }
     
     private var topView: some View {
@@ -114,8 +117,6 @@ struct DartsGameView: View {
                 .frame(width: 64)
         }
         .padding(.horizontal, 32)
-        .opacity(topViewIsShow ? 1 : 0)
-        .animation(.linear(duration: Constants.opacityAnimationDuration), value: topViewIsShow)
     }
     
     private var dartsView: some View {
@@ -128,7 +129,7 @@ struct DartsGameView: View {
                 .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
                            value: rotation)
                 .opacity(dartsTargetSide1IsShow ? 1 : 0)
-
+            
             DartsTargetView(.init(), appSettings: appSettings)
                 .overlay {
                     DartsHitsView(dartsHitsVM.darts, appSettings: appSettings)
@@ -144,41 +145,78 @@ struct DartsGameView: View {
     private var answers: some View {
         HStack(spacing: 10) {
             ForEach(gameVM.currentAnswers, id: \.self) { answer in
-                DartsGameAnswerView(answer) {
-                    onAnswered(answer)
-                }
+                //            ForEach([1, 2, 3, 4, 5], id: \.self) { answer in
+                DartsGameAnswerView(answer) { onAnswered(answer) }
             }
         }
         .opacity(answersIsShow ? 1 : 0)
         .animation(.linear(duration: Constants.opacityAnimationDuration), value: answersIsShow)
     }
     
+    private var gameViewButtons: some View {
+        VStack(spacing: 32) {
+            Spacer()
+            answers
+            startButton
+                .padding(.horizontal, 64)
+            Spacer()
+        }
+    }
+    
     private var startButton: some View {
-        PrimaryButton("НАЧАТЬ") { startGame() }
+        Button { startGame() } label: { Text(Constants.startBtnLabel) }
+            .buttonStyle(PrimaryButtonStyle())
             .opacity(startBtnIsShow ? 1 : 0)
             .animation(.linear(duration: Constants.opacityAnimationDuration), value: startBtnIsShow)
     }
     
+    private var gameStopedViewButtons: some View {
+        
+        VStack(spacing: 32) {
+            Spacer()
+            resumeButton
+            restartButton
+            Spacer()
+        }
+        .padding(.horizontal, 64)
+        
+        .opacity(gameStopedViewIsShow ? 1 : 0)
+        .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameStopedViewIsShow)
+    }
+    
     private var resumeButton: some View {
-        PrimaryButton("ПРОДОЛЖИТЬ") { startGame() }
-            .opacity(resumeBtnIsShow ? 1 : 0)
-            .animation(.linear(duration: Constants.opacityAnimationDuration), value: resumeBtnIsShow)
+        Button { startGame() } label: { Text(Constants.resumeBtnLabel) }
+            .buttonStyle(PrimaryButtonStyle())
     }
     
     private var restartButton: some View {
-        PrimaryButton("ЗАНОВО") { restartGame() }
-            .opacity(restartBtnIsShow ? 1 : 0)
-            .animation(.linear(duration: Constants.opacityAnimationDuration), value: restartBtnIsShow)
+        Button { restartGame() } label: { Text(Constants.restartBtnLabel) }
+            .buttonStyle(PrimaryButtonStyle())
     }
     
     private var gameOverView: some View {
-        VStack(spacing: 20) {
-            Text("Всего попыток: \(gameVM.game.attempts)")
-            Text("Правильных ответов: \(gameVM.game.successAttempts)")
-            Text("Заработано очков: \(gameVM.game.score)")
-            Text("Затрачено времени: \(TimerStringFormat.secMs.msStr( gameVM.game.timeSpent))")
+        ZStack {
+            VStack {
+                Spacer()
+                VStack(spacing: 20) {
+                    statsLabel("Всего попыток: ", .init(gameVM.game.attempts))
+                    statsLabel("Правильных ответов: ", .init(gameVM.game.successAttempts))
+                    statsLabel("Заработано очков: ", .init(gameVM.game.score))
+                    statsLabel("Потрачено времени: ", "\(TimerStringFormat.secMs.msStr( gameVM.game.timeSpent)) сек.")
+                }
+                .foregroundStyle(appSettings.pallet.bgTextColor)
+                .font(.title3)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 32)
+                
+                Spacer()
+                
+                restartButton
+                    .padding(.horizontal, 64)
+                
+                Spacer()
+            }
         }
-        .font(.title2)
         .opacity(gameOverViewIsShow ? 1 : 0)
         .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameOverViewIsShow)
     }
@@ -186,9 +224,24 @@ struct DartsGameView: View {
     private var attemptsLabel: some View {
         label("\(Constants.attemptsRemainingLabel) \(gameVM.remainingAttempts)")
     }
+    
+    private func statsLabel(_ text1: String, _ text2: String) -> some View {
+        HStack {
+            Text(text1)
+            Spacer()
+            Text(text2)
+        }
+    }
 }
 
 extension DartsGameView {
+    private func showUI(_ gameState: DartsGameViewModel.GameState) {
+        startBtnIsShow          = gameState == .idle
+        gameStopedViewIsShow    = gameState == .stoped
+        gameViewIsShow          = gameState != .finished
+        gameOverViewIsShow      = gameState == .finished
+    }
+    
     private func restartGame() {
         resetGame(isRestart: true)
     }
@@ -200,14 +253,6 @@ extension DartsGameView {
         
         answersIsShow = false
         showDartsSide()
-        topViewIsShow = true
-        dartsTargetIsShow = true
-        
-        gameOverViewIsShow = false
-        
-        startBtnIsShow = gameVM.state == .idle
-        resumeBtnIsShow = gameVM.state == .stoped
-        restartBtnIsShow = gameVM.state == .stoped
     }
     
     private func startGame() {
@@ -215,9 +260,6 @@ extension DartsGameView {
         timerVM.start(appSettings.timeForAnswer)
         
         updateAnswers()
-        startBtnIsShow = false
-        resumeBtnIsShow = false
-        restartBtnIsShow = false
     }
     
     private func updateAnswers() {
@@ -233,12 +275,6 @@ extension DartsGameView {
             actual: answer,
             darts: dartsHitsVM.darts
         )
-//        gameVM.onAnswered(
-//            answer,
-//            expectedScore: dartsHitsVM.score,
-//            time: timerVM.counter,
-//            darts: dartsHitsVM.darts
-//        )
         
         rotateDarts()
         answersIsShow = false
@@ -258,14 +294,9 @@ extension DartsGameView {
     private func continueGame() {
         Task {
             try? await Task.sleep(nanoseconds: 500_000_000)
-            
-//            showView(for: .dartsView1, isDarts1)
-//            showView(for: .dartsView2, !isDarts1)
             showDartsSide()
             
-            await MainActor.run {
-                updateAnswers()
-            }
+            await MainActor.run { updateAnswers() }
         }
         
         timerVM.start(appSettings.timeForAnswer)
@@ -287,14 +318,6 @@ extension DartsGameView {
         timerVM.stop()
         
         answersIsShow = false
-        dartsTargetIsShow = false
-        topViewIsShow = false
-        
-        gameOverViewIsShow = true
-        
-        startBtnIsShow = false
-        resumeBtnIsShow = false
-        restartBtnIsShow = false
     }
 }
 
