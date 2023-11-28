@@ -1,5 +1,5 @@
 //
-//  PrimaryButton.swift
+//  PrimaryButtonStyle.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 28.11.2023.
@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct PrimaryButtonStyle: ButtonStyle {
-//    let color = Color(UIColor(red: 1, green: 0.61, blue: 0.2, alpha: 1))
-    
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity)
@@ -24,21 +22,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     }
 }
 
-struct PrimaryButton: View {
-    let title: String
-    let action: () -> Void
-    
-    init(_ title: String, action: @escaping () -> Void) {
-        self.title = title
-        self.action = action
-    }
-    
-    var body: some View {
-        Button { action() } label: { Text(title) }
-            .buttonStyle(PrimaryButtonStyle())
-    }
-}
-
 #Preview {
-    PrimaryButton("START") { }
+    Button { } label: { Text("START") }
+        .buttonStyle(PrimaryButtonStyle())
 }
