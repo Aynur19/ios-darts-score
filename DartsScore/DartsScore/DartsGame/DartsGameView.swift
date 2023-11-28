@@ -15,7 +15,12 @@ private struct DartsGameViewConstants {
     static let attemptsRemainingLabel = "Осталось попыток: "
     static let opacityAnimationDuration: CGFloat = 0.5
     static let darts3DRotationAxis: (x: CGFloat, y: CGFloat, z: CGFloat) = (x: 0, y: 1, z: 0)
-    static let background = Color(UIColor(red: 0.11, green: 0.72, blue: 1, alpha: 1))
+    
+    static let answersSpasing: CGFloat = 10
+    static let buttonsVSpasing: CGFloat = 32
+    static let buttonsHPadding: CGFloat = 64
+    static let labelsVSpacing: CGFloat = 20
+    static let rotationAngle: Double = 180
 }
 
 struct DartsGameView: View {
@@ -50,12 +55,12 @@ struct DartsGameView: View {
             circleLineWidth: appSettings.timerCircleLineWidth,
             circleDownColor: appSettings.timerCircleDownColor,
             ciclreDownOpacity: appSettings.timerCiclreDownOpacity,
-            circleUpColor: Color(UIColor.systemIndigo),// appSettings.timerCircleUpColor,
+            circleUpColor: appSettings.pallet.optionsColor1,
             ciclreUpOpacity: appSettings.timerCiclreUpOpacity,
             circleUpRotation: appSettings.timerCircleUpRotation,
             animationDuration: appSettings.timerAnimationDuration,
             textFont: appSettings.timerTextFont,
-            textColor: appSettings.timerTextColor,
+            textColor: appSettings.pallet.optionsColor1,
             textIsBold: appSettings.timerTextIsBold,
             textFormat: appSettings.timerTextFormat
         )
@@ -95,8 +100,6 @@ struct DartsGameView: View {
                 dartsView
                     .frame(width: appSettings.dartsFrameWidth,
                            height: appSettings.dartsFrameWidth)
-                
-                
                 ZStack {
                     gameViewButtons
                     gameStopedViewButtons
@@ -134,7 +137,7 @@ struct DartsGameView: View {
                 .overlay {
                     DartsHitsView(dartsHitsVM.darts, appSettings: appSettings)
                 }
-                .rotation3DEffect(.degrees(180), axis: Constants.darts3DRotationAxis)
+                .rotation3DEffect(.degrees(Constants.rotationAngle), axis: Constants.darts3DRotationAxis)
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
                 .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
                            value: rotation)
@@ -143,9 +146,8 @@ struct DartsGameView: View {
     }
     
     private var answers: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: Constants.answersSpasing) {
             ForEach(gameVM.currentAnswers, id: \.self) { answer in
-                //            ForEach([1, 2, 3, 4, 5], id: \.self) { answer in
                 DartsGameAnswerView(answer) { onAnswered(answer) }
             }
         }
@@ -154,11 +156,11 @@ struct DartsGameView: View {
     }
     
     private var gameViewButtons: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: Constants.buttonsVSpasing) {
             Spacer()
             answers
             startButton
-                .padding(.horizontal, 64)
+                .padding(.horizontal, Constants.buttonsHPadding)
             Spacer()
         }
     }
@@ -171,14 +173,13 @@ struct DartsGameView: View {
     }
     
     private var gameStopedViewButtons: some View {
-        
-        VStack(spacing: 32) {
+        VStack(spacing: Constants.buttonsVSpasing) {
             Spacer()
             resumeButton
             restartButton
             Spacer()
         }
-        .padding(.horizontal, 64)
+        .padding(.horizontal, Constants.buttonsHPadding)
         
         .opacity(gameStopedViewIsShow ? 1 : 0)
         .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameStopedViewIsShow)
@@ -198,7 +199,7 @@ struct DartsGameView: View {
         ZStack {
             VStack {
                 Spacer()
-                VStack(spacing: 20) {
+                VStack(spacing: Constants.labelsVSpacing) {
                     statsLabel("Всего попыток: ", .init(gameVM.game.attempts))
                     statsLabel("Правильных ответов: ", .init(gameVM.game.successAttempts))
                     statsLabel("Заработано очков: ", .init(gameVM.game.score))
@@ -207,12 +208,12 @@ struct DartsGameView: View {
                 .foregroundStyle(appSettings.pallet.bgTextColor)
                 .font(.title3)
                 .frame(maxWidth: .infinity)
-                .padding(.horizontal, 32)
+                .padding(.horizontal, Constants.buttonsHPadding.half)
                 
                 Spacer()
                 
                 restartButton
-                    .padding(.horizontal, 64)
+                    .padding(.horizontal, Constants.buttonsHPadding)
                 
                 Spacer()
             }
@@ -288,7 +289,7 @@ extension DartsGameView {
     
     private func rotateDarts() {
         isDartsTargetSide1.toggle()
-        rotation += 180
+        rotation += Constants.rotationAngle
     }
     
     private func continueGame() {
@@ -316,7 +317,6 @@ extension DartsGameView {
     
     private func finishGame() {
         timerVM.stop()
-        
         answersIsShow = false
     }
 }
