@@ -25,7 +25,7 @@ struct DartsTargetViewOptions {
     init(_ appSettings: AppSettings = .shared) {
         self.wireLineWidth = DartsConstants.getWireLineWidth(appSettings.dartsFrameWidth)
         self.rotationAngle = DartsConstants.getRotationAngle(for: DartsConstants.points.count)
-        self.distanceWithoutScore = wireLineWidth.x2
+        self.distanceWithoutScore = wireLineWidth.x2.x2
         self.maxDartRadius = appSettings.dartsFrameWidth.half
         
         self.bullEyeRadius = DartsConstants.getRadius(appSettings.dartsFrameWidth, .bullEye)

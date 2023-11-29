@@ -8,6 +8,7 @@
 import SwiftUI
 
 private struct DartsGameStatsViewConstants {
+    static let title = "Статистика"
     static let pointsLabel = "Очки"
     static let attemptsLabel = "Попытки"
     static let timeLabel = "Время"
@@ -20,34 +21,47 @@ struct DartsGameStatsView: View {
     
     @State private var path = NavigationPath()
     @State private var stats: DartsGameStats = MockData.getDartsGameStats()
-
+    
+    @StateObject var appSettings = AppSettings.shared
+    
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
-                Color.offWhite.ignoresSafeArea(.all)
+                appSettings.pallet.background
+                    .ignoresSafeArea()
                 
-                ScrollView {
+                VStack {
                     headers
                         .padding(.horizontal, 32)
-                    
-                    ForEach(stats.items) { game in
-                        Button(action: {
-                            path.append(game.id)
-                        }, label: {
-                            row(game)
+                    ScrollView {
+                        
+                        ForEach(stats.items) { game in
+                            Button(action: {
+                                path.append(game.id)
+                            }, label: {
+                                row(game)
                                 
-                        })
-                        .foregroundStyle(Color.black)
-                        .padding(.horizontal, 16)
-//                        .padding(.vertical, 4)
-                    }
-                }.frame(maxWidth: .infinity)
+                            })
+                            .foregroundStyle(Color.black)
+                            .padding(.horizontal, 16)
+                            //                        .padding(.vertical, 4)
+                        }
+                    }.frame(maxWidth: .infinity)
+                }
                 .onAppear {
                     refresh()
                 }
             }
-            .navigationTitle("Статистика")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    viewTitle(Constants.title)
+                }
+            }
+//            .toolbarBackground(.visible, for: .tabBar)
+            .toolbarBackground(Color(UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 0.8)), for: .navigationBar)
+//            .toolbarColorScheme(.light, for: .navigationBar)
+//            .toolbarBackground(.hidden, for: .navigationBar)
             .navigationDestination(for: String.self) { gameIdx in
                 if let game = getGame(gameIdx) {
                     GameAnswersView(game, stats: MockData.getDartsGameSnapshotsList())
@@ -58,21 +72,19 @@ struct DartsGameStatsView: View {
     
     private var headers: some View {
         HStack {
-            Text(Constants.pointsLabel)
-                .bold()
+            label(Constants.pointsLabel)
                 .frame(maxWidth: .infinity)
-            Text(Constants.attemptsLabel)
+            label(Constants.attemptsLabel)
                 .frame(maxWidth: .infinity)
-            Text(Constants.timeLabel)
+            label(Constants.timeLabel)
                 .frame(maxWidth: .infinity)
-            Spacer(minLength: 32)
         }
+        .padding(.trailing, 32)
     }
     
     private func row(_ game: DartsGame) -> some View {
         HStack {
             Text(String(game.score))
-                .bold()
                 .frame(maxWidth: .infinity)
             Text(attemptsStr(game.attempts, success: game.successAttempts))
                 .frame(maxWidth: .infinity)
@@ -80,12 +92,13 @@ struct DartsGameStatsView: View {
                 .frame(maxWidth: .infinity)
             Image(systemName: Constants.chevronName)
         }
+        .foregroundStyle(appSettings.pallet.btnPrimaryTextColor)
         .padding(.vertical, 10)
         .padding(.horizontal)
-        .background(Color.offWhite)
+        .background(appSettings.pallet.btnPrimaryColor)
         .cornerRadius(20)
-        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 10, y: 10)
-        .shadow(color: Color.white.opacity(0.7), radius: 10, x: -5, y: -5)
+//        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 10, y: 10)
+//        .shadow(color: Color.white.opacity(0.7), radius: 10, x: -5, y: -5)
 //        .shadow(color: .gray, radius: 5)
     }
     

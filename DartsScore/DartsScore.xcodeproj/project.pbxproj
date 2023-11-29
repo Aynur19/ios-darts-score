@@ -44,6 +44,7 @@
 		A8DB72722B161402001145BF /* PalletColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72712B161402001145BF /* PalletColor.swift */; };
 		A8DB72742B162304001145BF /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72732B162304001145BF /* TitleView.swift */; };
 		A8DB72762B16267C001145BF /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72752B16267C001145BF /* ViewExt.swift */; };
+		A8DB72792B177680001145BF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A8DB72782B177680001145BF /* Localizable.xcstrings */; };
 		A8EA84922B14A800009FBDB5 /* DartsGameSnapshotsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84912B14A800009FBDB5 /* DartsGameSnapshotsList.swift */; };
 		A8EA84942B14C521009FBDB5 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84932B14C521009FBDB5 /* MockData.swift */; };
 		A8EA84962B1530B0009FBDB5 /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84952B1530B0009FBDB5 /* ColorExt.swift */; };
@@ -108,6 +109,8 @@
 		A8DB72712B161402001145BF /* PalletColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalletColor.swift; sourceTree = "<group>"; };
 		A8DB72732B162304001145BF /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A8DB72752B16267C001145BF /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
+		A8DB72772B173AA9001145BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A8DB72782B177680001145BF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A8EA84912B14A800009FBDB5 /* DartsGameSnapshotsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameSnapshotsList.swift; sourceTree = "<group>"; };
 		A8EA84932B14C521009FBDB5 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		A8EA84952B1530B0009FBDB5 /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
@@ -201,6 +204,7 @@
 		A88776162B0DEEFF005B746B /* DartsScore */ = {
 			isa = PBXGroup;
 			children = (
+				A8DB72772B173AA9001145BF /* Info.plist */,
 				A88776172B0DEEFF005B746B /* DartsScoreApp.swift */,
 				A88776192B0DEEFF005B746B /* ContentView.swift */,
 				A8A827262B0E433200AD1BD0 /* DartsConstants.swift */,
@@ -217,6 +221,7 @@
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A82D6CF82B13AFC2006CF50A /* Subviews */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
+				A8DB72782B177680001145BF /* Localizable.xcstrings */,
 			);
 			path = DartsScore;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = A887760B2B0DEEFF005B746B;
 			productRefGroup = A88776152B0DEEFF005B746B /* Products */;
@@ -400,6 +406,7 @@
 			files = (
 				A887761F2B0DEF02005B746B /* Preview Assets.xcassets in Resources */,
 				A887761C2B0DEF02005B746B /* Assets.xcassets in Resources */,
+				A8DB72792B177680001145BF /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,12 +653,14 @@
 				DEVELOPMENT_TEAM = 8FA6F58X42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DartsScore/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Darts Score";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -680,12 +689,14 @@
 				DEVELOPMENT_TEAM = 8FA6F58X42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DartsScore/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Darts Score";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

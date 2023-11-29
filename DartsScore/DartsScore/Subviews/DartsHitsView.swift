@@ -30,15 +30,13 @@ struct DartsHitsView: View {
                            height: appSettings.dartImageSize)
                     .bold()
                     .position(dart.globalPosition(center: center))
-                    .foregroundColor(appSettings.dartImageColor)
+                    .foregroundStyle(appSettings.dartImageColor)
             }
         }
     }
 }
 
-//#Preview {
-//    DartsHitsView(
-//        MockData.getDartsGameStats().items[0][0].darts,
-//        appSettings: .shared
-//    )
-//}
+#Preview {
+    DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts,
+                  appSettings: .shared)
+}

@@ -7,18 +7,19 @@
 
 import SwiftUI
 
-final class DartsGameAnswersViewModel: ObservableObject {
-    @Published private(set) var model: DartsGameStats
-    
-    init(model: DartsGameStats) {
-        self.model = model
-    }
-}
+//final class DartsGameAnswersViewModel: ObservableObject {
+//    @Published private(set) var model: DartsGameStats
+//    
+//    init(model: DartsGameStats) {
+//        self.model = model
+//    }
+//}
 
 struct GameAnswersView: View {
     private let game: DartsGame
     private let stats: DartsGameSnapshotsList
-//    let game = MockData.getDartsGameStats().items[0]
+    
+    @StateObject var appSettings = AppSettings.shared
     @State private var index = 0
     
     init(_ game: DartsGame, stats: DartsGameSnapshotsList) {
@@ -28,6 +29,9 @@ struct GameAnswersView: View {
     
     var body: some View {
         ZStack {
+            appSettings.pallet.background
+                .ignoresSafeArea()
+            
             VStack(spacing: 20) {
                 
                 TabView(selection: $index) {

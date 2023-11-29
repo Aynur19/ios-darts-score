@@ -21,6 +21,7 @@ struct DartsTargetView: View {
     
     var body: some View {
         Circle()
+            .fill(Color.black)
             .frame(width: appSettings.dartsFrameWidth)
             .overlay {
                 GeometryReader { geometry in
