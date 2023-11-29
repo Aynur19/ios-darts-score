@@ -8,11 +8,6 @@
 import SwiftUI
 
 private struct DartsGameViewConstants {
-    static let title = "Дартс"
-    static let startBtnLabel = "НАЧАТЬ"
-    static let resumeBtnLabel = "ПРОДОЛЖИТЬ"
-    static let restartBtnLabel = "ЗАНОВО"
-    static let attemptsRemainingLabel = "Осталось попыток: "
     static let opacityAnimationDuration: CGFloat = 0.5
     static let darts3DRotationAxis: (x: CGFloat, y: CGFloat, z: CGFloat) = (x: 0, y: 1, z: 0)
     
@@ -81,7 +76,9 @@ struct DartsGameView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    viewTitle(Constants.title)
+                    Text("viewTitle_Darts")
+                        .font(.title)
+                        .foregroundStyle(appSettings.pallet.bgTextColor)
                 }
             }
         }
@@ -166,7 +163,7 @@ struct DartsGameView: View {
     }
     
     private var startButton: some View {
-        Button { startGame() } label: { Text(Constants.startBtnLabel) }
+        Button { startGame() } label: { Text("btnLabel_Start") }
             .buttonStyle(PrimaryButtonStyle())
             .opacity(startBtnIsShow ? 1 : 0)
             .animation(.linear(duration: Constants.opacityAnimationDuration), value: startBtnIsShow)
@@ -186,12 +183,12 @@ struct DartsGameView: View {
     }
     
     private var resumeButton: some View {
-        Button { startGame() } label: { Text(Constants.resumeBtnLabel) }
+        Button { startGame() } label: { Text("btnLabel_Resume") }
             .buttonStyle(PrimaryButtonStyle())
     }
     
     private var restartButton: some View {
-        Button { restartGame() } label: { Text(Constants.restartBtnLabel) }
+        Button { restartGame() } label: { Text("btnLabel_Restart") }
             .buttonStyle(PrimaryButtonStyle())
     }
     
@@ -223,7 +220,9 @@ struct DartsGameView: View {
     }
     
     private var attemptsLabel: some View {
-        label("\(Constants.attemptsRemainingLabel) \(gameVM.remainingAttempts)")
+        Text("label_AttemptsRemaining \(gameVM.remainingAttempts)")
+            .font(.headline)
+            .foregroundStyle(appSettings.pallet.bgTextColor)
     }
     
     private func statsLabel(_ text1: String, _ text2: String) -> some View {

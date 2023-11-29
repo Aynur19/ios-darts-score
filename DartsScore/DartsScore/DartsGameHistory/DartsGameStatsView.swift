@@ -8,21 +8,43 @@
 import SwiftUI
 
 private struct DartsGameStatsViewConstants {
-    static let title = "Статистика"
-    static let pointsLabel = "Очки"
-    static let attemptsLabel = "Попытки"
-    static let timeLabel = "Время"
-    
     static let chevronName = "chevron.right"
+    static let hPadding: CGFloat = 32
+    static let vPadding: CGFloat = 10
+    static let rowCornerRadius: CGFloat = 20
+}
+
+final class DartsGameStatsViewModel: ObservableObject {
+    @Published private(set) var model: DartsGameStats
+    
+    init() {
+        model = DartsGameStatsViewModel.getModel()
+    }
+    
+    func refresh() {
+        model = DartsGameStatsViewModel.getModel()
+    }
+    
+    private static func getModel() -> DartsGameStats {
+        if isPreview {
+            return MockData.getDartsGameStats()
+        } else {
+            return JsonCache.loadDartsGameStats(from: AppSettings.statsJsonFileName)
+        }
+    }
+    
+    func getGame(_ idx: String) -> DartsGame? {
+        model.items.first { $0.id == idx }
+    }
 }
 
 struct DartsGameStatsView: View {
     private typealias Constants = DartsGameStatsViewConstants
     
-    @State private var path = NavigationPath()
-    @State private var stats: DartsGameStats = MockData.getDartsGameStats()
-    
     @StateObject var appSettings = AppSettings.shared
+    @StateObject var statsVM = DartsGameStatsViewModel()
+    
+    @State private var path = NavigationPath()
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -32,38 +54,23 @@ struct DartsGameStatsView: View {
                 
                 VStack {
                     headers
-                        .padding(.horizontal, 32)
-                    ScrollView {
-                        
-                        ForEach(stats.items) { game in
-                            Button(action: {
-                                path.append(game.id)
-                            }, label: {
-                                row(game)
-                                
-                            })
-                            .foregroundStyle(Color.black)
-                            .padding(.horizontal, 16)
-                            //                        .padding(.vertical, 4)
-                        }
-                    }.frame(maxWidth: .infinity)
+                        .padding(.horizontal, Constants.hPadding)
+                    statisticsList
                 }
                 .onAppear {
-                    refresh()
+                    statsVM.refresh()
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    viewTitle(Constants.title)
+                    Text("viewTitle_Statistics")
+                        .font(.title2)
+                        .foregroundStyle(appSettings.pallet.bgTextColor)
                 }
             }
-//            .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(Color(UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 0.8)), for: .navigationBar)
-//            .toolbarColorScheme(.light, for: .navigationBar)
-//            .toolbarBackground(.hidden, for: .navigationBar)
             .navigationDestination(for: String.self) { gameIdx in
-                if let game = getGame(gameIdx) {
+                if let game = statsVM.getGame(gameIdx) {
                     GameAnswersView(game, stats: MockData.getDartsGameSnapshotsList())
                 }
             }
@@ -72,54 +79,55 @@ struct DartsGameStatsView: View {
     
     private var headers: some View {
         HStack {
-            label(Constants.pointsLabel)
+            Text("label_Score")
                 .frame(maxWidth: .infinity)
-            label(Constants.attemptsLabel)
+            Text("label_Attempts")
                 .frame(maxWidth: .infinity)
-            label(Constants.timeLabel)
+            Text("label_Time")
                 .frame(maxWidth: .infinity)
         }
+        .font(.headline)
+        .foregroundStyle(appSettings.pallet.bgTextColor)
         .padding(.trailing, 32)
+    }
+    
+    private var statisticsList: some View {
+        ScrollView {
+            ForEach(statsVM.model.items) { game in
+                Button(action: {
+                    path.append(game.id)
+                }, label: {
+                    row(game)
+                })
+                .foregroundStyle(Color.black)
+                .padding(.horizontal, Constants.hPadding.half)
+            }
+        }.frame(maxWidth: .infinity)
     }
     
     private func row(_ game: DartsGame) -> some View {
         HStack {
             Text(String(game.score))
+                .bold()
                 .frame(maxWidth: .infinity)
             Text(attemptsStr(game.attempts, success: game.successAttempts))
                 .frame(maxWidth: .infinity)
-            Text(timeStr(game.timeForAnswer))
+            Text("\(TimerStringFormat.secMs.msStr(game.timeSpent)) suffix_Seconds")
                 .frame(maxWidth: .infinity)
             Image(systemName: Constants.chevronName)
         }
         .foregroundStyle(appSettings.pallet.btnPrimaryTextColor)
-        .padding(.vertical, 10)
+        .padding(.vertical, Constants.vPadding)
         .padding(.horizontal)
         .background(appSettings.pallet.btnPrimaryColor)
-        .cornerRadius(20)
-//        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 10, y: 10)
-//        .shadow(color: Color.white.opacity(0.7), radius: 10, x: -5, y: -5)
-//        .shadow(color: .gray, radius: 5)
+        .clipShape(RoundedRectangle(cornerRadius: Constants.rowCornerRadius))
     }
     
     private func attemptsStr(_ allAttempts: Int, success: Int) -> String {
         "\(success)/\(allAttempts)"
-    }
-    
-    private func timeStr(_ time: Int) -> String {
-        TimerStringFormat.secMs.msStr(time) + " сек."
-    }
-    
-    private func refresh() {
-        stats = MockData.getDartsGameStats()
-    }
-    
-    private func getGame(_ idx: String) -> DartsGame? {
-        stats.items.first { $0.id == idx }
     }
 }
 
 #Preview {
     DartsGameStatsView()
 }
-

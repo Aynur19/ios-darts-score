@@ -11,6 +11,10 @@ enum DartImageSystemName: String {
     case xmark
 }
 
+var isPreview: Bool {
+    return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+}
+
 class AppSettings: ObservableObject {
     static let shared = AppSettings()
     

@@ -10,8 +10,7 @@ import SwiftUI
 extension View {
     func viewTitle(_ title: String, appSettings: AppSettings = .shared) -> some View {
         Text(title)
-            .font(.title)
-            .foregroundStyle(appSettings.pallet.bgTextColor)
+            
     }
     
     func label(_ text: String, appSettings: AppSettings = .shared) -> some View {
