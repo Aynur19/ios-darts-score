@@ -41,34 +41,25 @@ struct GameAnswersView: View {
                 .ignoresSafeArea()
             
             VStack {
-//                Spacer()
-//                gameStatsView
-                
-                Text("Ответ: 1")
+                Text("label_Answer \(index + 1)")// "Ответ "
                     .font(.headline)
                     .bold()
                 
                 snapshotsView
-//                    .background(Color.red)
-                
                 snapshotsIndexView
                 Spacer(minLength: 64)
-//                    .frame(maxWidth: .infinity)
-//                Spacer()
+                
                 Button {
                     detailsIsShowed = true
                 } label: {
-                    Text("Подробно")
+                    Text("label_Details")// "Подробно"
                 }
                 
                 Spacer(minLength: 32)
-                
-//                .frame(maxHeight: .infinity)
             }
             .blurredSheet(.init(.ultraThinMaterial), show: $detailsIsShowed) {
                 
             } content: {
-//                Text("Hello, World!")
                 DartsGameStatisticsSheet(snapshotsVM.game, snapshotsVM.model)
                     .presentationDetents([.medium, .fraction(0.95)])
             }
@@ -80,64 +71,21 @@ struct GameAnswersView: View {
                     .font(.title2)
                     .foregroundStyle(appSettings.palette.bgTextColor)
             }
-        }//, onDissmiss: <#T##() -> ()#>, content: <#T##() -> View#>)
-//        .sheet(isPresented: $detailsIsShowed) {
-//            gameStatsView
-//            DartsGameStatisticsSheet(snapshotsVM.game, snapshotsVM.model)
-//                .presentationBackground(.ultraThinMaterial)
-//                .presentationBackground(appSettings.palette.background.opacity(0.1))
-//                .presentationBackground {
-//                    appSettings.palette.background
-//                        .opacity(0.1)
-//                        .ignoresSafeArea()
-//                }
-                
-//        }
-    }
-    
-    private var gameStatsView: some View {
-        VStack(spacing: 8) {
-            Text("Очков за игру: ")
-            Text("Общее время: ")
-            Text("Всего попыток: ")
-            Text("Правильных ответов: ")
         }
-        .background(appSettings.palette.btnPrimaryColor)
-        .font(.headline)
-        .foregroundStyle(appSettings.palette.bgTextColor)
     }
     
     private var snapshotsView: some View {
         TabView(selection: $index) {
             ForEach(snapshotsVM.model.snapshots) { snapshot in
                 VStack(spacing: 32) {
-//                    Spacer()
                     DartsTargetView(.init(.shared), appSettings: .shared)
                         .overlay { DartsHitsView(snapshot.darts, appSettings: .shared) }
                     
-//                    Spacer()
                     answersView(snapshot)
-//                    Spacer()
-                    
-//                    VStack(spacing: 4) {
-//                        Text("Счет: ")
-//                        Text("Выбран ответ: ")
-//                        Text("Затрачено времени: ")
-//                        Text("Набрано очков: ")
-//                    }
-//                    .font(.headline)
-//                    .foregroundStyle(appSettings.pallete.bgTextColor)
-//                    HStack {
-//                        ForEach(snapshot.darts) { dart in
-//                            Text(dart.sector.description)
-//                        }
-//                    }
-//                    Spacer()
                 }
             }
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-//        .tabViewStyle()
     }
     
     private func answersView(_ snapshot: DartsGameSnapshot) -> some View {
@@ -160,7 +108,6 @@ struct GameAnswersView: View {
                     .scaleEffect(index == self.index ? 1 : 0.75)
             }
         }
-//        .padding()
     }
     
     private func getAnswerColor(_ answer: Int, actual: Int, expected: Int) -> Color {
@@ -179,13 +126,13 @@ struct GameAnswersView: View {
 }
 
 #Preview {
-//    TabView {
-//        NavigationStack {
+    TabView {
+        NavigationStack {
             GameAnswersView(MockData.getDartsGameStats().items[0],
                             stats: MockData.getDartsGameSnapshotsList())
             .navigationBarTitleDisplayMode(.inline)
-//        }
-//        .toolbarBackground(.visible, for: .tabBar)
-//        .toolbarBackground(Color(UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 0.8)), for: .tabBar)
-//    }
+        }
+        .toolbarBackground(.visible, for: .tabBar)
+        .toolbarBackground(Color(UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 0.8)), for: .tabBar)
+    }
 }

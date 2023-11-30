@@ -1,8 +1,21 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "\tПопадание %lld: " : {
-
+    "\tlabel_Hit %lld " : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    Hit %lld"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    Попадание %lld"
+          }
+        }
+      }
     },
     "%@ suffix_Seconds" : {
       "localizations" : {
@@ -77,6 +90,54 @@
     "Hello, World!" : {
 
     },
+    "label_Answer %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answer %lld"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ответ %lld"
+          }
+        }
+      }
+    },
+    "label_AnswerPoints" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Points for answer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очки за ответ"
+          }
+        }
+      }
+    },
+    "label_AnswerTimeSpent" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time spent"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Затрачено времени"
+          }
+        }
+      }
+    },
     "label_Attempts" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -110,6 +171,102 @@
         }
       }
     },
+    "label_Details" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подробно"
+          }
+        }
+      }
+    },
+    "label_GameDate" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game day"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата "
+          }
+        }
+      }
+    },
+    "label_GameScore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Счет"
+          }
+        }
+      }
+    },
+    "label_GameTime" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время"
+          }
+        }
+      }
+    },
+    "label_HitPoints" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hit Points"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очки попадания"
+          }
+        }
+      }
+    },
+    "label_Miss" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Miss"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Промах"
+          }
+        }
+      }
+    },
     "label_Score" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -123,6 +280,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Счет"
+          }
+        }
+      }
+    },
+    "label_SuccessAnswers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success answers"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правильные ответы"
           }
         }
       }
@@ -144,8 +317,37 @@
         }
       }
     },
-    "Mimo" : {
-
+    "label_UserAnswer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User answer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ответ игрока"
+          }
+        }
+      }
+    },
+    "sheetTitle_DetailedGameStats" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detailed game statistics"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подробная статистика игры"
+          }
+        }
+      }
     },
     "viewTitle_AnswersHistory" : {
       "localizations" : {
@@ -196,45 +398,6 @@
           }
         }
       }
-    },
-    "Всего попыток: " : {
-
-    },
-    "День игры: " : {
-
-    },
-    "Затрачено времени: " : {
-
-    },
-    "Общее время: " : {
-
-    },
-    "Ответ %lld" : {
-
-    },
-    "Ответ пользователя: " : {
-
-    },
-    "Ответ: 1" : {
-
-    },
-    "Очки за ответ: " : {
-
-    },
-    "Очки попадания: " : {
-
-    },
-    "Очков за игру: " : {
-
-    },
-    "Подробная статистика игры" : {
-
-    },
-    "Подробно" : {
-
-    },
-    "Правильных ответов: " : {
-
     }
   },
   "version" : "1.0"

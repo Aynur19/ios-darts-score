@@ -20,9 +20,8 @@ struct DartsGameStatisticsSheet: View {
     
     var body: some View {
         VStack {
-            Text("Подробная статистика игры")
+            Text("sheetTitle_DetailedGameStats")// "Подробная статистика игры"
                 .font(.title2)
-            //                    .bold()
                 .padding(16)
             ScrollView {
                 VStack {
@@ -42,11 +41,11 @@ struct DartsGameStatisticsSheet: View {
     private var gameStats: some View {
         HStack {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Очков за игру: ")
-                Text("Общее время: ")
-                Text("Всего попыток: ")
-                Text("Правильных ответов: ")
-                Text("День игры: ")
+                Text("label_GameScore")// "Очков за игру: "
+                Text("label_GameTime")// "Общее время: "
+                Text("label_Attempts")// "Всего попыток: "
+                Text("label_SuccessAnswers")// "Правильных ответов: "
+                Text("label_GameDate")// "День игры: "
             }
             
             Spacer()
@@ -78,17 +77,17 @@ struct DartsGameStatisticsSheet: View {
     
     private func gameAnswerStats(_ snapshot: DartsGameSnapshot, idx: Int) -> some View {
         VStack {
-            Text("Ответ \(idx + 1)")
+            Text("label_Answer \(idx + 1)")// "Ответ "
 //
             HStack {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("Очки попадания: ")
+                    Text("label_HitPoints")// "Очки попадания: "
                     ForEach(snapshot.darts.indices, id: \.self) { dartIdx in
-                        Text("\tПопадание \(dartIdx + 1): ")
+                        Text("\tlabel_Hit \(dartIdx + 1) ") // "Попадание"
                     }
-                    Text("Ответ пользователя: ")
-                    Text("Затрачено времени: ")
-                    Text("Очки за ответ: ")
+                    Text("label_UserAnswer")// "Ответ пользователя: "
+                    Text("label_AnswerTimeSpent")// "Затрачено времени: "
+                    Text("label_AnswerPoints")// "Очки за ответ: "
                 }
                 
                 Spacer()
@@ -100,7 +99,7 @@ struct DartsGameStatisticsSheet: View {
                         if dart.sector.points > 0 {
                             Text(dart.sector.description)
                         } else {
-                            Text("Mimo")
+                            Text("label_Miss")// "промах"
                         }
                     }
                     Text(String(snapshot.actual))
