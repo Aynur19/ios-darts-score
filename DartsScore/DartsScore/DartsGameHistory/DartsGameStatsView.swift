@@ -49,7 +49,7 @@ struct DartsGameStatsView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
-                appSettings.pallet.background
+                appSettings.palette.background
                     .ignoresSafeArea()
                 
                 VStack {
@@ -66,7 +66,7 @@ struct DartsGameStatsView: View {
                 ToolbarItem(placement: .principal) {
                     Text("viewTitle_Statistics")
                         .font(.title2)
-                        .foregroundStyle(appSettings.pallet.bgTextColor)
+                        .foregroundStyle(appSettings.palette.bgTextColor)
                 }
             }
             .navigationDestination(for: String.self) { gameIdx in
@@ -87,7 +87,7 @@ struct DartsGameStatsView: View {
                 .frame(maxWidth: .infinity)
         }
         .font(.headline)
-        .foregroundStyle(appSettings.pallet.bgTextColor)
+        .foregroundStyle(appSettings.palette.bgTextColor)
         .padding(.trailing, 32)
     }
     
@@ -116,10 +116,10 @@ struct DartsGameStatsView: View {
                 .frame(maxWidth: .infinity)
             Image(systemName: Constants.chevronName)
         }
-        .foregroundStyle(appSettings.pallet.btnPrimaryTextColor)
+        .foregroundStyle(appSettings.palette.btnPrimaryTextColor)
         .padding(.vertical, Constants.vPadding)
         .padding(.horizontal)
-        .background(appSettings.pallet.btnPrimaryColor)
+        .background(appSettings.palette.btnPrimaryColor)
         .clipShape(RoundedRectangle(cornerRadius: Constants.rowCornerRadius))
     }
     

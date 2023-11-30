@@ -7,118 +7,185 @@
 
 import SwiftUI
 
-//final class DartsGameAnswersViewModel: ObservableObject {
-//    @Published private(set) var model: DartsGameStats
-//    
-//    init(model: DartsGameStats) {
-//        self.model = model
-//    }
-//}
+final class GameSnapshotsViewModel: ObservableObject {
+    let game: DartsGame
+    let model: DartsGameSnapshotsList
+    
+    init(_ game: DartsGame) {
+        self.game = game
+        self.model = GameSnapshotsViewModel.getModel(game)
+    }
+    
+    private static func getModel(_ game: DartsGame) -> DartsGameSnapshotsList {
+        if isPreview {
+            return MockData.getDartsGameSnapshotsList()
+        }
+        
+        return JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
+    }
+}
 
 struct GameAnswersView: View {
-    private let game: DartsGame
-    private let stats: DartsGameSnapshotsList
-    
     @StateObject var appSettings = AppSettings.shared
+    @ObservedObject var snapshotsVM: GameSnapshotsViewModel
     @State private var index = 0
+    @State private var detailsIsShowed = false
     
     init(_ game: DartsGame, stats: DartsGameSnapshotsList) {
-        self.game = game
-        self.stats = stats
+        snapshotsVM = .init(game)
     }
     
     var body: some View {
         ZStack {
-            appSettings.pallet.background
+            appSettings.palette.background
                 .ignoresSafeArea()
             
-            VStack(spacing: 20) {
+            VStack {
+//                Spacer()
+//                gameStatsView
                 
-                TabView(selection: $index) {
-                    ForEach(stats.snapshots) { snapshot in
-                        VStack(spacing: 60) {
-                            DartsTargetView(.init(.shared), appSettings: .shared)
-                                .overlay { DartsHitsView(snapshot.darts, appSettings: .shared) }
-                            
-                            HStack {
-                                ForEach(snapshot.answers, id: \.self) { answer in
-                                    let answerColor = getAnswerColor(answer,
-                                                                     actual: snapshot.actual,
-                                                                     expected: snapshot.expected)
-    
-                                    DartsGameAnswerView(answer, color: answerColor)
-                                }
-                            }.padding(.horizontal, 16)
-                            
-                            HStack {
-                                ForEach(snapshot.darts) { dart in
-                                    Text(dart.sector.description)
-                                }
-                            }
-                        }
-                    }
+                Text("Ответ: 1")
+                    .font(.headline)
+                    .bold()
+                
+                snapshotsView
+//                    .background(Color.red)
+                
+                snapshotsIndexView
+                Spacer(minLength: 64)
+//                    .frame(maxWidth: .infinity)
+//                Spacer()
+                Button {
+                    detailsIsShowed = true
+                } label: {
+                    Text("Подробно")
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 
+                Spacer(minLength: 32)
                 
-                HStack(spacing: 4) {
-                    ForEach(0..<stats.snapshots.count, id: \.self) { index in
-                        Circle()
-                            .fill(getTabIndexColor(index))
-                            .frame(width: 12)
-
-                    }
-                }
-                .padding()
-//                DartsTargetView(.init())
-//                    .overlay {
-//                        DartsHitsView(game.answers[0].darts, appSettings: .shared)
-//                    }
+//                .frame(maxHeight: .infinity)
+            }
+            .blurredSheet(.init(.ultraThinMaterial), show: $detailsIsShowed) {
                 
-
+            } content: {
+//                Text("Hello, World!")
+                DartsGameStatisticsSheet(snapshotsVM.game, snapshotsVM.model)
+                    .presentationDetents([.medium, .fraction(0.95)])
             }
         }
-        .navigationTitle("История игры: \(game.id)")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("viewTitle_AnswersHistory")
+                    .font(.title2)
+                    .foregroundStyle(appSettings.palette.bgTextColor)
+            }
+        }//, onDissmiss: <#T##() -> ()#>, content: <#T##() -> View#>)
+//        .sheet(isPresented: $detailsIsShowed) {
+//            gameStatsView
+//            DartsGameStatisticsSheet(snapshotsVM.game, snapshotsVM.model)
+//                .presentationBackground(.ultraThinMaterial)
+//                .presentationBackground(appSettings.palette.background.opacity(0.1))
+//                .presentationBackground {
+//                    appSettings.palette.background
+//                        .opacity(0.1)
+//                        .ignoresSafeArea()
+//                }
+                
+//        }
+    }
+    
+    private var gameStatsView: some View {
+        VStack(spacing: 8) {
+            Text("Очков за игру: ")
+            Text("Общее время: ")
+            Text("Всего попыток: ")
+            Text("Правильных ответов: ")
+        }
+        .background(appSettings.palette.btnPrimaryColor)
+        .font(.headline)
+        .foregroundStyle(appSettings.palette.bgTextColor)
+    }
+    
+    private var snapshotsView: some View {
+        TabView(selection: $index) {
+            ForEach(snapshotsVM.model.snapshots) { snapshot in
+                VStack(spacing: 32) {
+//                    Spacer()
+                    DartsTargetView(.init(.shared), appSettings: .shared)
+                        .overlay { DartsHitsView(snapshot.darts, appSettings: .shared) }
+                    
+//                    Spacer()
+                    answersView(snapshot)
+//                    Spacer()
+                    
+//                    VStack(spacing: 4) {
+//                        Text("Счет: ")
+//                        Text("Выбран ответ: ")
+//                        Text("Затрачено времени: ")
+//                        Text("Набрано очков: ")
+//                    }
+//                    .font(.headline)
+//                    .foregroundStyle(appSettings.pallete.bgTextColor)
+//                    HStack {
+//                        ForEach(snapshot.darts) { dart in
+//                            Text(dart.sector.description)
+//                        }
+//                    }
+//                    Spacer()
+                }
+            }
+        }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+//        .tabViewStyle()
+    }
+    
+    private func answersView(_ snapshot: DartsGameSnapshot) -> some View {
+        HStack(spacing: 10) {
+            ForEach(snapshot.answers, id: \.self) { answer in
+                let answerColor = getAnswerColor(answer, 
+                                                 actual: snapshot.actual,
+                                                 expected: snapshot.expected)
+                DartsGameAnswerView(answer, color: answerColor)
+            }
+        }
+    }
+    
+    private var snapshotsIndexView: some View {
+        HStack(spacing: 4) {
+            ForEach(0..<snapshotsVM.model.snapshots.count, id: \.self) { index in
+                Circle()
+                    .fill(getTabIndexColor(index))
+                    .frame(width: 12)
+                    .scaleEffect(index == self.index ? 1 : 0.75)
+            }
+        }
+//        .padding()
     }
     
     private func getAnswerColor(_ answer: Int, actual: Int, expected: Int) -> Color {
         if answer == expected {
-            .green
+            appSettings.palette.optionsColor1
         } else if answer == actual {
-            .red
+            appSettings.palette.optionsColor2
         } else {
-            .blue
+            appSettings.palette.btnSecondaryColor
         }
     }
     
     private func getTabIndexColor(_ index: Int) -> Color {
-        self.index == index ? .blue : .blue.opacity(0.5)
+        self.index == index ? appSettings.palette.btnPrimaryColor : appSettings.palette.btnPrimaryColor.opacity(0.5)
     }
 }
 
 #Preview {
-    GameAnswersView(MockData.getDartsGameStats().items[0],
-                    stats: MockData.getDartsGameSnapshotsList())
-}
-
-//struct DartsGameAnswersView: View {
-//    @ObservedObject var dartsVM = DartsViewModel()
-//    @ObservedObject var gameAnswersVM: DartsGameAnswersViewModel
-//    
-//    var body: some View {
-//        ZStack {
-//            DartsTargetView(dartsVM)
-//                .overlay {
-//                    GeometryReader { geometry in
-//                        let center = CGPoint.getCenter(from: geometry)
-//                        
-//                        
-//                    }
-//                }
+//    TabView {
+//        NavigationStack {
+            GameAnswersView(MockData.getDartsGameStats().items[0],
+                            stats: MockData.getDartsGameSnapshotsList())
+            .navigationBarTitleDisplayMode(.inline)
 //        }
+//        .toolbarBackground(.visible, for: .tabBar)
+//        .toolbarBackground(Color(UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 0.8)), for: .tabBar)
 //    }
-//}
-//
-//#Preview {
-//    DartsGameAnswersView(gameAnswersVM: .init(model: MockData.getDartsGameStats()))
-//}
+}

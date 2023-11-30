@@ -22,7 +22,7 @@ struct DartsGameAnswerView: View {
     
     init(
         _ score: Int,
-        color: Color = AppSettings.shared.pallet.btnSecondaryColor,
+        color: Color = AppSettings.shared.palette.btnSecondaryColor,
         onAnswered: @escaping () -> Void = { }
     ) {
         self.score = score

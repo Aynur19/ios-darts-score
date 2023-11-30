@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "\tПопадание %lld: " : {
+
+    },
     "%@ suffix_Seconds" : {
       "localizations" : {
         "en" : {
@@ -141,6 +144,25 @@
         }
       }
     },
+    "Mimo" : {
+
+    },
+    "viewTitle_AnswersHistory" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answers history"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История ответов"
+          }
+        }
+      }
+    },
     "viewTitle_Darts" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -175,7 +197,43 @@
         }
       }
     },
-    "История игры: %@" : {
+    "Всего попыток: " : {
+
+    },
+    "День игры: " : {
+
+    },
+    "Затрачено времени: " : {
+
+    },
+    "Общее время: " : {
+
+    },
+    "Ответ %lld" : {
+
+    },
+    "Ответ пользователя: " : {
+
+    },
+    "Ответ: 1" : {
+
+    },
+    "Очки за ответ: " : {
+
+    },
+    "Очки попадания: " : {
+
+    },
+    "Очков за игру: " : {
+
+    },
+    "Подробная статистика игры" : {
+
+    },
+    "Подробно" : {
+
+    },
+    "Правильных ответов: " : {
 
     }
   },

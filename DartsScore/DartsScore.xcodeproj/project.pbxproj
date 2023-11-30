@@ -45,6 +45,7 @@
 		A8DB72742B162304001145BF /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72732B162304001145BF /* TitleView.swift */; };
 		A8DB72762B16267C001145BF /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72752B16267C001145BF /* ViewExt.swift */; };
 		A8DB72792B177680001145BF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A8DB72782B177680001145BF /* Localizable.xcstrings */; };
+		A8DB727B2B18600E001145BF /* DartsGameStatisticsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB727A2B18600D001145BF /* DartsGameStatisticsSheet.swift */; };
 		A8EA84922B14A800009FBDB5 /* DartsGameSnapshotsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84912B14A800009FBDB5 /* DartsGameSnapshotsList.swift */; };
 		A8EA84942B14C521009FBDB5 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84932B14C521009FBDB5 /* MockData.swift */; };
 		A8EA84962B1530B0009FBDB5 /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84952B1530B0009FBDB5 /* ColorExt.swift */; };
@@ -111,6 +112,7 @@
 		A8DB72752B16267C001145BF /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
 		A8DB72772B173AA9001145BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A8DB72782B177680001145BF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		A8DB727A2B18600D001145BF /* DartsGameStatisticsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameStatisticsSheet.swift; sourceTree = "<group>"; };
 		A8EA84912B14A800009FBDB5 /* DartsGameSnapshotsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameSnapshotsList.swift; sourceTree = "<group>"; };
 		A8EA84932B14C521009FBDB5 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		A8EA84952B1530B0009FBDB5 /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			children = (
 				A8742F9B2B0E87EC0026E07F /* DartsGameStatsView.swift */,
 				A82D6CF22B0FC16B006CF50A /* DartsGameAnswersView.swift */,
+				A8DB727A2B18600D001145BF /* DartsGameStatisticsSheet.swift */,
 			);
 			path = DartsGameHistory;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				A8A8272F2B0E49AB00AD1BD0 /* Dart.swift in Sources */,
 				A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */,
 				A88776182B0DEEFF005B746B /* DartsScoreApp.swift in Sources */,
+				A8DB727B2B18600E001145BF /* DartsGameStatisticsSheet.swift in Sources */,
 				A8EA84962B1530B0009FBDB5 /* ColorExt.swift in Sources */,
 				A8A827292B0E436C00AD1BD0 /* CGFloatExt.swift in Sources */,
 				A82D6CF12B0F4A64006CF50A /* DartsGameAnswerView.swift in Sources */,
