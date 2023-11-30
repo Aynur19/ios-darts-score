@@ -30,7 +30,7 @@ class AppSettings: ObservableObject {
     static let gameJsonFileName = "DartsGame"
     static let answersCount = 5
     
-    private(set) var dartsFrameWidth: CGFloat = 350
+    private(set) var dartsFrameWidth: CGFloat = 350 // 512
     private(set) var dartsCount = 3
     
     @Published private(set) var points25Color: Color = .green
@@ -39,7 +39,7 @@ class AppSettings: ObservableObject {
     @Published private(set) var baseColors: [Color] = [.white, .black]
     @Published private(set) var xColors: [Color] = [.red, .green]
     
-    @Published private(set) var dartImageSize: CGFloat = 16
+    @Published private(set) var dartImageSize: CGFloat = 16 // 24
     @Published private(set) var dartImageName: DartImageSystemName = .xmark
     @Published private(set) var dartImageColor: Color = .blue
     
