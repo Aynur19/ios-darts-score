@@ -251,6 +251,22 @@
         }
       }
     },
+    "label_HowHitPoins" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How many points on the target?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Сколько очков на мишени?"
+          }
+        }
+      }
+    },
     "label_Miss" : {
       "localizations" : {
         "en" : {

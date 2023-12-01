@@ -149,9 +149,15 @@ struct DartsGameView: View {
     }
     
     private var answers: some View {
-        HStack(spacing: Constants.answersSpasing) {
-            ForEach(gameVM.currentAnswers, id: \.self) { answer in
-                DartsGameAnswerView(answer) { onAnswered(answer) }
+        VStack(spacing: 20) {
+            Text("label_HowHitPoins")
+                .font(.headline)
+                .foregroundStyle(appSettings.palette.bgTextColor)
+            
+            HStack(spacing: Constants.answersSpasing) {
+                ForEach(gameVM.currentAnswers, id: \.self) { answer in
+                    DartsGameAnswerView(answer) { onAnswered(answer) }
+                }
             }
         }
         .opacity(answersIsShow ? 1 : 0)
