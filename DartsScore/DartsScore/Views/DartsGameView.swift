@@ -50,12 +50,12 @@ struct DartsGameView: View {
             circleLineWidth: appSettings.timerCircleLineWidth,
             circleDownColor: appSettings.timerCircleDownColor,
             ciclreDownOpacity: appSettings.timerCiclreDownOpacity,
-            circleUpColor: appSettings.palette.optionsColor1,
+            circleUpColor: Palette.options1,
             ciclreUpOpacity: appSettings.timerCiclreUpOpacity,
             circleUpRotation: appSettings.timerCircleUpRotation,
             animationDuration: appSettings.timerAnimationDuration,
             textFont: appSettings.timerTextFont,
-            textColor: appSettings.palette.optionsColor1,
+            textColor: Palette.options1,
             textIsBold: appSettings.timerTextIsBold,
             textFormat: appSettings.timerTextFormat
         )
@@ -68,7 +68,7 @@ struct DartsGameView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                appSettings.palette.background
+                Palette.background
                     .ignoresSafeArea()
                 gameView
                 gameOverView
@@ -78,7 +78,7 @@ struct DartsGameView: View {
                 ToolbarItem(placement: .principal) {
                     Text("viewTitle_Darts")
                         .font(.title)
-                        .foregroundStyle(appSettings.palette.bgTextColor)
+                        .foregroundStyle(Palette.bgText)
                 }
             }
         }
@@ -152,7 +152,7 @@ struct DartsGameView: View {
         VStack(spacing: 20) {
             Text("label_HowHitPoins")
                 .font(.headline)
-                .foregroundStyle(appSettings.palette.bgTextColor)
+                .foregroundStyle(Palette.bgText)
             
             HStack(spacing: Constants.answersSpasing) {
                 ForEach(gameVM.currentAnswers, id: \.self) { answer in
@@ -214,7 +214,7 @@ struct DartsGameView: View {
                     statsLabel("Заработано очков: ", .init(gameVM.game.score))
                     statsLabel("Потрачено времени: ", "\(TimerStringFormat.secMs.msStr( gameVM.game.timeSpent)) сек.")
                 }
-                .foregroundStyle(appSettings.palette.bgTextColor)
+                .foregroundStyle(Palette.bgText)
                 .font(.title3)
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, Constants.buttonsHPadding.half)
@@ -234,7 +234,7 @@ struct DartsGameView: View {
     private var attemptsLabel: some View {
         Text("label_AttemptsRemaining \(gameVM.remainingAttempts)")
             .font(.headline)
-            .foregroundStyle(appSettings.palette.bgTextColor)
+            .foregroundStyle(Palette.bgText)
     }
     
     private func statsLabel(_ text1: String, _ text2: String) -> some View {

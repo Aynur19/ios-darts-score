@@ -20,8 +20,6 @@ class AppSettings: ObservableObject {
     
     private init() {}
     
-    @Published private(set) var palette: PalletColor = .dark1
-    
     static let standardTimeForAnswer = 60.secToMs
     static let statsMaxCount = 50
     static let wireRadiusesCount = 6

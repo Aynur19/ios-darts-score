@@ -16,14 +16,14 @@ struct ContentView: View {
                         Label("viewTitle_Darts", systemImage: "gamecontroller")
                     }
                     .toolbarBackground(.visible, for: .tabBar)
-                    .toolbarBackground(Color(UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 0.8)), for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
                 DartsGameResultsView()
                     .tabItem {
                         Label("viewTitle_Statistics", systemImage: "trophy")
                     }
                     .toolbarBackground(.visible, for: .tabBar)
-                    .toolbarBackground(Color(UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 0.8)), for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
             }
         }
     }

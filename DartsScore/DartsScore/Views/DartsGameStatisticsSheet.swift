@@ -53,12 +53,12 @@ struct DartsGameStatisticsSheet: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .foregroundStyle(appSettings.palette.btnPrimaryColor)
+        .foregroundStyle(Palette.btnPrimary)
         .padding(.horizontal, 16)
         .padding(.vertical, 16)
         .overlay {
             RoundedRectangle(cornerRadius: 24)
-                .stroke(appSettings.palette.btnPrimaryColor, lineWidth: 2)
+                .stroke(Palette.btnPrimary, lineWidth: 2)
         }
         .padding(.vertical, 16)
         .padding(.horizontal, 32)
@@ -106,12 +106,12 @@ struct DartsGameStatisticsSheet: View {
             .padding(.vertical, 16)
             .overlay {
                 RoundedRectangle(cornerRadius: 24)
-                    .stroke(appSettings.palette.btnSecondaryColor, lineWidth: 2)
+                    .stroke(Palette.btnSecondary, lineWidth: 2)
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 16)
         }
-        .foregroundStyle(appSettings.palette.btnSecondaryColor)
+        .foregroundStyle(Palette.btnSecondary)
     }
     
     private var dateTimeStr: String {

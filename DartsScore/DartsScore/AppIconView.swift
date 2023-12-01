@@ -10,7 +10,7 @@ import SwiftUI
 struct AppIconView: View {
     var body: some View {
         ZStack {
-            AppSettings.shared.palette.background
+            Palette.background
                 .ignoresSafeArea()
             
             DartsTargetView(.init())

@@ -19,7 +19,7 @@ struct GameAnswersView: View {
     
     var body: some View {
         ZStack {
-            appSettings.palette.background
+            Palette.background
                 .ignoresSafeArea()
             
             VStack {
@@ -51,7 +51,7 @@ struct GameAnswersView: View {
             ToolbarItem(placement: .principal) {
                 Text("viewTitle_AnswersHistory")
                     .font(.title2)
-                    .foregroundStyle(appSettings.palette.bgTextColor)
+                    .foregroundStyle(Palette.bgText)
             }
         }
     }
@@ -94,16 +94,16 @@ struct GameAnswersView: View {
     
     private func getAnswerColor(_ answer: Int, actual: Int, expected: Int) -> Color {
         if answer == expected {
-            appSettings.palette.optionsColor1
+            Palette.options1
         } else if answer == actual {
-            appSettings.palette.optionsColor2
+            Palette.options2
         } else {
-            appSettings.palette.btnSecondaryColor
+            Palette.btnSecondary
         }
     }
     
     private func getTabIndexColor(_ index: Int) -> Color {
-        self.index == index ? appSettings.palette.btnPrimaryColor : appSettings.palette.btnPrimaryColor.opacity(0.5)
+        self.index == index ? Palette.btnPrimary : Palette.btnPrimary.opacity(0.5)
     }
 }
 

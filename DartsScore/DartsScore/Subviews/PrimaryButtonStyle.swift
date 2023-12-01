@@ -12,8 +12,8 @@ struct PrimaryButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity)
             .padding(.vertical)
-            .background(AppSettings.shared.palette.btnPrimaryColor)
-            .foregroundStyle(AppSettings.shared.palette.btnPrimaryTextColor)
+            .background(Palette.btnPrimary)
+            .foregroundStyle(Palette.btnPrimaryText)
             .bold()
             .clipShape(RoundedRectangle(cornerRadius: 25.0))
             .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
