@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-private let appIconSize: CGFloat = 1024
-
 struct AppIconView: View {
     var body: some View {
         ZStack {
@@ -26,6 +24,4 @@ struct AppIconView: View {
 
 #Preview {
     AppIconView()
-        .previewLayout(.fixed(width: appIconSize, 
-                              height: appIconSize))
 }

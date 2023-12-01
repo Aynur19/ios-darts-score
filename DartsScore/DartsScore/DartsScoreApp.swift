@@ -12,6 +12,7 @@ struct DartsScoreApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(.dark)
         }
     }
 }
