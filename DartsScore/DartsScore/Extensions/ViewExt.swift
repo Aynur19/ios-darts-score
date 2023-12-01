@@ -19,7 +19,6 @@ extension View {
                 content()
                     .presentationBackground(.ultraThinMaterial)
                     .presentationCornerRadius(50)
-//                    .presentation
             }
         } else {
             return self.sheet(isPresented: show, onDismiss: onDissmiss) {
@@ -37,21 +36,14 @@ extension View {
     }
 }
 
-fileprivate struct ClearedBackground: UIViewRepresentable {
+private struct ClearedBackground: UIViewRepresentable {
     func makeUIView(context: Context) -> some UIView {
-        let view = UIView()
-        DispatchQueue.main.async {
-            view.superview?.superview?.backgroundColor = .clear
-        }
-        return view
+        .init()
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
         DispatchQueue.main.async {
-            uiView.backgroundColor = .clear
-            uiView.superview?.backgroundColor = .clear
             uiView.superview?.superview?.backgroundColor = .clear
-            uiView.superview?.superview?.superview?.backgroundColor = .clear
         }
     }
 }
