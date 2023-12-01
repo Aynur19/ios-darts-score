@@ -11,13 +11,7 @@ struct DartsGameSnapshotsList: Identifiable {
     let gameId: String
     private(set) var snapshots: [DartsGameSnapshot]
     
-    init(_ gameId: String) {
-        self.gameId = gameId
-        self.snapshots = []
-    }
-    
-    // TODO: for mock data
-    init(_ gameId: String, snapshots: [DartsGameSnapshot]) {
+    init(_ gameId: String, snapshots: [DartsGameSnapshot] = []) {
         self.gameId = gameId
         self.snapshots = snapshots
     }

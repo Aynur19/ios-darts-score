@@ -7,26 +7,27 @@
 
 import Foundation
 
+private let snapshotsJsonNamePrefix = "GameSnapshots_"
+
 struct DartsGame: Identifiable {
     let id: String
     let attempts: Int
-    let timeForAnswer: Int  // ms
+    let timeForAnswer: Int
     let snapshotsJsonName: String
     
     private(set) var score: Int = .zero
     private(set) var spentAttempts: Int = .zero
     private(set) var successAttempts: Int = .zero
-    private(set) var timeSpent: Int = .zero // ms
+    private(set) var timeSpent: Int = .zero
     private(set) var dateTime: Date = .now
     
     init(_ id: String = UUID().uuidString, attempts: Int, timeForAnswer: Int) {
         self.id = id
         self.attempts = attempts
         self.timeForAnswer = timeForAnswer
-        self.snapshotsJsonName = "GameSnapshots_\(id)"
+        self.snapshotsJsonName = snapshotsJsonNamePrefix + id
     }
     
-    // TODO: for mock data
     init(
         id: String = UUID().uuidString,
         attempts: Int,
@@ -36,10 +37,7 @@ struct DartsGame: Identifiable {
         timeSpent: Int,
         dateTime: Date
     ) {
-        self.id = id
-        self.attempts = attempts
-        self.timeForAnswer = timeForAnswer
-        self.snapshotsJsonName = "GameSnapshots_\(id)"
+        self.init(id, attempts: attempts, timeForAnswer: timeForAnswer)
         self.score = score
         self.successAttempts = successAttempts
         self.timeSpent = timeSpent
@@ -51,7 +49,7 @@ struct DartsGame: Identifiable {
         timeSpent += time
         spentAttempts += 1
         
-        if score > 0 {
+        if score > .zero {
             successAttempts += 1
         }
     }

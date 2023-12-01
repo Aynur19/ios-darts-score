@@ -10,15 +10,16 @@ import Foundation
 struct DartsGameStats: Identifiable {
     let id: String
     let createdOn: Date
-    var updatedOn: Date
-    var items: [DartsGame]
+    private(set) var updatedOn: Date
+    private(set) var items: [DartsGame]
     
     init(
+        _ id: String = UUID().uuidString,
         createdOn: Date = .now,
         updatedOn: Date = .now,
         items: [DartsGame] = []
     ) {
-        self.id = UUID().uuidString
+        self.id = id
         self.createdOn = createdOn
         self.updatedOn = updatedOn
         self.items = items
@@ -52,9 +53,9 @@ extension DartsGameStats: Codable {
 
         let dateDecodingStrategy = ISO8601DateFormatter()
         self.createdOn = (try? dateDecodingStrategy
-            .date(from: container.decode(String.self, forKey: .createdOn))) ?? Date()
+            .date(from: container.decode(String.self, forKey: .createdOn))) ?? .now
         self.updatedOn = (try? dateDecodingStrategy
-            .date(from: container.decode(String.self, forKey: .updatedOn))) ?? Date()
+            .date(from: container.decode(String.self, forKey: .updatedOn))) ?? .now
     }
 
     private enum CodingKeys: String, CodingKey {

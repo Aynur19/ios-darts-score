@@ -44,7 +44,7 @@ struct DartsSector {
     }
     
     var description: String {
-        points > 0 ? "\(points)x\(xScore)" : "Мимо"
+        points > .zero ? "\(points)x\(xScore)" : "Miss"
     }
 }
 
