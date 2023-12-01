@@ -7,27 +7,9 @@
 
 import SwiftUI
 
-final class GameSnapshotsViewModel: ObservableObject {
-    let game: DartsGame
-    let model: DartsGameSnapshotsList
-    
-    init(_ game: DartsGame) {
-        self.game = game
-        self.model = GameSnapshotsViewModel.getModel(game)
-    }
-    
-    private static func getModel(_ game: DartsGame) -> DartsGameSnapshotsList {
-        if isPreview {
-            return MockData.getDartsGameSnapshotsList()
-        }
-        
-        return JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
-    }
-}
-
 struct GameAnswersView: View {
     @StateObject var appSettings = AppSettings.shared
-    @ObservedObject var snapshotsVM: GameSnapshotsViewModel
+    @ObservedObject var snapshotsVM: DartsGameAnswersViewModel
     @State private var index = 0
     @State private var detailsIsShowed = false
     

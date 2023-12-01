@@ -1,5 +1,5 @@
 //
-//  DartsGameStatsView.swift
+//  DartsGameResultsView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 2023.11.22.
@@ -7,42 +7,18 @@
 
 import SwiftUI
 
-private struct DartsGameStatsViewConstants {
+private struct DartsGameResultsViewConstants {
     static let chevronName = "chevron.right"
     static let hPadding: CGFloat = 32
     static let vPadding: CGFloat = 10
     static let rowCornerRadius: CGFloat = 20
 }
 
-final class DartsGameStatsViewModel: ObservableObject {
-    @Published private(set) var model: DartsGameStats
-    
-    init() {
-        model = DartsGameStatsViewModel.getModel()
-    }
-    
-    func refresh() {
-        model = DartsGameStatsViewModel.getModel()
-    }
-    
-    private static func getModel() -> DartsGameStats {
-        if isPreview {
-            return MockData.getDartsGameStats()
-        } else {
-            return JsonCache.loadDartsGameStats(from: AppSettings.statsJsonFileName)
-        }
-    }
-    
-    func getGame(_ idx: String) -> DartsGame? {
-        model.items.first { $0.id == idx }
-    }
-}
-
-struct DartsGameStatsView: View {
-    private typealias Constants = DartsGameStatsViewConstants
+struct DartsGameResultsView: View {
+    private typealias Constants = DartsGameResultsViewConstants
     
     @StateObject var appSettings = AppSettings.shared
-    @StateObject var statsVM = DartsGameStatsViewModel()
+    @StateObject var statsVM = DartsGameResultsViewModel()
     
     @State private var path = NavigationPath()
     
@@ -129,5 +105,5 @@ struct DartsGameStatsView: View {
 }
 
 #Preview {
-    DartsGameStatsView()
+    DartsGameResultsView()
 }
