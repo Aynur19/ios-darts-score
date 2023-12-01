@@ -58,24 +58,6 @@ class CountdownTimerViewModel: ObservableObject {
         startTimer()
     }
     
-//    private func restartTimer() {
-//        progress = Constants.progressFull
-//        counter = time
-//        
-//        Task {
-//            timer?.invalidate()
-//
-//            if timer != nil {
-//                try? await Task.sleep(nanoseconds: Constants.restartSleep)
-//            }
-//            
-//            await MainActor.run {
-//                progress = getProgress()
-//                startTimer()
-//            }
-//        }
-//    }
-    
     private func resumeTimer() {
         timer?.invalidate()
         startTimer()

@@ -64,8 +64,7 @@ final class JsonCache {
                                                 withIntermediateDirectories: true,
                                                 attributes: nil)
             } catch {
-                throw DataCacheError.folderCreatingFailed(path: fileURL.path,
-                                                          error: error)
+                throw DataCacheError.folderCreatingFailed(path: fileURL.path, error: error)
             }
         }
         

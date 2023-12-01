@@ -50,6 +50,5 @@ struct CountdownTimerCircleProgressBar: View {
 }
 
 #Preview {
-//        CountdownTimerCircleProgressBar(47.secToMs)
     CountdownTimerCircleProgressBar(timerVM: .init(43.secToMs))
 }
