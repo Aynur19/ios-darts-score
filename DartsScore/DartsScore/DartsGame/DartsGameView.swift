@@ -87,6 +87,12 @@ struct DartsGameView: View {
         .onReceive(gameVM.$state) { gameState in
             showUI(gameState)
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            stopGame()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
+            stopGame()
+        }
         .background()
     }
     
