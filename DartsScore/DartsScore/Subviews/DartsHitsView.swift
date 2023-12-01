@@ -11,10 +11,7 @@ struct DartsHitsView: View {
     private let darts: [Dart]
     private let appSettings: AppSettings
     
-    init(
-        _ darts: [Dart],
-        appSettings: AppSettings
-    ) {
+    init(_ darts: [Dart], appSettings: AppSettings) {
         self.darts = darts
         self.appSettings = appSettings
     }

@@ -60,7 +60,7 @@ struct GameAnswersView: View {
         TabView(selection: $index) {
             ForEach(snapshotsVM.model.snapshots) { snapshot in
                 VStack(spacing: 32) {
-                    DartsTargetView(.init(.shared), appSettings: .shared)
+                    DartsTargetView(.init(.shared))
                         .overlay { DartsHitsView(snapshot.darts, appSettings: .shared) }
                     
                     answersView(snapshot)

@@ -23,6 +23,6 @@ struct PrimaryButtonStyle: ButtonStyle {
 }
 
 #Preview {
-    Button { } label: { Text("START") }
+    Button { } label: { Text("btnLabel_Start") }
         .buttonStyle(PrimaryButtonStyle())
 }

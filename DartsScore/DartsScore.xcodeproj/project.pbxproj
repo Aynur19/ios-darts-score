@@ -42,7 +42,6 @@
 		A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */; };
 		A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */; };
 		A8DB72722B161402001145BF /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72712B161402001145BF /* Palette.swift */; };
-		A8DB72742B162304001145BF /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72732B162304001145BF /* TitleView.swift */; };
 		A8DB72762B16267C001145BF /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72752B16267C001145BF /* ViewExt.swift */; };
 		A8DB72792B177680001145BF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A8DB72782B177680001145BF /* Localizable.xcstrings */; };
 		A8DB727B2B18600E001145BF /* DartsGameStatisticsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB727A2B18600D001145BF /* DartsGameStatisticsSheet.swift */; };
@@ -110,7 +109,6 @@
 		A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt64Ext.swift; sourceTree = "<group>"; };
 		A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerCircleProgressBar.swift; sourceTree = "<group>"; };
 		A8DB72712B161402001145BF /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
-		A8DB72732B162304001145BF /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		A8DB72752B16267C001145BF /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
 		A8DB72772B173AA9001145BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A8DB72782B177680001145BF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 				A82D6CF42B126C8E006CF50A /* DartsHitsView.swift */,
 				A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */,
 				A8EA84972B15C27F009FBDB5 /* PrimaryButtonStyle.swift */,
-				A8DB72732B162304001145BF /* TitleView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -208,7 +205,6 @@
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
 				A8DB72782B177680001145BF /* Localizable.xcstrings */,
-				A8DB727C2B18E911001145BF /* AppIconView.swift */,
 			);
 			path = DartsScore;
 			sourceTree = "<group>";
@@ -287,6 +283,7 @@
 		A8DB727E2B1A2DAC001145BF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A8DB727C2B18E911001145BF /* AppIconView.swift */,
 				A8DB72882B1A30EB001145BF /* DartsGame */,
 				A8DB728A2B1A3234001145BF /* DartsGameResults */,
 				A8DB72892B1A311B001145BF /* DartsGameAnswers */,
@@ -504,7 +501,6 @@
 				A8DB72722B161402001145BF /* Palette.swift in Sources */,
 				A8A8273E2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift in Sources */,
 				A8A827392B0E4B9E00AD1BD0 /* DartsGameStats.swift in Sources */,
-				A8DB72742B162304001145BF /* TitleView.swift in Sources */,
 				A8A8272F2B0E49AB00AD1BD0 /* Dart.swift in Sources */,
 				A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */,
 				A88776182B0DEEFF005B746B /* DartsScoreApp.swift in Sources */,

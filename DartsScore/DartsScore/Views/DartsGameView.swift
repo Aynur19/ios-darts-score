@@ -127,7 +127,7 @@ struct DartsGameView: View {
     
     private var dartsView: some View {
         ZStack {
-            DartsTargetView(.init(), appSettings: appSettings)
+            DartsTargetView(.init())
                 .overlay {
                     DartsHitsView(dartsHitsVM.darts, appSettings: appSettings)
                 }
@@ -136,7 +136,7 @@ struct DartsGameView: View {
                            value: rotation)
                 .opacity(dartsTargetSide1IsShow ? 1 : 0)
             
-            DartsTargetView(.init(), appSettings: appSettings)
+            DartsTargetView(.init())
                 .overlay {
                     DartsHitsView(dartsHitsVM.darts, appSettings: appSettings)
                 }

@@ -8,14 +8,11 @@
 import SwiftUI
 
 struct DartsTargetView: View {
-    private let appSettings: AppSettings
+    @StateObject var appSettings: AppSettings = .shared
     private let options: DartsTargetViewOptions
+    private let sectorsCount = DartsConstants.points.count
     
-    init(
-        _ options: DartsTargetViewOptions,
-        appSettings: AppSettings = .shared
-    ) {
-        self.appSettings = appSettings
+    init(_ options: DartsTargetViewOptions) {
         self.options = options
     }
     
@@ -56,13 +53,13 @@ struct DartsTargetView: View {
     
     private func dartsNumbers(at center: CGPoint) -> some View {
         ForEach(DartsConstants.points.indices, id: \.self) { sectorIdx in
-            let angle = -CGFloat(sectorIdx) * 2 * .pi / CGFloat(DartsConstants.points.count)
+            let angle = -CGFloat(sectorIdx).x2 * .pi / CGFloat(DartsConstants.points.count)
             let distance = appSettings.dartsFrameWidth.half * DartsConstants.symbolsDistanceCoef
             
             let x = center.x + cos(angle) * distance
             let y = center.y + sin(angle) * distance
             
-            Text("\(DartsConstants.points[sectorIdx])")
+            Text(String(DartsConstants.points[sectorIdx]))
                 .position(x: x, y: y)
                 .foregroundColor(appSettings.dartsSectorNumberColor)
                 .bold()
@@ -75,7 +72,7 @@ struct DartsTargetView: View {
         isEven: Bool = true,
         isBaseSector: Bool = true
     ) -> some View {
-        let checkNumber = isEven ? 0 : 1
+        let checkNumber: Int = isEven ? .zero : 1
         
         let innerRadius1 = isBaseSector ? options.points25Radius : options.baseSmallRadius
         let outherRadius1 = isBaseSector ? options.baseSmallRadius : options.x3Radius
@@ -105,8 +102,8 @@ struct DartsTargetView: View {
                 
                 for sectorIdx in 1..<DartsConstants.points.count
                 where sectorIdx % 2 == checkNumber {
-                    let startAngle = Angle.degrees(Double(360 / DartsConstants.points.count * sectorIdx))
-                    let endAngle = Angle.degrees(Double(360 / DartsConstants.points.count * (sectorIdx + 1)))
+                    let startAngle = Angle.degrees(Double(360 / sectorsCount * sectorIdx))
+                    let endAngle = Angle.degrees(Double(360 / sectorsCount * (sectorIdx + 1)))
                     
                     path.addPath(sectorPath(
                         in: center,
@@ -124,7 +121,8 @@ struct DartsTargetView: View {
                         outerRadius: outherRadius2
                     ))
                 }
-            }.fill(appSettings.getSectorColor(for: checkNumber, isBaseSector))
+            }
+            .fill(appSettings.getSectorColor(for: checkNumber, isBaseSector))
         }
     }
     
@@ -176,14 +174,14 @@ struct DartsTargetView: View {
                 path.addArc(
                     center: center,
                     radius: radius,
-                    startAngle: .degrees(0),
-                    endAngle: .degrees(360),
+                    startAngle: .degrees(.zero),
+                    endAngle: .circle,
                     clockwise: true
                 )
             }
              
             for angleIdx in DartsConstants.points.indices {
-                let angle = Angle.degrees(Double(360 / DartsConstants.points.count * angleIdx))
+                let angle = Angle.degrees(Double(360 / sectorsCount * angleIdx))
                 
                 path.addPath(wireLinePath(
                     in: center,

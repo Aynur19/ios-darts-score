@@ -27,14 +27,11 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%@ сек."
           }
         }
       }
-    },
-    "%lld" : {
-
     },
     "btnLabel_Restart" : {
       "extractionState" : "manual",
@@ -86,9 +83,6 @@
           }
         }
       }
-    },
-    "Hello, World!" : {
-
     },
     "label_Answer %lld" : {
       "localizations" : {
@@ -261,7 +255,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Сколько очков на мишени?"
           }
         }
