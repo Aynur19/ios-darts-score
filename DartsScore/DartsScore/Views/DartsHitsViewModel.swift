@@ -8,20 +8,15 @@
 import SwiftUI
 
 class DartsHitsViewModel: ObservableObject {
-    let appSettings: AppSettings
+    let appSettings: AppSettingsVM
     let options: DartsTargetViewOptions
     let sectorsCount = DartsConstants.points.count
     let rotationAngle = DartsConstants.rotationAngle
     
-    // MARK: Variables
     @Published private(set) var darts = [Dart]()
     @Published private(set) var score: Int = .zero
     
-    // MARK: Init
-    init(
-        _ options: DartsTargetViewOptions,
-        appSettings: AppSettings = .shared
-    ) {
+    init(options: DartsTargetViewOptions, appSettings: AppSettingsVM = .shared) {
         self.options = options
         self.appSettings = appSettings
     }
@@ -106,7 +101,7 @@ class DartsHitsViewModel: ObservableObject {
     }
     
     private func checkTouchedOfWire(at touchPoint: CGPoint, angle: Angle, distance: CGFloat) -> Bool {
-        for radiusIdx in 0..<AppSettings.wireRadiusesCount 
+        for radiusIdx in 0..<AppSettingsVM.wireRadiusesCount 
         where abs(distance - options.getRadius(radiusIdx)) <= options.distanceWithoutScore { return true }
         
         for idx in DartsConstants.points.indices {

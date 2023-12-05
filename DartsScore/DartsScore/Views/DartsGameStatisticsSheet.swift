@@ -11,7 +11,7 @@ struct DartsGameStatisticsSheet: View {
     private let game: DartsGame
     private let snapshots: DartsGameSnapshotsList
     
-    @StateObject var appSettings = AppSettings.shared
+    @StateObject var appSettings = AppSettingsVM.shared
     
     init(_ game: DartsGame, _ snapshots: DartsGameSnapshotsList) {
         self.game = game

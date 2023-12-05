@@ -9,9 +9,9 @@ import SwiftUI
 
 struct DartsHitsView: View {
     private let darts: [Dart]
-    private let appSettings: AppSettings
+    private let appSettings: AppSettingsVM
     
-    init(_ darts: [Dart], appSettings: AppSettings) {
+    init(_ darts: [Dart], appSettings: AppSettingsVM) {
         self.darts = darts
         self.appSettings = appSettings
     }

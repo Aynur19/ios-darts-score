@@ -80,7 +80,7 @@ final class JsonCache {
 }
 
 extension JsonCache {
-    static func loadGame(from jsonName: String, appSettings: AppSettings = .shared) -> DartsGame {
+    static func loadGame(from jsonName: String, appSettings: AppSettingsVM = .shared) -> DartsGame {
         (try? JsonCache.load(from: jsonName))
         ?? .init(attempts: appSettings.attempts, timeForAnswer: appSettings.timeForAnswer)
     }

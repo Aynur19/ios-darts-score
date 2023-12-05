@@ -27,7 +27,7 @@ struct DartsGameView: View {
     
     private var timerOptions: CountdownTimerCircleProgressBarOptions = .init()
     
-    private let appSettings: AppSettings
+    private let appSettings: AppSettingsVM
     
     @State private var isDartsTargetSide1 = true
     @State private var rotation: Double = .zero
@@ -43,7 +43,7 @@ struct DartsGameView: View {
     
     @State private var startBtnIsShow = true
     
-    init(_ appSettings: AppSettings = .shared) {
+    init(_ appSettings: AppSettingsVM = .shared) {
         self.appSettings = appSettings
         
         timerOptions = CountdownTimerCircleProgressBarOptions(
@@ -62,7 +62,7 @@ struct DartsGameView: View {
         
         timerVM = .init(appSettings.timeForAnswer)
         gameVM = .init(appSettings: appSettings)
-        dartsHitsVM = .init(.init(appSettings))
+        dartsHitsVM = .init(options: .init(appSettings))
     }
     
     var body: some View {

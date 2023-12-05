@@ -1,0 +1,61 @@
+panic(cpu 2 caller 0xffffff801439591a): watchdog timeout: no checkins from watchdogd in 91 seconds (2078 total checkins since monitoring last enabled)
+Panicked task 0xffffffaf3563d9d8: 210 threads: pid 0: kernel_task
+Backtrace (CPU 2), panicked thread: 0xffffffb401d97b30, Frame : Return Address
+0xffffffce83567bb0 : 0xffffff8011070c7d mach_kernel : _handle_debugger_trap + 0x4ad
+0xffffffce83567c00 : 0xffffff80111c4f54 mach_kernel : _kdp_i386_trap + 0x114
+0xffffffce83567c40 : 0xffffff80111b4a67 mach_kernel : _kernel_trap + 0x3b7
+0xffffffce83567c90 : 0xffffff8011011971 mach_kernel : _return_from_trap + 0xc1
+0xffffffce83567cb0 : 0xffffff8011070f5d mach_kernel : _DebuggerTrapWithState + 0x5d
+0xffffffce83567da0 : 0xffffff8011070607 mach_kernel : _panic_trap_to_debugger + 0x1a7
+0xffffffce83567e00 : 0xffffff80117dba73 mach_kernel : _panic_with_options + 0x89
+0xffffffce83567ef0 : 0xffffff801439591a com.apple.driver.watchdog : __ZN10IOWatchdog14userspacePanicEP8OSObjectPvP25IOExternalMethodArguments.cold.1
+0xffffffce83567f20 : 0xffffff80143950a1 com.apple.driver.watchdog : __ZN10IOWatchdog13checkWatchdogEv + 0xd7
+0xffffffce83567f50 : 0xffffff80126f060b com.apple.driver.AppleSMC : __ZN16SMCWatchDogTimer14watchdogThreadEv + 0xbb
+0xffffffce83567fa0 : 0xffffff801101119e mach_kernel : _call_continuation + 0x2e
+      Kernel Extensions in backtrace:
+         com.apple.driver.watchdog(1.0)[BD08CE2D-77F5-358C-8F0D-A570540A0BE7]@0xffffff8014393000->0xffffff8014395fff
+         com.apple.driver.AppleSMC(3.1.9)[DD55DA6A-679A-3797-947C-0B50B7B5B659]@0xffffff80126de000->0xffffff80126fafff
+            dependency: com.apple.driver.watchdog(1)[BD08CE2D-77F5-358C-8F0D-A570540A0BE7]@0xffffff8014393000->0xffffff8014395fff
+            dependency: com.apple.iokit.IOACPIFamily(1.4)[D342E754-A422-3F44-BFFB-DEE93F6723BC]@0xffffff801363c000->0xffffff801363dfff
+            dependency: com.apple.iokit.IOPCIFamily(2.9)[18153FB8-529A-32CC-9C31-57F159E58DC6]@0xffffff8013aac000->0xffffff8013addfff
+
+Process name corresponding to current thread (0xffffffb401d97b30): kernel_task
+Boot args: keepsyms=1 debug=0x100 ipc_control_port_options=0 -nokcmismatchpanic
+
+Mac OS version:
+22G313
+
+Kernel version:
+Darwin Kernel Version 22.6.0: Wed Oct  4 21:25:26 PDT 2023; root:xnu-8796.141.3.701.17~4/RELEASE_X86_64
+Kernel UUID: 6059599F-7994-349C-8DC6-03F3B60C83DE
+roots installed: 0
+KernelCache slide: 0x0000000010c00000
+KernelCache base:  0xffffff8010e00000
+Kernel slide:      0x0000000010cdc000
+Kernel text base:  0xffffff8010edc000
+__HIB  text base: 0xffffff8010d00000
+System model name: MacBookPro13,1 (Mac-473D31EABEB93F9B)
+System shutdown begun: NO
+Panic diags file available: YES (0x0)
+Hibernation exit count: 7
+
+System uptime in nanoseconds: 273512653564153
+Last Sleep:           absolute           base_tsc          base_nano
+  Uptime  : 0x0000f8c2208eb2d6
+  Sleep   : 0x0000e5bd9aae80a7 0x00002c95b47f4129 0x0000e5b4b2050b8f
+  Wake    : 0x0000e5bda6c12752 0x0000314f81707f70 0x0000e5bda4d61df9
+Compressor Info: 44% of compressed pages limit (OK) and 22% of segments limit (OK) with 11 swapfiles and OK swap space
+Zone info:
+  Zone map: 0xffffff9a6845e000 - 0xffffffba6845e000
+  . PGZ   : 0xffffff9a6845e000 - 0xffffff9a6945f000
+  . VM    : 0xffffff9a6945f000 - 0xffffff9f35ec5000
+  . RO    : 0xffffff9f35ec5000 - 0xffffffa0cf791000
+  . GEN0  : 0xffffffa0cf791000 - 0xffffffa59c1f7000
+  . GEN1  : 0xffffffa59c1f7000 - 0xffffffaa68c5d000
+  . GEN2  : 0xffffffaa68c5d000 - 0xffffffaf356c3000
+  . GEN3  : 0xffffffaf356c3000 - 0xffffffb40212a000
+  . DATA  : 0xffffffb40212a000 - 0xffffffba6845e000
+  Metadata: 0xffffff801fb0a000 - 0xffffff803fb0a000
+  Bitmaps : 0xffffff803fb0a000 - 0xffffff804130a000
+  Extra   : 0 - 0
+

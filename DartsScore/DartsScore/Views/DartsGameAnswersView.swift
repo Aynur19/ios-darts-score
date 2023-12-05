@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameAnswersView: View {
-    @StateObject var appSettings = AppSettings.shared
+    @StateObject var appSettings = AppSettingsVM.shared
     @ObservedObject var snapshotsVM: DartsGameAnswersViewModel
     @State private var index = 0
     @State private var detailsIsShowed = false

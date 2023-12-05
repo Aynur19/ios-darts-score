@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DartsTargetView: View {
-    @StateObject var appSettings: AppSettings = .shared
+    @StateObject var appSettings: AppSettingsVM = .shared
     private let options: DartsTargetViewOptions
     private let sectorsCount = DartsConstants.points.count
     
@@ -168,7 +168,7 @@ struct DartsTargetView: View {
     // MARK: Wire Paths
     private func wirePath(in center: CGPoint) -> Path {
         Path { path in
-            for radiusIdx in 0..<AppSettings.wireRadiusesCount {
+            for radiusIdx in 0..<AppSettingsVM.wireRadiusesCount {
                 let radius = options.getRadius(radiusIdx)
                 
                 path.addArc(

@@ -15,8 +15,26 @@ var isPreview: Bool {
     return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
 }
 
-class AppSettings: ObservableObject {
-    static let shared = AppSettings()
+struct AppSettings {
+    static let standardTimeForAnswer = 60.secToMs
+    static let statsMaxCount = 50
+    static let wireRadiusesCount = 6
+    
+    static let statsJsonFileName = "DartsGameStats"
+    static let gameJsonFileName = "DartsGame"
+    static let answersCount = 5
+    
+    static let attemptsCountData = [5, 10, 15, 20]
+    static let timesForAnswerData = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+    
+    private(set) var dartsFrameWidth: CGFloat = 350 // 512
+    private(set) var dartsCount = 3
+    
+    private(set) var timeForAnswer = 60000
+}
+
+class AppSettingsVM: ObservableObject {
+    static let shared = AppSettingsVM()
     
     private init() {}
     

@@ -22,7 +22,7 @@ struct DartsTargetViewOptions {
     let baseBigRadius: CGFloat
     let wireRadius: CGFloat
     
-    init(_ appSettings: AppSettings = .shared) {
+    init(_ appSettings: AppSettingsVM = .shared) {
         let dartsFrameWidth = appSettings.dartsFrameWidth
         self.wireLineWidth = DartsConstants.getWireLineWidth(dartsFrameWidth)
         self.rotationAngle = DartsConstants.getRotationAngle(for: DartsConstants.points.count)
