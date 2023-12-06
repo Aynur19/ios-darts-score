@@ -22,6 +22,10 @@ struct DartsGameResultsView: View {
     
     @State private var path = NavigationPath()
     
+    init() {
+        print("init: DartsGameResultsViewConstants")
+    }
+    
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {

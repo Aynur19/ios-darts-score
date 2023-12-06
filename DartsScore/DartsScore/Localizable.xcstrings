@@ -36,6 +36,9 @@
     "%lld" : {
 
     },
+    "%lld сек." : {
+
+    },
     "btnLabel_Restart" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -348,6 +351,9 @@
           }
         }
       }
+    },
+    "Save" : {
+
     },
     "sheetTitle_DetailedGameStats" : {
       "localizations" : {

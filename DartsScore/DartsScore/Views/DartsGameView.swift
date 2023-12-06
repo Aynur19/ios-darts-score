@@ -21,6 +21,8 @@ private struct DartsGameViewConstants {
 struct DartsGameView: View {
     private typealias Constants = DartsGameViewConstants
     
+    @ObservedObject var appSettingsVM: AppSettingsViewModel
+    
     @ObservedObject var timerVM: CountdownTimerViewModel
     @ObservedObject var gameVM: DartsGameViewModel
     @ObservedObject var dartsHitsVM: DartsHitsViewModel
@@ -43,8 +45,10 @@ struct DartsGameView: View {
     
     @State private var startBtnIsShow = true
     
-    init(_ appSettings: AppSettingsVM = .shared) {
+    init(_ appSettings: AppSettingsVM = .shared, _ appSettingsVM: AppSettingsViewModel) {
+        print("init: DartsGameResultsViewConstants")
         self.appSettings = appSettings
+        self.appSettingsVM = appSettingsVM
         
         timerOptions = CountdownTimerCircleProgressBarOptions(
             circleLineWidth: appSettings.timerCircleLineWidth,
@@ -60,8 +64,11 @@ struct DartsGameView: View {
             textFormat: appSettings.timerTextFormat
         )
         
-        timerVM = .init(appSettings.timeForAnswer)
-        gameVM = .init(appSettings: appSettings)
+        let attempts = appSettingsVM.attemptsCount
+        let timeForAnswer = appSettingsVM.timeForAnswer
+        
+        gameVM = .init(attempts, timeForAnswer)
+        timerVM = .init(timeForAnswer)
         dartsHitsVM = .init(options: .init(appSettings))
     }
     
@@ -259,9 +266,14 @@ extension DartsGameView {
     }
     
     private func resetGame(isRestart: Bool = false) {
-        gameVM.reset(isRestart: isRestart)
+        if isRestart {
+            gameVM.restart(appSettingsVM.attemptsCount, appSettingsVM.timeForAnswer)
+        } else {
+            gameVM.reset()
+        }
+        
+        timerVM.reset(gameVM.timeForAnswer)
         dartsHitsVM.reset()
-        timerVM.reset(appSettings.timeForAnswer)
         
         answersIsShow = false
         showDartsSide()
@@ -269,7 +281,7 @@ extension DartsGameView {
     
     private func startGame() {
         gameVM.start()
-        timerVM.start(appSettings.timeForAnswer)
+        timerVM.start(gameVM.timeForAnswer)
         
         updateAnswers()
     }
@@ -311,7 +323,7 @@ extension DartsGameView {
             await MainActor.run { updateAnswers() }
         }
         
-        timerVM.start(appSettings.timeForAnswer)
+        timerVM.start(gameVM.timeForAnswer)
     }
     
     private func showDartsSide() {
@@ -333,5 +345,5 @@ extension DartsGameView {
 }
 
 #Preview {
-    DartsGameView()
+    DartsGameView(.shared, .init())
 }

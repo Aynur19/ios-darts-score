@@ -15,8 +15,9 @@ final class DartsGameViewModel: ObservableObject {
         case finished
     }
     
-    private let appSettings: AppSettingsVM
-    private var attempts: Int = .zero
+//    private let appSettings: AppSettingsVM
+    private(set) var attempts: Int = .zero
+    private(set) var timeForAnswer: Int = .zero
     
     @Published private(set) var game: DartsGame
     @Published private(set) var snapshots: DartsGameSnapshotsList
@@ -24,34 +25,41 @@ final class DartsGameViewModel: ObservableObject {
     @Published private(set) var state: GameState = .idle
     @Published private(set) var currentAnswers = [Int]()
     
-    init(appSettings: AppSettingsVM = .shared) {
-        self.appSettings = appSettings
+    init(_ attempts: Int, _ timeForAnswer: Int) {
         let gameId = UUID().uuidString
         
-        self.game = .init(gameId, attempts: appSettings.attempts, timeForAnswer: appSettings.timeForAnswer)
+        self.game = Self.loadGame(attempts, timeForAnswer)
         self.snapshots = .init(gameId)
+        
+        self.attempts = game.attempts
+        self.timeForAnswer = game.timeForAnswer
+    }
+    
+    private static func loadGame(_ attempts: Int, _ timeForAnswer: Int) -> DartsGame {
+        JsonCache.loadGame(from: AppSettingsVM.gameJsonFileName) ?? .init(attempts: attempts, timeForAnswer: timeForAnswer)
     }
     
     var remainingAttempts: Int {
-        game.attempts - attempts
+        game.attempts - game.spentAttempts
     }
 
-    func reset(isRestart: Bool = false) {
-        if !isRestart {
-            game = JsonCache.loadGame(from: AppSettingsVM.gameJsonFileName)
-            snapshots = JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
-        } else {
-            restart()
-        }
+    func reset() {
+        game = Self.loadGame(attempts, timeForAnswer)
+        snapshots = JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
         
-        attempts = game.spentAttempts
-        state = attempts == .zero ? .idle : .stoped
+        attempts = game.attempts
+        timeForAnswer = game.timeForAnswer
+        state = game.spentAttempts == .zero ? .idle : .stoped
     }
     
-    func restart() {
+    func restart(_ attempts: Int, _ timeForAnswer: Int) {
         JsonCache.deleteFile(name: AppSettingsVM.gameJsonFileName)
-        game = .init(attempts: appSettings.attempts, timeForAnswer: appSettings.timeForAnswer)
+        game = .init(attempts: attempts, timeForAnswer: timeForAnswer)
         snapshots = .init(game.id)
+        
+        self.attempts = game.attempts
+        self.timeForAnswer = game.timeForAnswer
+        state = .idle
     }
     
     func start() {
@@ -118,9 +126,9 @@ final class DartsGameViewModel: ObservableObject {
         if state == .processing {
             JsonCache.saveGameSnapshotsList(snapshots, to: game.snapshotsJsonName)
             JsonCache.saveGame(game, to: AppSettingsVM.gameJsonFileName)
+            
+            state = .stoped
         }
-        
-        state = .stoped
     }
     
     func gameOver() {
