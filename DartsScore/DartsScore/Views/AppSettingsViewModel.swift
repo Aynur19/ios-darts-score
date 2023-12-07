@@ -17,9 +17,11 @@ struct AppSettings {
     static let answersCount = 5
     
     static let attemptsCountData = [5, 10, 15, 20]
-    static let timesForAnswerData = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+    static let defaultAttempts = attemptsCountData[1]
     
-    static let defaultTimeForAnswer = 60
+    static let timesForAnswerData = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+    static let defaultTimeForAnserIdx = timesForAnswerData.count - 1
+    static let defaultTimeForAnswer = timesForAnswerData[defaultTimeForAnserIdx]
     
     private(set) var dartsFrameWidth: CGFloat = 350 // 512
     private(set) var dartsCount = 3
@@ -30,6 +32,7 @@ struct AppSettings {
 final class AppSettingsViewModel: ObservableObject {
     enum AppSettingsKeys: String {
         case settingsIsInitialized
+        case attemptsCount
         case timeForAnswerIdx
     }
     
@@ -37,45 +40,101 @@ final class AppSettingsViewModel: ObservableObject {
     
     @Published private(set) var isChanged = false
     
-    @Published private(set) var attemptsCount = AppSettings.attemptsCountData[2]
+    private var savedAttempts: Int// = AppSettings.defaultAttempts
+    @Published var attempts: Int { didSet { checkChanges() } }
     
-    @Published var timeForAnswerIdx: Int = .zero
-    @Published private(set) var timeForAnswer: Int = AppSettings.timesForAnswerData[0]
+    @Published var timeForAnswerIdx: Int { didSet { checkChanges() } }
+    @Published private(set) var timeForAnswer: Int/// = AppSettings.defaultTimeForAnswer
     
     init() {
-        let userDefaults = UserDefaults.standard
+        print("\n==========================================")
+        print("AppSettingsViewModel.\(#function)")
         
-        settingsIsInitialized = userDefaults.bool(forKey: AppSettingsKeys.settingsIsInitialized.rawValue)
+        settingsIsInitialized = UserDefaults.standard.bool(forKey: AppSettingsKeys.settingsIsInitialized.rawValue)
         
-        if settingsIsInitialized {
-            timeForAnswerIdx = userDefaults.integer(forKey: AppSettingsKeys.timeForAnswerIdx.rawValue)
-        } else {
-            timeForAnswerIdx = AppSettings.timesForAnswerData.count - 1
-        }
+        let attempts = Self.getAttempts(settingsIsInitialized)
+        self.attempts = attempts
+        self.savedAttempts = attempts
         
-        timeForAnswer = AppSettings.timesForAnswerData[timeForAnswerIdx].secToMs
+        let timeForAnswerIdx = Self.getTimeForAnswerIdx(settingsIsInitialized)
+        self.timeForAnswerIdx = timeForAnswerIdx
+        self.timeForAnswer = AppSettings.timesForAnswerData[timeForAnswerIdx].secToMs
+        
         settingsIsInitialized = true
         
-        print("AppSettingsViewModel:")
-        print("  timeForAnswer: \(timeForAnswer)")
+//        print("  AppSettingsViewModel:")
+//        print("    savedAttempts: \(savedAttempts)")
+//        print("    timeForAnswer: \(timeForAnswer)")
+        
+        checkChanges()
+    }
+    
+    func resetSettings() {
+        settingsIsInitialized = UserDefaults.standard.bool(forKey: AppSettingsKeys.settingsIsInitialized.rawValue)
+        
+        let attempts = Self.getAttempts(settingsIsInitialized)
+        self.attempts = attempts
+        self.savedAttempts = attempts
+        
+        let timeForAnswerIdx = Self.getTimeForAnswerIdx(settingsIsInitialized)
+        self.timeForAnswerIdx = timeForAnswerIdx
+        self.timeForAnswer = AppSettings.timesForAnswerData[timeForAnswerIdx].secToMs
+        
+        checkChanges()
     }
     
     func saveSettings() {
         let userDefaults = UserDefaults.standard
         
+        userDefaults.setValue(attempts, forKey: AppSettingsKeys.attemptsCount.rawValue)
         userDefaults.setValue(timeForAnswerIdx, forKey: AppSettingsKeys.timeForAnswerIdx.rawValue)
         userDefaults.setValue(settingsIsInitialized, forKey: AppSettingsKeys.settingsIsInitialized.rawValue)
         
+        savedAttempts = attempts
         timeForAnswer = AppSettings.timesForAnswerData[timeForAnswerIdx].secToMs
         
         checkChanges()
     }
     
     func checkChanges() {
-        isChanged = checkTimeForAnswerIsChanged
+        print("AppSettingsViewModel.\(#function)")
+//        print("  attempts: \(attempts)")
+//        print("  savedAttempts: \(savedAttempts)")
+//        print("  timeForAnswer: \(AppSettings.timesForAnswerData[timeForAnswerIdx].secToMs)")
+//        print("  timeForAnswer2: \(timeForAnswer)")
+//        print("  timeForAnswerIdx: \(timeForAnswerIdx)")
+        
+        isChanged = attemptsIsChanged
+                    || timeForAnswerIsChanged
     }
     
-    private var checkTimeForAnswerIsChanged: Bool {
+    private static func getAttempts(_ isInitialized: Bool = true) -> Int {
+        if isInitialized {
+            return UserDefaults.standard.integer(forKey: AppSettingsKeys.attemptsCount.rawValue)
+        }
+        
+        return AppSettings.defaultAttempts
+    }
+    
+    private static func getTimeForAnswerIdx(_ isInitialized: Bool = true) -> Int {
+        if isInitialized {
+            return UserDefaults.standard.integer(forKey: AppSettingsKeys.timeForAnswerIdx.rawValue)
+        }
+        
+        return AppSettings.defaultTimeForAnserIdx
+    }
+    
+    private var timeForAnswerIsChanged: Bool {
         AppSettings.timesForAnswerData[timeForAnswerIdx].secToMs != timeForAnswer
+//        let isChanged = AppSettings.timesForAnswerData[timeForAnswerIdx].secToMs != timeForAnswer
+//        print("  timeForAnswerIsChanged: \(isChanged)")
+//        return isChanged
+    }
+    
+    private var attemptsIsChanged: Bool {
+        savedAttempts != attempts
+//        let isChanged = savedAttempts != attempts
+//        print("  attemptsIsChanged: \(isChanged)")
+//        return isChanged
     }
 }

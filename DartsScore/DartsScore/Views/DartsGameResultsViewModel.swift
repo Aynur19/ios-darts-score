@@ -11,6 +11,7 @@ final class DartsGameResultsViewModel: ObservableObject {
     @Published private(set) var model: DartsGameStats
     
     init() {
+        print("DartsGameResultsViewModel.\(#function)")
         model = DartsGameResultsViewModel.getModel()
     }
     

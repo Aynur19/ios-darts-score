@@ -10,16 +10,12 @@ import SwiftUI
 struct AppSettingsView: View {
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
-    @State private var isChanged = false
-    
     private let attemptsCountData = AppSettings.attemptsCountData
-    @State private var attemptsCount: Int = .zero
-    
     private let timesForAnswerData = AppSettings.timesForAnswerData
     
-    init(_ appSettingsVM: AppSettingsViewModel = AppSettingsViewModel()) {
-        print("init: DartsGameResultsViewConstants")
-        self.attemptsCount = appSettingsVM.attemptsCount
+    init() {
+        print("\n****************************")
+        print("AppSettingsView.\(#function)")
     }
     
     var body: some View {
@@ -36,6 +32,10 @@ struct AppSettingsView: View {
                     .font(.headline)
                     .padding(32)
                 }
+            }
+            .onAppear { }
+            .onDisappear {
+                appSettingsVM.resetSettings()
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -61,8 +61,15 @@ struct AppSettingsView: View {
         VStack {
             Text("Количество попыток за игру")
                 .foregroundStyle(Palette.btnPrimary)
-            CustomSegmentedPickerView(attemptsCountData, $attemptsCount) {
-                "\($0)"
+            HSegmentedPickerView(
+                attemptsCountData,
+                $appSettingsVM.attempts,
+                backgroundColor: UIColor(Palette.btnPrimary.opacity(0.25)),
+                selectedSegmentTintColor: UIColor(Palette.btnPrimary),
+                selectedForecroundColor: UIColor(Palette.btnPrimaryText),
+                normalForegroundColor: UIColor(Palette.bgText.opacity(0.75))
+            ) { item in
+                Text("\(item)")
             }
         }
     }
@@ -72,8 +79,8 @@ struct AppSettingsView: View {
             HStack {
                 Text("Время на ответ")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(timesForAnswerData[appSettingsVM.timeForAnswerIdx]) сек.")
-                    .multilineTextAlignment(.trailing)
+//                Text("\(timesForAnswerData[appSettingsVM.timeForAnswerIdx]) сек.")
+//                    .multilineTextAlignment(.trailing)
             }
             .padding(.horizontal)
             .foregroundStyle(Palette.btnPrimary)
@@ -87,12 +94,9 @@ struct AppSettingsView: View {
                                startPoint: .leading,
                                endPoint: .trailing)
             } maskView: {
-                LinearGradient(colors: [.clear, Palette.bgText.opacity(0.75), .clear],
+                LinearGradient(colors: [.clear, Palette.bgText, .clear],
                                startPoint: .leading,
                                endPoint: .trailing)
-            }
-            .onReceive(appSettingsVM.$timeForAnswerIdx) { _ in
-                appSettingsVM.checkChanges()
             }
         }
     }

@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "\tlabel_Hit %lld " : {
       "localizations" : {
         "en" : {
@@ -34,9 +37,6 @@
       }
     },
     "%lld" : {
-
-    },
-    "%lld сек." : {
 
     },
     "btnLabel_Restart" : {
@@ -89,9 +89,6 @@
           }
         }
       }
-    },
-    "How many cups" : {
-
     },
     "label_Answer %lld" : {
       "localizations" : {

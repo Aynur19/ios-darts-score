@@ -26,6 +26,7 @@ final class DartsGameViewModel: ObservableObject {
     @Published private(set) var currentAnswers = [Int]()
     
     init(_ attempts: Int, _ timeForAnswer: Int) {
+        print("DartsGameViewModel.\(#function)")
         let gameId = UUID().uuidString
         
         self.game = Self.loadGame(attempts, timeForAnswer)

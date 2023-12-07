@@ -46,7 +46,7 @@ struct DartsGameView: View {
     @State private var startBtnIsShow = true
     
     init(_ appSettings: AppSettingsVM = .shared, _ appSettingsVM: AppSettingsViewModel) {
-        print("init: DartsGameResultsViewConstants")
+        print("DartsGameView.\(#function)")
         self.appSettings = appSettings
         self.appSettingsVM = appSettingsVM
         
@@ -64,7 +64,7 @@ struct DartsGameView: View {
             textFormat: appSettings.timerTextFormat
         )
         
-        let attempts = appSettingsVM.attemptsCount
+        let attempts = appSettingsVM.attempts
         let timeForAnswer = appSettingsVM.timeForAnswer
         
         gameVM = .init(attempts, timeForAnswer)
@@ -267,7 +267,7 @@ extension DartsGameView {
     
     private func resetGame(isRestart: Bool = false) {
         if isRestart {
-            gameVM.restart(appSettingsVM.attemptsCount, appSettingsVM.timeForAnswer)
+            gameVM.restart(appSettingsVM.attempts, appSettingsVM.timeForAnswer)
         } else {
             gameVM.reset()
         }

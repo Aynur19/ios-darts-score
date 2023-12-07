@@ -23,7 +23,7 @@ struct DartsGameResultsView: View {
     @State private var path = NavigationPath()
     
     init() {
-        print("init: DartsGameResultsViewConstants")
+        print("DartsGameResultsView.\(#function)")
     }
     
     var body: some View {

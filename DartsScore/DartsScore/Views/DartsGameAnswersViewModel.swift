@@ -12,6 +12,7 @@ final class DartsGameAnswersViewModel: ObservableObject {
     let model: DartsGameSnapshotsList
     
     init(_ game: DartsGame) {
+        print("DartsGameAnswersViewModel.\(#function)")
         self.game = game
         self.model = DartsGameAnswersViewModel.getModel(game)
     }

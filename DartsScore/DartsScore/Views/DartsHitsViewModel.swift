@@ -17,6 +17,7 @@ class DartsHitsViewModel: ObservableObject {
     @Published private(set) var score: Int = .zero
     
     init(options: DartsTargetViewOptions, appSettings: AppSettingsVM = .shared) {
+        print("DartsHitsViewModel.\(#function)")
         self.options = options
         self.appSettings = appSettings
     }

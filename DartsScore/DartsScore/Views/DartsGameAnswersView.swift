@@ -14,6 +14,7 @@ struct GameAnswersView: View {
     @State private var detailsIsShowed = false
     
     init(_ game: DartsGame, stats: DartsGameSnapshotsList) {
+        print("GameAnswersView.\(#function)")
         snapshotsVM = .init(game)
     }
     
