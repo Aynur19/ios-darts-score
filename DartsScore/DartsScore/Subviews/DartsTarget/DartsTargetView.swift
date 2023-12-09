@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct DartsTargetView: View {
-    @StateObject var appSettings: AppSettingsVM = .shared
+//    @StateObject var appSettings: AppSettingsVM = .shared
     private let options: DartsTargetViewOptions
     private let sectorsCount = DartsConstants.points.count
+    
+    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
     init(_ options: DartsTargetViewOptions) {
         self.options = options
@@ -19,7 +21,7 @@ struct DartsTargetView: View {
     var body: some View {
         Circle()
             .fill(Color.black)
-            .frame(width: appSettings.dartsFrameWidth)
+            .frame(width: options.maxDartRadius.x2)
             .overlay {
                 GeometryReader { geometry in
                     ZStack {
@@ -32,16 +34,16 @@ struct DartsTargetView: View {
                         sector(in: center, isEven: false)
                         
                         wirePath(in: center)
-                            .stroke(appSettings.wireColor,
+                            .stroke(appSettingsVM.dartsTargetPalette.wireColor,
                                     lineWidth: options.wireLineWidth)
                         
                         Circle()
-                            .fill(appSettings.points25Color)
+                            .fill(appSettingsVM.dartsTargetPalette.points25Color)
                             .frame(width: options.points25Radius.x2)
                             .position(center)
                         
                         Circle()
-                            .fill(appSettings.bullEyeColor)
+                            .fill(appSettingsVM.dartsTargetPalette.bullEyeColor)
                             .frame(width: options.bullEyeRadius.x2)
                             .position(center)
                         
@@ -54,14 +56,14 @@ struct DartsTargetView: View {
     private func dartsNumbers(at center: CGPoint) -> some View {
         ForEach(DartsConstants.points.indices, id: \.self) { sectorIdx in
             let angle = -CGFloat(sectorIdx).x2 * .pi / CGFloat(DartsConstants.points.count)
-            let distance = appSettings.dartsFrameWidth.half * DartsConstants.symbolsDistanceCoef
+            let distance = options.maxDartRadius * DartsConstants.symbolsDistanceCoef
             
             let x = center.x + cos(angle) * distance
             let y = center.y + sin(angle) * distance
             
             Text(String(DartsConstants.points[sectorIdx]))
                 .position(x: x, y: y)
-                .foregroundColor(appSettings.dartsSectorNumberColor)
+                .foregroundColor(appSettingsVM.dartsTargetPalette.dartsSectorNumberColor)
                 .bold()
         }
     }
@@ -122,7 +124,7 @@ struct DartsTargetView: View {
                     ))
                 }
             }
-            .fill(appSettings.getSectorColor(for: checkNumber, isBaseSector))
+            .fill(appSettingsVM.dartsTargetPalette.getSectorColor(for: checkNumber, isBaseSector))
         }
     }
     
@@ -168,7 +170,7 @@ struct DartsTargetView: View {
     // MARK: Wire Paths
     private func wirePath(in center: CGPoint) -> Path {
         Path { path in
-            for radiusIdx in 0..<AppSettingsVM.wireRadiusesCount {
+            for radiusIdx in 0..<AppConstants.wireRadiusesCount {
                 let radius = options.getRadius(radiusIdx)
                 
                 path.addArc(

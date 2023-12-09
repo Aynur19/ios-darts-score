@@ -21,7 +21,9 @@ private struct DartsGameViewConstants {
 struct DartsGameView: View {
     private typealias Constants = DartsGameViewConstants
     
-    @ObservedObject var appSettingsVM: AppSettingsViewModel
+    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
+    
+//    @ObservedObject var appSettingsVM: AppSettingsViewModel
     
     @ObservedObject var timerVM: CountdownTimerViewModel
     @ObservedObject var gameVM: DartsGameViewModel
@@ -29,7 +31,7 @@ struct DartsGameView: View {
     
     private var timerOptions: CountdownTimerCircleProgressBarOptions = .init()
     
-    private let appSettings: AppSettingsVM
+//    private let appSettings: AppSettingsVM
     
     @State private var isDartsTargetSide1 = true
     @State private var rotation: Double = .zero
@@ -45,31 +47,32 @@ struct DartsGameView: View {
     
     @State private var startBtnIsShow = true
     
-    init(_ appSettings: AppSettingsVM = .shared, _ appSettingsVM: AppSettingsViewModel) {
+    init(_ appSettings: AppSettings) {
         print("DartsGameView.\(#function)")
-        self.appSettings = appSettings
-        self.appSettingsVM = appSettingsVM
+//        self.appSettings = appSettings
+//        self.appSettingsVM = appSettingsVM
         
         timerOptions = CountdownTimerCircleProgressBarOptions(
-            circleLineWidth: appSettings.timerCircleLineWidth,
-            circleDownColor: appSettings.timerCircleDownColor,
-            ciclreDownOpacity: appSettings.timerCiclreDownOpacity,
-            circleUpColor: Palette.options1,
-            ciclreUpOpacity: appSettings.timerCiclreUpOpacity,
-            circleUpRotation: appSettings.timerCircleUpRotation,
-            animationDuration: appSettings.timerAnimationDuration,
-            textFont: appSettings.timerTextFont,
-            textColor: Palette.options1,
-            textIsBold: appSettings.timerTextIsBold,
-            textFormat: appSettings.timerTextFormat
+            circleLineWidth: AppConstants.timerCircleLineWidth,
+            circleDownColor: AppConstants.timerCircleDownColor,
+            ciclreDownOpacity: AppConstants.timerCiclreDownOpacity,
+            circleUpColor: AppConstants.timerCircleUpColor,
+            ciclreUpOpacity: AppConstants.timerCiclreUpOpacity,
+            circleUpRotation: AppConstants.timerCircleUpRotation,
+            animationDuration: AppConstants.timerAnimationDuration,
+            textFont: AppConstants.timerTextFont,
+            textColor: AppConstants.timerTextColor,
+            textIsBold: AppConstants.timerTextIsBold,
+            textFormat: AppConstants.timerTextFormat
         )
         
-        let attempts = appSettingsVM.attempts
-        let timeForAnswer = appSettingsVM.timeForAnswer
-        
-        gameVM = .init(attempts, timeForAnswer)
-        timerVM = .init(timeForAnswer)
-        dartsHitsVM = .init(options: .init(appSettings))
+//        let attempts = appSettingsVM .attempts
+//        let timeForAnswer = appSettingsVM.timeForAnswer
+//        
+        gameVM = .init(appSettings.attempts, appSettings.timeForAnswer) 
+        //ObservedObject(wrappedValue: DartsGameViewModel(appSettingsVM.attempts, appSettingsVM.timeForAnswer))// .init( attempts, timeForAnswer)
+        timerVM = .init(appSettings.timeForAnswer) //ObservedObject(wrappedValue: CountdownTimerViewModel(appSettingsVM.timeForAnswer)) ///.init(timeForAnswer)
+        dartsHitsVM = .init(options: .init()) // .init(options: .init(appSettings))
     }
     
     var body: some View {
@@ -108,8 +111,8 @@ struct DartsGameView: View {
             VStack {
                 topView
                 dartsView
-                    .frame(width: appSettings.dartsFrameWidth,
-                           height: appSettings.dartsFrameWidth)
+                    .frame(width: AppConstants.dartsFrameWidth,
+                           height: AppConstants.dartsFrameWidth)
                 ZStack {
                     gameViewButtons
                     gameStopedViewButtons
@@ -136,7 +139,8 @@ struct DartsGameView: View {
         ZStack {
             DartsTargetView(.init())
                 .overlay {
-                    DartsHitsView(dartsHitsVM.darts, appSettings: appSettings)
+                    DartsHitsView(dartsHitsVM.darts)
+                        .environmentObject(appSettingsVM)
                 }
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
                 .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
@@ -145,7 +149,8 @@ struct DartsGameView: View {
             
             DartsTargetView(.init())
                 .overlay {
-                    DartsHitsView(dartsHitsVM.darts, appSettings: appSettings)
+                    DartsHitsView(dartsHitsVM.darts)
+                        .environmentObject(appSettingsVM)
                 }
                 .rotation3DEffect(.degrees(Constants.rotationAngle), axis: Constants.darts3DRotationAxis)
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
@@ -344,6 +349,6 @@ extension DartsGameView {
     }
 }
 
-#Preview {
-    DartsGameView(.shared, .init())
-}
+//#Preview {
+//    DartsGameView(.shared, .init())
+//}

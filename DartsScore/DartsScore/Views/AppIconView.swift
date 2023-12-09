@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-struct AppIconView: View {
-    var body: some View {
-        ZStack {
-            Palette.background
-                .ignoresSafeArea()
-            
-            DartsTargetView(.init())
-                .overlay {
-                    DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts,
-                                  appSettings: .shared)
-                }
-        }
-    }
-}
-
-#Preview {
-    AppIconView()
-}
+//struct AppIconView: View {
+//    var body: some View {
+//        ZStack {
+//            Palette.background
+//                .ignoresSafeArea()
+//            
+//            DartsTargetView(.init())
+//                .overlay {
+//                    DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts,
+//                                  appSettings: .shared)
+//                }
+//        }
+//    }
+//}
+//
+//#Preview {
+//    AppIconView()
+//}

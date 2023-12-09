@@ -15,7 +15,6 @@ final class DartsGameViewModel: ObservableObject {
         case finished
     }
     
-//    private let appSettings: AppSettingsVM
     private(set) var attempts: Int = .zero
     private(set) var timeForAnswer: Int = .zero
     
@@ -37,7 +36,7 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     private static func loadGame(_ attempts: Int, _ timeForAnswer: Int) -> DartsGame {
-        JsonCache.loadGame(from: AppSettingsVM.gameJsonFileName) ?? .init(attempts: attempts, timeForAnswer: timeForAnswer)
+        JsonCache.loadGame(from: AppConstants.gameJsonName) ?? .init(attempts: attempts, timeForAnswer: timeForAnswer)
     }
     
     var remainingAttempts: Int {
@@ -54,7 +53,7 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     func restart(_ attempts: Int, _ timeForAnswer: Int) {
-        JsonCache.deleteFile(name: AppSettingsVM.gameJsonFileName)
+        JsonCache.deleteFile(name: AppConstants.gameJsonName)
         game = .init(attempts: attempts, timeForAnswer: timeForAnswer)
         snapshots = .init(game.id)
         
@@ -75,7 +74,7 @@ final class DartsGameViewModel: ObservableObject {
     private func getAnswers(_ expectedScore: Int) -> [Int] {
         var generatedAnswers = [expectedScore]
         
-        while generatedAnswers.count < AppSettingsVM.answersCount {
+        while generatedAnswers.count < AppConstants.answersCount {
             let newScore = Int.random(in: 0...DartsConstants.maxScore)
             if !generatedAnswers.contains(newScore) {
                 generatedAnswers.append(newScore)
@@ -116,7 +115,7 @@ final class DartsGameViewModel: ObservableObject {
     
     private func getScoreForAnswer(expected: Int, actual: Int, time: Int) -> Int {
         if expected == actual {
-            let scoreMultiplier = CGFloat(AppSettingsVM.standardTimeForAnswer / game.timeForAnswer)
+            let scoreMultiplier = CGFloat(AppConstants.standardTimeForAnswer / game.timeForAnswer)
             return Int(CGFloat(game.timeForAnswer) / CGFloat(time) * scoreMultiplier)
         }
         
@@ -126,20 +125,20 @@ final class DartsGameViewModel: ObservableObject {
     func stop() {
         if state == .processing {
             JsonCache.saveGameSnapshotsList(snapshots, to: game.snapshotsJsonName)
-            JsonCache.saveGame(game, to: AppSettingsVM.gameJsonFileName)
+            JsonCache.saveGame(game, to: AppConstants.gameJsonName)
             
             state = .stoped
         }
     }
     
     func gameOver() {
-        var context = JsonCache.loadDartsGameStats(from: AppSettingsVM.statsJsonFileName)
+        var context = JsonCache.loadDartsGameStats(from: AppConstants.statsJsonName)
         
         if context.add(game) {
             JsonCache.saveGameSnapshotsList(snapshots, to: game.snapshotsJsonName)
-            JsonCache.saveDartsGameStats(context, to: AppSettingsVM.statsJsonFileName)
+            JsonCache.saveDartsGameStats(context, to: AppConstants.statsJsonName)
         }
         
-        JsonCache.deleteFile(name: AppSettingsVM.gameJsonFileName)
+        JsonCache.deleteFile(name: AppConstants.gameJsonName)
     }
 }

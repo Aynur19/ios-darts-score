@@ -11,7 +11,9 @@ struct DartsGameStatisticsSheet: View {
     private let game: DartsGame
     private let snapshots: DartsGameSnapshotsList
     
-    @StateObject var appSettings = AppSettingsVM.shared
+    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
+    
+//    @StateObject var appSettings = AppSettingsVM.shared
     
     init(_ game: DartsGame, _ snapshots: DartsGameSnapshotsList) {
         self.game = game
@@ -46,7 +48,7 @@ struct DartsGameStatisticsSheet: View {
             Spacer()
             VStack(alignment: .trailing, spacing: 16) {
                 Text(String(game.score))
-                Text("\(appSettings.timerTextFormat.msStr(game.timeSpent)) suffix_Seconds")
+                Text("\(AppConstants.timerTextFormat.msStr(game.timeSpent)) suffix_Seconds")
                 Text(String(game.attempts))
                 Text(String(game.successAttempts))
                 Text(dateTimeStr)
@@ -97,7 +99,7 @@ struct DartsGameStatisticsSheet: View {
                         }
                     }
                     Text(String(snapshot.actual))
-                    Text("\(appSettings.timerTextFormat.msStr(snapshot.time)) suffix_Seconds")
+                    Text("\(AppConstants.timerTextFormat.msStr(snapshot.time)) suffix_Seconds")
                     Text(String(snapshot.score))
                 }
             }

@@ -8,15 +8,6 @@
 import SwiftUI
 import Combine
 
-struct ScrollViewOffsetKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue = CGFloat.zero
-    
-    static func reduce(value: inout Value, nextValue: () -> Value) {
-        value += nextValue()
-    }
-}
-
 struct HWheelPickerView<DataType, ContentType, DividerType, BackgroundType, MaskType>: View
 where DataType: Hashable,
       ContentType: View,
@@ -26,27 +17,25 @@ where DataType: Hashable,
     
     private let preferenceName = "scrollOffset"
     
-    var data: [DataType]
+    private let data: [DataType]
     @Binding var selectedItemIdx: Int
     
-    var contentSize: CGSize
-    var dividerSize: CGSize
+    private let contentSize: CGSize
+    private let dividerSize: CGSize
     
-    var contentView: (DataType) -> ContentType
-    var dividerView: () -> DividerType
+    private let contentView: (DataType) -> ContentType
+    private let dividerView: () -> DividerType
     
-    var backgroundView: () -> BackgroundType
-    var maskView: () -> MaskType
+    private let backgroundView: () -> BackgroundType
+    private let maskView: () -> MaskType
     
     @State private var xOffset: CurrentValueSubject<CGFloat, Never>
     @State private var publisher: AnyPublisher<CGFloat, Never>
     
-    @State private var pressing = false
-    
     init(
         _ data: [DataType],
         _ selectedItemIdx: Binding<Int>,
-        contentSize: CGSize = .init(width: 64, height: 24),
+        contentSize: CGSize = .init(width: 64, height: 32),
         dividerSize: CGSize = .init(width: 2, height: 20),
         contentView: @escaping (DataType) -> ContentType,
         dividerView: @escaping () -> DividerType,
@@ -74,6 +63,25 @@ where DataType: Hashable,
         self.xOffset = xOffset
     }
     
+    var body: some View {
+        GeometryReader { geometry in
+            ScrollViewReader { scrollProxy in
+                hScrollView(geometry, scrollProxy)
+                    .coordinateSpace(name: preferenceName)
+                    .onAppear {
+                        DispatchQueue.main.async {
+                            scrollProxy.scrollTo(selectedItemIdx, anchor: .center)
+                        }
+                    }
+                    .onReceive(publisher) { offset in
+                        scrollTo(offset, scrollProxy)
+                    }
+                    .background { backgroundView() }
+                    .mask { maskView() }
+            }
+        }
+    }
+    
     private var scrollItems: some View {
         ForEach(data.indices, id: \.self) { itemIdx in
             HStack(spacing: .zero) {
@@ -97,8 +105,8 @@ where DataType: Hashable,
         if idx >= data.count {
             idx = data.count - 1
         }
-        
         selectedItemIdx = idx
+        
         withAnimation {
             scrollProxy.scrollTo(idx, anchor: .center)
         }
@@ -127,37 +135,13 @@ where DataType: Hashable,
         .onPreferenceChange(ScrollViewOffsetKey.self) {
             xOffset.send($0)
         }
-        //        ._onButtonGesture { pressing in
-        //            if self.pressing, !pressing {
-        //                scrollTo(xOffset.value, scrollProxy)
-        //            }
-        //        } perform: {}
-    }
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ScrollViewReader { scrollProxy in
-                hScrollView(geometry, scrollProxy)
-                    .coordinateSpace(name: preferenceName)
-                    .onAppear {
-                        DispatchQueue.main.async() {
-                            scrollProxy.scrollTo(selectedItemIdx, anchor: .center)
-                        }
-                    }
-                    .onReceive(publisher) { offset in
-                        scrollTo(offset, scrollProxy)
-                    }
-                    .padding(.vertical, 6)
-                    .background { backgroundView() }
-                    .mask { maskView() }
-            }
-        }
     }
 }
 
 struct CustomWheelPickerView_Previews: PreviewProvider {
     static let data = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
     @State static var selectedItemIdx = 5
+    
     static var previews: some View {
         VStack {
             Text("\(selectedItemIdx)")
@@ -168,13 +152,17 @@ struct CustomWheelPickerView_Previews: PreviewProvider {
             } dividerView: {
                 Palette.btnPrimary
             } backgroundView: {
-                LinearGradient(colors: [.clear, Palette.btnPrimary.opacity(0.25), .clear],
-                               startPoint: .leading,
-                               endPoint: .trailing)
+                LinearGradient(
+                    colors: [.clear, Palette.btnPrimary.opacity(0.25), .clear],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
             } maskView: {
-                LinearGradient(colors: [.clear, Palette.btnPrimary, .clear],
-                               startPoint: .leading,
-                               endPoint: .trailing)
+                LinearGradient(
+                    colors: [.clear, Palette.btnPrimary, .clear],
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
             }
         }
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 class DartsHitsViewModel: ObservableObject {
-    let appSettings: AppSettingsVM
+//    let appSettings: AppSettingsVM
     let options: DartsTargetViewOptions
     let sectorsCount = DartsConstants.points.count
     let rotationAngle = DartsConstants.rotationAngle
@@ -16,10 +16,9 @@ class DartsHitsViewModel: ObservableObject {
     @Published private(set) var darts = [Dart]()
     @Published private(set) var score: Int = .zero
     
-    init(options: DartsTargetViewOptions, appSettings: AppSettingsVM = .shared) {
-        print("DartsHitsViewModel.\(#function)")
+    init(options: DartsTargetViewOptions) {
         self.options = options
-        self.appSettings = appSettings
+//        self.appSettings = appSettings
     }
     
     func reset() {
@@ -40,7 +39,7 @@ class DartsHitsViewModel: ObservableObject {
     
     private func generateDarts() {
         darts.removeAll()
-        for _ in 0..<appSettings.dartsCount {
+        for _ in 0..<AppConstants.dartsCount {
             darts.append(generateDart())
         }
     }
@@ -102,7 +101,7 @@ class DartsHitsViewModel: ObservableObject {
     }
     
     private func checkTouchedOfWire(at touchPoint: CGPoint, angle: Angle, distance: CGFloat) -> Bool {
-        for radiusIdx in 0..<AppSettingsVM.wireRadiusesCount 
+        for radiusIdx in 0..<AppConstants.wireRadiusesCount
         where abs(distance - options.getRadius(radiusIdx)) <= options.distanceWithoutScore { return true }
         
         for idx in DartsConstants.points.indices {

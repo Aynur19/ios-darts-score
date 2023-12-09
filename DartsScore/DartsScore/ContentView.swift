@@ -13,8 +13,8 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView {
-                DartsGameView(.shared, appSettingsVM)
-//                    .environmentObject(appSettingsVM)
+                DartsGameView(appSettingsVM.model)
+                    .environmentObject(appSettingsVM)
                     .tabItem {
                         Label("viewTitle_Darts", systemImage: "gamecontroller")
                     }
@@ -22,6 +22,7 @@ struct ContentView: View {
                     .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
                 DartsGameResultsView()
+                    .environmentObject(appSettingsVM)
                     .tabItem {
                         Label("viewTitle_Statistics", systemImage: "trophy")
                     }

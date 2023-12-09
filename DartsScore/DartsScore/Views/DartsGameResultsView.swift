@@ -17,7 +17,8 @@ private struct DartsGameResultsViewConstants {
 struct DartsGameResultsView: View {
     private typealias Constants = DartsGameResultsViewConstants
     
-    @StateObject var appSettings = AppSettingsVM.shared
+    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
+//    @StateObject var appSettings = AppSettingsVM.shared
     @StateObject var statsVM = DartsGameResultsViewModel()
     
     @State private var path = NavigationPath()

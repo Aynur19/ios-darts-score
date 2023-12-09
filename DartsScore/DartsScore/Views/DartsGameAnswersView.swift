@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct GameAnswersView: View {
-    @StateObject var appSettings = AppSettingsVM.shared
+    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
+//    @EnvironmentObject var dartSettingsVM: DartSettingsViewModel
+    
+//    @StateObject var appSettings = AppSettingsVM.shared
     @ObservedObject var snapshotsVM: DartsGameAnswersViewModel
     @State private var index = 0
     @State private var detailsIsShowed = false
@@ -61,8 +64,11 @@ struct GameAnswersView: View {
         TabView(selection: $index) {
             ForEach(snapshotsVM.model.snapshots) { snapshot in
                 VStack(spacing: 32) {
-                    DartsTargetView(.init(.shared))
-                        .overlay { DartsHitsView(snapshot.darts, appSettings: .shared) }
+                    DartsTargetView(.init())
+                        .overlay {
+                            DartsHitsView(snapshot.darts)
+                                .environmentObject(appSettingsVM)
+                        }
                     
                     answersView(snapshot)
                 }

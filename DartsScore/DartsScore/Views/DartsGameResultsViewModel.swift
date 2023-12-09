@@ -23,7 +23,7 @@ final class DartsGameResultsViewModel: ObservableObject {
         if isPreview {
             return MockData.getDartsGameStats()
         } else {
-            return JsonCache.loadDartsGameStats(from: AppSettingsVM.statsJsonFileName)
+            return JsonCache.loadDartsGameStats(from: AppConstants.statsJsonName)
         }
     }
     

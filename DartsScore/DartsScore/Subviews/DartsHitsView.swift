@@ -9,11 +9,11 @@ import SwiftUI
 
 struct DartsHitsView: View {
     private let darts: [Dart]
-    private let appSettings: AppSettingsVM
     
-    init(_ darts: [Dart], appSettings: AppSettingsVM) {
+    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
+    
+    init(_ darts: [Dart]) {
         self.darts = darts
-        self.appSettings = appSettings
     }
     
     var body: some View {
@@ -21,19 +21,23 @@ struct DartsHitsView: View {
             let center = CGPoint.getCenter(from: geometry)
             
             ForEach(darts) { dart in
-                Image(systemName: appSettings.dartImageName.rawValue)
+                Image(systemName: appSettingsVM.dartImageName)
                     .resizable()
-                    .frame(width: appSettings.dartImageSize,
-                           height: appSettings.dartImageSize)
+                    .frame(width: appSettingsVM.dartSize,
+                           height: appSettingsVM.dartSize)
                     .bold()
                     .position(dart.globalPosition(center: center))
-                    .foregroundStyle(appSettings.dartImageColor)
+                    .foregroundStyle(appSettingsVM.dartColor)
             }
         }
     }
 }
 
-#Preview {
-    DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts,
-                  appSettings: .shared)
+struct DartsHitsView_Previews: PreviewProvider {
+    @StateObject static var appSettingsVM = AppSettingsViewModel()
+    
+    static var previews: some View {
+        DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts)
+            .environmentObject(appSettingsVM)
+    }
 }
