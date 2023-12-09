@@ -36,7 +36,7 @@ struct AppSettingsView: View {
                         hitImageSettings
                         
                         
-                        DartsTargetView(.init())
+                        DartsTargetView(.init(AppConstants.dartsFrameWidth))
                             .overlay {
                                 DartsHitsView(snapshots.snapshots[1].darts)
                                     .environmentObject(appSettingsVM)
@@ -67,6 +67,7 @@ struct AppSettingsView: View {
                     .disabled(!appSettingsVM.isChanged)
                 }
             }
+
         }
     }
     
@@ -91,6 +92,7 @@ struct AppSettingsView: View {
             ) { item in
                 Text("\(item)")
             }
+            .id(appSettingsVM.id)
         }
     }
     

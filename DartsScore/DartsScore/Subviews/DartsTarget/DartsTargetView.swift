@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DartsTargetView: View {
-//    @StateObject var appSettings: AppSettingsVM = .shared
     private let options: DartsTargetViewOptions
     private let sectorsCount = DartsConstants.points.count
     
@@ -206,6 +205,20 @@ struct DartsTargetView: View {
     }
 }
 
+private struct TestDartsTargetView: View {
+    @StateObject var appSettingsVM = AppSettingsViewModel()
+    
+    var body: some View {
+        ZStack {
+            Color(.systemGray6)
+                .ignoresSafeArea()
+            
+            DartsTargetView(.init(360))
+                .environmentObject(appSettingsVM)
+        }
+    }
+}
+
 #Preview {
-    DartsTargetView(.init())
+    TestDartsTargetView()
 }

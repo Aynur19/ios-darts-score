@@ -9,7 +9,6 @@ import SwiftUI
 
 struct DartsHitsView: View {
     private let darts: [Dart]
-    
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
     init(_ darts: [Dart]) {
@@ -33,11 +32,23 @@ struct DartsHitsView: View {
     }
 }
 
-struct DartsHitsView_Previews: PreviewProvider {
-    @StateObject static var appSettingsVM = AppSettingsViewModel()
+private struct TestDartsHitsView: View {
+    @StateObject var appSettingsVM = AppSettingsViewModel()
     
+    var body: some View {
+        VStack {
+            Text("Dart Size: \(appSettingsVM.dartSize)")
+            DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts)
+                .environmentObject(appSettingsVM)
+        }
+        .onAppear {
+            appSettingsVM.dartSize = 16
+        }
+    }
+}
+
+struct DartsHitsView_Previews: PreviewProvider {
     static var previews: some View {
-        DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts)
-            .environmentObject(appSettingsVM)
+        TestDartsHitsView()
     }
 }

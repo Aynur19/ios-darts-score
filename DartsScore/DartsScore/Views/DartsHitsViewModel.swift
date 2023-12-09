@@ -74,7 +74,7 @@ class DartsHitsViewModel: ObservableObject {
         var isWireLineTouched = false
         var sector: DartsSector = .init(.outOfPoints)
         
-        isOutSectors = options.checkOutOfSectors(distance: distance)
+        isOutSectors = options.checkOutOfSectors(distance)
         if isOutSectors { return sector }
         
         sector = getCircleSector(distance: distance)

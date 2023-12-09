@@ -53,9 +53,8 @@ struct AppSettings {
         case dartsTargetPalette
     }
     
-
-    
     private let defaults = UserDefaults.standard
+    
     fileprivate(set) var attempts: Int
     fileprivate(set) var timeForAnswer: Int
     fileprivate(set) var dartsWithMiss: Bool
@@ -67,23 +66,15 @@ struct AppSettings {
     fileprivate(set) var dartsTargetPalette: DartsTargetPalette
     
     init() {
-        if defaults.bool(forKey: AppSettingsKeys.settingsIsInitialized.rawValue) {
-            attempts = defaults.integer(forKey: AppSettingsKeys.attempts.rawValue)
-            timeForAnswer = defaults.integer(forKey: AppSettingsKeys.timeForAnswer.rawValue)
-            dartsWithMiss = defaults.bool(forKey: AppSettingsKeys.dartsWithMiss.rawValue)
-            
-            dartSize = CGFloat(defaults.double(forKey: AppSettingsKeys.dartSize.rawValue))
-        } else {
-            attempts = Self.defaultAttempts
-            timeForAnswer = Self.defaultTimeForAnswer
-            dartsWithMiss = Self.defaultDartsWithMiss
-            
-            dartSize = Self.defaultDartSize
-        }
+        Self.registerSettings()
         
+        attempts = defaults.integer(forKey: AppSettingsKeys.attempts.rawValue)
+        timeForAnswer = defaults.integer(forKey: AppSettingsKeys.timeForAnswer.rawValue)
+        dartsWithMiss = defaults.bool(forKey: AppSettingsKeys.dartsWithMiss.rawValue)
         dartImageName = defaults.string(forKey: AppSettingsKeys.dartImageName.rawValue) ?? Self.defaultDartImageName
-        dartColor = Self.loadColor(for: AppSettingsKeys.dartColor.rawValue) ?? Self.defaultDartColor
+        dartSize = CGFloat(defaults.double(forKey: AppSettingsKeys.dartSize.rawValue))
         
+        dartColor = Self.loadColor(for: AppSettingsKeys.dartColor.rawValue) ?? Self.defaultDartColor
         dartsTargetPalette = Self.loadDartsTargetPalette(for: AppSettingsKeys.dartsTargetPalette.rawValue)
     }
     
@@ -91,14 +82,25 @@ struct AppSettings {
         defaults.setValue(attempts, forKey: AppSettingsKeys.attempts.rawValue)
         defaults.setValue(timeForAnswer, forKey: AppSettingsKeys.timeForAnswer.rawValue)
         defaults.setValue(dartsWithMiss, forKey: AppSettingsKeys.dartsWithMiss.rawValue)
-        
         defaults.setValue(dartImageName, forKey: AppSettingsKeys.dartImageName.rawValue)
         defaults.setValue(Double(dartSize), forKey: AppSettingsKeys.dartSize.rawValue)
+        
         Self.saveColor(dartColor, key: AppSettingsKeys.dartColor.rawValue)
-        
         defaults.setValue(dartsTargetPalette.rawValue, forKey: AppSettingsKeys.dartsTargetPalette.rawValue)
+    }
+    
+    private static func registerSettings() {
+        let userDefaults = UserDefaults.standard
         
-        defaults.setValue(true, forKey: AppSettingsKeys.settingsIsInitialized.rawValue)
+        userDefaults.register(
+            defaults: [
+                AppSettingsKeys.attempts.rawValue: Self.defaultAttempts,
+                AppSettingsKeys.timeForAnswer.rawValue: Self.defaultTimeForAnswer,
+                AppSettingsKeys.dartsWithMiss.rawValue: Self.defaultDartsWithMiss,
+                AppSettingsKeys.dartImageName.rawValue: Self.defaultDartImageName,
+                AppSettingsKeys.dartSize.rawValue: Double(Self.defaultDartSize)
+            ]
+        )
     }
     
     private static func saveColor(_ codableColor: CodableColor, key: String) {
@@ -127,6 +129,8 @@ struct AppSettings {
 
 final class AppSettingsViewModel: ObservableObject {
     private(set) var model: AppSettings
+    
+    private(set) var id: String
     
     @Published private(set) var isChanged = false
     
@@ -168,6 +172,8 @@ final class AppSettingsViewModel: ObservableObject {
     }
     
     init(_ model: AppSettings = .init()) {
+        id = Date().description
+        
         self.model = model
         
         attempts            = model.attempts
@@ -185,6 +191,8 @@ final class AppSettingsViewModel: ObservableObject {
     }
     
     func resetSettings() {
+        id = Date().description
+        
         attempts            = model.attempts
         timeForAnswerIdx    = Self.getTimeForAnswerIdx(model)
         timeForAnswer       = model.timeForAnswer
@@ -214,6 +222,8 @@ final class AppSettingsViewModel: ObservableObject {
         
         model.save()
         checkChanges()
+        
+        id = Date().description
     }
     
     func checkChanges() {

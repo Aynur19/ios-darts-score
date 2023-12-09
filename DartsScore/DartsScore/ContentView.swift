@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var appSettingsVM = AppSettingsViewModel()
+    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
     var body: some View {
         ZStack {
             TabView {
                 DartsGameView(appSettingsVM.model)
-                    .environmentObject(appSettingsVM)
                     .tabItem {
                         Label("viewTitle_Darts", systemImage: "gamecontroller")
                     }
@@ -22,7 +21,6 @@ struct ContentView: View {
                     .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
                 DartsGameResultsView()
-                    .environmentObject(appSettingsVM)
                     .tabItem {
                         Label("viewTitle_Statistics", systemImage: "trophy")
                     }
@@ -30,7 +28,6 @@ struct ContentView: View {
                     .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
                 AppSettingsView()
-                    .environmentObject(appSettingsVM)
                     .tabItem {
                         Label("viewTitle_AppSettings", systemImage: "gear")
 
@@ -42,6 +39,18 @@ struct ContentView: View {
     }
 }
 
+private struct TestContentView: View {
+    @StateObject var appSettingsVM = AppSettingsViewModel()
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ContentView()
+                .environment(\.mainWindowSize, geometry.size)
+                .environmentObject(appSettingsVM)
+        }
+    }
+}
+
 #Preview {
-    ContentView()
+    TestContentView()
 }

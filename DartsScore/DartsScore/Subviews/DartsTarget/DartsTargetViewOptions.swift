@@ -22,20 +22,19 @@ struct DartsTargetViewOptions {
     let baseBigRadius: CGFloat
     let wireRadius: CGFloat
     
-    init() {
-        let dartsFrameWidth = AppConstants.dartsFrameWidth
-        self.wireLineWidth = DartsConstants.getWireLineWidth(dartsFrameWidth)
+    init(_ frameWidth: CGFloat) {
+        self.wireLineWidth = DartsConstants.getWireLineWidth(frameWidth)
         self.rotationAngle = DartsConstants.getRotationAngle(for: DartsConstants.points.count)
         self.distanceWithoutScore = wireLineWidth.x2.x2
-        self.maxDartRadius = dartsFrameWidth.half
+        self.maxDartRadius = frameWidth.half
         
-        self.bullEyeRadius = DartsConstants.getRadius(dartsFrameWidth, .bullEye)
-        self.points25Radius = DartsConstants.getRadius(dartsFrameWidth, .points25)
-        self.x3Radius = DartsConstants.getRadius(dartsFrameWidth, .x3)
-        self.x2Radius = DartsConstants.getRadius(dartsFrameWidth, .x2)
-        self.baseSmallRadius = DartsConstants.getRadius(dartsFrameWidth, .baseSmall)
-        self.baseBigRadius = DartsConstants.getRadius(dartsFrameWidth, .baseBig)
-        self.wireRadius = DartsConstants.getRadius(dartsFrameWidth, .wire)
+        self.bullEyeRadius = DartsConstants.getRadius(frameWidth, .bullEye)
+        self.points25Radius = DartsConstants.getRadius(frameWidth, .points25)
+        self.x3Radius = DartsConstants.getRadius(frameWidth, .x3)
+        self.x2Radius = DartsConstants.getRadius(frameWidth, .x2)
+        self.baseSmallRadius = DartsConstants.getRadius(frameWidth, .baseSmall)
+        self.baseBigRadius = DartsConstants.getRadius(frameWidth, .baseBig)
+        self.wireRadius = DartsConstants.getRadius(frameWidth, .wire)
     }
     
     func getRadius(_ idx: Int) -> CGFloat {
@@ -49,7 +48,7 @@ struct DartsTargetViewOptions {
         }
     }
     
-    func checkOutOfSectors(distance: CGFloat) -> Bool {
+    func checkOutOfSectors(_ distance: CGFloat) -> Bool {
         distance > x2Radius + distanceWithoutScore
     }
     

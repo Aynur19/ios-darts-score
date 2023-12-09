@@ -16,11 +16,14 @@ private struct DartsGameViewConstants {
     static let buttonsHPadding: CGFloat = 64
     static let labelsVSpacing: CGFloat = 20
     static let rotationAngle: Double = 180
+    
+    static let dartsTargetHPadding: CGFloat = 32
 }
 
 struct DartsGameView: View {
     private typealias Constants = DartsGameViewConstants
     
+    @Environment(\.mainWindowSize) var windowSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
 //    @ObservedObject var appSettingsVM: AppSettingsViewModel
@@ -72,7 +75,7 @@ struct DartsGameView: View {
         gameVM = .init(appSettings.attempts, appSettings.timeForAnswer) 
         //ObservedObject(wrappedValue: DartsGameViewModel(appSettingsVM.attempts, appSettingsVM.timeForAnswer))// .init( attempts, timeForAnswer)
         timerVM = .init(appSettings.timeForAnswer) //ObservedObject(wrappedValue: CountdownTimerViewModel(appSettingsVM.timeForAnswer)) ///.init(timeForAnswer)
-        dartsHitsVM = .init(options: .init()) // .init(options: .init(appSettings))
+        dartsHitsVM = .init(options: .init(AppConstants.dartsFrameWidth)) // .init(options: .init(appSettings))
     }
     
     var body: some View {
@@ -109,10 +112,11 @@ struct DartsGameView: View {
     private var gameView: some View {
         ZStack {
             VStack {
+                
                 topView
                 dartsView
-                    .frame(width: AppConstants.dartsFrameWidth,
-                           height: AppConstants.dartsFrameWidth)
+                    .frame(width: dartsSize, height: dartsSize)
+
                 ZStack {
                     gameViewButtons
                     gameStopedViewButtons
@@ -123,6 +127,10 @@ struct DartsGameView: View {
         }
         .opacity(gameViewIsShow ? 1 : 0)
         .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameViewIsShow)
+    }
+    
+    private var dartsSize: CGFloat {
+        windowSize.width - Constants.dartsTargetHPadding.x2
     }
     
     private var topView: some View {
@@ -136,8 +144,10 @@ struct DartsGameView: View {
     }
     
     private var dartsView: some View {
-        ZStack {
-            DartsTargetView(.init())
+        print("Darts width: \(dartsSize)")
+        
+        return ZStack {
+            DartsTargetView(.init(dartsSize))
                 .overlay {
                     DartsHitsView(dartsHitsVM.darts)
                         .environmentObject(appSettingsVM)
@@ -147,7 +157,7 @@ struct DartsGameView: View {
                            value: rotation)
                 .opacity(dartsTargetSide1IsShow ? 1 : 0)
             
-            DartsTargetView(.init())
+            DartsTargetView(.init(dartsSize))
                 .overlay {
                     DartsHitsView(dartsHitsVM.darts)
                         .environmentObject(appSettingsVM)

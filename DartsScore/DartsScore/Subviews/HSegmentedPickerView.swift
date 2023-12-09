@@ -14,7 +14,6 @@ where DataType: Hashable, ContentType: View {
     @Binding var selectedItem: DataType
     
     let contentView: (DataType) -> ContentType
-    private let id: DataType
     
     init(
         _ data: [DataType],
@@ -28,14 +27,11 @@ where DataType: Hashable, ContentType: View {
     ) {
         self.data = data
         _selectedItem = selectedItem
-        id = selectedItem.wrappedValue
         
         self.contentView = contentView
         
-        // Sets the background color of the Picker
         UISegmentedControl.appearance().backgroundColor = backgroundColor
         
-        // Disappears the divider
         UISegmentedControl.appearance().setDividerImage(
             .init(),
             forLeftSegmentState: .normal,
@@ -43,10 +39,8 @@ where DataType: Hashable, ContentType: View {
             barMetrics: .compact
         )
         
-        // Changes the color for the selected item
         UISegmentedControl.appearance().selectedSegmentTintColor = selectedSegmentTintColor
         
-        // Changes the text color for the selected item
         UISegmentedControl.appearance().setTitleTextAttributes([
             .foregroundColor: selectedForecroundColor,
             .font: UIFont.preferredFont(forTextStyle: textStyle)
@@ -67,14 +61,13 @@ where DataType: Hashable, ContentType: View {
                 }
             }
             .pickerStyle(.segmented)
-            .id(id)
         }
     }
 }
 
-struct TestHSegmentedPickerView: View {
+private struct TestHSegmentedPickerView: View {
     let data = [5, 10, 13, 15, 17, 30]
-    @State var selectedItem = 5
+    @State private var selectedItem = 5
     
     var body: some View {
         HSegmentedPickerView(
@@ -91,7 +84,6 @@ struct TestHSegmentedPickerView: View {
 }
 
 struct HSegmentedPickerView_Previews: PreviewProvider {
-    
     static var previews: some View {
         TestHSegmentedPickerView()
     }

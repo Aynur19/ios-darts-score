@@ -138,13 +138,13 @@ where DataType: Hashable,
     }
 }
 
-struct CustomWheelPickerView_Previews: PreviewProvider {
-    static let data = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
-    @State static var selectedItemIdx = 5
+private struct TestHWheelPickerView: View {
+    let data = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+    @State var selectedItemIdx = 5
     
-    static var previews: some View {
+    var body: some View {
         VStack {
-            Text("\(selectedItemIdx)")
+            Text("\(data[selectedItemIdx])")
             HWheelPickerView(data, $selectedItemIdx) { item in
                 Text("\(item)")
                     .font(.headline)
@@ -165,5 +165,11 @@ struct CustomWheelPickerView_Previews: PreviewProvider {
                 )
             }
         }
+    }
+}
+
+struct HWheelPickerView_Previews: PreviewProvider {
+    static var previews: some View {
+        TestHWheelPickerView()
     }
 }

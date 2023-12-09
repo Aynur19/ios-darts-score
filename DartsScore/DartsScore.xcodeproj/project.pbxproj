@@ -170,9 +170,9 @@
 				A8A8273C2B0E4EAF00AD1BD0 /* DartsTarget */,
 				A82D6CF42B126C8E006CF50A /* DartsHitsView.swift */,
 				A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */,
-				A8EA84972B15C27F009FBDB5 /* PrimaryButtonStyle.swift */,
 				A8DB72922B1B9775001145BF /* HSegmentedPickerView.swift */,
 				A8DB72942B1CE217001145BF /* HWheelPickerView.swift */,
+				A8EA84972B15C27F009FBDB5 /* PrimaryButtonStyle.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
