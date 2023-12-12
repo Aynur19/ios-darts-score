@@ -1,5 +1,5 @@
 //
-//  HSegmentedPickerView.swift
+//  HStaticSegmentedPickerView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 02.12.2023.
@@ -7,26 +7,27 @@
 
 import SwiftUI
 
-struct HSegmentedPickerView<DataType, ContentType>: View
-where DataType: Hashable, ContentType: View {
+struct HStaticSegmentedPickerView<DataType, ContentViewType>: View
+where DataType: Hashable,
+      ContentViewType: View {
     
     let data: [DataType]
     @Binding var selectedItem: DataType
     
-    let contentView: (DataType) -> ContentType
+    @ViewBuilder private var contentView: (DataType) -> ContentViewType
     
     init(
-        _ data: [DataType],
-        _ selectedItem: Binding<DataType>,
+        data: [DataType],
+        value: Binding<DataType>,
         backgroundColor: UIColor = .gray.withAlphaComponent(0.25),
         selectedSegmentTintColor: UIColor = .gray.withAlphaComponent(0.75),
         selectedForecroundColor: UIColor = .white,
         normalForegroundColor: UIColor = .white.withAlphaComponent(0.75),
         textStyle: UIFont.TextStyle = .headline,
-        contentView: @escaping (DataType) -> ContentType
+        @ViewBuilder contentView: @escaping (DataType) -> ContentViewType
     ) {
         self.data = data
-        _selectedItem = selectedItem
+        _selectedItem = value
         
         self.contentView = contentView
         
@@ -65,26 +66,41 @@ where DataType: Hashable, ContentType: View {
     }
 }
 
-private struct TestHSegmentedPickerView: View {
+private struct TestHStaticSegmentedPickerView: View {
     let data = [5, 10, 13, 15, 17, 30]
     @State private var selectedItem = 5
     
     var body: some View {
-        HSegmentedPickerView(
-            data,
-            $selectedItem,
-            backgroundColor: UIColor(Palette.btnPrimary.opacity(0.25)),
-            selectedSegmentTintColor: UIColor(Palette.btnPrimary),
-            selectedForecroundColor: UIColor(Palette.btnPrimaryText),
-            normalForegroundColor: UIColor(Palette.bgText.opacity(0.75))
-        ) { item in
-            Text("\(item)")
+        VStack {
+            Picker("Options", selection: $selectedItem) {
+                ForEach(data, id: \.self) { item in
+                    Text("\(item)")
+                }
+            }
+            .pickerStyle(.segmented)
+            
+            HStaticSegmentedPickerView(
+                data: data,
+                value: $selectedItem,
+                contentView: { item in
+                    Text("\(item)")
+                }
+            )
+            
+            HStaticSegmentedPickerView(
+                data: data,
+                value: $selectedItem,
+                backgroundColor: UIColor(Palette.btnPrimary.opacity(0.25)),
+                selectedSegmentTintColor: UIColor(Palette.btnPrimary),
+                selectedForecroundColor: UIColor(Palette.btnPrimaryText),
+                normalForegroundColor: UIColor(Palette.bgText.opacity(0.75))
+            ) { item in
+                Text("\(item)")
+            }
         }
     }
 }
 
-struct HSegmentedPickerView_Previews: PreviewProvider {
-    static var previews: some View {
-        TestHSegmentedPickerView()
-    }
+#Preview {
+    TestHStaticSegmentedPickerView()
 }

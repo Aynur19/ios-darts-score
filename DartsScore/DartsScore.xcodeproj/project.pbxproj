@@ -46,7 +46,7 @@
 		A8DA54012B24AE08003BD9BC /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54002B24AE08003BD9BC /* CodableColor.swift */; };
 		A8DA54042B24F3DF003BD9BC /* ScrollViewOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54032B24F3DF003BD9BC /* ScrollViewOffsetKey.swift */; };
 		A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */; };
-		A8DA54082B25A5A1003BD9BC /* CustomStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54072B25A5A1003BD9BC /* CustomStepperView.swift */; };
+		A8DA54082B25A5A1003BD9BC /* HStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54072B25A5A1003BD9BC /* HStepperView.swift */; };
 		A8DA540D2B28AAA4003BD9BC /* DartImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA540C2B28AAA4003BD9BC /* DartImage.swift */; };
 		A8DA54102B28D2F3003BD9BC /* tap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8DA540F2B28D2F2003BD9BC /* tap.mp3 */; };
 		A8DB72722B161402001145BF /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72712B161402001145BF /* Palette.swift */; };
@@ -58,7 +58,7 @@
 		A8DB72842B1A2F80001145BF /* DartsGameAnswersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72832B1A2F80001145BF /* DartsGameAnswersViewModel.swift */; };
 		A8DB728F2B1B00A3001145BF /* AppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB728E2B1B00A3001145BF /* AppSettingsViewModel.swift */; };
 		A8DB72912B1B00E7001145BF /* AppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72902B1B00E7001145BF /* AppSettingsView.swift */; };
-		A8DB72932B1B9775001145BF /* HSegmentedPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72922B1B9775001145BF /* HSegmentedPickerView.swift */; };
+		A8DB72932B1B9775001145BF /* HStaticSegmentedPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */; };
 		A8DB72952B1CE217001145BF /* HWheelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72942B1CE217001145BF /* HWheelPickerView.swift */; };
 		A8EA84922B14A800009FBDB5 /* DartsGameSnapshotsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84912B14A800009FBDB5 /* DartsGameSnapshotsList.swift */; };
 		A8EA84942B14C521009FBDB5 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84932B14C521009FBDB5 /* MockData.swift */; };
@@ -125,7 +125,7 @@
 		A8DA54002B24AE08003BD9BC /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 		A8DA54032B24F3DF003BD9BC /* ScrollViewOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewOffsetKey.swift; sourceTree = "<group>"; };
 		A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToggleStyle.swift; sourceTree = "<group>"; };
-		A8DA54072B25A5A1003BD9BC /* CustomStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepperView.swift; sourceTree = "<group>"; };
+		A8DA54072B25A5A1003BD9BC /* HStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStepperView.swift; sourceTree = "<group>"; };
 		A8DA540C2B28AAA4003BD9BC /* DartImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartImage.swift; sourceTree = "<group>"; };
 		A8DA540F2B28D2F2003BD9BC /* tap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tap.mp3; sourceTree = "<group>"; };
 		A8DB72712B161402001145BF /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		A8DB72832B1A2F80001145BF /* DartsGameAnswersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameAnswersViewModel.swift; sourceTree = "<group>"; };
 		A8DB728E2B1B00A3001145BF /* AppSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModel.swift; sourceTree = "<group>"; };
 		A8DB72902B1B00E7001145BF /* AppSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsView.swift; sourceTree = "<group>"; };
-		A8DB72922B1B9775001145BF /* HSegmentedPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSegmentedPickerView.swift; sourceTree = "<group>"; };
+		A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStaticSegmentedPickerView.swift; sourceTree = "<group>"; };
 		A8DB72942B1CE217001145BF /* HWheelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HWheelPickerView.swift; sourceTree = "<group>"; };
 		A8EA84912B14A800009FBDB5 /* DartsGameSnapshotsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameSnapshotsList.swift; sourceTree = "<group>"; };
 		A8EA84932B14C521009FBDB5 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -176,11 +176,6 @@
 				A8DA54092B287419003BD9BC /* DartHit */,
 				A8A8273C2B0E4EAF00AD1BD0 /* DartsTarget */,
 				A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */,
-				A8DB72922B1B9775001145BF /* HSegmentedPickerView.swift */,
-				A8DB72942B1CE217001145BF /* HWheelPickerView.swift */,
-				A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */,
-				A8EA84972B15C27F009FBDB5 /* PrimaryButtonStyle.swift */,
-				A8DA54072B25A5A1003BD9BC /* CustomStepperView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -233,6 +228,8 @@
 				A8C12F3A2B0E088E00940A64 /* CountdownTimer */,
 				A8DB727E2B1A2DAC001145BF /* Views */,
 				A82D6CF82B13AFC2006CF50A /* Subviews */,
+				A8DA54122B28E83D003BD9BC /* Styles */,
+				A8DA54112B28E750003BD9BC /* Custom UI Elements */,
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
 				A8DB72782B177680001145BF /* Localizable.xcstrings */,
@@ -335,6 +332,25 @@
 				A8DA540F2B28D2F2003BD9BC /* tap.mp3 */,
 			);
 			path = Audio;
+			sourceTree = "<group>";
+		};
+		A8DA54112B28E750003BD9BC /* Custom UI Elements */ = {
+			isa = PBXGroup;
+			children = (
+				A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */,
+				A8DA54072B25A5A1003BD9BC /* HStepperView.swift */,
+				A8DB72942B1CE217001145BF /* HWheelPickerView.swift */,
+			);
+			path = "Custom UI Elements";
+			sourceTree = "<group>";
+		};
+		A8DA54122B28E83D003BD9BC /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */,
+				A8EA84972B15C27F009FBDB5 /* PrimaryButtonStyle.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		A8DB727E2B1A2DAC001145BF /* Views */ = {
@@ -545,7 +561,7 @@
 				A8742F992B0E7A650026E07F /* DataCacheError.swift in Sources */,
 				A8DB72842B1A2F80001145BF /* DartsGameAnswersViewModel.swift in Sources */,
 				A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */,
-				A8DB72932B1B9775001145BF /* HSegmentedPickerView.swift in Sources */,
+				A8DB72932B1B9775001145BF /* HStaticSegmentedPickerView.swift in Sources */,
 				A82D6CF72B12722D006CF50A /* DartsTargetViewOptions.swift in Sources */,
 				A8A827352B0E4AD200AD1BD0 /* DartsGame.swift in Sources */,
 				A82D6CF32B0FC16C006CF50A /* DartsGameAnswersView.swift in Sources */,
@@ -569,7 +585,7 @@
 				A82D6CF52B126C8E006CF50A /* DartsHitsView.swift in Sources */,
 				A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */,
 				A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */,
-				A8DA54082B25A5A1003BD9BC /* CustomStepperView.swift in Sources */,
+				A8DA54082B25A5A1003BD9BC /* HStepperView.swift in Sources */,
 				A8DA53FF2B24A272003BD9BC /* DartsTargetPalette.swift in Sources */,
 				A8A827312B0E49CD00AD1BD0 /* CGPointExt.swift in Sources */,
 				A8DB72722B161402001145BF /* Palette.swift in Sources */,

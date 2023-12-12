@@ -1,5 +1,5 @@
 //
-//  PalletColor.swift
+//  Palette.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 28.11.2023.
@@ -13,10 +13,10 @@ struct Palette {
     static let background       = Color("Background")
     static let bgText           = Color("Background Text")
     
-    static let btnPrimary       = Color("Primary")
+    static let btnPrimary       = Color("Primary Button")
     static let btnPrimaryText   = Color("Primary Text")
     
-    static let btnSecondary     = Color("Secondary")
+    static let btnSecondary     = Color("Secondary Button")
     static let btnSecondaryText = Color("Secondary Text")
     
     static let options1         = Color("Options 1")

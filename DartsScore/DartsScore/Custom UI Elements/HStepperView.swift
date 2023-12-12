@@ -1,5 +1,5 @@
 //
-//  CustomStepperView.swift
+//  HStepperView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 10.12.2023.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 // original source: https://www.hackingwithswift.com/forums/100-days-of-swiftui/custom-stepper-view/13742
-struct CustomStepperView<DataType, LabelViewType, DecrementViewType, IncrementViewType, DividerViewType>: View
+struct HStepperView<DataType, LabelViewType, DecrementViewType, IncrementViewType, DividerViewType>: View
 where DataType: AdditiveArithmetic,
       DataType: Comparable,
       LabelViewType: View,
@@ -204,7 +204,7 @@ struct TestCustomStepperView: View {
                 }
                 
                 Section {
-                    CustomStepperView(
+                    HStepperView(
                         value: $value,
                         range: -5...5,
                         step: 1,
@@ -215,7 +215,7 @@ struct TestCustomStepperView: View {
                 }
                 
                 Section {
-                    CustomStepperView(
+                    HStepperView(
                         value: $value,
                         range: -5...5,
                         step: 1,

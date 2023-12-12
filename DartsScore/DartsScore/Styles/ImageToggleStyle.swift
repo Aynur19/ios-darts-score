@@ -7,22 +7,22 @@
 
 import SwiftUI
 
-struct ImageToggleStyle<ButtonType>: ToggleStyle
-where ButtonType: View{
+struct ImageToggleStyle<ButtonViewType>: ToggleStyle
+where ButtonViewType: View {
     
-    let buttonChange: (Bool) -> ButtonType
-    let backgroundChange: (Bool) -> Color
+    @ViewBuilder private var buttonChange: (Bool) -> ButtonViewType
+    @ViewBuilder private var backgroundChange: (Bool) -> Color
 
-    let frameSize: CGSize
-    let cornerRadius: CGFloat
+    private let frameSize: CGSize
+    private let cornerRadius: CGFloat
     
     init(
         frameSize: CGSize = .init(width: 50, height: 32),
         cornerRadius: CGFloat = 30,
-        buttonChange: @escaping (Bool) -> ButtonType = { isOn in
+        @ViewBuilder buttonChange: @escaping (Bool) -> ButtonViewType = { isOn in
             Image(systemName: isOn ? "checkmark" : "xmark")
         },
-        backgroundChange: @escaping (Bool) -> Color = { isOn in
+        @ViewBuilder backgroundChange: @escaping (Bool) -> Color = { isOn in
             isOn ? .green : Color(.systemGray4)
         }
     ) {
@@ -66,16 +66,14 @@ private struct TestImageToggleStyleView: View {
     @State private var isOn = false
     
     var body: some View {
-        ZStack {
-            Color(.systemGray6)
-                .ignoresSafeArea()
-            
-            HStack {
-                Text(question)
-                Spacer()
-                Toggle("", isOn: $isOn)
-                    .toggleStyle(
-                        ImageToggleStyle { isOn in
+        VStack {
+            Toggle(question, isOn: $isOn)
+                .foregroundStyle(Color.orange)
+                .toggleStyle(
+                    ImageToggleStyle(
+                        frameSize: .init(width: 100, height: 50),
+                        cornerRadius: 10,
+                        buttonChange: { isOn in
                             Circle()
                                 .fill(Palette.btnPrimary)
                                 .overlay {
@@ -83,11 +81,12 @@ private struct TestImageToggleStyleView: View {
                                         .foregroundStyle(Palette.btnPrimaryText)
                                 }
                                 .padding(2)
-                        } backgroundChange: { isOn in
+                        },
+                        backgroundChange: { isOn in
                             isOn ? Palette.btnPrimary.opacity(0.5) : Color(.systemGray4)
                         }
                     )
-            }
+                )
         }
     }
 }

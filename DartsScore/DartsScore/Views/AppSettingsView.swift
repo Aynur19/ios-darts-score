@@ -116,9 +116,9 @@ struct AppSettingsView: View {
                     .multilineTextAlignment(.trailing)
             }
             
-            HSegmentedPickerView(
-                attemptsCountData,
-                $appSettingsVM.attempts,
+            HStaticSegmentedPickerView(
+                data: attemptsCountData,
+                value: $appSettingsVM.attempts,
                 backgroundColor: UIColor(Palette.btnPrimary.opacity(0.2)),
                 selectedSegmentTintColor: UIColor(Palette.btnPrimary),
                 selectedForecroundColor: UIColor(Palette.btnPrimaryText),
@@ -144,8 +144,8 @@ struct AppSettingsView: View {
             hWheelPickerCursor
             
             HWheelPickerView(
-                timesForAnswerData,
-                $appSettingsVM.timeForAnswerIdx,
+                data: timesForAnswerData,
+                valueIdx: $appSettingsVM.timeForAnswerIdx,
                 contentSize: .init(width: 64, height: 32)
             ) { item in
                 Text("\(item)")
@@ -198,8 +198,8 @@ struct AppSettingsView: View {
             hWheelPickerCursor
             
             HWheelPickerView(
-                AppSettings.dartImageNamesData,
-                $appSettingsVM.dartImageNameIdx,
+                data: AppSettings.dartImageNamesData,
+                valueIdx: $appSettingsVM.dartImageNameIdx,
                 contentSize: .init(width: 64, height: 32)
             ) { item in
                 item.image(size: 20)
@@ -217,7 +217,7 @@ struct AppSettingsView: View {
     }
     
     private var hitSizeSettings: some View {
-        CustomStepperView(
+        HStepperView(
             value: $appSettingsVM.dartSize,
             range: 10...40,
             step: 1,
