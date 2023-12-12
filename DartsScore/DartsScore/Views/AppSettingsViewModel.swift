@@ -18,7 +18,7 @@ struct AppSettings {
     fileprivate static let defaultDartsWithMiss = true
     
     static let dartImageNamesData = [
-        "xmark", "plus", "staroflife.fill"
+        "Dart1"
     ]
     
     fileprivate static let defaultDartImageNameIdx = 0

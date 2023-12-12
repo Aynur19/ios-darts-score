@@ -45,7 +45,7 @@ struct MockData {
                     darts: [
                         .init(
                             for: .init(x: -74.68731142673033, y: 7.5668327770026425),
-                            in: .init(points: 11, xScore: 3)
+                            in: .init(10, points: 11, xScore: 3)
                         ),
                         .init(
                             for: .init(x: -114.41818603506827, y: -121.26699838960911),
@@ -53,7 +53,7 @@ struct MockData {
                         ),
                         .init(
                             for: .init(x: 47.69048522948828, y: 10.236433758896286),
-                            in: .init(points: 13, xScore: 1)
+                            in: .init(1, points: 13, xScore: 1)
                         )
                     ],
                     time: 1100,
@@ -67,15 +67,15 @@ struct MockData {
                     darts: [
                         .init(
                             for: .init(x: -112.99518337758805, y: 49.58186017870711),
-                            in: .init(points: 14, xScore: 2)
+                            in: .init(9, points: 14, xScore: 2)
                         ),
                         .init(
                             for: .init(x: -54.74240928394898, y: -1.4117007953131555),
-                            in: .init(points: 11, xScore: 1)
+                            in: .init(10, points: 11, xScore: 1)
                         ),
                         .init(
                             for: .init(x: 25.090263003953215, y: 6.904254517419105),
-                            in: .init(points: 18, xScore: 1)
+                            in: .init(3, points: 18, xScore: 1)
                         )
                     ],
                     time: 1100,

@@ -16,12 +16,15 @@ enum DartsSectorArea: String, Codable {
 }
 
 struct DartsSector {
+    let sectorIdx: Int
+    
     let points: Int
     let xScore: Int
     let area: DartsSectorArea
     
     init(_ area: DartsSectorArea) {
         self.area = area
+        self.sectorIdx = 0
 
         switch area {
             case .bullEye:
@@ -37,7 +40,8 @@ struct DartsSector {
         }
     }
     
-    init(points: Int, xScore: Int = DartsConstants.x1Score) {
+    init(_ sectorIdx: Int, points: Int, xScore: Int = DartsConstants.x1Score) {
+        self.sectorIdx = sectorIdx
         self.points = points
         self.xScore = xScore
         self.area = .points
@@ -52,12 +56,14 @@ extension DartsSector: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.points = try container.decode(Int.self, forKey: .points)
-        self.xScore = try container.decode(Int.self, forKey: .xScore)
-        self.area   = try container.decode(DartsSectorArea.self, forKey: .area)
+        self.sectorIdx  = try container.decode(Int.self, forKey: .sectorIdx)
+        self.points     = try container.decode(Int.self, forKey: .points)
+        self.xScore     = try container.decode(Int.self, forKey: .xScore)
+        self.area       = try container.decode(DartsSectorArea.self, forKey: .area)
     }
 
     private enum CodingKeys: String, CodingKey {
+        case sectorIdx
         case points
         case xScore
         case area

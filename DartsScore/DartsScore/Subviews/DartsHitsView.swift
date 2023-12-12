@@ -20,18 +20,43 @@ struct DartsHitsView: View {
             let center = CGPoint.getCenter(from: geometry)
             
             ForEach(darts) { dart in
-                Image(systemName: appSettingsVM.dartImageName)
-                    .resizable()
-                    .frame(width: dartSize, height: dartSize)
-                    .bold()
-                    .position(dart.globalPosition(center: center))
-                    .foregroundStyle(appSettingsVM.dartColor)
+                ZStack {
+                    Circle()
+                        .fill(dartPositionColor(dart))
+                        .frame(width: 3)
+                        .position(dart.globalPosition(center: center))
+                    
+//                    Image(appSettingsVM.dartImageName)
+                    Image("Dart1")
+                        .resizable()
+                        .frame(width: dartSize, height: dartSize)
+                        .bold()
+                        .position(dartPosition(dart, center: center))
+                        .foregroundStyle(appSettingsVM.dartColor)
+                }
             }
         }
     }
     
     private var dartSize: CGFloat {
         .init(appSettingsVM.dartSize)
+    }
+    
+    private func dartPosition(_ dart: Dart, center: CGPoint) -> CGPoint {
+        var position = dart.globalPosition(center: center)
+        position.x += dartSize.half
+        position.y -= dartSize.half
+        return position
+    }
+    
+    private func dartPositionColor(_ dart: Dart) -> Color {
+        let sector = dart.sector
+        
+        if sector.area == .outOfPoints { return .white }
+        
+        if sector.sectorIdx % 2 == 1, sector.xScore == 1 { return .white }
+        
+        return .black
     }
 }
 

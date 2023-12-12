@@ -47,15 +47,19 @@ where DataType: AdditiveArithmetic,
         step: DataType,
         onDecrement: (() -> Void)? = nil,
         onIncrement: (() -> Void)? = nil,
-        buttonsCornerRadius: CGFloat = defaultButtonsCornerRadius,
-        buttonsContainerSize: CGSize = defaultButtonsContainerSize,
-        buttonsContainerBackground: Color = defaultButtonsContainerBackground,
-        tappedBackground: Color = defaultTappedBackground,
-        onBoundMask: Color = defaultOnBoundMask,
+        buttonsCornerRadius: CGFloat = 8,
+        buttonsContainerSize: CGSize = .init(width: 96, height: 32),
+        buttonsContainerBackground: Color = .init(.systemGray5),
+        tappedBackground: Color = .black.opacity(0.5),
+        onBoundMask: Color = .black.opacity(0.5),
         @ViewBuilder labelView: @escaping (DataType) -> LabelViewType,
-        @ViewBuilder decrementView: () -> DecrementViewType = { defaultDecrementView },
-        @ViewBuilder incrementView: () -> IncrementViewType = { defaultIncrementView },
-        @ViewBuilder dividerView: () -> DividerViewType = { defaultDividerView }
+        @ViewBuilder decrementView: () -> DecrementViewType = { Image(systemName: "minus") },
+        @ViewBuilder incrementView: () -> IncrementViewType = { Image(systemName: "plus") },
+        @ViewBuilder dividerView: () -> DividerViewType = {
+            Rectangle()
+                .fill(Color(.systemGray3))
+                .frame(width: 1.5, height: 16)
+        }
     ) {
         _value = value
         self.range = range
@@ -188,31 +192,6 @@ where DataType: AdditiveArithmetic,
             .background { incrementTapped ? tappedBackground : .clear }
             .clipShape(RoundedRectangle(cornerRadius: buttonCornerRadius))
     }
-}
-
-private let defaultButtonsCornerRadius: CGFloat = 8
-
-private let defaultButtonsContainerSize: CGSize = .init(width: 96, height: 32)
-
-private let defaultButtonsContainerBackground: Color = .init(.systemGray5)
-
-private let defaultTappedBackground: Color = .black.opacity(0.5)
-
-private let defaultOnBoundMask: Color = .black.opacity(0.5)
-
-private var defaultDecrementView: some View {
-    Image(systemName: "minus")
-        .padding(.vertical)
-}
-
-private var defaultIncrementView: some View {
-    Image(systemName: "plus")
-}
-
-private var defaultDividerView: some View {
-    Rectangle()
-        .fill(Color(.systemGray3))
-        .frame(width: 1.5, height: defaultButtonsContainerSize.height - 16)
 }
 
 struct TestCustomStepperView: View {

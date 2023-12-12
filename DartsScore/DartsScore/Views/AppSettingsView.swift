@@ -24,12 +24,12 @@ struct AppSettingsView: View {
                 
                 ScrollView {
                     VStack(spacing: 20) {
-                        Image("Minus")
-//                            .renderingMode(.original)
-                            .resizable()
-                            .frame(width: 64, height: 64)
-                            .colorMultiply(.green)
-//                            .background { Color.yellow }
+//                        Image("Minus")
+////                            .renderingMode(.original)
+//                            .resizable()
+//                            .frame(width: 64, height: 64)
+//                            .colorMultiply(.green)
+////                            .background { Color.yellow }
                         
                         attemptsSettings
                         timeForAnswerSettings

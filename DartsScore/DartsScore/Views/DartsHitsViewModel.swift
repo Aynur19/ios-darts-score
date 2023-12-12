@@ -136,7 +136,7 @@ class DartsHitsViewModel: ObservableObject {
             }
             
             if isInSector {
-                return .init(points: DartsConstants.points[idx], xScore: xScore)
+                return .init(idx, points: DartsConstants.points[idx], xScore: xScore)
             }
         }
         
