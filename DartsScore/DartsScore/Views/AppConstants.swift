@@ -39,5 +39,3 @@ class AppConstants: ObservableObject {
     static let timerTextIsBold: Bool = true
     static let timerTextFormat: TimerStringFormat = .secMs
 }
-
-

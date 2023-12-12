@@ -13,8 +13,6 @@ struct DartsGameStatisticsSheet: View {
     
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
-//    @StateObject var appSettings = AppSettingsVM.shared
-    
     init(_ game: DartsGame, _ snapshots: DartsGameSnapshotsList) {
         self.game = game
         self.snapshots = snapshots

@@ -22,13 +22,16 @@ struct DartsHitsView: View {
             ForEach(darts) { dart in
                 Image(systemName: appSettingsVM.dartImageName)
                     .resizable()
-                    .frame(width: appSettingsVM.dartSize,
-                           height: appSettingsVM.dartSize)
+                    .frame(width: dartSize, height: dartSize)
                     .bold()
                     .position(dart.globalPosition(center: center))
                     .foregroundStyle(appSettingsVM.dartColor)
             }
         }
+    }
+    
+    private var dartSize: CGFloat {
+        .init(appSettingsVM.dartSize)
     }
 }
 

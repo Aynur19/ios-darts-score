@@ -8,14 +8,6 @@
 import SwiftUI
 
 struct AppSettings {
-//    static let standardTimeForAnswer = 60.secToMs
-//    static let statsMaxCount = 50
-//    static let wireRadiusesCount = 6
-    
-//    static let statsJsonFileName = "DartsGameStats"
-//    static let gameJsonFileName = "DartsGame"
-//    static let answersCount = 5
-    
     static let attemptsCountData = [5, 10, 15, 20]
     fileprivate static let defaultAttempts = attemptsCountData[1]
     
@@ -31,13 +23,10 @@ struct AppSettings {
     
     fileprivate static let defaultDartImageNameIdx = 0
     fileprivate static let defaultDartImageName = dartImageNamesData[defaultDartImageNameIdx]
-    fileprivate static let defaultDartSize: CGFloat = 16
+    fileprivate static let defaultDartSize = 16
     fileprivate static let defaultDartColor: CodableColor = .init(.blue)
     
     fileprivate static let defaultDartsTargetPalette: DartsTargetPalette = .classic
-    
-//    private(set) var dartsFrameWidth: CGFloat = 350 // 512
-//    private(set) var dartsCount = 3
     
     private enum AppSettingsKeys: String {
         case settingsIsInitialized
@@ -60,7 +49,7 @@ struct AppSettings {
     fileprivate(set) var dartsWithMiss: Bool
     
     fileprivate(set) var dartImageName: String
-    fileprivate(set) var dartSize: CGFloat
+    fileprivate(set) var dartSize: Int
     fileprivate(set) var dartColor: CodableColor
     
     fileprivate(set) var dartsTargetPalette: DartsTargetPalette
@@ -72,7 +61,7 @@ struct AppSettings {
         timeForAnswer = defaults.integer(forKey: AppSettingsKeys.timeForAnswer.rawValue)
         dartsWithMiss = defaults.bool(forKey: AppSettingsKeys.dartsWithMiss.rawValue)
         dartImageName = defaults.string(forKey: AppSettingsKeys.dartImageName.rawValue) ?? Self.defaultDartImageName
-        dartSize = CGFloat(defaults.double(forKey: AppSettingsKeys.dartSize.rawValue))
+        dartSize = defaults.integer(forKey: AppSettingsKeys.dartSize.rawValue)
         
         dartColor = Self.loadColor(for: AppSettingsKeys.dartColor.rawValue) ?? Self.defaultDartColor
         dartsTargetPalette = Self.loadDartsTargetPalette(for: AppSettingsKeys.dartsTargetPalette.rawValue)
@@ -83,16 +72,14 @@ struct AppSettings {
         defaults.setValue(timeForAnswer, forKey: AppSettingsKeys.timeForAnswer.rawValue)
         defaults.setValue(dartsWithMiss, forKey: AppSettingsKeys.dartsWithMiss.rawValue)
         defaults.setValue(dartImageName, forKey: AppSettingsKeys.dartImageName.rawValue)
-        defaults.setValue(Double(dartSize), forKey: AppSettingsKeys.dartSize.rawValue)
+        defaults.setValue(dartSize, forKey: AppSettingsKeys.dartSize.rawValue)
         
         Self.saveColor(dartColor, key: AppSettingsKeys.dartColor.rawValue)
         defaults.setValue(dartsTargetPalette.rawValue, forKey: AppSettingsKeys.dartsTargetPalette.rawValue)
     }
     
     private static func registerSettings() {
-        let userDefaults = UserDefaults.standard
-        
-        userDefaults.register(
+        UserDefaults.standard.register(
             defaults: [
                 AppSettingsKeys.attempts.rawValue: Self.defaultAttempts,
                 AppSettingsKeys.timeForAnswer.rawValue: Self.defaultTimeForAnswer,
@@ -156,7 +143,7 @@ final class AppSettingsViewModel: ObservableObject {
         didSet { checkChanges() }
     }
     
-    @Published var dartSize: CGFloat {
+    @Published var dartSize: Int {
         didSet { checkChanges() }
     }
     
@@ -171,10 +158,10 @@ final class AppSettingsViewModel: ObservableObject {
         didSet { checkChanges() }
     }
     
-    init(_ model: AppSettings = .init()) {
+    init() {
         id = Date().description
         
-        self.model = model
+        model = .init()
         
         attempts            = model.attempts
         timeForAnswerIdx    = Self.getTimeForAnswerIdx(model)
@@ -231,6 +218,7 @@ final class AppSettingsViewModel: ObservableObject {
         || timeForAnswer != model.timeForAnswer
         || dartsWithMiss != model.dartsWithMiss
         || dartImageName != model.dartImageName
+        || dartSize != model.dartSize
         || dartCodableColor != model.dartColor
         || dartsTargetPalette != model.dartsTargetPalette
     }

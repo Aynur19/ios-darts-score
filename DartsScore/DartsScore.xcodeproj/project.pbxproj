@@ -42,10 +42,11 @@
 		A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */; };
 		A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */; };
 		A8DA53FB2B239B4C003BD9BC /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53FA2B239B4C003BD9BC /* ColorExt.swift */; };
-		A8DA53FD2B2483CC003BD9BC /* DartSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53FC2B2483CC003BD9BC /* DartSettingsViewModel.swift */; };
-		A8DA53FF2B24A272003BD9BC /* DartTargetSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53FE2B24A272003BD9BC /* DartTargetSettingsViewModel.swift */; };
+		A8DA53FF2B24A272003BD9BC /* DartsTargetPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53FE2B24A272003BD9BC /* DartsTargetPalette.swift */; };
 		A8DA54012B24AE08003BD9BC /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54002B24AE08003BD9BC /* CodableColor.swift */; };
 		A8DA54042B24F3DF003BD9BC /* ScrollViewOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54032B24F3DF003BD9BC /* ScrollViewOffsetKey.swift */; };
+		A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */; };
+		A8DA54082B25A5A1003BD9BC /* CustomStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54072B25A5A1003BD9BC /* CustomStepperView.swift */; };
 		A8DB72722B161402001145BF /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72712B161402001145BF /* Palette.swift */; };
 		A8DB72762B16267C001145BF /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72752B16267C001145BF /* ViewExt.swift */; };
 		A8DB72792B177680001145BF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A8DB72782B177680001145BF /* Localizable.xcstrings */; };
@@ -118,10 +119,11 @@
 		A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt64Ext.swift; sourceTree = "<group>"; };
 		A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerCircleProgressBar.swift; sourceTree = "<group>"; };
 		A8DA53FA2B239B4C003BD9BC /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
-		A8DA53FC2B2483CC003BD9BC /* DartSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartSettingsViewModel.swift; sourceTree = "<group>"; };
-		A8DA53FE2B24A272003BD9BC /* DartTargetSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartTargetSettingsViewModel.swift; sourceTree = "<group>"; };
+		A8DA53FE2B24A272003BD9BC /* DartsTargetPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsTargetPalette.swift; sourceTree = "<group>"; };
 		A8DA54002B24AE08003BD9BC /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 		A8DA54032B24F3DF003BD9BC /* ScrollViewOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewOffsetKey.swift; sourceTree = "<group>"; };
+		A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToggleStyle.swift; sourceTree = "<group>"; };
+		A8DA54072B25A5A1003BD9BC /* CustomStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStepperView.swift; sourceTree = "<group>"; };
 		A8DB72712B161402001145BF /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		A8DB72752B16267C001145BF /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
 		A8DB72772B173AA9001145BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -172,7 +174,9 @@
 				A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */,
 				A8DB72922B1B9775001145BF /* HSegmentedPickerView.swift */,
 				A8DB72942B1CE217001145BF /* HWheelPickerView.swift */,
+				A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */,
 				A8EA84972B15C27F009FBDB5 /* PrimaryButtonStyle.swift */,
+				A8DA54072B25A5A1003BD9BC /* CustomStepperView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -215,6 +219,7 @@
 				A8A827262B0E433200AD1BD0 /* DartsConstants.swift */,
 				A8EA84932B14C521009FBDB5 /* MockData.swift */,
 				A8DB72712B161402001145BF /* Palette.swift */,
+				A8DA53FE2B24A272003BD9BC /* DartsTargetPalette.swift */,
 				A8DA54022B24F3C1003BD9BC /* Helpers */,
 				A8A827232B0E42C900AD1BD0 /* Models */,
 				A8C12F412B0E0D3100940A64 /* Extensions */,
@@ -357,8 +362,6 @@
 				A8A827362B0E4B0200AD1BD0 /* AppConstants.swift */,
 				A8DB72902B1B00E7001145BF /* AppSettingsView.swift */,
 				A8DB728E2B1B00A3001145BF /* AppSettingsViewModel.swift */,
-				A8DA53FC2B2483CC003BD9BC /* DartSettingsViewModel.swift */,
-				A8DA53FE2B24A272003BD9BC /* DartTargetSettingsViewModel.swift */,
 			);
 			name = AppSettings;
 			sourceTree = "<group>";
@@ -543,7 +546,8 @@
 				A82D6CF52B126C8E006CF50A /* DartsHitsView.swift in Sources */,
 				A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */,
 				A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */,
-				A8DA53FF2B24A272003BD9BC /* DartTargetSettingsViewModel.swift in Sources */,
+				A8DA54082B25A5A1003BD9BC /* CustomStepperView.swift in Sources */,
+				A8DA53FF2B24A272003BD9BC /* DartsTargetPalette.swift in Sources */,
 				A8A827312B0E49CD00AD1BD0 /* CGPointExt.swift in Sources */,
 				A8DB72722B161402001145BF /* Palette.swift in Sources */,
 				A8A8273E2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift in Sources */,
@@ -553,7 +557,6 @@
 				A8DA54012B24AE08003BD9BC /* CodableColor.swift in Sources */,
 				A8DA54042B24F3DF003BD9BC /* ScrollViewOffsetKey.swift in Sources */,
 				A8DB72912B1B00E7001145BF /* AppSettingsView.swift in Sources */,
-				A8DA53FD2B2483CC003BD9BC /* DartSettingsViewModel.swift in Sources */,
 				A88776182B0DEEFF005B746B /* DartsScoreApp.swift in Sources */,
 				A8DB727B2B18600E001145BF /* DartsGameStatisticsSheet.swift in Sources */,
 				A8DA53FB2B239B4C003BD9BC /* ColorExt.swift in Sources */,
@@ -561,6 +564,7 @@
 				A82D6CF12B0F4A64006CF50A /* DartsGameAnswerView.swift in Sources */,
 				A8A827372B0E4B0200AD1BD0 /* AppConstants.swift in Sources */,
 				A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */,
+				A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */,
 				A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */,
 				A8A827332B0E4A8500AD1BD0 /* DartsGameSnapshot.swift in Sources */,
 			);

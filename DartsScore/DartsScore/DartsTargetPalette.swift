@@ -1,5 +1,5 @@
 //
-//  DartTargetSettings.swift
+//  DartsTargetPalette.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 09.12.2023.

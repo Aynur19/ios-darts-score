@@ -20,6 +20,9 @@
         }
       }
     },
+    "%@" : {
+
+    },
     "%@ suffix_Seconds" : {
       "localizations" : {
         "en" : {
@@ -93,7 +96,10 @@
         }
       }
     },
-    "Dart Size: %lf" : {
+    "Current value: %lld" : {
+
+    },
+    "Dart Size: %lld" : {
 
     },
     "label_Answer %lld" : {
@@ -450,6 +456,9 @@
 
     },
     "Количество попыток за игру" : {
+
+    },
+    "Размер попадания: %lld" : {
 
     }
   },
