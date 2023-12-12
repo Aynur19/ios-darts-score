@@ -26,13 +26,9 @@ struct DartsHitsView: View {
                         .frame(width: 3)
                         .position(dart.globalPosition(center: center))
                     
-//                    Image(appSettingsVM.dartImageName)
-                    Image("Dart1")
-                        .resizable()
-                        .frame(width: dartSize, height: dartSize)
-                        .bold()
+                    appSettingsVM.dartImageName
+                        .image(size: dartSize)
                         .position(dartPosition(dart, center: center))
-                        .foregroundStyle(appSettingsVM.dartColor)
                 }
             }
         }
@@ -75,8 +71,6 @@ private struct TestDartsHitsView: View {
     }
 }
 
-struct DartsHitsView_Previews: PreviewProvider {
-    static var previews: some View {
-        TestDartsHitsView()
-    }
+#Preview {
+    TestDartsHitsView()
 }

@@ -17,14 +17,16 @@ struct AppSettings {
     
     fileprivate static let defaultDartsWithMiss = true
     
-    static let dartImageNamesData = [
-        "Dart1"
+    static let dartImageNamesData: [DartImage] = [
+        .dart1, .dart2, .dart3, .dart4, .dart5, .dart6, .dart7,
+        .dartFlipH1, .dartFlipH2, 
+        .dart1Rotate180
     ]
     
     fileprivate static let defaultDartImageNameIdx = 0
-    fileprivate static let defaultDartImageName = dartImageNamesData[defaultDartImageNameIdx]
-    fileprivate static let defaultDartSize = 16
-    fileprivate static let defaultDartColor: CodableColor = .init(.blue)
+//    fileprivate static let defaultDartImageName = dartImageNamesData[defaultDartImageNameIdx]
+    fileprivate static let defaultDartSize = 26
+//    fileprivate static let defaultDartColor: CodableColor = .init(.blue)
     
     fileprivate static let defaultDartsTargetPalette: DartsTargetPalette = .classic
     
@@ -35,7 +37,7 @@ struct AppSettings {
         
         case dartsWithMiss
         
-        case dartImageName
+        case dartImageNameIdx
         case dartSize
         case dartColor
         
@@ -48,9 +50,10 @@ struct AppSettings {
     fileprivate(set) var timeForAnswer: Int
     fileprivate(set) var dartsWithMiss: Bool
     
-    fileprivate(set) var dartImageName: String
+    fileprivate(set) var dartImageNameIdx: Int
+//    fileprivate(set) var dartImageName: String
     fileprivate(set) var dartSize: Int
-    fileprivate(set) var dartColor: CodableColor
+//    fileprivate(set) var dartColor: CodableColor
     
     fileprivate(set) var dartsTargetPalette: DartsTargetPalette
     
@@ -60,10 +63,10 @@ struct AppSettings {
         attempts = defaults.integer(forKey: AppSettingsKeys.attempts.rawValue)
         timeForAnswer = defaults.integer(forKey: AppSettingsKeys.timeForAnswer.rawValue)
         dartsWithMiss = defaults.bool(forKey: AppSettingsKeys.dartsWithMiss.rawValue)
-        dartImageName = defaults.string(forKey: AppSettingsKeys.dartImageName.rawValue) ?? Self.defaultDartImageName
+        dartImageNameIdx = defaults.integer(forKey: AppSettingsKeys.dartImageNameIdx.rawValue)
         dartSize = defaults.integer(forKey: AppSettingsKeys.dartSize.rawValue)
         
-        dartColor = Self.loadColor(for: AppSettingsKeys.dartColor.rawValue) ?? Self.defaultDartColor
+//        dartColor = Self.loadColor(for: AppSettingsKeys.dartColor.rawValue) ?? Self.defaultDartColor
         dartsTargetPalette = Self.loadDartsTargetPalette(for: AppSettingsKeys.dartsTargetPalette.rawValue)
     }
     
@@ -71,10 +74,10 @@ struct AppSettings {
         defaults.setValue(attempts, forKey: AppSettingsKeys.attempts.rawValue)
         defaults.setValue(timeForAnswer, forKey: AppSettingsKeys.timeForAnswer.rawValue)
         defaults.setValue(dartsWithMiss, forKey: AppSettingsKeys.dartsWithMiss.rawValue)
-        defaults.setValue(dartImageName, forKey: AppSettingsKeys.dartImageName.rawValue)
+        defaults.setValue(dartImageNameIdx, forKey: AppSettingsKeys.dartImageNameIdx.rawValue)
         defaults.setValue(dartSize, forKey: AppSettingsKeys.dartSize.rawValue)
         
-        Self.saveColor(dartColor, key: AppSettingsKeys.dartColor.rawValue)
+//        Self.saveColor(dartColor, key: AppSettingsKeys.dartColor.rawValue)
         defaults.setValue(dartsTargetPalette.rawValue, forKey: AppSettingsKeys.dartsTargetPalette.rawValue)
     }
     
@@ -84,7 +87,7 @@ struct AppSettings {
                 AppSettingsKeys.attempts.rawValue: Self.defaultAttempts,
                 AppSettingsKeys.timeForAnswer.rawValue: Self.defaultTimeForAnswer,
                 AppSettingsKeys.dartsWithMiss.rawValue: Self.defaultDartsWithMiss,
-                AppSettingsKeys.dartImageName.rawValue: Self.defaultDartImageName,
+                AppSettingsKeys.dartImageNameIdx.rawValue: Self.defaultDartImageNameIdx,
                 AppSettingsKeys.dartSize.rawValue: Double(Self.defaultDartSize)
             ]
         )
@@ -139,7 +142,7 @@ final class AppSettingsViewModel: ObservableObject {
     @Published var dartImageNameIdx: Int {
         didSet { dartImageName = AppSettings.dartImageNamesData[dartImageNameIdx] }
     }
-    @Published private(set) var dartImageName: String {
+    @Published private(set) var dartImageName: DartImage {
         didSet { checkChanges() }
     }
     
@@ -147,12 +150,12 @@ final class AppSettingsViewModel: ObservableObject {
         didSet { checkChanges() }
     }
     
-    @Published var dartColor: Color {
-        didSet { dartCodableColor = .init(dartColor) }
-    }
-    private var dartCodableColor: CodableColor {
-        didSet { checkChanges() }
-    }
+//    @Published var dartColor: Color {
+//        didSet { dartCodableColor = .init(dartColor) }
+//    }
+//    private var dartCodableColor: CodableColor {
+//        didSet { checkChanges() }
+//    }
     
     @Published var dartsTargetPalette: DartsTargetPalette {
         didSet { checkChanges() }
@@ -168,11 +171,11 @@ final class AppSettingsViewModel: ObservableObject {
         timeForAnswer       = model.timeForAnswer
         dartsWithMiss       = model.dartsWithMiss
         
-        dartImageNameIdx    = Self.getDartImageIdx(model)
-        dartImageName       = model.dartImageName
+        dartImageNameIdx    = model.dartImageNameIdx
+        dartImageName       = AppSettings.dartImageNamesData[model.dartImageNameIdx]// model.dartImageName
         dartSize            = model.dartSize
-        dartCodableColor    = model.dartColor
-        dartColor           = model.dartColor.toColor()
+//        dartCodableColor    = model.dartColor
+//        dartColor           = model.dartColor.toColor()
         
         dartsTargetPalette  = model.dartsTargetPalette
     }
@@ -185,11 +188,11 @@ final class AppSettingsViewModel: ObservableObject {
         timeForAnswer       = model.timeForAnswer
         dartsWithMiss       = model.dartsWithMiss
         
-        dartImageNameIdx    = Self.getDartImageIdx(model)
-        dartImageName       = model.dartImageName
+        dartImageNameIdx    = model.dartImageNameIdx
+        dartImageName       = AppSettings.dartImageNamesData[dartImageNameIdx]
         dartSize            = model.dartSize
-        dartCodableColor    = model.dartColor
-        dartColor           = model.dartColor.toColor()
+//        dartCodableColor    = model.dartColor
+//        dartColor           = model.dartColor.toColor()
         
         dartsTargetPalette  = model.dartsTargetPalette
         
@@ -197,13 +200,13 @@ final class AppSettingsViewModel: ObservableObject {
     }
     
     func saveSettings() {
-        model.attempts = attempts
-        model.timeForAnswer = timeForAnswer
-        model.dartsWithMiss = dartsWithMiss
+        model.attempts          = attempts
+        model.timeForAnswer     = timeForAnswer
+        model.dartsWithMiss     = dartsWithMiss
         
-        model.dartImageName = dartImageName
-        model.dartSize      = dartSize
-        model.dartColor     = dartCodableColor
+        model.dartImageNameIdx  = dartImageNameIdx
+        model.dartSize          = dartSize
+//        model.dartColor         = dartCodableColor
         
         model.dartsTargetPalette = dartsTargetPalette
         
@@ -217,9 +220,9 @@ final class AppSettingsViewModel: ObservableObject {
         isChanged = attempts != model.attempts
         || timeForAnswer != model.timeForAnswer
         || dartsWithMiss != model.dartsWithMiss
-        || dartImageName != model.dartImageName
+        || dartImageNameIdx != model.dartImageNameIdx
         || dartSize != model.dartSize
-        || dartCodableColor != model.dartColor
+//        || dartCodableColor != model.dartColor
         || dartsTargetPalette != model.dartsTargetPalette
     }
     
@@ -231,11 +234,11 @@ final class AppSettingsViewModel: ObservableObject {
         return idx
     }
     
-    private static func getDartImageIdx(_ model: AppSettings) -> Int {
-        guard let idx = AppSettings.dartImageNamesData.firstIndex(of: model.dartImageName) else {
-            return AppSettings.defaultDartImageNameIdx
-        }
-        
-        return idx
-    }
+//    private static func getDartImageIdx(_ model: AppSettings) -> Int {
+//        guard let idx = AppSettings.dartImageNamesData.firstIndex(of: model.dartImageName) else {
+//            return AppSettings.defaultDartImageNameIdx
+//        }
+//        
+//        return idx
+//    }
 }

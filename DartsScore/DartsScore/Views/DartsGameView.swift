@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 private struct DartsGameViewConstants {
     static let opacityAnimationDuration: CGFloat = 0.5
@@ -25,6 +26,9 @@ struct DartsGameView: View {
     
     @Environment(\.mainWindowSize) var windowSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
+    
+    @State private var audioPlayer: AVAudioPlayer?
+    @State private var selectedSound: String = "tap"
     
 //    @ObservedObject var appSettingsVM: AppSettingsViewModel
     
@@ -307,7 +311,23 @@ extension DartsGameView {
         answersIsShow = true
     }
     
+    func playTapSound() {
+        let resourcePath = Bundle.main.url(forResource: "tap", withExtension: "mp3")
+        
+        do {
+            //initializing the audio player with the resource path
+            audioPlayer = try AVAudioPlayer(contentsOf: resourcePath!)
+            
+            //play the audio
+            audioPlayer?.play()
+        } catch {
+            //error handling
+            print(error.localizedDescription)
+        }
+    }
+    
     private func onAnswered(_ answer: Int) {
+        playTapSound()
         gameVM.onAnswered(
             for: timerVM.counter,
             expected: dartsHitsVM.score,

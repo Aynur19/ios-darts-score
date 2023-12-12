@@ -190,7 +190,9 @@ struct AppSettingsView: View {
             HStack {
                 Text("Изображение попадания")
                 Spacer()
-                Image(systemName: appSettingsVM.dartImageName)
+                
+                appSettingsVM.dartImageName
+                    .image(size: 20)
             }
             
             hWheelPickerCursor
@@ -200,7 +202,7 @@ struct AppSettingsView: View {
                 $appSettingsVM.dartImageNameIdx,
                 contentSize: .init(width: 64, height: 32)
             ) { item in
-                Image(systemName: item)
+                item.image(size: 20)
             } dividerView: {
                 hWheelPickerDivider
             } backgroundView: {
@@ -217,7 +219,7 @@ struct AppSettingsView: View {
     private var hitSizeSettings: some View {
         CustomStepperView(
             value: $appSettingsVM.dartSize,
-            range: 10...30,
+            range: 10...40,
             step: 1,
             labelView: { value in
                 Text("Размер попадания: \(value)")
