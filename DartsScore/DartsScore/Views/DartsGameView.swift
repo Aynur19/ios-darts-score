@@ -182,7 +182,7 @@ struct DartsGameView: View {
             
             HStack(spacing: Constants.answersSpasing) {
                 ForEach(gameVM.currentAnswers, id: \.self) { answer in
-                    DartsGameAnswerView(answer) { onAnswered(answer) }
+                    DartsGameAnswerView(score: answer) { onAnswered(answer) }
                 }
             }
         }

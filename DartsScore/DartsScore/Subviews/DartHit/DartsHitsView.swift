@@ -42,6 +42,7 @@ struct DartsHitsView: View {
         var position = dart.globalPosition(center: center)
         position.x += dartSize.half
         position.y -= dartSize.half
+        
         return position
     }
     
@@ -49,7 +50,6 @@ struct DartsHitsView: View {
         let sector = dart.sector
         
         if sector.area == .outOfPoints { return .white }
-        
         if sector.sectorIdx % 2 == 1, sector.xScore == 1 { return .white }
         
         return .black
@@ -66,7 +66,7 @@ private struct TestDartsHitsView: View {
                 .environmentObject(appSettingsVM)
         }
         .onAppear {
-            appSettingsVM.dartSize = 16
+            appSettingsVM.dartSize = 30
         }
     }
 }

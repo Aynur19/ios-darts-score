@@ -16,12 +16,12 @@ private struct DartsGameAnswerViewConstants {
 struct DartsGameAnswerView: View {
     private typealias Constants = DartsGameAnswerViewConstants
     
-    let score: Int
-    let color: Color
-    let onAnswered: () -> Void
+    private let score: Int
+    private let color: Color
+    private let onAnswered: () -> Void
     
     init(
-        _ score: Int,
+        score: Int,
         color: Color = Palette.btnSecondary,
         onAnswered: @escaping () -> Void = { }
     ) {
@@ -49,5 +49,5 @@ struct DartsGameAnswerView: View {
 }
 
 #Preview {
-    DartsGameAnswerView(180)
+    DartsGameAnswerView(score: 180)
 }

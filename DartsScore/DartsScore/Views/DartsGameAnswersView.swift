@@ -83,7 +83,7 @@ struct GameAnswersView: View {
                 let answerColor = getAnswerColor(answer, 
                                                  actual: snapshot.actual,
                                                  expected: snapshot.expected)
-                DartsGameAnswerView(answer, color: answerColor)
+                DartsGameAnswerView(score: answer, color: answerColor)
             }
         }
     }
