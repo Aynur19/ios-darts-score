@@ -8,31 +8,31 @@
 import SwiftUI
 
 class DartsHitsViewModel: ObservableObject {
-//    let appSettings: AppSettingsVM
-    let options: DartsTargetViewOptions
-    let sectorsCount = DartsConstants.points.count
-    let rotationAngle = DartsConstants.rotationAngle
+    private let options: DartsTargetViewOptions
+    private let sectorsCount = DartsConstants.points.count
+    private let rotationAngle = DartsConstants.rotationAngle
+    
+    private(set) var dartsWithMiss: Bool
+    private(set) var dartsSize: CGFloat
     
     @Published private(set) var darts = [Dart]()
     @Published private(set) var score: Int = .zero
     
-    init(options: DartsTargetViewOptions) {
+    init(options: DartsTargetViewOptions, dartsWithMiss: Bool, dartsSize: Int) {
         self.options = options
-//        self.appSettings = appSettings
+        self.dartsWithMiss = dartsWithMiss
+        self.dartsSize = CGFloat(dartsSize)
     }
     
-    func reset() {
+    func reset(dartsWithMiss: Bool, dartsSize: Int) {
+        self.dartsWithMiss = dartsWithMiss
+        self.dartsSize = CGFloat(dartsSize)
+        
         darts.removeAll()
         score = .zero
     }
     
-    func updateDarts(_ darts: [Dart] = []) {
-        if !darts.isEmpty {
-            self.darts.removeAll()
-            self.darts.append(contentsOf: darts)
-            return
-        }
-        
+    func updateDarts() {
         generateDarts()
         updateScore()
     }

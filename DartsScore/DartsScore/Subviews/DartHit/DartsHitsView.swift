@@ -25,8 +25,8 @@ struct DartsHitsView: View {
                         .fill(dartPositionColor(dart))
                         .frame(width: 3)
                         .position(dart.globalPosition(center: center))
-                    
-                    appSettingsVM.dartImageName
+//                    , dartsTargetPalette: .classic
+                    appSettingsVM.model.dartImageName
                         .image(size: dartSize)
                         .position(dartPosition(dart, center: center))
                 }
@@ -35,7 +35,7 @@ struct DartsHitsView: View {
     }
     
     private var dartSize: CGFloat {
-        .init(appSettingsVM.dartSize)
+        .init(appSettingsVM.model.dartSize)
     }
     
     private func dartPosition(_ dart: Dart, center: CGPoint) -> CGPoint {
@@ -61,12 +61,9 @@ private struct TestDartsHitsView: View {
     
     var body: some View {
         VStack {
-            Text("Dart Size: \(appSettingsVM.dartSize)")
+            Text("Dart Size: \(appSettingsVM.model.dartSize)")
             DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts)
                 .environmentObject(appSettingsVM)
-        }
-        .onAppear {
-            appSettingsVM.dartSize = 30
         }
     }
 }

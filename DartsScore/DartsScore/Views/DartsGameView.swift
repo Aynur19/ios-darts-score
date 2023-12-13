@@ -54,8 +54,12 @@ struct DartsGameView: View {
     
     @State private var startBtnIsShow = true
     
+    private let dartsTargetViewOptions: DartsTargetViewOptions
+//    @State private var dartsTargetWidth: CGFloat
+    
     init(_ appSettings: AppSettings) {
         print("DartsGameView.\(#function)")
+//        self.dartsTargetWidth = windowSize.width - Constants.dartsTargetHPadding.x2
 //        self.appSettings = appSettings
 //        self.appSettingsVM = appSettingsVM
         
@@ -73,13 +77,15 @@ struct DartsGameView: View {
             textFormat: AppConstants.timerTextFormat
         )
         
-//        let attempts = appSettingsVM .attempts
-//        let timeForAnswer = appSettingsVM.timeForAnswer
-//        
-        gameVM = .init(appSettings.attempts, appSettings.timeForAnswer) 
-        //ObservedObject(wrappedValue: DartsGameViewModel(appSettingsVM.attempts, appSettingsVM.timeForAnswer))// .init( attempts, timeForAnswer)
-        timerVM = .init(appSettings.timeForAnswer) //ObservedObject(wrappedValue: CountdownTimerViewModel(appSettingsVM.timeForAnswer)) ///.init(timeForAnswer)
-        dartsHitsVM = .init(options: .init(AppConstants.dartsFrameWidth)) // .init(options: .init(appSettings))
+        gameVM = .init(appSettings)
+        timerVM = .init(appSettings.timeForAnswer)
+        
+        dartsTargetViewOptions = DartsTargetViewOptions(AppConstants.dartsFrameWidth)
+        dartsHitsVM = .init(
+            options: dartsTargetViewOptions,
+            dartsWithMiss: appSettings.dartsWithMiss,
+            dartsSize: appSettings.dartSize
+        )
     }
     
     var body: some View {
@@ -119,7 +125,7 @@ struct DartsGameView: View {
                 
                 topView
                 dartsView
-                    .frame(width: dartsSize, height: dartsSize)
+                    .frame(width: dartsTargetWidth, height: dartsTargetWidth)
 
                 ZStack {
                     gameViewButtons
@@ -133,7 +139,7 @@ struct DartsGameView: View {
         .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameViewIsShow)
     }
     
-    private var dartsSize: CGFloat {
+    private var dartsTargetWidth: CGFloat {
         windowSize.width - Constants.dartsTargetHPadding.x2
     }
     
@@ -148,10 +154,10 @@ struct DartsGameView: View {
     }
     
     private var dartsView: some View {
-        print("Darts width: \(dartsSize)")
+//        print("Darts width: \(dartsSize)")
         
         return ZStack {
-            DartsTargetView(.init(dartsSize))
+            DartsTargetView(dartsTargetViewOptions, dartsTargetPalette: .classic)
                 .overlay {
                     DartsHitsView(dartsHitsVM.darts)
                         .environmentObject(appSettingsVM)
@@ -161,7 +167,7 @@ struct DartsGameView: View {
                            value: rotation)
                 .opacity(dartsTargetSide1IsShow ? 1 : 0)
             
-            DartsTargetView(.init(dartsSize))
+            DartsTargetView(dartsTargetViewOptions, dartsTargetPalette: .classic)
                 .overlay {
                     DartsHitsView(dartsHitsVM.darts)
                         .environmentObject(appSettingsVM)
@@ -286,13 +292,16 @@ extension DartsGameView {
     
     private func resetGame(isRestart: Bool = false) {
         if isRestart {
-            gameVM.restart(appSettingsVM.attempts, appSettingsVM.timeForAnswer)
+            gameVM.restart(appSettings: appSettingsVM.model)
         } else {
             gameVM.reset()
         }
         
-        timerVM.reset(gameVM.timeForAnswer)
-        dartsHitsVM.reset()
+        timerVM.reset(gameVM.game.timeForAnswer)
+        dartsHitsVM.reset(
+            dartsWithMiss: appSettingsVM.model.dartsWithMiss,
+            dartsSize: appSettingsVM.model.dartSize
+        )
         
         answersIsShow = false
         showDartsSide()
@@ -300,7 +309,7 @@ extension DartsGameView {
     
     private func startGame() {
         gameVM.start()
-        timerVM.start(gameVM.timeForAnswer)
+        timerVM.start(gameVM.game.timeForAnswer)
         
         updateAnswers()
     }
@@ -358,7 +367,7 @@ extension DartsGameView {
             await MainActor.run { updateAnswers() }
         }
         
-        timerVM.start(gameVM.timeForAnswer)
+        timerVM.start(gameVM.game.timeForAnswer)
     }
     
     private func showDartsSide() {

@@ -10,11 +10,11 @@ import SwiftUI
 struct DartsTargetView: View {
     private let options: DartsTargetViewOptions
     private let sectorsCount = DartsConstants.points.count
+    private let dartsTargetPalette: DartsTargetPalette
     
-    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
-    
-    init(_ options: DartsTargetViewOptions) {
+    init(_ options: DartsTargetViewOptions, dartsTargetPalette: DartsTargetPalette) {
         self.options = options
+        self.dartsTargetPalette = dartsTargetPalette
     }
     
     var body: some View {
@@ -33,16 +33,16 @@ struct DartsTargetView: View {
                         sector(in: center, isEven: false)
                         
                         wirePath(in: center)
-                            .stroke(appSettingsVM.dartsTargetPalette.wireColor,
+                            .stroke(dartsTargetPalette.wireColor,
                                     lineWidth: options.wireLineWidth)
                         
                         Circle()
-                            .fill(appSettingsVM.dartsTargetPalette.points25Color)
+                            .fill(dartsTargetPalette.points25Color)
                             .frame(width: options.points25Radius.x2)
                             .position(center)
                         
                         Circle()
-                            .fill(appSettingsVM.dartsTargetPalette.bullEyeColor)
+                            .fill(dartsTargetPalette.bullEyeColor)
                             .frame(width: options.bullEyeRadius.x2)
                             .position(center)
                         
@@ -62,7 +62,7 @@ struct DartsTargetView: View {
             
             Text(String(DartsConstants.points[sectorIdx]))
                 .position(x: x, y: y)
-                .foregroundColor(appSettingsVM.dartsTargetPalette.dartsSectorNumberColor)
+                .foregroundColor(dartsTargetPalette.dartsSectorNumberColor)
                 .bold()
         }
     }
@@ -123,7 +123,7 @@ struct DartsTargetView: View {
                     ))
                 }
             }
-            .fill(appSettingsVM.dartsTargetPalette.getSectorColor(for: checkNumber, isBaseSector))
+            .fill(dartsTargetPalette.getSectorColor(for: checkNumber, isBaseSector))
         }
     }
     
@@ -206,15 +206,15 @@ struct DartsTargetView: View {
 }
 
 private struct TestDartsTargetView: View {
-    @StateObject var appSettingsVM = AppSettingsViewModel()
-    
     var body: some View {
         ZStack {
             Color(.systemGray6)
                 .ignoresSafeArea()
             
-            DartsTargetView(.init(360))
-                .environmentObject(appSettingsVM)
+            DartsTargetView(
+                .init(360),
+                dartsTargetPalette: .classic
+            )
         }
     }
 }

@@ -8,13 +8,27 @@
 import SwiftUI
 
 struct AppSettingsView: View {
+    private typealias Constants = AppSettingsConstants
+    
     @Environment(\.mainWindowSize) var windowsSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
-    private let attemptsCountData = AppSettings.attemptsCountData
-    private let timesForAnswerData = AppSettings.timesForAnswerData
+    @ObservedObject var settingsVM: SettingsViewModel
     
-    private let snapshots = MockData.getDartsGameSnapshotsList()
+//    @State private var isChanged: Bool = false
+//    
+//    @State private var attempts: Int = Constants.defaultAttempts
+//    @State private var timeForAnswerIdx: Int = Constants.defaultTimeForAnswerIdx
+//    @State private var dartsWithMiss: Bool = Constants.defaultDartsWithMiss
+//    @State private var dartImageNameIdx: Int = Constants.defaultDartImageNameIdx
+//    @State private var dartSize: Int = Constants.defaultDartSize
+    
+//    private let snapshots = MockData.getDartsGameSnapshotsList()
+    
+    init(appSettings: AppSettings) {
+        print("AppSettingsView.\(#function)")
+        settingsVM = .init(appSettings: appSettings)
+    }
     
     var body: some View {
         NavigationStack {
@@ -24,31 +38,28 @@ struct AppSettingsView: View {
                 
                 ScrollView {
                     VStack(spacing: 20) {
-//                        Image("Minus")
-////                            .renderingMode(.original)
-//                            .resizable()
-//                            .frame(width: 64, height: 64)
-//                            .colorMultiply(.green)
-////                            .background { Color.yellow }
-                        
                         attemptsSettings
                         timeForAnswerSettings
                         dartsWithMissSettings
                         hitImageSettings
                         hitSizeSettings
                         
-                        DartsTargetView(.init(AppConstants.dartsFrameWidth))
-                            .overlay { DartsHitsView(darts) }
+                        DartsTargetView(
+                            .init(AppConstants.dartsFrameWidth),
+                            dartsTargetPalette: .classic
+                        )
+                        .overlay { DartsHitsView(settingsVM.darts) }
                     }
                     .foregroundStyle(Palette.btnPrimary)
                     .font(.headline)
                     .padding(32)
                 }
             }
-            .onAppear { }
-            .onDisappear {
-                appSettingsVM.resetSettings()
-            }
+//            .onAppear { prepareProperties() }
+//            .onAppear { }
+//            .onDisappear {
+//                appSettingsVM.resetSettings()
+//            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -59,11 +70,12 @@ struct AppSettingsView: View {
                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        appSettingsVM.saveSettings()
+                        saveSettings()
+//                        appSettingsVM.saveSettings()
                     } label: {
                         Text("Save")
                     }
-                    .disabled(!appSettingsVM.isChanged)
+                    .disabled(!settingsVM.isChanged)
                 }
             }
 
@@ -103,22 +115,18 @@ struct AppSettingsView: View {
         Palette.btnPrimary
     }
     
-    private var darts: [Dart] {
-        appSettingsVM.dartsWithMiss ? snapshots.snapshots[0].darts : snapshots.snapshots[1].darts
-    }
-    
     private var attemptsSettings: some View {
         VStack {
             HStack {
                 Text("Количество попыток за игру")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(appSettingsVM.attempts)")
+                Text("\(settingsVM.attempts)")
                     .multilineTextAlignment(.trailing)
             }
             
             HStaticSegmentedPickerView(
-                data: attemptsCountData,
-                value: $appSettingsVM.attempts,
+                data: Constants.attemptsCountData,
+                value: $settingsVM.attempts,
                 backgroundColor: UIColor(Palette.btnPrimary.opacity(0.2)),
                 selectedSegmentTintColor: UIColor(Palette.btnPrimary),
                 selectedForecroundColor: UIColor(Palette.btnPrimaryText),
@@ -126,7 +134,7 @@ struct AppSettingsView: View {
             ) { item in
                 Text("\(item)")
             }
-            .id(appSettingsVM.id)
+//            .id(appSettingsVM.id)
         }
         .padding()
         .overlay { glowingOutline }
@@ -137,15 +145,15 @@ struct AppSettingsView: View {
             HStack {
                 Text("Время на ответ")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(timesForAnswerData[appSettingsVM.timeForAnswerIdx]) сек.")
+                Text("\(settingsVM.timeForAnswer) сек.")
                     .multilineTextAlignment(.trailing)
             }
             
             hWheelPickerCursor
             
             HWheelPickerView(
-                data: timesForAnswerData,
-                valueIdx: $appSettingsVM.timeForAnswerIdx,
+                data: Constants.timesForAnswerData,
+                valueIdx: $settingsVM.timeForAnswerIdx,
                 contentSize: .init(width: 64, height: 32)
             ) { item in
                 Text("\(item)")
@@ -164,7 +172,7 @@ struct AppSettingsView: View {
     
     private var dartsWithMissSettings: some View {
         VStack(spacing: 20) {
-            Toggle(isOn: $appSettingsVM.dartsWithMiss) {
+            Toggle(isOn: $settingsVM.dartsWithMiss) {
                 Text("Включить промахи")
             }
             .toggleStyle(
@@ -191,15 +199,14 @@ struct AppSettingsView: View {
                 Text("Изображение попадания")
                 Spacer()
                 
-                appSettingsVM.dartImageName
-                    .image(size: 20)
+                settingsVM.dartImageName.image(size: 20)
             }
             
             hWheelPickerCursor
             
             HWheelPickerView(
-                data: AppSettings.dartImageNamesData,
-                valueIdx: $appSettingsVM.dartImageNameIdx,
+                data: Constants.dartImageNamesData,
+                valueIdx: $settingsVM.dartImageNameIdx,
                 contentSize: .init(width: 64, height: 32)
             ) { item in
                 item.image(size: 20)
@@ -218,19 +225,46 @@ struct AppSettingsView: View {
     
     private var hitSizeSettings: some View {
         HStepperView(
-            value: $appSettingsVM.dartSize,
+            value: $settingsVM.dartSize,
             range: 10...40,
             step: 1,
             labelView: { value in
                 Text("Размер попадания: \(value)")
             }
         )
-//        Stepper("Размер попадания: \(appSettingsVM.dartSize)",
-//                value: $appSettingsVM.dartSize,
-//                in: 10...30)
         .padding()
         .overlay { glowingOutline }
-
+    }
+    
+//    private func prepareProperties() {
+//        attempts = appSettingsVM.model.attempts
+//        timeForAnswerIdx = appSettingsVM.getTimeForAnswerIdx()
+//        dartsWithMiss = appSettingsVM.model.dartsWithMiss
+//        dartImageNameIdx = appSettingsVM.getDartImageNameIdx()
+//        dartSize = appSettingsVM.model.dartSize
+//    }
+    
+//    private func checkChanges() {
+//        isChanged =
+//        appSettingsVM.model.attempts != attempts
+//        || appSettingsVM.model.timeForAnswer != Constants.timesForAnswerData[timeForAnswerIdx]
+//        || appSettingsVM.model.dartsWithMiss != dartsWithMiss
+//        || appSettingsVM.model.dartImageName != Constants.dartImageNamesData[dartImageNameIdx]
+//        || appSettingsVM.model.dartSize != dartSize
+//    }
+    
+    private func saveSettings() {
+//        appSettingsVM.save(
+//            attempts: attempts,
+//            timeForAnswerIdx: timeForAnswerIdx,
+//            dartsWithMiss: dartsWithMiss,
+//            dartImageNameIdx: dartImageNameIdx,
+//            dartSize: dartSize,
+//            dartsTargetPalette: .classic
+//        )
+        
+        appSettingsVM.save(settingsVM: settingsVM)
+        settingsVM.checkChanges()
     }
 }
 
@@ -239,13 +273,10 @@ private struct TestAppSettingsView: View {
     
     var body: some View {
         TabView {
-            AppSettingsView()
+            AppSettingsView(appSettings: appSettingsVM.model)
                 .environmentObject(appSettingsVM)
                 .toolbarBackground(.visible, for: .tabBar)
                 .toolbarBackground(Palette.tabBar, for: .tabBar)
-        }
-        .onAppear {
-            appSettingsVM.dartSize = 16
         }
     }
 }

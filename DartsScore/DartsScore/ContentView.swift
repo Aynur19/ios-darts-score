@@ -27,7 +27,7 @@ struct ContentView: View {
                     .toolbarBackground(.visible, for: .tabBar)
                     .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
-                AppSettingsView()
+                AppSettingsView(appSettings: appSettingsVM.model)
                     .tabItem {
                         Label("viewTitle_AppSettings", systemImage: "gear")
 

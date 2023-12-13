@@ -64,11 +64,14 @@ struct GameAnswersView: View {
         TabView(selection: $index) {
             ForEach(snapshotsVM.model.snapshots) { snapshot in
                 VStack(spacing: 32) {
-                    DartsTargetView(.init(AppConstants.dartsFrameWidth))
-                        .overlay {
-                            DartsHitsView(snapshot.darts)
-                                .environmentObject(appSettingsVM)
-                        }
+                    DartsTargetView(
+                        .init(AppConstants.dartsFrameWidth),
+                        dartsTargetPalette: .classic
+                    )
+                    .overlay {
+                        DartsHitsView(snapshot.darts)
+                            .environmentObject(appSettingsVM)
+                    }
                     
                     answersView(snapshot)
                 }

@@ -13,6 +13,7 @@ struct DartsGame: Identifiable {
     let id: String
     let attempts: Int
     let timeForAnswer: Int
+    let dartsWithMiss: Bool
     let snapshotsJsonName: String
     
     private(set) var score: Int = .zero
@@ -21,10 +22,16 @@ struct DartsGame: Identifiable {
     private(set) var timeSpent: Int = .zero
     private(set) var dateTime: Date = .now
     
-    init(_ id: String = UUID().uuidString, attempts: Int, timeForAnswer: Int) {
+    init(
+        _ id: String = UUID().uuidString,
+        attempts: Int,
+        timeForAnswer: Int,
+        dartsWithMiss: Bool
+    ) {
         self.id = id
         self.attempts = attempts
         self.timeForAnswer = timeForAnswer
+        self.dartsWithMiss = dartsWithMiss
         self.snapshotsJsonName = snapshotsJsonNamePrefix + id
     }
     
@@ -32,12 +39,13 @@ struct DartsGame: Identifiable {
         id: String = UUID().uuidString,
         attempts: Int,
         timeForAnswer: Int,
+        dartsWithMiss: Bool,
         score: Int,
         successAttempts: Int,
         timeSpent: Int,
         dateTime: Date
     ) {
-        self.init(id, attempts: attempts, timeForAnswer: timeForAnswer)
+        self.init(id, attempts: attempts, timeForAnswer: timeForAnswer, dartsWithMiss: dartsWithMiss)
         self.score = score
         self.successAttempts = successAttempts
         self.timeSpent = timeSpent
@@ -66,6 +74,7 @@ extension DartsGame: Codable {
         self.id                 = try container.decode(String.self, forKey: .id)
         self.attempts           = try container.decode(Int.self, forKey: .attempts)
         self.timeForAnswer      = try container.decode(Int.self, forKey: .timeForAnswer)
+        self.dartsWithMiss      = try container.decode(Bool.self, forKey: .dartsWithMiss)
         self.snapshotsJsonName  = try container.decode(String.self, forKey: .snapshotsJsonName)
         self.score              = try container.decode(Int.self, forKey: .score)
         self.spentAttempts      = try container.decode(Int.self, forKey: .spentAttempts)
@@ -80,6 +89,7 @@ extension DartsGame: Codable {
         case id
         case attempts
         case timeForAnswer
+        case dartsWithMiss
         case snapshotsJsonName
         case score
         case spentAttempts
