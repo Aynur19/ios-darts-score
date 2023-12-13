@@ -121,12 +121,29 @@ where DataType: Hashable,
         }
         selectedItemIdx = idx
         
+        scrollTo(idx: idx, scrollProxy: scrollProxy)
+//        withAnimation {
+//            scrollProxy.scrollTo(idx, anchor: .center)
+//        }
+    }
+    
+    private func scrollTo(idx: Int, scrollProxy: ScrollViewProxy) {
         withAnimation {
             scrollProxy.scrollTo(idx, anchor: .center)
         }
     }
     
+    @ViewBuilder
     private func hScrollView(_ geometry: GeometryProxy, _ scrollProxy: ScrollViewProxy) -> some View {
+        if #available(iOS 17.0, *) {
+            hScrollView_ios17(geometry, scrollProxy)
+        } else {
+            hScrollView_default(geometry, scrollProxy)
+        }
+    }
+    
+    @available(iOS 17.0, *)
+    private func hScrollView_ios17(_ geometry: GeometryProxy, _ scrollProxy: ScrollViewProxy) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: .zero) {
                 Spacer(minLength: geometry.size.width.half)
@@ -144,6 +161,35 @@ where DataType: Hashable,
         }
         .onPreferenceChange(ScrollViewOffsetKey.self) {
             xOffset.send($0)
+        }
+        .onChange(of: selectedItemIdx) { oldValue, newValue in
+            if oldValue != newValue {
+                scrollTo(idx: newValue, scrollProxy: scrollProxy)
+            }
+        }
+    }
+    
+    private func hScrollView_default(_ geometry: GeometryProxy, _ scrollProxy: ScrollViewProxy) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: .zero) {
+                Spacer(minLength: geometry.size.width.half)
+                scrollItems
+                Spacer(minLength: geometry.size.width.half)
+            }
+            .background {
+                GeometryReader {
+                    Color.clear.preference(
+                        key: ScrollViewOffsetKey.self,
+                        value: -$0.frame(in: .named(preferenceName)).origin.x
+                    )
+                }
+            }
+        }
+        .onPreferenceChange(ScrollViewOffsetKey.self) {
+            xOffset.send($0)
+        }
+        .onChange(of: selectedItemIdx) { newValue in
+            scrollTo(idx: newValue, scrollProxy: scrollProxy)
         }
     }
 }
@@ -169,11 +215,11 @@ private struct TestHWheelPickerView: View {
             }
             
             VStack {
-                Text("\(data[selectedItemIdx2])")
+                Text("\(data[selectedItemIdx1])")
                 
                 HWheelPickerView(
                     data: data,
-                    valueIdx: $selectedItemIdx2,
+                    valueIdx: $selectedItemIdx1,
                     contentSize: .init(width: 100, height: 50),
                     dividerSize: .init(width: 1.5, height: 34),
                     contentView: { item in

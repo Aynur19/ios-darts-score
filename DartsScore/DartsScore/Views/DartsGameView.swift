@@ -299,7 +299,7 @@ extension DartsGameView {
         
         timerVM.reset(gameVM.game.timeForAnswer)
         dartsHitsVM.reset(
-            dartsWithMiss: appSettingsVM.model.dartsWithMiss,
+            dartsWithMiss: gameVM.game.dartsWithMiss,
             dartsSize: appSettingsVM.model.dartSize
         )
         

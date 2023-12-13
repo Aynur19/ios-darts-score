@@ -45,10 +45,12 @@ class DartsHitsViewModel: ObservableObject {
     }
     
     private func generateDart() -> Dart {
+        print("DartsHitsViewModel.\(#function)")
+        print("  dartsWithMiss: \(dartsWithMiss)")
         var sector: DartsSector = .init(.wire)
         var position: CGPoint = .zero
         
-        while sector.area == .wire {
+        while sector.area == .wire || (!dartsWithMiss && sector.area == .outOfPoints) {
             let angle = CGFloat(Angle.randomCircleSector().degrees)
             let distance = CGFloat.random(in: 0...options.maxDartRadius)
             

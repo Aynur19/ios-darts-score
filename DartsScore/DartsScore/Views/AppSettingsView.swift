@@ -15,16 +15,6 @@ struct AppSettingsView: View {
     
     @ObservedObject var settingsVM: SettingsViewModel
     
-//    @State private var isChanged: Bool = false
-//    
-//    @State private var attempts: Int = Constants.defaultAttempts
-//    @State private var timeForAnswerIdx: Int = Constants.defaultTimeForAnswerIdx
-//    @State private var dartsWithMiss: Bool = Constants.defaultDartsWithMiss
-//    @State private var dartImageNameIdx: Int = Constants.defaultDartImageNameIdx
-//    @State private var dartSize: Int = Constants.defaultDartSize
-    
-//    private let snapshots = MockData.getDartsGameSnapshotsList()
-    
     init(appSettings: AppSettings) {
         print("AppSettingsView.\(#function)")
         settingsVM = .init(appSettings: appSettings)
@@ -55,8 +45,7 @@ struct AppSettingsView: View {
                     .padding(32)
                 }
             }
-//            .onAppear { prepareProperties() }
-//            .onAppear { }
+            .onAppear { resetSettings() }
 //            .onDisappear {
 //                appSettingsVM.resetSettings()
 //            }
@@ -68,10 +57,19 @@ struct AppSettingsView: View {
                         .foregroundStyle(Palette.bgText)
                 }
                 
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        resetSettings()
+                    } label: {
+                        Text("Reset")
+                    }
+                    .disabled(!settingsVM.isChanged)
+                }
+                
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         saveSettings()
-//                        appSettingsVM.saveSettings()
                     } label: {
                         Text("Save")
                     }
@@ -88,7 +86,7 @@ struct AppSettingsView: View {
             .shadow(color: Palette.btnPrimary, radius: 5)
     }
     
-    private var hWhheelPickerBackground: some View {
+    private var hWheelPickerBackground: some View {
         LinearGradient(
             colors: [.clear, Palette.btnPrimary.opacity(0.25), .clear],
             startPoint: .leading,
@@ -96,7 +94,7 @@ struct AppSettingsView: View {
         )
     }
     
-    private var hWhheelPickerMask: some View {
+    private var hWheelPickerMask: some View {
         LinearGradient(
             colors: [.clear, Palette.bgText, .clear],
             startPoint: .leading,
@@ -160,9 +158,9 @@ struct AppSettingsView: View {
             } dividerView: {
                 hWheelPickerDivider
             } backgroundView: {
-                hWhheelPickerBackground
+                hWheelPickerBackground
             } maskView: {
-                hWhheelPickerMask
+                hWheelPickerMask
             }
             .frame(minHeight: 32)
         }
@@ -213,9 +211,9 @@ struct AppSettingsView: View {
             } dividerView: {
                 hWheelPickerDivider
             } backgroundView: {
-                hWhheelPickerBackground
+                hWheelPickerBackground
             } maskView: {
-                hWhheelPickerMask
+                hWheelPickerMask
             }
             .frame(minHeight: 32)
         }
@@ -228,44 +226,35 @@ struct AppSettingsView: View {
             value: $settingsVM.dartSize,
             range: 10...40,
             step: 1,
+            buttonsContainerBackground: Palette.btnPrimary.opacity(0.25),
             labelView: { value in
                 Text("Размер попадания: \(value)")
+            },
+            dividerView: {
+                Rectangle()
+                    .fill(Palette.btnPrimary)
+                    .frame(width: 1.5, height: 20)
             }
+//            dividerView:
         )
         .padding()
         .overlay { glowingOutline }
     }
     
-//    private func prepareProperties() {
-//        attempts = appSettingsVM.model.attempts
-//        timeForAnswerIdx = appSettingsVM.getTimeForAnswerIdx()
-//        dartsWithMiss = appSettingsVM.model.dartsWithMiss
-//        dartImageNameIdx = appSettingsVM.getDartImageNameIdx()
-//        dartSize = appSettingsVM.model.dartSize
-//    }
-    
-//    private func checkChanges() {
-//        isChanged =
-//        appSettingsVM.model.attempts != attempts
-//        || appSettingsVM.model.timeForAnswer != Constants.timesForAnswerData[timeForAnswerIdx]
-//        || appSettingsVM.model.dartsWithMiss != dartsWithMiss
-//        || appSettingsVM.model.dartImageName != Constants.dartImageNamesData[dartImageNameIdx]
-//        || appSettingsVM.model.dartSize != dartSize
-//    }
-    
     private func saveSettings() {
-//        appSettingsVM.save(
-//            attempts: attempts,
-//            timeForAnswerIdx: timeForAnswerIdx,
-//            dartsWithMiss: dartsWithMiss,
-//            dartImageNameIdx: dartImageNameIdx,
-//            dartSize: dartSize,
-//            dartsTargetPalette: .classic
-//        )
-        
         appSettingsVM.save(settingsVM: settingsVM)
         settingsVM.checkChanges()
     }
+    
+    private func resetSettings() {
+        if settingsVM.isChanged {
+            settingsVM.reset()
+        }
+    }
+    
+//    private func toDefaultSettings() {
+////        settingsVM.toDefault()
+//    }
 }
 
 private struct TestAppSettingsView: View {

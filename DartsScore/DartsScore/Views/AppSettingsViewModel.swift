@@ -35,6 +35,7 @@ final class SettingsViewModel: ObservableObject {
     private typealias Constants = AppSettingsConstants
     
     @Published private(set) var isChanged: Bool = false
+    @Published private(set) var isDefaults: Bool = false
     
     @Published var attempts: Int {
         didSet { checkChanges() }
@@ -80,13 +81,14 @@ final class SettingsViewModel: ObservableObject {
         self.timeForAnswer = appSettings.timeForAnswer.msToSec
         
         self.dartsWithMiss = appSettings.dartsWithMiss
+        self.darts = appSettings.dartsWithMiss ? snapshots[0].darts : snapshots[1].darts
         
         self.dartImageNameIdx = Self.getDartImageNameIdx(appSettings)
         self.dartImageName = appSettings.dartImageName
         
         self.dartSize = appSettings.dartSize
         
-        self.darts = appSettings.dartsWithMiss ? snapshots[0].darts : snapshots[1].darts
+        checkDefaults()
     }
     
     private static func getTimeForAnswerIdx(_ appSettings: AppSettings) -> Int {
@@ -103,6 +105,31 @@ final class SettingsViewModel: ObservableObject {
         || appSettings.dartsWithMiss != dartsWithMiss
         || appSettings.dartImageName != dartImageName
         || appSettings.dartSize != dartSize
+        
+        checkDefaults()
+    }
+    
+    func checkDefaults() {
+        isDefaults = attempts == Constants.defaultAttempts
+        || timeForAnswer == Constants.defaultTimeForAnswer
+        || dartsWithMiss == Constants.defaultDartsWithMiss
+        || dartImageName == Constants.defaultDartImageName
+        || dartSize == Constants.defaultDartSize
+    }
+    
+    func reset() {
+        self.attempts = Constants.defaultAttempts
+        
+        self.timeForAnswerIdx = Constants.defaultTimeForAnswerIdx
+//        self.timeForAnswer = appSettings.timeForAnswer.msToSec
+        
+        self.dartsWithMiss = Constants.defaultDartsWithMiss
+//        self.darts = appSettings.dartsWithMiss ? snapshots[0].darts : snapshots[1].darts
+        
+        self.dartImageNameIdx = Constants.defaultDartImageNameIdx// Self.getDartImageNameIdx(appSettings)
+//        self.dartImageName = appSettings.dartImageName
+        
+        self.dartSize = Constants.defaultDartSize// appSettings.dartSize
     }
     
     private func updateDarts() {
