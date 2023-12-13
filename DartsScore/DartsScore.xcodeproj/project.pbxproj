@@ -47,7 +47,7 @@
 		A8DA54042B24F3DF003BD9BC /* ScrollViewOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54032B24F3DF003BD9BC /* ScrollViewOffsetKey.swift */; };
 		A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */; };
 		A8DA54082B25A5A1003BD9BC /* HStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54072B25A5A1003BD9BC /* HStepperView.swift */; };
-		A8DA540D2B28AAA4003BD9BC /* DartImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA540C2B28AAA4003BD9BC /* DartImage.swift */; };
+		A8DA540D2B28AAA4003BD9BC /* DartImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */; };
 		A8DA54102B28D2F3003BD9BC /* tap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8DA540F2B28D2F2003BD9BC /* tap.mp3 */; };
 		A8DB72722B161402001145BF /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72712B161402001145BF /* Palette.swift */; };
 		A8DB72762B16267C001145BF /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72752B16267C001145BF /* ViewExt.swift */; };
@@ -65,6 +65,7 @@
 		A8EA84982B15C27F009FBDB5 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84972B15C27F009FBDB5 /* PrimaryButtonStyle.swift */; };
 		A8F14F782B29CB6A00C4E1FD /* AppSettingsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F772B29CB6A00C4E1FD /* AppSettingsConstants.swift */; };
 		A8F14F7A2B29CC4100C4E1FD /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F792B29CC4100C4E1FD /* AppSettings.swift */; };
+		A8F14F7C2B29FA5B00C4E1FD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,7 +129,7 @@
 		A8DA54032B24F3DF003BD9BC /* ScrollViewOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewOffsetKey.swift; sourceTree = "<group>"; };
 		A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToggleStyle.swift; sourceTree = "<group>"; };
 		A8DA54072B25A5A1003BD9BC /* HStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStepperView.swift; sourceTree = "<group>"; };
-		A8DA540C2B28AAA4003BD9BC /* DartImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartImage.swift; sourceTree = "<group>"; };
+		A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartImageName.swift; sourceTree = "<group>"; };
 		A8DA540F2B28D2F2003BD9BC /* tap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tap.mp3; sourceTree = "<group>"; };
 		A8DB72712B161402001145BF /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		A8DB72752B16267C001145BF /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
@@ -147,6 +148,7 @@
 		A8EA84972B15C27F009FBDB5 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		A8F14F772B29CB6A00C4E1FD /* AppSettingsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsConstants.swift; sourceTree = "<group>"; };
 		A8F14F792B29CC4100C4E1FD /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +227,7 @@
 				A8EA84932B14C521009FBDB5 /* MockData.swift */,
 				A8DB72712B161402001145BF /* Palette.swift */,
 				A8DA53FE2B24A272003BD9BC /* DartsTargetPalette.swift */,
-				A8DA540C2B28AAA4003BD9BC /* DartImage.swift */,
+				A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */,
 				A8DA54022B24F3C1003BD9BC /* Helpers */,
 				A8A827232B0E42C900AD1BD0 /* Models */,
 				A8C12F412B0E0D3100940A64 /* Extensions */,
@@ -364,7 +366,7 @@
 				A8DB72882B1A30EB001145BF /* DartsGame */,
 				A8DB728A2B1A3234001145BF /* DartsGameResults */,
 				A8DB72892B1A311B001145BF /* DartsGameAnswers */,
-				A8DB728B2B1B001F001145BF /* AppSettings */,
+				A8DB728B2B1B001F001145BF /* Settings */,
 				A8DB727A2B18600D001145BF /* DartsGameStatisticsSheet.swift */,
 			);
 			path = Views;
@@ -398,7 +400,7 @@
 			name = DartsGameResults;
 			sourceTree = "<group>";
 		};
-		A8DB728B2B1B001F001145BF /* AppSettings */ = {
+		A8DB728B2B1B001F001145BF /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				A8A827362B0E4B0200AD1BD0 /* AppConstants.swift */,
@@ -406,8 +408,9 @@
 				A8F14F792B29CC4100C4E1FD /* AppSettings.swift */,
 				A8DB72902B1B00E7001145BF /* AppSettingsView.swift */,
 				A8DB728E2B1B00A3001145BF /* AppSettingsViewModel.swift */,
+				A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */,
 			);
-			name = AppSettings;
+			name = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -597,7 +600,7 @@
 				A8A827312B0E49CD00AD1BD0 /* CGPointExt.swift in Sources */,
 				A8DB72722B161402001145BF /* Palette.swift in Sources */,
 				A8A8273E2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift in Sources */,
-				A8DA540D2B28AAA4003BD9BC /* DartImage.swift in Sources */,
+				A8DA540D2B28AAA4003BD9BC /* DartImageName.swift in Sources */,
 				A8A827392B0E4B9E00AD1BD0 /* DartsGameStats.swift in Sources */,
 				A8A8272F2B0E49AB00AD1BD0 /* Dart.swift in Sources */,
 				A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */,
@@ -611,6 +614,7 @@
 				A82D6CF12B0F4A64006CF50A /* DartsGameAnswerView.swift in Sources */,
 				A8A827372B0E4B0200AD1BD0 /* AppConstants.swift in Sources */,
 				A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */,
+				A8F14F7C2B29FA5B00C4E1FD /* SettingsViewModel.swift in Sources */,
 				A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */,
 				A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */,
 				A8A827332B0E4A8500AD1BD0 /* DartsGameSnapshot.swift in Sources */,

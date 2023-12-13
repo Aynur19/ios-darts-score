@@ -9,10 +9,13 @@ import SwiftUI
 
 struct DartsHitsView: View {
     private let darts: [Dart]
-    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
+    private let dartSize: CGFloat
+    private let dartImageName: DartImageName
     
-    init(_ darts: [Dart]) {
+    init(_ darts: [Dart], dartSize: CGFloat, dartImageName: DartImageName) {
         self.darts = darts
+        self.dartSize = dartSize
+        self.dartImageName = dartImageName
     }
     
     var body: some View {
@@ -25,17 +28,13 @@ struct DartsHitsView: View {
                         .fill(dartPositionColor(dart))
                         .frame(width: 3)
                         .position(dart.globalPosition(center: center))
-//                    , dartsTargetPalette: .classic
-                    appSettingsVM.model.dartImageName
+                    
+                    dartImageName
                         .image(size: dartSize)
                         .position(dartPosition(dart, center: center))
                 }
             }
         }
-    }
-    
-    private var dartSize: CGFloat {
-        .init(appSettingsVM.model.dartSize)
     }
     
     private func dartPosition(_ dart: Dart, center: CGPoint) -> CGPoint {
@@ -57,13 +56,13 @@ struct DartsHitsView: View {
 }
 
 private struct TestDartsHitsView: View {
-    @StateObject var appSettingsVM = AppSettingsViewModel()
-    
     var body: some View {
         VStack {
-            Text("Dart Size: \(appSettingsVM.model.dartSize)")
-            DartsHitsView(MockData.getDartsGameSnapshotsList().snapshots[0].darts)
-                .environmentObject(appSettingsVM)
+            DartsHitsView(
+                MockData.getDartsGameSnapshotsList().snapshots[0].darts,
+                dartSize: 30,
+                dartImageName: .dartFlipH1
+            )
         }
     }
 }

@@ -18,7 +18,7 @@ struct AppSettingsConstants {
     
     static let defaultDartsWithMiss = true
     
-    static let dartImageNamesData: [DartImage] = [
+    static let dartImageNamesData: [DartImageName] = [
         .dart1, .dart2, .dart3, .dart4, .dart5, .dart6, .dart7,
         .dartFlipH1, .dartFlipH2,
         .dart1Rotate180

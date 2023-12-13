@@ -159,8 +159,11 @@ struct DartsGameView: View {
         return ZStack {
             DartsTargetView(dartsTargetViewOptions, dartsTargetPalette: .classic)
                 .overlay {
-                    DartsHitsView(dartsHitsVM.darts)
-                        .environmentObject(appSettingsVM)
+                    DartsHitsView(
+                        dartsHitsVM.darts,
+                        dartSize: CGFloat(appSettingsVM.model.dartSize),
+                        dartImageName: appSettingsVM.model.dartImageName
+                    )
                 }
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
                 .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
@@ -169,8 +172,11 @@ struct DartsGameView: View {
             
             DartsTargetView(dartsTargetViewOptions, dartsTargetPalette: .classic)
                 .overlay {
-                    DartsHitsView(dartsHitsVM.darts)
-                        .environmentObject(appSettingsVM)
+                    DartsHitsView(
+                        dartsHitsVM.darts,
+                        dartSize: CGFloat(appSettingsVM.model.dartSize),
+                        dartImageName: appSettingsVM.model.dartImageName
+                    )
                 }
                 .rotation3DEffect(.degrees(Constants.rotationAngle), axis: Constants.darts3DRotationAxis)
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)

@@ -38,7 +38,13 @@ struct AppSettingsView: View {
                             .init(AppConstants.dartsFrameWidth),
                             dartsTargetPalette: .classic
                         )
-                        .overlay { DartsHitsView(settingsVM.darts) }
+                        .overlay {
+                            DartsHitsView(
+                                settingsVM.darts,
+                                dartSize: CGFloat(settingsVM.dartSize),
+                                dartImageName: settingsVM.dartImageName
+                            )
+                        }
                     }
                     .foregroundStyle(Palette.btnPrimary)
                     .font(.headline)
@@ -64,7 +70,7 @@ struct AppSettingsView: View {
                     } label: {
                         Text("Reset")
                     }
-                    .disabled(!settingsVM.isChanged)
+                    .disabled(settingsVM.isDefaults)
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
@@ -235,7 +241,6 @@ struct AppSettingsView: View {
                     .fill(Palette.btnPrimary)
                     .frame(width: 1.5, height: 20)
             }
-//            dividerView:
         )
         .padding()
         .overlay { glowingOutline }
@@ -243,13 +248,11 @@ struct AppSettingsView: View {
     
     private func saveSettings() {
         appSettingsVM.save(settingsVM: settingsVM)
-        settingsVM.checkChanges()
+        settingsVM.checkChangesAndDefaults()
     }
     
     private func resetSettings() {
-        if settingsVM.isChanged {
-            settingsVM.reset()
-        }
+        settingsVM.reset()
     }
     
 //    private func toDefaultSettings() {

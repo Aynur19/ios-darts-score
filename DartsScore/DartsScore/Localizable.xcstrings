@@ -99,9 +99,6 @@
     "Current value: %lld" : {
 
     },
-    "Dart Size: %lld" : {
-
-    },
     "label_Answer %lld" : {
       "localizations" : {
         "en" : {

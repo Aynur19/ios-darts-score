@@ -1,5 +1,5 @@
 //
-//  DartImage.swift
+//  DartImageName.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 12.12.2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum DartImage: String {
+enum DartImageName: String {
     case dart1 = "Dart 1"
     case dart2 = "Dart 2"
     case dart3 = "Dart 3"

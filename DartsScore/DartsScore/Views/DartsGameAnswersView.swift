@@ -69,8 +69,11 @@ struct GameAnswersView: View {
                         dartsTargetPalette: .classic
                     )
                     .overlay {
-                        DartsHitsView(snapshot.darts)
-                            .environmentObject(appSettingsVM)
+                        DartsHitsView(
+                            snapshot.darts,
+                            dartSize: CGFloat(appSettingsVM.model.dartSize),
+                            dartImageName: appSettingsVM.model.dartImageName
+                        )
                     }
                     
                     answersView(snapshot)
