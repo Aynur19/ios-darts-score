@@ -78,18 +78,20 @@ final class SettingsViewModel: ObservableObject {
         && dartSize == Constants.defaultDartSize
     }
     
+    func cancel() {
+        attempts = appSettings.attempts
+        timeForAnswerIdx = Self.getTimeForAnswerIdx(appSettings.timeForAnswer)
+        dartsWithMiss = appSettings.dartsWithMiss
+        dartImageNameIdx = Self.getDartImageNameIdx(appSettings.dartImageName)
+        dartSize = appSettings.dartSize
+    }
+    
     func reset() {
         attempts = Constants.defaultAttempts
         timeForAnswerIdx = Constants.defaultTimeForAnswerIdx
-//        self.timeForAnswer = appSettings.timeForAnswer.msToSec
-        
         dartsWithMiss = Constants.defaultDartsWithMiss
-//        self.darts = appSettings.dartsWithMiss ? snapshots[0].darts : snapshots[1].darts
-        
-        dartImageNameIdx = Constants.defaultDartImageNameIdx// Self.getDartImageNameIdx(appSettings)
-//        self.dartImageName = appSettings.dartImageName
-        
-        dartSize = Constants.defaultDartSize// appSettings.dartSize
+        dartImageNameIdx = Constants.defaultDartImageNameIdx
+        dartSize = Constants.defaultDartSize
     }
     
     private func updateDarts() {

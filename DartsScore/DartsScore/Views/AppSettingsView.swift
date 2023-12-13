@@ -15,6 +15,8 @@ struct AppSettingsView: View {
     
     @ObservedObject var settingsVM: SettingsViewModel
     
+    @State private var appearDatetimeId: String = ""
+    
     init(appSettings: AppSettings) {
         print("AppSettingsView.\(#function)")
         settingsVM = .init(appSettings: appSettings)
@@ -51,7 +53,10 @@ struct AppSettingsView: View {
                     .padding(32)
                 }
             }
-            .onAppear { resetSettings() }
+            .onAppear {
+                appearDatetimeId = Date().description
+            }
+            .onDisappear { cancelSettings() }
 //            .onDisappear {
 //                appSettingsVM.resetSettings()
 //            }
@@ -138,6 +143,7 @@ struct AppSettingsView: View {
             ) { item in
                 Text("\(item)")
             }
+            .id(appearDatetimeId)
 //            .id(appSettingsVM.id)
         }
         .padding()
@@ -249,6 +255,10 @@ struct AppSettingsView: View {
     private func saveSettings() {
         appSettingsVM.save(settingsVM: settingsVM)
         settingsVM.checkChangesAndDefaults()
+    }
+    
+    private func cancelSettings() {
+        settingsVM.cancel()
     }
     
     private func resetSettings() {
