@@ -48,7 +48,7 @@
 		A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */; };
 		A8DA54082B25A5A1003BD9BC /* HStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54072B25A5A1003BD9BC /* HStepperView.swift */; };
 		A8DA540D2B28AAA4003BD9BC /* DartImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */; };
-		A8DA54102B28D2F3003BD9BC /* tap.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8DA540F2B28D2F2003BD9BC /* tap.mp3 */; };
+		A8DA54102B28D2F3003BD9BC /* UserTapSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8DA540F2B28D2F2003BD9BC /* UserTapSound.mp3 */; };
 		A8DB72722B161402001145BF /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72712B161402001145BF /* Palette.swift */; };
 		A8DB72762B16267C001145BF /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72752B16267C001145BF /* ViewExt.swift */; };
 		A8DB72792B177680001145BF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A8DB72782B177680001145BF /* Localizable.xcstrings */; };
@@ -66,12 +66,14 @@
 		A8F14F782B29CB6A00C4E1FD /* AppSettingsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F772B29CB6A00C4E1FD /* AppSettingsConstants.swift */; };
 		A8F14F7A2B29CC4100C4E1FD /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F792B29CC4100C4E1FD /* AppSettings.swift */; };
 		A8F14F7C2B29FA5B00C4E1FD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */; };
-		A8F14F7E2B2A17ED00C4E1FD /* timer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F7D2B2A17EC00C4E1FD /* timer.mp3 */; };
-		A8F14F812B2A35D200C4E1FD /* AVAudioPlayerPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F802B2A35D200C4E1FD /* AVAudioPlayerPool.swift */; };
+		A8F14F7E2B2A17ED00C4E1FD /* TimerEndSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F7D2B2A17EC00C4E1FD /* TimerEndSound.mp3 */; };
 		A8F14F832B2A3D0B00C4E1FD /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F822B2A3D0B00C4E1FD /* Sound.swift */; };
 		A8F14F8B2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F8A2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 */; };
 		A8F14F8D2B2B826400C4E1FD /* GoodGameResultSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F8C2B2B826300C4E1FD /* GoodGameResultSound.mp3 */; };
 		A8F14F8F2B2B83B800C4E1FD /* BadGameResultSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F8E2B2B83B800C4E1FD /* BadGameResultSound.mp3 */; };
+		A8F14F912B2B951300C4E1FD /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F902B2B951300C4E1FD /* SoundManager.swift */; };
+		A8F14F932B2B97C400C4E1FD /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F922B2B97C400C4E1FD /* Sounds.swift */; };
+		A8F14F952B2B97FA00C4E1FD /* SoundFileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F942B2B97FA00C4E1FD /* SoundFileExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +138,7 @@
 		A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToggleStyle.swift; sourceTree = "<group>"; };
 		A8DA54072B25A5A1003BD9BC /* HStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStepperView.swift; sourceTree = "<group>"; };
 		A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartImageName.swift; sourceTree = "<group>"; };
-		A8DA540F2B28D2F2003BD9BC /* tap.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tap.mp3; sourceTree = "<group>"; };
+		A8DA540F2B28D2F2003BD9BC /* UserTapSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = UserTapSound.mp3; sourceTree = "<group>"; };
 		A8DB72712B161402001145BF /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		A8DB72752B16267C001145BF /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
 		A8DB72772B173AA9001145BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -155,12 +157,14 @@
 		A8F14F772B29CB6A00C4E1FD /* AppSettingsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsConstants.swift; sourceTree = "<group>"; };
 		A8F14F792B29CC4100C4E1FD /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		A8F14F7D2B2A17EC00C4E1FD /* timer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = timer.mp3; sourceTree = "<group>"; };
-		A8F14F802B2A35D200C4E1FD /* AVAudioPlayerPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioPlayerPool.swift; sourceTree = "<group>"; };
+		A8F14F7D2B2A17EC00C4E1FD /* TimerEndSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TimerEndSound.mp3; sourceTree = "<group>"; };
 		A8F14F822B2A3D0B00C4E1FD /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		A8F14F8A2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DartsTargetRotation.mp3; sourceTree = "<group>"; };
 		A8F14F8C2B2B826300C4E1FD /* GoodGameResultSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GoodGameResultSound.mp3; sourceTree = "<group>"; };
 		A8F14F8E2B2B83B800C4E1FD /* BadGameResultSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BadGameResultSound.mp3; sourceTree = "<group>"; };
+		A8F14F902B2B951300C4E1FD /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		A8F14F922B2B97C400C4E1FD /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
+		A8F14F942B2B97FA00C4E1FD /* SoundFileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundFileExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,8 +356,8 @@
 				A8F14F8C2B2B826300C4E1FD /* GoodGameResultSound.mp3 */,
 				A8F14F8E2B2B83B800C4E1FD /* BadGameResultSound.mp3 */,
 				A8F14F8A2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 */,
-				A8DA540F2B28D2F2003BD9BC /* tap.mp3 */,
-				A8F14F7D2B2A17EC00C4E1FD /* timer.mp3 */,
+				A8DA540F2B28D2F2003BD9BC /* UserTapSound.mp3 */,
+				A8F14F7D2B2A17EC00C4E1FD /* TimerEndSound.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -433,8 +437,10 @@
 		A8F14F7F2B2A35BA00C4E1FD /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				A8F14F802B2A35D200C4E1FD /* AVAudioPlayerPool.swift */,
 				A8F14F822B2A3D0B00C4E1FD /* Sound.swift */,
+				A8F14F902B2B951300C4E1FD /* SoundManager.swift */,
+				A8F14F942B2B97FA00C4E1FD /* SoundFileExtension.swift */,
+				A8F14F922B2B97C400C4E1FD /* Sounds.swift */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -547,9 +553,9 @@
 			files = (
 				A887761F2B0DEF02005B746B /* Preview Assets.xcassets in Resources */,
 				A887761C2B0DEF02005B746B /* Assets.xcassets in Resources */,
-				A8DA54102B28D2F3003BD9BC /* tap.mp3 in Resources */,
+				A8DA54102B28D2F3003BD9BC /* UserTapSound.mp3 in Resources */,
 				A8F14F8D2B2B826400C4E1FD /* GoodGameResultSound.mp3 in Resources */,
-				A8F14F7E2B2A17ED00C4E1FD /* timer.mp3 in Resources */,
+				A8F14F7E2B2A17ED00C4E1FD /* TimerEndSound.mp3 in Resources */,
 				A8F14F8F2B2B83B800C4E1FD /* BadGameResultSound.mp3 in Resources */,
 				A8F14F8B2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 in Resources */,
 				A8DB72792B177680001145BF /* Localizable.xcstrings in Resources */,
@@ -598,6 +604,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8742F992B0E7A650026E07F /* DataCacheError.swift in Sources */,
+				A8F14F952B2B97FA00C4E1FD /* SoundFileExtension.swift in Sources */,
 				A8DB72842B1A2F80001145BF /* DartsGameAnswersViewModel.swift in Sources */,
 				A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */,
 				A8DB72932B1B9775001145BF /* HStaticSegmentedPickerView.swift in Sources */,
@@ -614,8 +621,8 @@
 				A8C12F3C2B0E08B100940A64 /* TimerStringFormat.swift in Sources */,
 				A8EA84942B14C521009FBDB5 /* MockData.swift in Sources */,
 				A8EA84922B14A800009FBDB5 /* DartsGameSnapshotsList.swift in Sources */,
+				A8F14F912B2B951300C4E1FD /* SoundManager.swift in Sources */,
 				A8742F9C2B0E87EC0026E07F /* DartsGameResultsView.swift in Sources */,
-				A8F14F812B2A35D200C4E1FD /* AVAudioPlayerPool.swift in Sources */,
 				A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */,
 				A8EA84982B15C27F009FBDB5 /* PrimaryButtonStyle.swift in Sources */,
 				A8A827252B0E42D600AD1BD0 /* DartsSector.swift in Sources */,
@@ -624,6 +631,7 @@
 				A8A8273B2B0E4EA200AD1BD0 /* DartsTargetView.swift in Sources */,
 				A8DB72762B16267C001145BF /* ViewExt.swift in Sources */,
 				A8A8272B2B0E43E900AD1BD0 /* AngleExt.swift in Sources */,
+				A8F14F932B2B97C400C4E1FD /* Sounds.swift in Sources */,
 				A82D6CF52B126C8E006CF50A /* DartsHitsView.swift in Sources */,
 				A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */,
 				A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */,

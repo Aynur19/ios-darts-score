@@ -37,7 +37,7 @@ struct ContentView: View {
             }
             .onAppear {
                 DispatchQueue.global().async {
-                    SoundManager.shared.prepare(DartsGameAnswerTapSound())
+                    SoundManager.shared.prepare(UserTapSound())
                     SoundManager.shared.prepare(TimerEndSound())
                     SoundManager.shared.prepare(DartsRotationSound())
                 }

@@ -360,7 +360,7 @@ extension DartsGameView {
     }
     
     func playTapSound() {
-        SoundManager.shared.play(DartsGameAnswerTapSound())
+        SoundManager.shared.play(UserTapSound())
     }
     
     private func onAnswered(_ answer: Int) {
