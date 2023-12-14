@@ -8,7 +8,7 @@
 import SwiftUI
 
 final class SettingsViewModel: ObservableObject {
-    private typealias Constants = AppSettingsConstants
+    private typealias Constants = AppConstants
     
     @Published private(set) var isChanged: Bool = false
     @Published private(set) var isDefaults: Bool = false

@@ -141,7 +141,7 @@ final class DartsGameViewModel: ObservableObject {
             state = .stoped
         }
         
-        SoundManager.shared.stop()
+//        SoundManager.shared.stop()
     }
     
     func gameOver() {
@@ -156,12 +156,12 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     func playSoundGameOver() {
-        if state == .finished {
-            if game.attempts - game.successAttempts <= game.successAttempts {
-                SoundManager.shared.play(GoodGameResultSound())
-            } else {
-                SoundManager.shared.play(BadGameResultSound())
-            }
-        }
+//        if state == .finished {
+//            if game.attempts - game.successAttempts <= game.successAttempts {
+//                SoundManager.shared.play(GoodGameResultSound())
+//            } else {
+//                SoundManager.shared.play(BadGameResultSound())
+//            }
+//        }
     }
 }

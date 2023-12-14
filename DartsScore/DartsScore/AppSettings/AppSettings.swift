@@ -7,20 +7,20 @@
 
 import Foundation
 
-private enum AppSettingsKeys: String {
-    case attempts
-    case timeForAnswer
-    case dartsWithMiss
-    
-    case dartImageName
-    case dartSize
-    case dartColor
-    
-    case dartsTargetPalette
-}
-
 struct AppSettings {
-    private typealias Constants = AppSettingsConstants
+    private typealias Constants = AppConstants
+    
+    private enum AppSettingsKeys: String {
+        case attempts
+        case timeForAnswer
+        case dartsWithMiss
+        
+        case dartImageName
+        case dartSize
+        case dartColor
+        
+        case dartsTargetPalette
+    }
 
     private let defaults = UserDefaults.standard
     

@@ -1,5 +1,5 @@
 //
-//  AppSettingsView.swift
+//  SettingsView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 02.12.2023.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct AppSettingsView: View {
-    private typealias Constants = AppSettingsConstants
+struct SettingsView: View {
+    private typealias Constants = AppConstants
     
     @Environment(\.mainWindowSize) var windowsSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
@@ -275,7 +275,7 @@ private struct TestAppSettingsView: View {
     
     var body: some View {
         TabView {
-            AppSettingsView(appSettings: appSettingsVM.model)
+            SettingsView(appSettings: appSettingsVM.model)
                 .environmentObject(appSettingsVM)
                 .toolbarBackground(.visible, for: .tabBar)
                 .toolbarBackground(Palette.tabBar, for: .tabBar)

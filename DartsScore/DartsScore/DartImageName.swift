@@ -57,7 +57,7 @@ enum DartImageName: String {
 private struct TestDartImageView: View {
     var body: some View {
         VStack {
-            ForEach(AppSettingsConstants.dartImageNamesData, id: \.self) { item in
+            ForEach(AppConstants.dartImageNamesData, id: \.self) { item in
                 item.image(size: 32)
             }
         }

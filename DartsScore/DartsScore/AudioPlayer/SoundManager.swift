@@ -9,6 +9,7 @@ import AVFoundation
 
 // original source: 
 // https://stackoverflow.com/questions/36865233/get-avaudioplayer-to-play-multiple-sounds-at-a-time/71582181#71582181
+@MainActor
 final class SoundManager: NSObject, AVAudioPlayerDelegate {
     static let shared = SoundManager()
 
