@@ -55,13 +55,11 @@ struct DartsGameView: View {
     @State private var startBtnIsShow = true
     
     private let dartsTargetViewOptions: DartsTargetViewOptions
-//    @State private var dartsTargetWidth: CGFloat
+    
+    private var timerAudioPlayer: AVAudioPlayer? = nil
     
     init(_ appSettings: AppSettings) {
         print("DartsGameView.\(#function)")
-//        self.dartsTargetWidth = windowSize.width - Constants.dartsTargetHPadding.x2
-//        self.appSettings = appSettings
-//        self.appSettingsVM = appSettingsVM
         
         timerOptions = CountdownTimerCircleProgressBarOptions(
             circleLineWidth: AppConstants.timerCircleLineWidth,
@@ -78,7 +76,10 @@ struct DartsGameView: View {
         )
         
         gameVM = .init(appSettings)
-        timerVM = .init(appSettings.timeForAnswer)
+        timerVM = .init(
+            appSettings.timeForAnswer,
+            timeLeftToNotify: AppConstants.timerTimeLeftToNotify
+        )
         
         dartsTargetViewOptions = DartsTargetViewOptions(AppConstants.dartsFrameWidth)
         dartsHitsVM = .init(
@@ -105,8 +106,15 @@ struct DartsGameView: View {
                 }
             }
         }
-        .onAppear { resetGame() }
+        .onAppear {
+            resetGame()
+        }
         .onDisappear { stopGame() }
+        .onReceive(timerVM.$isNotified) { isNotified in
+            if isNotified {
+                playTimerSound()
+            }
+        }
         .onReceive(gameVM.$state) { gameState in
             showUI(gameState)
         }
@@ -293,17 +301,20 @@ extension DartsGameView {
     }
     
     private func restartGame() {
+        print("DartsGameView.\(#function)")
         resetGame(isRestart: true)
     }
     
     private func resetGame(isRestart: Bool = false) {
+        print("DartsGameView.\(#function)")
         if isRestart {
             gameVM.restart(appSettings: appSettingsVM.model)
         } else {
             gameVM.reset()
         }
         
-        timerVM.reset(gameVM.game.timeForAnswer)
+        timerVM.reset(gameVM.game.timeForAnswer,
+                      timeLeftToNotify: AppConstants.timerTimeLeftToNotify)
         dartsHitsVM.reset(
             dartsWithMiss: gameVM.game.dartsWithMiss,
             dartsSize: appSettingsVM.model.dartSize
@@ -311,37 +322,54 @@ extension DartsGameView {
         
         answersIsShow = false
         showDartsSide()
+        
+//        DispatchQueue.global().async {
+//        }
     }
     
     private func startGame() {
+        print("DartsGameView.\(#function)")
         gameVM.start()
-        timerVM.start(gameVM.game.timeForAnswer)
+        timerVM.start()
         
         updateAnswers()
     }
     
     private func updateAnswers() {
+        print("DartsGameView.\(#function)")
         dartsHitsVM.updateDarts()
         gameVM.generateAnswers(dartsHitsVM.score)
         answersIsShow = true
     }
     
+    func playTimerSound() {
+        SoundManager.shared.play(TimerEndSound())
+//        print("DartsGameView.\(#function)")
+//        let resourcePath = Bundle.main.url(forResource: "timer", withExtension: "mp3")
+//        
+//        do {
+//            audioPlayer = try AVAudioPlayer(contentsOf: resourcePath!)
+//            audioPlayer?.play()
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+    }
+    
+    func stopTimerSound() {
+        SoundManager.shared.stop(TimerEndSound())
+    }
+    
     func playTapSound() {
-        let resourcePath = Bundle.main.url(forResource: "tap", withExtension: "mp3")
-        
-        do {
-            //initializing the audio player with the resource path
-            audioPlayer = try AVAudioPlayer(contentsOf: resourcePath!)
-            
-            //play the audio
-            audioPlayer?.play()
-        } catch {
-            //error handling
-            print(error.localizedDescription)
-        }
+        SoundManager.shared.play(DartsGameAnswerTapSound())
     }
     
     private func onAnswered(_ answer: Int) {
+        print("DartsGameView.\(#function)")
+        
+        if timerVM.isNotified {
+            stopTimerSound()
+        }
+        
         playTapSound()
         gameVM.onAnswered(
             for: timerVM.counter,
@@ -361,11 +389,15 @@ extension DartsGameView {
     }
     
     private func rotateDarts() {
+        print("DartsGameView.\(#function)")
         isDartsTargetSide1.toggle()
         rotation += Constants.rotationAngle
+        
+        SoundManager.shared.play(DartsRotationSound())
     }
     
     private func continueGame() {
+        print("DartsGameView.\(#function)")
         Task {
             try? await Task.sleep(nanoseconds: 500_000_000)
             showDartsSide()
@@ -373,7 +405,8 @@ extension DartsGameView {
             await MainActor.run { updateAnswers() }
         }
         
-        timerVM.start(gameVM.game.timeForAnswer)
+        timerVM.reset()
+        timerVM.start()
     }
     
     private func showDartsSide() {
@@ -382,6 +415,7 @@ extension DartsGameView {
     }
     
     private func stopGame() {
+        print("DartsGameView.\(#function)")
         timerVM.stop()
         gameVM.stop()
         
@@ -389,6 +423,7 @@ extension DartsGameView {
     }
     
     private func finishGame() {
+        print("DartsGameView.\(#function)")
         timerVM.stop()
         answersIsShow = false
     }

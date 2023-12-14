@@ -38,4 +38,6 @@ class AppConstants: ObservableObject {
     static let timerTextColor: Color = .green
     static let timerTextIsBold: Bool = true
     static let timerTextFormat: TimerStringFormat = .secMs
+    
+    static let timerTimeLeftToNotify: Int = 5300
 }

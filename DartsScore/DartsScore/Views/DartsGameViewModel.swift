@@ -24,6 +24,7 @@ final class DartsGameViewModel: ObservableObject {
     @Published private(set) var snapshots: DartsGameSnapshotsList
     
     @Published private(set) var state: GameState = .idle
+    
     @Published private(set) var currentAnswers = [Int]()
     
     init(_ appSettings: AppSettings) {
@@ -117,6 +118,8 @@ final class DartsGameViewModel: ObservableObject {
         
         if game.attempts == game.spentAttempts {
             state = .finished
+            
+            playSoundGameOver()
             gameOver()
         }
     }
@@ -137,6 +140,8 @@ final class DartsGameViewModel: ObservableObject {
             
             state = .stoped
         }
+        
+        SoundManager.shared.stop()
     }
     
     func gameOver() {
@@ -148,5 +153,15 @@ final class DartsGameViewModel: ObservableObject {
         }
         
         JsonCache.deleteFile(name: AppConstants.gameJsonName)
+    }
+    
+    func playSoundGameOver() {
+        if state == .finished {
+            if game.attempts - game.successAttempts <= game.successAttempts {
+                SoundManager.shared.play(GoodGameResultSound())
+            } else {
+                SoundManager.shared.play(BadGameResultSound())
+            }
+        }
     }
 }

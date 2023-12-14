@@ -66,6 +66,12 @@
 		A8F14F782B29CB6A00C4E1FD /* AppSettingsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F772B29CB6A00C4E1FD /* AppSettingsConstants.swift */; };
 		A8F14F7A2B29CC4100C4E1FD /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F792B29CC4100C4E1FD /* AppSettings.swift */; };
 		A8F14F7C2B29FA5B00C4E1FD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */; };
+		A8F14F7E2B2A17ED00C4E1FD /* timer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F7D2B2A17EC00C4E1FD /* timer.mp3 */; };
+		A8F14F812B2A35D200C4E1FD /* AVAudioPlayerPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F802B2A35D200C4E1FD /* AVAudioPlayerPool.swift */; };
+		A8F14F832B2A3D0B00C4E1FD /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F822B2A3D0B00C4E1FD /* Sound.swift */; };
+		A8F14F8B2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F8A2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 */; };
+		A8F14F8D2B2B826400C4E1FD /* GoodGameResultSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F8C2B2B826300C4E1FD /* GoodGameResultSound.mp3 */; };
+		A8F14F8F2B2B83B800C4E1FD /* BadGameResultSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F14F8E2B2B83B800C4E1FD /* BadGameResultSound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +155,12 @@
 		A8F14F772B29CB6A00C4E1FD /* AppSettingsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsConstants.swift; sourceTree = "<group>"; };
 		A8F14F792B29CC4100C4E1FD /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		A8F14F7D2B2A17EC00C4E1FD /* timer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = timer.mp3; sourceTree = "<group>"; };
+		A8F14F802B2A35D200C4E1FD /* AVAudioPlayerPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioPlayerPool.swift; sourceTree = "<group>"; };
+		A8F14F822B2A3D0B00C4E1FD /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		A8F14F8A2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DartsTargetRotation.mp3; sourceTree = "<group>"; };
+		A8F14F8C2B2B826300C4E1FD /* GoodGameResultSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GoodGameResultSound.mp3; sourceTree = "<group>"; };
+		A8F14F8E2B2B83B800C4E1FD /* BadGameResultSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BadGameResultSound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,7 +231,8 @@
 		A88776162B0DEEFF005B746B /* DartsScore */ = {
 			isa = PBXGroup;
 			children = (
-				A8DA540E2B28D289003BD9BC /* Audio */,
+				A8DA540E2B28D289003BD9BC /* Sounds */,
+				A8F14F7F2B2A35BA00C4E1FD /* AudioPlayer */,
 				A8DB72772B173AA9001145BF /* Info.plist */,
 				A88776172B0DEEFF005B746B /* DartsScoreApp.swift */,
 				A88776192B0DEEFF005B746B /* ContentView.swift */,
@@ -333,12 +346,16 @@
 			path = DartHit;
 			sourceTree = "<group>";
 		};
-		A8DA540E2B28D289003BD9BC /* Audio */ = {
+		A8DA540E2B28D289003BD9BC /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				A8F14F8C2B2B826300C4E1FD /* GoodGameResultSound.mp3 */,
+				A8F14F8E2B2B83B800C4E1FD /* BadGameResultSound.mp3 */,
+				A8F14F8A2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 */,
 				A8DA540F2B28D2F2003BD9BC /* tap.mp3 */,
+				A8F14F7D2B2A17EC00C4E1FD /* timer.mp3 */,
 			);
-			path = Audio;
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		A8DA54112B28E750003BD9BC /* Custom UI Elements */ = {
@@ -411,6 +428,15 @@
 				A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		A8F14F7F2B2A35BA00C4E1FD /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				A8F14F802B2A35D200C4E1FD /* AVAudioPlayerPool.swift */,
+				A8F14F822B2A3D0B00C4E1FD /* Sound.swift */,
+			);
+			path = AudioPlayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -522,6 +548,10 @@
 				A887761F2B0DEF02005B746B /* Preview Assets.xcassets in Resources */,
 				A887761C2B0DEF02005B746B /* Assets.xcassets in Resources */,
 				A8DA54102B28D2F3003BD9BC /* tap.mp3 in Resources */,
+				A8F14F8D2B2B826400C4E1FD /* GoodGameResultSound.mp3 in Resources */,
+				A8F14F7E2B2A17ED00C4E1FD /* timer.mp3 in Resources */,
+				A8F14F8F2B2B83B800C4E1FD /* BadGameResultSound.mp3 in Resources */,
+				A8F14F8B2B2B4B1800C4E1FD /* DartsTargetRotation.mp3 in Resources */,
 				A8DB72792B177680001145BF /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,6 +604,7 @@
 				A82D6CF72B12722D006CF50A /* DartsTargetViewOptions.swift in Sources */,
 				A8A827352B0E4AD200AD1BD0 /* DartsGame.swift in Sources */,
 				A82D6CF32B0FC16C006CF50A /* DartsGameAnswersView.swift in Sources */,
+				A8F14F832B2A3D0B00C4E1FD /* Sound.swift in Sources */,
 				A8DB72802B1A2E31001145BF /* DartsGameResultsViewModel.swift in Sources */,
 				A8F14F782B29CB6A00C4E1FD /* AppSettingsConstants.swift in Sources */,
 				A8A827272B0E433200AD1BD0 /* DartsConstants.swift in Sources */,
@@ -584,6 +615,7 @@
 				A8EA84942B14C521009FBDB5 /* MockData.swift in Sources */,
 				A8EA84922B14A800009FBDB5 /* DartsGameSnapshotsList.swift in Sources */,
 				A8742F9C2B0E87EC0026E07F /* DartsGameResultsView.swift in Sources */,
+				A8F14F812B2A35D200C4E1FD /* AVAudioPlayerPool.swift in Sources */,
 				A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */,
 				A8EA84982B15C27F009FBDB5 /* PrimaryButtonStyle.swift in Sources */,
 				A8A827252B0E42D600AD1BD0 /* DartsSector.swift in Sources */,

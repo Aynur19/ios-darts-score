@@ -12,14 +12,18 @@ struct CountdownTimerCircleProgressBar: View {
     private let options: CountdownTimerCircleProgressBarOptions
     
     init(
-        _ milliseconds: Int,
+        milliseconds: Int,
+        timeLeftToNotify: Int = .max,
         options: CountdownTimerCircleProgressBarOptions = .init()
     ) {
-        self.timerVM = .init(milliseconds)
+        self.timerVM = .init(milliseconds, timeLeftToNotify: timeLeftToNotify)
         self.options = options
     }
     
-    init(timerVM: CountdownTimerViewModel, options: CountdownTimerCircleProgressBarOptions = .init()) {
+    init(
+        timerVM: CountdownTimerViewModel,
+        options: CountdownTimerCircleProgressBarOptions = .init()
+    ) {
         self.timerVM = timerVM
         self.options = options
     }
@@ -39,7 +43,8 @@ struct CountdownTimerCircleProgressBar: View {
                 .foregroundColor(options.circleUpColor)
                 .opacity(options.ciclreUpOpacity)
                 .rotationEffect(options.circleUpRotation)
-                .animation(.linear(duration: options.animationDuration), value: timerVM.progress)
+                .animation(.linear(duration: options.animationDuration), 
+                           value: timerVM.progress)
             
             Text(options.textFormat.msStr(timerVM.counter))
                 .font(options.textFont)

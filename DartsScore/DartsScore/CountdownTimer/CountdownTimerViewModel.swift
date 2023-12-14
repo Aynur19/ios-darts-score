@@ -25,28 +25,41 @@ class CountdownTimerViewModel: ObservableObject {
     private typealias Constants = CountdownTimerViewModelConstants
     
     @Published private(set) var progress: CGFloat = Constants.progressFull
-    @Published private(set) var counter: Int = .zero
-    @Published private(set) var time: Int = .zero
+    @Published private(set) var counter: Int
+    @Published private(set) var time: Int
     @Published private(set) var state: CountdownTimerState = .idle
+    
+    @Published private(set) var isNotified = false
+    private var timeLeftToNotify: Int
     
     private var timer: Timer?
 
-    init(_ milliseconds: Int? = .none) {
-        reset(milliseconds)
+    init(_ milliseconds: Int, timeLeftToNotify: Int = .max) {
+        print("CountdownTimerViewModel.\(#function)")
+        self.time = milliseconds
+        self.timeLeftToNotify = timeLeftToNotify
+        self.counter = milliseconds
     }
     
-    func reset(_ milliseconds: Int?) {
+    func reset(_ milliseconds: Int? = .none, timeLeftToNotify: Int? = .none) {
+        print("CountdownTimerViewModel.\(#function)")
         timer?.invalidate()
         if let timeOfMs = milliseconds {
             time = timeOfMs
         }
+        
+        if let timeLeftToNotifyOfMs = timeLeftToNotify {
+            self.timeLeftToNotify = timeLeftToNotifyOfMs
+        }
+        
+        isNotified = false
+        
         counter = time
         progress = Constants.progressFull
         state = .idle
     }
     
-    func start(_ milliseconds: Int?) {
-        reset(milliseconds)
+    func start() {
         startTimer()
     }
     
@@ -59,16 +72,22 @@ class CountdownTimerViewModel: ObservableObject {
     }
     
     private func resumeTimer() {
+        print("CountdownTimerViewModel.\(#function)")
         timer?.invalidate()
         startTimer()
     }
     
     private func startTimer() {
+        print("CountdownTimerViewModel.\(#function)")
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             
             if self.counter > .zero {
                 self.counter -= Constants.counterChangeValue
+                
+                if !self.isNotified, self.counter < timeLeftToNotify {
+                    isNotified = true
+                }
                 self.progress = self.getProgress()
             } else {
                 self.state = .finished
@@ -79,6 +98,7 @@ class CountdownTimerViewModel: ObservableObject {
     }
     
     private func stopTimer() {
+        print("CountdownTimerViewModel.\(#function)")
         timer?.invalidate()
         state = .stoped
     }

@@ -35,6 +35,19 @@ struct ContentView: View {
                     .toolbarBackground(.visible, for: .tabBar)
                     .toolbarBackground(Palette.tabBar, for: .tabBar)
             }
+            .onAppear {
+                DispatchQueue.global().async {
+                    SoundManager.shared.prepare(DartsGameAnswerTapSound())
+                    SoundManager.shared.prepare(TimerEndSound())
+                    SoundManager.shared.prepare(DartsRotationSound())
+                }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                SoundManager.shared.stop()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
+                SoundManager.shared.stop()
+            }
         }
     }
 }
