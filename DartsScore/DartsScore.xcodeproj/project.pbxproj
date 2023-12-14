@@ -235,14 +235,12 @@
 			children = (
 				A8DB72772B173AA9001145BF /* Info.plist */,
 				A88776172B0DEEFF005B746B /* DartsScoreApp.swift */,
+				A88776192B0DEEFF005B746B /* ContentView.swift */,
 				A8F14F972B2BA4F300C4E1FD /* Constants */,
 				A8DA540E2B28D289003BD9BC /* Sounds */,
 				A8F14F7F2B2A35BA00C4E1FD /* AudioPlayer */,
 				A8F14F962B2B99D500C4E1FD /* AppSettings */,
-				A88776192B0DEEFF005B746B /* ContentView.swift */,
-				A8DB72712B161402001145BF /* Palette.swift */,
-				A8DA53FE2B24A272003BD9BC /* DartsTargetPalette.swift */,
-				A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */,
+				A8F14F982B2BAB0F00C4E1FD /* Enums */,
 				A8DA54022B24F3C1003BD9BC /* Helpers */,
 				A8A827232B0E42C900AD1BD0 /* Models */,
 				A8C12F412B0E0D3100940A64 /* Extensions */,
@@ -456,6 +454,16 @@
 				A8EA84932B14C521009FBDB5 /* MockData.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		A8F14F982B2BAB0F00C4E1FD /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				A8DB72712B161402001145BF /* Palette.swift */,
+				A8DA53FE2B24A272003BD9BC /* DartsTargetPalette.swift */,
+				A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
