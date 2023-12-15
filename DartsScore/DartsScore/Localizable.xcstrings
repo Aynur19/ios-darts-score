@@ -364,6 +364,9 @@
     "Reset" : {
 
     },
+    "RESET" : {
+
+    },
     "Save" : {
 
     },
@@ -382,6 +385,12 @@
           }
         }
       }
+    },
+    "START" : {
+
+    },
+    "STOP" : {
+
     },
     "viewTitle_AnswersHistory" : {
       "localizations" : {

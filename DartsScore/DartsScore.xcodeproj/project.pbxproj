@@ -36,7 +36,6 @@
 		A8A8273B2B0E4EA200AD1BD0 /* DartsTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8273A2B0E4EA200AD1BD0 /* DartsTargetView.swift */; };
 		A8A8273E2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8273D2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift */; };
 		A8C12F3C2B0E08B100940A64 /* TimerStringFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */; };
-		A8C12F3E2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3D2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift */; };
 		A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */; };
 		A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F422B0E0D5F00940A64 /* IntExt.swift */; };
 		A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */; };
@@ -125,7 +124,6 @@
 		A8A8273A2B0E4EA200AD1BD0 /* DartsTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsTargetView.swift; sourceTree = "<group>"; };
 		A8A8273D2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsHitsViewModel.swift; sourceTree = "<group>"; };
 		A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStringFormat.swift; sourceTree = "<group>"; };
-		A8C12F3D2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerCircleProgressBarOptions.swift; sourceTree = "<group>"; };
 		A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerViewModel.swift; sourceTree = "<group>"; };
 		A8C12F422B0E0D5F00940A64 /* IntExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExt.swift; sourceTree = "<group>"; };
 		A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt64Ext.swift; sourceTree = "<group>"; };
@@ -311,7 +309,6 @@
 				A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */,
 				A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */,
 				A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */,
-				A8C12F3D2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift */,
 			);
 			path = CountdownTimer;
 			sourceTree = "<group>";
@@ -646,7 +643,6 @@
 				A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */,
 				A8EA84982B15C27F009FBDB5 /* PrimaryButtonStyle.swift in Sources */,
 				A8A827252B0E42D600AD1BD0 /* DartsSector.swift in Sources */,
-				A8C12F3E2B0E0C4600940A64 /* CountdownTimerCircleProgressBarOptions.swift in Sources */,
 				A8DB728F2B1B00A3001145BF /* AppSettingsViewModel.swift in Sources */,
 				A8A8273B2B0E4EA200AD1BD0 /* DartsTargetView.swift in Sources */,
 				A8DB72762B16267C001145BF /* ViewExt.swift in Sources */,

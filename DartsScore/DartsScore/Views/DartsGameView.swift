@@ -27,18 +27,13 @@ struct DartsGameView: View {
     @Environment(\.mainWindowSize) var windowSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
-    @State private var audioPlayer: AVAudioPlayer?
-    @State private var selectedSound: String = "tap"
+    @StateObject var timerVM = CountdownTimerViewModel(
+        AppConstants.defaultTimeForAnswer.secToMs,
+        timeLeftToNotify: AppConstants.timerTimeLeftToNotify
+    )
     
-//    @ObservedObject var appSettingsVM: AppSettingsViewModel
-    
-    @ObservedObject var timerVM: CountdownTimerViewModel
     @ObservedObject var gameVM: DartsGameViewModel
     @ObservedObject var dartsHitsVM: DartsHitsViewModel
-    
-    private var timerOptions: CountdownTimerCircleProgressBarOptions = .init()
-    
-//    private let appSettings: AppSettingsVM
     
     @State private var isDartsTargetSide1 = true
     @State private var rotation: Double = .zero
@@ -51,35 +46,14 @@ struct DartsGameView: View {
     @State private var dartsTargetSide2IsShow = false
     
     @State private var answersIsShow = true
-    
     @State private var startBtnIsShow = true
     
     private let dartsTargetViewOptions: DartsTargetViewOptions
     
-    private var timerAudioPlayer: AVAudioPlayer? = nil
-    
     init(_ appSettings: AppSettings) {
         print("DartsGameView.\(#function)")
         
-        timerOptions = CountdownTimerCircleProgressBarOptions(
-            circleLineWidth: AppConstants.timerCircleLineWidth,
-            circleDownColor: AppConstants.timerCircleDownColor,
-            ciclreDownOpacity: AppConstants.timerCiclreDownOpacity,
-            circleUpColor: AppConstants.timerCircleUpColor,
-            ciclreUpOpacity: AppConstants.timerCiclreUpOpacity,
-            circleUpRotation: AppConstants.timerCircleUpRotation,
-            animationDuration: AppConstants.timerAnimationDuration,
-            textFont: AppConstants.timerTextFont,
-            textColor: AppConstants.timerTextColor,
-            textIsBold: AppConstants.timerTextIsBold,
-            textFormat: AppConstants.timerTextFormat
-        )
-        
         gameVM = .init(appSettings)
-        timerVM = .init(
-            appSettings.timeForAnswer,
-            timeLeftToNotify: AppConstants.timerTimeLeftToNotify
-        )
         
         dartsTargetViewOptions = DartsTargetViewOptions(AppConstants.dartsFrameWidth)
         dartsHitsVM = .init(
@@ -130,7 +104,6 @@ struct DartsGameView: View {
     private var gameView: some View {
         ZStack {
             VStack {
-                
                 topView
                 dartsView
                     .frame(width: dartsTargetWidth, height: dartsTargetWidth)
@@ -155,16 +128,35 @@ struct DartsGameView: View {
         HStack {
             attemptsLabel
             Spacer()
-            CountdownTimerCircleProgressBar(timerVM: timerVM, options: timerOptions)
-                .frame(width: 64)
+            timerView
         }
         .padding(.horizontal, 32)
     }
     
+    private var timerView: some View {
+        CountdownTimerCircleProgressBar(
+            timerVM: timerVM,
+            lineWidth: AppConstants.timerCircleLineWidth,
+            backForegroundStyle: {
+                AppConstants.timerCircleDownColor
+                    .opacity(AppConstants.timerCiclreDownOpacity)
+            },
+            frontForegroundStyle: {
+                AppConstants.timerCircleUpColor
+                    .opacity(AppConstants.timerCiclreUpOpacity)
+            },
+            contentView: {
+                Text(TimerStringFormat.secMs.msStr(timerVM.counter))
+                    .font(.headline)
+                    .bold()
+                    .foregroundStyle(Color.green)
+            }
+        )
+        .frame(width: 64)
+    }
+    
     private var dartsView: some View {
-//        print("Darts width: \(dartsSize)")
-        
-        return ZStack {
+        ZStack {
             DartsTargetView(dartsTargetViewOptions, dartsTargetPalette: .classic)
                 .overlay {
                     DartsHitsView(
@@ -313,8 +305,11 @@ extension DartsGameView {
             gameVM.reset()
         }
         
-        timerVM.reset(gameVM.game.timeForAnswer,
-                      timeLeftToNotify: AppConstants.timerTimeLeftToNotify)
+        timerVM.reset(
+            gameVM.game.timeForAnswer,
+            timeLeftToNotify: AppConstants.timerTimeLeftToNotify
+        )
+        
         dartsHitsVM.reset(
             dartsWithMiss: gameVM.game.dartsWithMiss,
             dartsSize: appSettingsVM.model.dartSize
@@ -322,9 +317,6 @@ extension DartsGameView {
         
         answersIsShow = false
         showDartsSide()
-        
-//        DispatchQueue.global().async {
-//        }
     }
     
     private func startGame() {
@@ -419,7 +411,7 @@ extension DartsGameView {
         timerVM.stop()
         gameVM.stop()
         
-        resetGame()
+//        resetGame()
     }
     
     private func finishGame() {
@@ -429,6 +421,18 @@ extension DartsGameView {
     }
 }
 
-//#Preview {
-//    DartsGameView(.shared, .init())
-//}
+private struct TestDartsGameView: View {
+    @StateObject var appSettingsVM = AppSettingsViewModel()
+    
+    var body: some View {
+        GeometryReader { geometry in
+            DartsGameView(appSettingsVM.model)
+                .environment(\.mainWindowSize, geometry.size)
+                .environmentObject(appSettingsVM)
+        }
+    }
+}
+
+#Preview {
+    TestDartsGameView()
+}
