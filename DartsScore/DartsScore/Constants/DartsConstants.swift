@@ -40,8 +40,12 @@ struct DartsConstants {
     
     static let rotationAngle = Angle.degrees(Double(360 / points.count / 2))
     
-    static func getRotationAngle(for count: Int) -> Angle {
-        .circleSector(devided: Double(count * 2))
+//    static func getRotationAngle(for count: Int) -> Angle {
+//        .circleSector(devided: Double(count * 2))
+//    }
+    
+    static func getDartsTargetWidth(windowsSize: CGSize, hPadding: CGFloat = 32) -> CGFloat {
+        windowsSize.width - hPadding.x2
     }
     
     static func getRadius(_ frameWidth: CGFloat, _ radiusType: DartsRadiuses) -> CGFloat {

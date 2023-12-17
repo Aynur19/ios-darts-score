@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct DartsTargetView: View {
-    private let options: DartsTargetViewOptions
+    @EnvironmentObject var dartsTargetVM: DartsTargetViewModel
+    
     private let sectorsCount = DartsConstants.points.count
     private let dartsTargetPalette: DartsTargetPalette
     
-    init(_ options: DartsTargetViewOptions, dartsTargetPalette: DartsTargetPalette) {
-        self.options = options
+    init(dartsTargetPalette: DartsTargetPalette) {
         self.dartsTargetPalette = dartsTargetPalette
     }
     
     var body: some View {
         Circle()
             .fill(Color.black)
-            .frame(width: options.maxDartRadius.x2)
+            .frame(width: dartsTarget.frameWidth)
             .overlay {
                 GeometryReader { geometry in
                     ZStack {
@@ -34,16 +34,16 @@ struct DartsTargetView: View {
                         
                         wirePath(in: center)
                             .stroke(dartsTargetPalette.wireColor,
-                                    lineWidth: options.wireLineWidth)
+                                    lineWidth: dartsTarget.wireLineWidth)
                         
                         Circle()
                             .fill(dartsTargetPalette.points25Color)
-                            .frame(width: options.points25Radius.x2)
+                            .frame(width: dartsTarget.points25Radius.x2)
                             .position(center)
                         
                         Circle()
                             .fill(dartsTargetPalette.bullEyeColor)
-                            .frame(width: options.bullEyeRadius.x2)
+                            .frame(width: dartsTarget.bullEyeRadius.x2)
                             .position(center)
                         
                         dartsNumbers(at: center)
@@ -52,10 +52,12 @@ struct DartsTargetView: View {
             }
     }
     
+    private var dartsTarget: DartsTarget { dartsTargetVM.model }
+    
     private func dartsNumbers(at center: CGPoint) -> some View {
         ForEach(DartsConstants.points.indices, id: \.self) { sectorIdx in
             let angle = -CGFloat(sectorIdx).x2 * .pi / CGFloat(DartsConstants.points.count)
-            let distance = options.maxDartRadius * DartsConstants.symbolsDistanceCoef
+            let distance = dartsTarget.maxRadius * DartsConstants.symbolsDistanceCoef
             
             let x = center.x + cos(angle) * distance
             let y = center.y + sin(angle) * distance
@@ -68,34 +70,30 @@ struct DartsTargetView: View {
     }
     
     // MARK: Sector View
-    private func sector(
-        in center: CGPoint,
-        isEven: Bool = true,
-        isBaseSector: Bool = true
-    ) -> some View {
+    private func sector(in center: CGPoint, isEven: Bool = true, isBaseSector: Bool = true) -> some View {
         let checkNumber: Int = isEven ? .zero : 1
         
-        let innerRadius1 = isBaseSector ? options.points25Radius : options.baseSmallRadius
-        let outherRadius1 = isBaseSector ? options.baseSmallRadius : options.x3Radius
+        let innerRadius1 = isBaseSector ? dartsTarget.points25Radius : dartsTarget.baseSmallRadius
+        let outherRadius1 = isBaseSector ? dartsTarget.baseSmallRadius : dartsTarget.x3Radius
         
-        let innerRadius2 = isBaseSector ? options.x3Radius : options.baseBigRadius
-        let outherRadius2 = isBaseSector ? options.baseBigRadius : options.x2Radius
+        let innerRadius2 = isBaseSector ? dartsTarget.x3Radius : dartsTarget.baseBigRadius
+        let outherRadius2 = isBaseSector ? dartsTarget.baseBigRadius : dartsTarget.x2Radius
         
         return ZStack {
             Path { path in
                 if isEven {
                     path.addPath(sectorPath(
                         in: center,
-                        startAngle: -options.rotationAngle,
-                        endAngle: options.rotationAngle,
+                        startAngle: -dartsTarget.rotationAngle,
+                        endAngle: dartsTarget.rotationAngle,
                         innerRadius: innerRadius1,
                         outerRadius: outherRadius1
                     ))
                     
                     path.addPath(sectorPath(
                         in: center,
-                        startAngle: -options.rotationAngle,
-                        endAngle: options.rotationAngle,
+                        startAngle: -dartsTarget.rotationAngle,
+                        endAngle: dartsTarget.rotationAngle,
                         innerRadius: innerRadius2,
                         outerRadius: outherRadius2
                     ))
@@ -108,16 +106,16 @@ struct DartsTargetView: View {
                     
                     path.addPath(sectorPath(
                         in: center,
-                        startAngle: startAngle - options.rotationAngle,
-                        endAngle: endAngle - options.rotationAngle,
+                        startAngle: startAngle - dartsTarget.rotationAngle,
+                        endAngle: endAngle - dartsTarget.rotationAngle,
                         innerRadius: innerRadius1,
                         outerRadius: outherRadius1
                     ))
                     
                     path.addPath(sectorPath(
                         in: center,
-                        startAngle: startAngle - options.rotationAngle,
-                        endAngle: endAngle - options.rotationAngle,
+                        startAngle: startAngle - dartsTarget.rotationAngle,
+                        endAngle: endAngle - dartsTarget.rotationAngle,
                         innerRadius: innerRadius2,
                         outerRadius: outherRadius2
                     ))
@@ -170,7 +168,7 @@ struct DartsTargetView: View {
     private func wirePath(in center: CGPoint) -> Path {
         Path { path in
             for radiusIdx in 0..<AppConstants.wireRadiusesCount {
-                let radius = options.getRadius(radiusIdx)
+                let radius = dartsTarget.getRadius(radiusIdx)
                 
                 path.addArc(
                     center: center,
@@ -186,8 +184,8 @@ struct DartsTargetView: View {
                 
                 path.addPath(wireLinePath(
                     in: center,
-                    radius: options.wireRadius,
-                    angle: angle + options.rotationAngle
+                    radius: dartsTarget.wireRadius,
+                    angle: angle + dartsTarget.rotationAngle
                 ))
             }
         }
@@ -206,17 +204,55 @@ struct DartsTargetView: View {
 }
 
 private struct TestDartsTargetView: View {
+    @StateObject var dartsTargetVM = DartsTargetViewModel(frameWidth: 350)
+    @ObservedObject var dartsHitsVM =  DartsHitsViewModel(
+        dartsTarget: .init(frameWidth: 350),
+        missesIsEnabled: true,
+        dartSize: 10,
+        dartImageName: .dart1
+    )
+    
     var body: some View {
         ZStack {
             Color(.systemGray6)
                 .ignoresSafeArea()
             
-            DartsTargetView(
-                .init(360),
-                dartsTargetPalette: .classic
+            VStack {
+                DartsTargetView(dartsTargetPalette: .classic)
+                    .overlay {
+                        DartsHitsView()
+                            .environmentObject(dartsHitsVM)
+                    }
+                    .environmentObject(dartsTargetVM)
+                
+                Spacer()
+                
+                Button {
+                    dartsHitsVM.updateDarts()
+                } label: {
+                    Text("UPDATE DARTS")
+                }
+                
+                Spacer()
+                
+                if dartsHitsVM.darts.count == 3 {
+                    Text("Dart sector 1: \(darts[0].sector.points)x\(darts[0].sector.xScore)")
+                    Text("Dart sector 1: \(darts[1].sector.points)x\(darts[1].sector.xScore)")
+                    Text("Dart sector 1: \(darts[2].sector.points)x\(darts[2].sector.xScore)")
+                }
+            }
+        }
+        .onAppear {
+            dartsHitsVM.reset(
+                dartsTarget: dartsTargetVM.model,
+                missesIsEnabled: false,
+                dartSize: 30,
+                dartImageName: .dart2
             )
         }
     }
+    
+    private var darts: [Dart] { dartsHitsVM.darts }
 }
 
 #Preview {

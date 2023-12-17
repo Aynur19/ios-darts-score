@@ -36,17 +36,17 @@ struct SettingsView: View {
                         hitImageSettings
                         hitSizeSettings
                         
-                        DartsTargetView(
-                            .init(AppConstants.dartsFrameWidth),
-                            dartsTargetPalette: .classic
-                        )
-                        .overlay {
-                            DartsHitsView(
-                                settingsVM.darts,
-                                dartSize: CGFloat(settingsVM.dartSize),
-                                dartImageName: settingsVM.dartImageName
-                            )
-                        }
+//                        DartsTargetView(
+//                            .init(AppConstants.dartsFrameWidth),
+//                            dartsTargetPalette: .classic
+//                        )
+//                        .overlay {
+//                            DartsHitsView(
+//                                settingsVM.darts,
+//                                dartSize: CGFloat(settingsVM.dartSize),
+//                                dartImageName: settingsVM.dartImageName
+//                            )
+//                        }
                     }
                     .foregroundStyle(Palette.btnPrimary)
                     .font(.headline)

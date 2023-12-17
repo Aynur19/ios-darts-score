@@ -32,8 +32,20 @@ struct DartsGameView: View {
         timeLeftToNotify: AppConstants.timerTimeLeftToNotify
     )
     
-    @ObservedObject var gameVM: DartsGameViewModel
-    @ObservedObject var dartsHitsVM: DartsHitsViewModel
+    @StateObject var gameVM = DartsGameViewModel(
+        appSettings: .init()
+    )
+    
+    @StateObject var dartsTargetVM = DartsTargetViewModel(
+        frameWidth: AppConstants.dartsFrameWidth
+    )
+    
+    @StateObject var dartsHitsVM = DartsHitsViewModel(
+        dartsTarget: .init(frameWidth: AppConstants.dartsFrameWidth),
+        missesIsEnabled: AppConstants.defaultDartsWithMiss,
+        dartSize: AppConstants.defaultDartSize,
+        dartImageName: AppConstants.defaultDartImageName
+    )
     
     @State private var isDartsTargetSide1 = true
     @State private var rotation: Double = .zero
@@ -48,20 +60,20 @@ struct DartsGameView: View {
     @State private var answersIsShow = true
     @State private var startBtnIsShow = true
     
-    private let dartsTargetViewOptions: DartsTargetViewOptions
-    
-    init(_ appSettings: AppSettings) {
-        print("DartsGameView.\(#function)")
-        
-        gameVM = .init(appSettings)
-        
-        dartsTargetViewOptions = DartsTargetViewOptions(AppConstants.dartsFrameWidth)
-        dartsHitsVM = .init(
-            options: dartsTargetViewOptions,
-            dartsWithMiss: appSettings.dartsWithMiss,
-            dartsSize: appSettings.dartSize
-        )
-    }
+//    init(_ appSettings: AppSettings) {
+//        print("DartsGameView.\(#function)")
+//        
+//        gameVM = .init(appSettings)
+//        
+//        dartsTargetVM = .init(frameWidth: <#T##CGFloat#>)
+//        
+//        dartsHitsVM = .init(
+//            dartsTarget: .init(frameWidth: 300),
+//            missesIsEnabled: appSettings.dartsWithMiss,
+//            dartSize: appSettings.dartSize,
+//            dartImageName: appSettings.dartImageName
+//        )
+//    }
     
     var body: some View {
         NavigationStack {
@@ -157,31 +169,25 @@ struct DartsGameView: View {
     
     private var dartsView: some View {
         ZStack {
-            DartsTargetView(dartsTargetViewOptions, dartsTargetPalette: .classic)
+            DartsTargetView(dartsTargetPalette: .classic)
+                .environmentObject(dartsTargetVM)
                 .overlay {
-                    DartsHitsView(
-                        dartsHitsVM.darts,
-                        dartSize: CGFloat(appSettingsVM.model.dartSize),
-                        dartImageName: appSettingsVM.model.dartImageName
-                    )
+                    DartsHitsView()
+                        .environmentObject(dartsHitsVM)
                 }
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
-                .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
-                           value: rotation)
+                .animation(.linear(duration: Constants.opacityAnimationDuration.x2), value: rotation)
                 .opacity(dartsTargetSide1IsShow ? 1 : 0)
             
-            DartsTargetView(dartsTargetViewOptions, dartsTargetPalette: .classic)
+            DartsTargetView(dartsTargetPalette: .classic)
+                .environmentObject(dartsTargetVM)
                 .overlay {
-                    DartsHitsView(
-                        dartsHitsVM.darts,
-                        dartSize: CGFloat(appSettingsVM.model.dartSize),
-                        dartImageName: appSettingsVM.model.dartImageName
-                    )
+                    DartsHitsView()
+                        .environmentObject(dartsHitsVM)
                 }
                 .rotation3DEffect(.degrees(Constants.rotationAngle), axis: Constants.darts3DRotationAxis)
                 .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
-                .animation(.linear(duration: Constants.opacityAnimationDuration.x2),
-                           value: rotation)
+                .animation(.linear(duration: Constants.opacityAnimationDuration.x2), value: rotation)
                 .opacity(dartsTargetSide2IsShow ? 1 : 0)
         }
     }
@@ -302,7 +308,7 @@ extension DartsGameView {
         if isRestart {
             gameVM.restart(appSettings: appSettingsVM.model)
         } else {
-            gameVM.reset()
+            gameVM.reset(appSettings: appSettingsVM.model)
         }
         
         timerVM.reset(
@@ -310,10 +316,21 @@ extension DartsGameView {
             timeLeftToNotify: AppConstants.timerTimeLeftToNotify
         )
         
-        dartsHitsVM.reset(
-            dartsWithMiss: gameVM.game.dartsWithMiss,
-            dartsSize: appSettingsVM.model.dartSize
+        dartsTargetVM.reset(
+            frameWidth: dartsTargetWidth
         )
+        
+        dartsHitsVM.reset(
+            dartsTarget: dartsTargetVM.model,
+            missesIsEnabled: gameVM.game.dartsWithMiss,
+            dartSize: appSettingsVM.model.dartSize,
+            dartImageName: appSettingsVM.model.dartImageName
+        )
+        
+//        dartsHitsVM.reset(
+//            dartsWithMiss: gameVM.game.dartsWithMiss,
+//            dartsSize: appSettingsVM.model.dartSize
+//        )
         
         answersIsShow = false
         showDartsSide()
@@ -426,7 +443,8 @@ private struct TestDartsGameView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            DartsGameView(appSettingsVM.model)
+            DartsGameView()
+            //appSettings: appSettingsVM.model)
                 .environment(\.mainWindowSize, geometry.size)
                 .environmentObject(appSettingsVM)
         }

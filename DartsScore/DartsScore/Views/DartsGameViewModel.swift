@@ -16,7 +16,7 @@ final class DartsGameViewModel: ObservableObject {
     }
     
 //    private(set) var attempts: Int
-    private(set) var appSettings: AppSettings
+//    private(set) var appSettings: AppSettings
 //    private(set) var timeForAnswer: Int
 //    private(set) var dartsWithMiss: Bool
     
@@ -27,9 +27,9 @@ final class DartsGameViewModel: ObservableObject {
     
     @Published private(set) var currentAnswers = [Int]()
     
-    init(_ appSettings: AppSettings) {
+    init(appSettings: AppSettings) {
         print("DartsGameViewModel.\(#function)")
-        self.appSettings = appSettings
+//        self.appSettings = appSettings
 //        let gameId = UUID().uuidString
         
         let game = Self.loadGame(appSettings: appSettings)
@@ -49,7 +49,7 @@ final class DartsGameViewModel: ObservableObject {
         game.attempts - game.spentAttempts
     }
 
-    func reset() {
+    func reset(appSettings: AppSettings) {
         game = Self.loadGame(appSettings: appSettings)
         snapshots = JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
         
@@ -59,7 +59,7 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     func restart(appSettings: AppSettings) {
-        self.appSettings = appSettings
+//        self.appSettings = appSettings
         JsonCache.deleteFile(name: AppConstants.gameJsonName)
         game = .init(attempts: appSettings.attempts,
                      timeForAnswer: appSettings.timeForAnswer,

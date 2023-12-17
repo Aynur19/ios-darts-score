@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView {
-                DartsGameView(appSettingsVM.model)
+                DartsGameView()//appSettingsVM.model)
                     .tabItem {
                         Label("viewTitle_Darts", systemImage: "gamecontroller")
                     }
@@ -27,13 +27,13 @@ struct ContentView: View {
                     .toolbarBackground(.visible, for: .tabBar)
                     .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
-                SettingsView(appSettings: appSettingsVM.model)
-                    .tabItem {
-                        Label("viewTitle_AppSettings", systemImage: "gear")
-
-                    }
-                    .toolbarBackground(.visible, for: .tabBar)
-                    .toolbarBackground(Palette.tabBar, for: .tabBar)
+//                SettingsView(appSettings: appSettingsVM.model)
+//                    .tabItem {
+//                        Label("viewTitle_AppSettings", systemImage: "gear")
+//
+//                    }
+//                    .toolbarBackground(.visible, for: .tabBar)
+//                    .toolbarBackground(Palette.tabBar, for: .tabBar)
             }
 //            .onAppear {
 //                DispatchQueue.global().async {

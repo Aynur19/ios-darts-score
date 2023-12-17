@@ -72,6 +72,8 @@
 		A8F14F912B2B951300C4E1FD /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F902B2B951300C4E1FD /* SoundManager.swift */; };
 		A8F14F932B2B97C400C4E1FD /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F922B2B97C400C4E1FD /* Sounds.swift */; };
 		A8F14F952B2B97FA00C4E1FD /* SoundFileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F942B2B97FA00C4E1FD /* SoundFileExtension.swift */; };
+		A8F14F9A2B2E12FA00C4E1FD /* DartsTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F992B2E12F900C4E1FD /* DartsTarget.swift */; };
+		A8F14F9C2B2E14A200C4E1FD /* DartsTargetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F14F9B2B2E14A200C4E1FD /* DartsTargetViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +163,8 @@
 		A8F14F902B2B951300C4E1FD /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		A8F14F922B2B97C400C4E1FD /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		A8F14F942B2B97FA00C4E1FD /* SoundFileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundFileExtension.swift; sourceTree = "<group>"; };
+		A8F14F992B2E12F900C4E1FD /* DartsTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsTarget.swift; sourceTree = "<group>"; };
+		A8F14F9B2B2E14A200C4E1FD /* DartsTargetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsTargetViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,7 +301,9 @@
 		A8A8273C2B0E4EAF00AD1BD0 /* DartsTarget */ = {
 			isa = PBXGroup;
 			children = (
+				A8F14F992B2E12F900C4E1FD /* DartsTarget.swift */,
 				A8A8273A2B0E4EA200AD1BD0 /* DartsTargetView.swift */,
+				A8F14F9B2B2E14A200C4E1FD /* DartsTargetViewModel.swift */,
 				A82D6CF62B12722D006CF50A /* DartsTargetViewOptions.swift */,
 			);
 			path = DartsTarget;
@@ -339,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				A82D6CF42B126C8E006CF50A /* DartsHitsView.swift */,
+				A8A8273D2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift */,
 			);
 			path = DartHit;
 			sourceTree = "<group>";
@@ -391,7 +398,6 @@
 			children = (
 				A8742F912B0E79E50026E07F /* DartsGameView.swift */,
 				A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */,
-				A8A8273D2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift */,
 			);
 			name = DartsGame;
 			sourceTree = "<group>";
@@ -650,6 +656,7 @@
 				A8F14F932B2B97C400C4E1FD /* Sounds.swift in Sources */,
 				A82D6CF52B126C8E006CF50A /* DartsHitsView.swift in Sources */,
 				A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */,
+				A8F14F9A2B2E12FA00C4E1FD /* DartsTarget.swift in Sources */,
 				A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */,
 				A8DA54082B25A5A1003BD9BC /* HStepperView.swift in Sources */,
 				A8DA53FF2B24A272003BD9BC /* DartsTargetPalette.swift in Sources */,
@@ -658,6 +665,7 @@
 				A8A8273E2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift in Sources */,
 				A8DA540D2B28AAA4003BD9BC /* DartImageName.swift in Sources */,
 				A8A827392B0E4B9E00AD1BD0 /* DartsGameStats.swift in Sources */,
+				A8F14F9C2B2E14A200C4E1FD /* DartsTargetViewModel.swift in Sources */,
 				A8A8272F2B0E49AB00AD1BD0 /* Dart.swift in Sources */,
 				A887761A2B0DEEFF005B746B /* ContentView.swift in Sources */,
 				A8DA54012B24AE08003BD9BC /* CodableColor.swift in Sources */,
