@@ -167,7 +167,7 @@ struct DartsTargetView: View {
     // MARK: Wire Paths
     private func wirePath(in center: CGPoint) -> Path {
         Path { path in
-            for radiusIdx in 0..<AppConstants.wireRadiusesCount {
+            for radiusIdx in 0..<DartsConstants.circleWireRadiuses {
                 let radius = dartsTarget.getRadius(radiusIdx)
                 
                 path.addArc(

@@ -27,7 +27,7 @@ struct DartsGameStats: Identifiable {
     
     mutating func add(_ item: DartsGame) -> Bool {
         var isAdded = true
-        if items.count < AppConstants.statsMaxCount {
+        if items.count < AppConstants.resultsMaxCount {
             items.append(item)
         } else {
             items.sort { $0.score > $1.score }

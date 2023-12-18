@@ -70,7 +70,7 @@ struct DartsTarget {
     }
     
     func checkTouchedOfWire(at touchPoint: CGPoint, angle: Angle, distance: CGFloat) -> Bool {
-        for radiusIdx in 0..<AppConstants.wireRadiusesCount
+        for radiusIdx in 0..<DartsConstants.circleWireRadiuses
         where abs(distance - getRadius(radiusIdx)) <= distanceWithoutScore { return true }
         
         for idx in DartsConstants.points.indices {

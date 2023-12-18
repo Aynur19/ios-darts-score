@@ -12,7 +12,7 @@ where BackShapeStyleType: ShapeStyle,
       FrontShapeStyleType: ShapeStyle,
       ContentViewType: View {
     
-    private var timerVM: CountdownTimerViewModel
+    @EnvironmentObject var timerVM: CountdownTimerViewModel
     
     private let lineWidth: CGFloat
     private let circleRotation: Angle
@@ -24,7 +24,6 @@ where BackShapeStyleType: ShapeStyle,
     @ViewBuilder private var contentView: ContentViewType
     
     init(
-        timerVM: CountdownTimerViewModel,
         lineWidth: CGFloat = 20,
         circleRotation: Angle = .degrees(-90),
         animationDuration: Double = 0.2,
@@ -32,8 +31,6 @@ where BackShapeStyleType: ShapeStyle,
         frontForegroundStyle: @escaping () -> FrontShapeStyleType = { Color.green },
         @ViewBuilder contentView: () -> ContentViewType
     ) {
-        self.timerVM = timerVM
-        
         self.lineWidth = lineWidth
         self.circleRotation = circleRotation
         self.animationDuration = animationDuration
@@ -69,12 +66,15 @@ private struct TestCountdownTimerCircleProgressBarView: View {
     
     var body: some View {
         VStack {
-            CountdownTimerCircleProgressBar(timerVM: timerVM) {
-                Text(TimerStringFormat.secMs.msStr(timerVM.counter))
-                    .font(.headline)
-                    .bold()
-                    .foregroundStyle(Color.green)
-            }
+            CountdownTimerCircleProgressBar(
+                contentView: {
+                    Text(TimerStringFormat.secMs.msStr(timerVM.counter))
+                        .font(.headline)
+                        .bold()
+                        .foregroundStyle(Color.green)
+                }
+            )
+            .environmentObject(timerVM)
             .padding()
             
             VStack(spacing: 16) {

@@ -30,15 +30,20 @@ struct DartsConstants {
     // MARK: Sizes
     static let targetRadius: CGFloat = 225              // Общий радиус
     static let xWidth: CGFloat = 8                      // Внутренняя ширина колец «даблов» и «треблов»
+    
     static let bullEyeRadius: CGFloat = 12.7 / 2        // Внутренний диаметр «яблочка»
     static let centralCircleRadius: CGFloat = 31.8 / 2  // Внутренний диаметр внешнего центрального кольца
     static let x2Radius: CGFloat = 170                  // Расстояние от центра до внешней стороны кольца «даблов»
     static let x3Radius: CGFloat = 107                  // Расстояние от центра до внешней стороны кольца «треблов»
     static let wireThickness: CGFloat = 1.5             // Толщина проволоки
-    static let wireRadius: CGFloat = 185                // Максимальный радиус проволки
+    static let wireRadius: CGFloat = 185                // Максимальный радиус проволки    
+    static let circleWireRadiuses = 6
+    
     static let symbolsDistanceCoef: CGFloat = 0.87
     
     static let rotationAngle = Angle.degrees(Double(360 / points.count / 2))
+
+    static let dartsCount = 3
     
 //    static func getRotationAngle(for count: Int) -> Angle {
 //        .circleSector(devided: Double(count * 2))

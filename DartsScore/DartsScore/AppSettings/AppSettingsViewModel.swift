@@ -61,7 +61,6 @@ final class AppSettingsViewModel: ObservableObject {
         }
     }
 
-
     func stopSounds() {
         Task {
             await MainActor.run { SoundManager.shared.stop() }

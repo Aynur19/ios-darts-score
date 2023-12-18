@@ -51,7 +51,7 @@ class DartsHitsViewModel: ObservableObject {
     private func generateDarts() {
         darts.removeAll()
         
-        for _ in 0..<AppConstants.dartsCount {
+        for _ in 0..<DartsConstants.dartsCount {
             darts.append(generateDart())
         }
     }

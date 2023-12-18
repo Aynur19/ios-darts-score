@@ -59,6 +59,7 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     func restart(appSettings: AppSettings) {
+        playTapSound()
 //        self.appSettings = appSettings
         JsonCache.deleteFile(name: AppConstants.gameJsonName)
         game = .init(attempts: appSettings.attempts,
@@ -72,10 +73,11 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     func start() {
+        playTapSound()
         state = .processing
     }
     
-    func generateAnswers(_ expectedScore: Int) {
+    func generateAnswers(expectedScore: Int) {
         currentAnswers.removeAll()
         currentAnswers.append(contentsOf: getAnswers(expectedScore))
     }
@@ -94,6 +96,8 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     func onAnswered(for time: Int, expected: Int, actual: Int, darts: [Dart]) {
+        playTapSound()
+        
         let timeForCurrentAnswer = game.timeForAnswer - time
         let scoreForCurrentAnswer = getScoreForAnswer(
             expected: expected,
@@ -119,14 +123,14 @@ final class DartsGameViewModel: ObservableObject {
         if game.attempts == game.spentAttempts {
             state = .finished
             
-            playSoundGameOver()
+//            playSoundGameOver()
             gameOver()
         }
     }
     
     private func getScoreForAnswer(expected: Int, actual: Int, time: Int) -> Int {
         if expected == actual {
-            let scoreMultiplier = CGFloat(AppConstants.standardTimeForAnswer / game.timeForAnswer)
+            let scoreMultiplier = -CGFloat(111)// CGFloat(AppConstants.standardTimeForAnswer / game.timeForAnswer)
             return Int(CGFloat(game.timeForAnswer) / CGFloat(time) * scoreMultiplier)
         }
         
@@ -155,13 +159,25 @@ final class DartsGameViewModel: ObservableObject {
         JsonCache.deleteFile(name: AppConstants.gameJsonName)
     }
     
-    func playSoundGameOver() {
-//        if state == .finished {
-//            if game.attempts - game.successAttempts <= game.successAttempts {
-//                SoundManager.shared.play(GoodGameResultSound())
-//            } else {
-//                SoundManager.shared.play(BadGameResultSound())
-//            }
-//        }
+    func playResultSound() {
+        Task { await MainActor.run { SoundManager.shared.play(resultSound) } }
+    }
+    
+    func stopResultSound() {
+        Task { await MainActor.run { SoundManager.shared.stop(resultSound) } }
+    }
+    
+    private var isGoodReasult: Bool {
+        game.successAttempts >= game.attempts - game.successAttempts
+    }
+    
+    private var resultSound: Sound {
+        isGoodReasult ? GoodGameResultSound() : BadGameResultSound()
+    }
+    
+    private func playTapSound() {
+        Task {
+            await MainActor.run { SoundManager.shared.play(UserTapSound()) }
+        }
     }
 }
