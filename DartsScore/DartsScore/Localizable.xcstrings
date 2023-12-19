@@ -20,9 +20,6 @@
         }
       }
     },
-    "???" : {
-
-    },
     "%@" : {
 
     },
@@ -196,6 +193,22 @@
         }
       }
     },
+    "label_DartsTargetRotationSound" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rotate the target"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поворот мишени"
+          }
+        }
+      }
+    },
     "label_Details" : {
       "localizations" : {
         "en" : {
@@ -212,6 +225,22 @@
         }
       }
     },
+    "label_GameBadResultSound" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- sound when the result is bad"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- звук при плохом результате"
+          }
+        }
+      }
+    },
     "label_GameDate" : {
       "localizations" : {
         "en" : {
@@ -224,6 +253,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дата "
+          }
+        }
+      }
+    },
+    "label_GameGoodResultSound" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- sound when the result is good"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "- звук при хорошем результате"
+          }
+        }
+      }
+    },
+    "label_GameResultSound" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game result"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Результат игры"
           }
         }
       }
@@ -337,6 +398,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Правильные ответы"
+          }
+        }
+      }
+    },
+    "label_TamerEndSound" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End of timer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Окончание таймера"
+          }
+        }
+      }
+    },
+    "label_TapSound" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click / tap on a button"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажатие / тап по кнопке"
           }
         }
       }
@@ -462,6 +555,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дартс"
+          }
+        }
+      }
+    },
+    "viewTitle_SoundSettings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sound settings"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки звука"
           }
         }
       }

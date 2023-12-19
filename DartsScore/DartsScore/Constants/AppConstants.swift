@@ -12,17 +12,13 @@ var isPreview: Bool {
 }
 
 class AppConstants: ObservableObject {
-    //
-//    static let standardTimeForAnswer = 60.secToMs
     static let resultsMaxCount = 50
-//    static let wireRadiusesCount = 6
     
     static let gameJsonName = "DartsGame"
     static let statsJsonName = "DartsGameStats"
     static let answersCount = 5
     
     static let defaultDartsTargetWidth: CGFloat = 350
-//    static let dartsCount = 3
     
     // default data
     static let attemptsCountData = [5, 10, 15, 20]
@@ -66,4 +62,11 @@ class AppConstants: ObservableObject {
     static let timerTextFormat: TimerStringFormat = .secMs
     
     static let timerTimeLeftToNotify: Int = 5300
+    
+    static func getScoreForSuccesAnswer(timeForAnswer: Int, time: Int) -> Int {
+        let xCoef = Float(AppConstants.defaultTimeForAnswer.msToSec) / Float(timeForAnswer.msToSec)
+        let score = Float(AppConstants.defaultTimeForAnswer.msToSec - time.msToSec)
+        
+        return Int(xCoef * score)
+    }
 }

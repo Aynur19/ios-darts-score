@@ -23,8 +23,8 @@ struct GameOverPopupView: View {
             
             VStack(spacing: 16) {
                 Text("Результаты")
-                Spacer()
                 
+                Spacer()
                 attemptsLabel
                 successLabel
                 withoutAnswerLabel
@@ -33,8 +33,8 @@ struct GameOverPopupView: View {
                 
                 Spacer()
                 resultLabel
-                Spacer()
                 
+                Spacer()
                 okButton
             }
             .foregroundStyle(Palette.btnPrimary)
@@ -44,7 +44,6 @@ struct GameOverPopupView: View {
         .clipShape(RoundedRectangle(cornerRadius: 25))
         .padding(.horizontal, 32)
         .padding(.vertical, 128)
-//        .onAppear { playSound() }
     }
     
     private var game: DartsGame { gameVM.game }
@@ -61,7 +60,7 @@ struct GameOverPopupView: View {
         HStack {
             Text("Правильных: ")
             Spacer()
-            Text("\(game.successAttempts)")
+            Text("\(game.correct)")
         }
     }
     
@@ -69,7 +68,7 @@ struct GameOverPopupView: View {
         HStack {
             Text("Без ответов: ")
             Spacer()
-            Text("???")
+            Text("\(game.missed)")
         }
     }
     
@@ -90,7 +89,7 @@ struct GameOverPopupView: View {
     }
     
     private var isGoodResult: Bool {
-        game.successAttempts >= game.attempts - game.successAttempts
+        game.correct >= game.attempts - game.correct
     }
     
     private var resultLabel: some View {
@@ -99,25 +98,11 @@ struct GameOverPopupView: View {
         : Text("Можно и лучше!")
     }
     
-//    private var sound: Sound {
-//        isGoodResult ? GoodGameResultSound() : BadGameResultSound()
-//    }
-//    
-//    private func playSound() {
-//        SoundManager.shared.play(sound)
-//    }
-//    
-//    private func stopSound() {
-//        SoundManager.shared.stop(sound)
-//    }
-    
     private var okButton: some View {
-        Button {
-//            stopSound()
-            action()
-        } label: {
-            Text("OK")
-        }
+        Button(
+            action: { action() },
+            label: { Text("OK") }
+        )
         .foregroundStyle(Palette.btnPrimary)
         .bold()
     }

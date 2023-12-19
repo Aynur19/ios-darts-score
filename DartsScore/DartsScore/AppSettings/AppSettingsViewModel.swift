@@ -10,12 +10,14 @@ import Combine
 
 final class AppSettingsViewModel: ObservableObject {
     @Published private(set) var model: AppSettings
+    @Published private(set) var soundSettings: AppSoundSettings
     
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
         print("AppSettingsViewModel.\(#function)")
         model = .init()
+        soundSettings = .init()
         
         NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
             .sink { [weak self] _ in
@@ -52,11 +54,11 @@ final class AppSettingsViewModel: ObservableObject {
     func prepareSounds() {
         Task {
             await MainActor.run {
-                SoundManager.shared.prepare(UserTapSound())
-                SoundManager.shared.prepare(TimerEndSound())
-                SoundManager.shared.prepare(DartsRotationSound())
-                SoundManager.shared.prepare(GoodGameResultSound())
-                SoundManager.shared.prepare(BadGameResultSound())
+//                SoundManager.shared.prepare(UserTapSound())
+//                SoundManager.shared.prepare(TimerEndSound())
+//                SoundManager.shared.prepare(DartsTargetRotationSound())
+//                SoundManager.shared.prepare(GoodGameResultSound())
+//                SoundManager.shared.prepare(BadGameResultSound())
             }
         }
     }

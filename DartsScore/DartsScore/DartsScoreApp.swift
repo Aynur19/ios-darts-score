@@ -24,8 +24,6 @@ struct DartsScoreApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            TestGameOverView()
-            
             GeometryReader { geometry in
                 ContentView()
                     .environment(\.mainWindowSize, geometry.size)

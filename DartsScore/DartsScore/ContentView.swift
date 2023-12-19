@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView {
-                DartsGameView()//appSettingsVM.model)
+                DartsGameView()
                     .tabItem {
                         Label("viewTitle_Darts", systemImage: "gamecontroller")
                     }

@@ -48,7 +48,7 @@ struct DartsGameStatisticsSheet: View {
                 Text(String(game.score))
                 Text("\(AppConstants.timerTextFormat.msStr(game.timeSpent)) suffix_Seconds")
                 Text(String(game.attempts))
-                Text(String(game.successAttempts))
+                Text(String(game.correct))
                 Text(dateTimeStr)
             }
         }

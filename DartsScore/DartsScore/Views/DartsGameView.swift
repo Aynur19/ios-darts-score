@@ -50,7 +50,6 @@ struct DartsGameView: View {
     @State private var isDartsTargetSide1 = true
     @State private var rotation: Double = .zero
     
-//    @State private var gameViewIsShow = false
     @State private var gameStopedViewIsShow = false
     @State private var gameOverViewIsShow = false
     
@@ -79,7 +78,6 @@ struct DartsGameView: View {
                         gameVM.playResultSound()
                     }
                 }
-//                gameOverView
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -95,15 +93,22 @@ struct DartsGameView: View {
         .onReceive(timerVM.$isNotified) { isNotified in
             playTimerSound(isNotified)
         }
+        .onReceive(timerVM.$state) { newState in
+            onTimerStateChange(state: newState)
+        }
         .onReceive(gameVM.$state) { gameState in
             showUI(gameState)
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-            stopGame()
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
-            stopGame()
-        }
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: UIApplication.willResignActiveNotification
+            )
+        ) { _ in stopGame() }
+        .onReceive(
+            NotificationCenter.default.publisher(
+                for: UIApplication.willTerminateNotification
+            )
+        ) { _ in stopGame() }
     }
     
     private var gameView: some View {
@@ -121,8 +126,6 @@ struct DartsGameView: View {
                 Spacer()
             }
         }
-//        .opacity(gameViewIsShow ? 1 : 0)
-//        .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameViewIsShow)
     }
     
     private var topView: some View {
@@ -197,7 +200,7 @@ struct DartsGameView: View {
                 ForEach(gameVM.currentAnswers, id: \.self) { answer in
                     DartsGameAnswerView(
                         score: answer,
-                        onAnswered: { onAnswered(answer) }
+                        onAnswered: { nextAttempt(answer: answer) }
                     )
                 }
             }
@@ -245,41 +248,6 @@ struct DartsGameView: View {
         Button { restartGame() } label: { Text("btnLabel_Restart") }
             .buttonStyle(PrimaryButtonStyle())
     }
-    
-//    private var gameOverView: some View {
-//        ZStack {
-//            VStack {
-//                Spacer()
-//                VStack(spacing: Constants.labelsVSpacing) {
-//                    statsLabel("Всего попыток: ", .init(gameVM.game.attempts))
-//                    statsLabel("Правильных ответов: ", .init(gameVM.game.successAttempts))
-//                    statsLabel("Заработано очков: ", .init(gameVM.game.score))
-//                    statsLabel("Потрачено времени: ", "\(TimerStringFormat.secMs.msStr( gameVM.game.timeSpent)) сек.")
-//                }
-//                .foregroundStyle(Palette.bgText)
-//                .font(.title3)
-//                .frame(maxWidth: .infinity)
-//                .padding(.horizontal, Constants.buttonsHPadding.half)
-//                
-//                Spacer()
-//                
-//                restartButton
-//                    .padding(.horizontal, Constants.buttonsHPadding)
-//                
-//                Spacer()
-//            }
-//        }
-//        .opacity(gameOverViewIsShow ? 1 : 0)
-//        .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameOverViewIsShow)
-//    }
-    
-//    private func statsLabel(_ text1: String, _ text2: String) -> some View {
-//        HStack {
-//            Text(text1)
-//            Spacer()
-//            Text(text2)
-//        }
-//    }
 }
 
 extension DartsGameView {
@@ -290,8 +258,6 @@ extension DartsGameView {
     private func showUI(_ gameState: DartsGameViewModel.GameState) {
         startBtnIsShow          = gameState == .idle
         gameStopedViewIsShow    = gameState == .stoped
-//        gameViewIsShow          = gameState != .finished
-//        gameOverViewIsShow      = gameState == .finished
     }
     
     private func restartGame() {
@@ -344,27 +310,36 @@ extension DartsGameView {
     
     private func playTimerSound(_ isNotified: Bool) {
         if isNotified {
-            SoundManager.shared.play(TimerEndSound())
+//            SoundManager.shared.play(TimerEndSound())
         }
     }
     
     private func stopTimerSound() {
-        SoundManager.shared.stop(TimerEndSound())
+//        SoundManager.shared.stop(TimerEndSound())
     }
     
-    private func onAnswered(_ answer: Int) {
-        print("DartsGameView.\(#function)")
-        
-        if timerVM.isNotified {
-            stopTimerSound()
+    private func onTimerStateChange(state: CountdownTimerState) {
+        if state == .finished {
+            nextAttempt()
         }
+    }
+    
+    private func nextAttempt(answer: Int? = .none) {
+        if timerVM.isNotified { stopTimerSound() }
         
-        gameVM.onAnswered(
-            for: timerVM.counter,
-            expected: dartsHitsVM.score,
-            actual: answer,
-            darts: dartsHitsVM.darts
-        )
+        if let currentAnswer = answer {
+            gameVM.onAnswered(
+                for: timerVM.counter,
+                expected: dartsHitsVM.score,
+                actual: currentAnswer,
+                darts: dartsHitsVM.darts
+            )
+        } else {
+            gameVM.onMissed(
+                expected: dartsHitsVM.score,
+                darts: dartsHitsVM.darts
+            )
+        }
         
         rotateDarts()
         answersIsShow = false
@@ -381,7 +356,7 @@ extension DartsGameView {
         isDartsTargetSide1.toggle()
         rotation += Constants.rotationAngle
         
-        SoundManager.shared.play(DartsRotationSound())
+//        SoundManager.shared.play(DartsTargetRotationSound())
     }
     
     private func continueGame() {
@@ -403,13 +378,13 @@ extension DartsGameView {
     }
     
     private func stopGame() {
-        print("DartsGameView.\(#function)")
         timerVM.stop()
         gameVM.stop()
+        
+        SoundManager.shared.stop()
     }
     
     private func finishGame() {
-        print("DartsGameView.\(#function)")
         timerVM.stop()
         answersIsShow = false
         
@@ -424,6 +399,12 @@ extension DartsGameView {
             gameOverViewIsShow = false
         }
         restartGame()
+    }
+    
+    private func onTimerStateChanged(state: CountdownTimerState) {
+        if state == .finished {
+            
+        }
     }
 }
 

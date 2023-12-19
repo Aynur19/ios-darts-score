@@ -15,27 +15,18 @@ final class DartsGameViewModel: ObservableObject {
         case finished
     }
     
-//    private(set) var attempts: Int
-//    private(set) var appSettings: AppSettings
-//    private(set) var timeForAnswer: Int
-//    private(set) var dartsWithMiss: Bool
-    
     @Published private(set) var game: DartsGame
     @Published private(set) var snapshots: DartsGameSnapshotsList
     
     @Published private(set) var state: GameState = .idle
-    
     @Published private(set) var currentAnswers = [Int]()
     
     init(appSettings: AppSettings) {
         print("DartsGameViewModel.\(#function)")
-//        self.appSettings = appSettings
-//        let gameId = UUID().uuidString
         
         let game = Self.loadGame(appSettings: appSettings)
         self.game = game
         self.snapshots = .init(game.id)
-//        self.attempts = game.attempts
     }
     
     private static func loadGame(appSettings: AppSettings) -> DartsGame {
@@ -52,23 +43,18 @@ final class DartsGameViewModel: ObservableObject {
     func reset(appSettings: AppSettings) {
         game = Self.loadGame(appSettings: appSettings)
         snapshots = JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
-        
-//        attempts = game.attempts
-//        timeForAnswer = game.timeForAnswer
+    
         state = game.spentAttempts == .zero ? .idle : .stoped
     }
     
     func restart(appSettings: AppSettings) {
         playTapSound()
-//        self.appSettings = appSettings
         JsonCache.deleteFile(name: AppConstants.gameJsonName)
         game = .init(attempts: appSettings.attempts,
                      timeForAnswer: appSettings.timeForAnswer,
                      dartsWithMiss: appSettings.dartsWithMiss)
         snapshots = .init(game.id)
         
-//        self.attempts = game.attempts
-//        self.timeForAnswer = game.timeForAnswer
         state = .idle
     }
     
@@ -95,6 +81,26 @@ final class DartsGameViewModel: ObservableObject {
         return generatedAnswers.shuffled()
     }
     
+    func onMissed(expected: Int, darts: [Dart]) {
+        let timeForCurrentAnswer = game.timeForAnswer
+        
+        let answerSnapshot = DartsGameSnapshot(
+            id: snapshots.snapshots.count,
+            expected: expected,
+            actual: -1,
+            answers: currentAnswers,
+            darts: darts,
+            time: game.timeForAnswer,
+            score: 0,
+            isMissed: true
+        )
+        
+        snapshots.add(answerSnapshot)
+        game.onMissed(for: game.timeForAnswer)
+        
+        checkAttempts()
+    }
+    
     func onAnswered(for time: Int, expected: Int, actual: Int, darts: [Dart]) {
         playTapSound()
         
@@ -112,26 +118,26 @@ final class DartsGameViewModel: ObservableObject {
             answers: currentAnswers,
             darts: darts,
             time: timeForCurrentAnswer,
-            score: scoreForCurrentAnswer
+            score: scoreForCurrentAnswer,
+            isMissed: false
         )
         
         snapshots.add(answerSnapshot)
-        game.onAnswered(scoreForCurrentAnswer, for: timeForCurrentAnswer)
+        game.onAnswered(score: scoreForCurrentAnswer, for: timeForCurrentAnswer)
         
-//        attempts += 1
-        
+        checkAttempts()
+    }
+    
+    private func checkAttempts() {
         if game.attempts == game.spentAttempts {
-            state = .finished
-            
-//            playSoundGameOver()
             gameOver()
+            state = .finished
         }
     }
     
     private func getScoreForAnswer(expected: Int, actual: Int, time: Int) -> Int {
         if expected == actual {
-            let scoreMultiplier = -CGFloat(111)// CGFloat(AppConstants.standardTimeForAnswer / game.timeForAnswer)
-            return Int(CGFloat(game.timeForAnswer) / CGFloat(time) * scoreMultiplier)
+            return AppConstants.getScoreForSuccesAnswer(timeForAnswer: game.timeForAnswer, time: time)
         }
         
         return .zero
@@ -144,8 +150,6 @@ final class DartsGameViewModel: ObservableObject {
             
             state = .stoped
         }
-        
-//        SoundManager.shared.stop()
     }
     
     func gameOver() {
@@ -168,16 +172,14 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     private var isGoodReasult: Bool {
-        game.successAttempts >= game.attempts - game.successAttempts
+        game.correct >= game.attempts - game.correct
     }
     
     private var resultSound: Sound {
-        isGoodReasult ? GoodGameResultSound() : BadGameResultSound()
+        isGoodReasult ? GameGoodResultSound(volume: 1) : GameBadResultSound(volume: 1)
     }
     
     private func playTapSound() {
-        Task {
-            await MainActor.run { SoundManager.shared.play(UserTapSound()) }
-        }
+        Task { await MainActor.run { SoundManager.shared.play(UserTapSound(volume: 1)) } }
     }
 }

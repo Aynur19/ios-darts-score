@@ -59,7 +59,8 @@ struct MockData {
                         )
                     ],
                     time: 1100,
-                    score: 0
+                    score: 0,
+                    isMissed: false
                 ),
                 .init(
                     id: 1,
@@ -81,7 +82,8 @@ struct MockData {
                         )
                     ],
                     time: 1100,
-                    score: 64
+                    score: 64,
+                    isMissed: false
                 )
             ]
         )

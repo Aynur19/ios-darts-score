@@ -34,6 +34,10 @@ extension View {
             }
         }
     }
+    
+    func glowingOutline() -> some View {
+        modifier(GlowingOutline())
+    }
 }
 
 private struct ClearedBackground: UIViewRepresentable {
@@ -47,3 +51,16 @@ private struct ClearedBackground: UIViewRepresentable {
         }
     }
 }
+
+
+struct GlowingOutline: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .overlay {
+                RoundedRectangle(cornerRadius: 25.0)
+                    .stroke(Palette.btnPrimary, lineWidth: 2)
+                    .shadow(color: Palette.btnPrimary, radius: 5)
+            }
+    }
+}
+

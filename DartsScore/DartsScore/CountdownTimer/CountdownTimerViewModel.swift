@@ -7,14 +7,14 @@
 
 import Foundation
 
+enum CountdownTimerState: String {
+    case idle
+    case stoped
+    case processing
+    case finished
+}
+
 final class CountdownTimerViewModel: ObservableObject {
-    enum CountdownTimerState: String {
-        case idle
-        case stoped
-        case processing
-        case finished
-    }
-    
     @Published private(set) var progress: CGFloat = 1
     @Published private(set) var counter: Int
     @Published private(set) var time: Int
@@ -55,15 +55,9 @@ final class CountdownTimerViewModel: ObservableObject {
             guard let self = self else { return }
             
             if self.counter > .zero {
-                self.counter -= 100
-                
-                if !self.isNotified, self.counter < timeLeftToNotify {
-                    isNotified = true
-                }
-                
-                self.progress = CGFloat(self.counter) / CGFloat(self.time)
+                tick()
             } else {
-                self.state = .finished
+                finish()
             }
         }
         
@@ -73,6 +67,21 @@ final class CountdownTimerViewModel: ObservableObject {
     func stop() {
         timer?.invalidate()
         state = .stoped
+    }
+    
+    private func tick() {
+        counter -= 100
+        
+        if !isNotified, counter < timeLeftToNotify {
+            isNotified = true
+        }
+        
+        progress = CGFloat(counter) / CGFloat(time)
+    }
+    
+    private func finish() {
+        self.timer?.invalidate()
+        self.state = .finished
     }
     
     deinit { timer?.invalidate() }

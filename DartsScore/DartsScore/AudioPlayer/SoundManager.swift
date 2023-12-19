@@ -13,15 +13,40 @@ import AVFoundation
 final class SoundManager: NSObject, AVAudioPlayerDelegate {
     static let shared = SoundManager()
 
+    private var settings: AppSoundSettings = .init()
     private var audioPlayers: [URL: AVAudioPlayer] = [:]
     private var duplicateAudioPlayers: [AVAudioPlayer] = []
 
     private override init() {}
     
+    func prepare(settings: AppSoundSettings) {
+        self.settings = settings
+        
+        audioPlayers.removeAll()
+        duplicateAudioPlayers.removeAll()
+        
+        if settings.tapSoundIsEnabled {
+            prepare(UserTapSound(volume: settings.tapSoundVolume.float))
+        }
+        
+        if settings.timerEndSoundIsEnabled {
+            prepare(TimerEndSound(volume: settings.timerEndSoundVolume.float))
+        }
+        
+        if settings.targetRotationSoundIsEnabled {
+            prepare(DartsTargetRotationSound(volume: settings.targetRotationSoundVolume.float))
+        }
+        
+        if settings.gameResultSoundIsEnabled {
+            prepare(GameGoodResultSound(volume: settings.gameGoodResultSoundVolume.float))
+            prepare(GameBadResultSound(volume: settings.gameBadResultSoundVolume.float))
+        }
+    }
+    
     func prepare(_ sound: Sound) {
         guard let player = getAudioPlayer(sound) else { return }
         
-        player.volume = sound.getVolume()
+        player.volume = sound.volume
         player.numberOfLoops = sound.getNumberOfLoops()
         
         if sound.enableRate() {
@@ -33,15 +58,11 @@ final class SoundManager: NSObject, AVAudioPlayerDelegate {
     }
 
     func play(_ sound: Sound, isRestart: Bool = true) {
-        guard let player = getAudioPlayer(sound) else { return }
-        
-        player.volume = sound.getVolume()
-        player.numberOfLoops = sound.getNumberOfLoops()
-        
-        if sound.enableRate() {
-            player.enableRate = true
-            player.rate = sound.getRate()
-        }
+        print("SoundManager.\(#function)")
+        print("  sound: \(sound)")
+        guard let url = sound.url,
+              let player = audioPlayers[url]
+        else { return }
         
         if isRestart {
             player.currentTime = .zero
@@ -51,15 +72,58 @@ final class SoundManager: NSObject, AVAudioPlayerDelegate {
         player.play()
     }
     
-    func stop() {
-        audioPlayers.forEach { _, player in
-            player.stop()
+    func playAndStop(sound: Sound) {
+        let player: AVAudioPlayer
+        
+        if let url = sound.url {
+            if let foundedPlayer = audioPlayers[url] {
+                player = foundedPlayer
+            } else if let createdPlayer = try? AVAudioPlayer(contentsOf: url) {
+                player = createdPlayer
+                audioPlayers[url] = player
+            } else { return }
+            
+            if player.isPlaying {
+                player.stop()
+                return
+            }
+            
+            player.currentTime = 0
+            player.volume = sound.volume
+            player.prepareToPlay()
+            player.play()
+        }
+    }
+    
+    func stop(excludedSounds: [Sound] = []) {
+        let excludedUrls = excludedSounds.compactMap { $0.url }
+        
+        if excludedUrls.isEmpty {
+            audioPlayers.forEach { url, player in
+                player.stop()
+            }
+        } else {
+            audioPlayers.forEach { url, player in
+                if !excludedUrls.contains(url) {
+                    player.stop()
+                }
+            }
         }
         
         duplicateAudioPlayers.forEach { player in
             player.stop()
         }
     }
+    
+//    func stop() {
+//        audioPlayers.forEach { url, player in
+//            player.stop()
+//        }
+//        
+//        duplicateAudioPlayers.forEach { player in
+//            player.stop()
+//        }
+//    }
     
     func stop(_ sound: Sound, onPause: Bool = false) {
         guard let url = sound.url,
@@ -73,7 +137,7 @@ final class SoundManager: NSObject, AVAudioPlayerDelegate {
         }
     }
     
-    func getAudioPlayer(_ sound: Sound) -> AVAudioPlayer? {
+    func getAudioPlayer(_ sound: Sound, notBusy: Bool = true) -> AVAudioPlayer? {
         print("SoundManager.\(#function)")
         print(" duplicate Audio Players: \(duplicateAudioPlayers.count)")
         
@@ -85,6 +149,8 @@ final class SoundManager: NSObject, AVAudioPlayerDelegate {
             
             return player
         }
+        
+        if !notBusy { return player }
         
         guard player.isPlaying else { return player }
         

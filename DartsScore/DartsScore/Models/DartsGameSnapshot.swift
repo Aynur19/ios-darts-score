@@ -15,24 +15,7 @@ struct DartsGameSnapshot: Identifiable {
     let darts: [Dart]
     let time: Int
     let score: Int
-    
-    init(
-        id: Int,
-        expected: Int,
-        actual: Int,
-        answers: [Int],
-        darts: [Dart],
-        time: Int,
-        score: Int
-    ) {
-        self.id =  id
-        self.expected = expected
-        self.actual = actual
-        self.answers = answers
-        self.darts = darts
-        self.time = time
-        self.score = score
-    }
+    let isMissed: Bool
 }
 
 extension DartsGameSnapshot: Codable {
@@ -46,6 +29,7 @@ extension DartsGameSnapshot: Codable {
         self.darts      = try container.decode([Dart].self, forKey: .darts)
         self.time       = try container.decode(Int.self, forKey: .time)
         self.score      = try container.decode(Int.self, forKey: .score)
+        self.isMissed   = try container.decode(Bool.self, forKey: .isMissed)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -56,5 +40,6 @@ extension DartsGameSnapshot: Codable {
         case darts
         case time
         case score
+        case isMissed
     }
 }

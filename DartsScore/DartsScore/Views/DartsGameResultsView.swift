@@ -91,7 +91,7 @@ struct DartsGameResultsView: View {
             Text(String(game.score))
                 .bold()
                 .frame(maxWidth: .infinity)
-            Text(attemptsStr(game.attempts, success: game.successAttempts))
+            Text(attemptsStr(game.attempts, success: game.correct))
                 .frame(maxWidth: .infinity)
             Text("\(TimerStringFormat.secMs.msStr(game.timeSpent)) suffix_Seconds")
                 .frame(maxWidth: .infinity)

@@ -18,7 +18,8 @@ struct DartsGame: Identifiable {
     
     private(set) var score: Int = .zero
     private(set) var spentAttempts: Int = .zero
-    private(set) var successAttempts: Int = .zero
+    private(set) var correct: Int = .zero
+    private(set) var missed: Int = .zero
     private(set) var timeSpent: Int = .zero
     private(set) var dateTime: Date = .now
     
@@ -47,19 +48,27 @@ struct DartsGame: Identifiable {
     ) {
         self.init(id, attempts: attempts, timeForAnswer: timeForAnswer, dartsWithMiss: dartsWithMiss)
         self.score = score
-        self.successAttempts = successAttempts
+        self.correct = successAttempts
         self.timeSpent = timeSpent
         self.dateTime = dateTime
     }
     
-    mutating func onAnswered(_ score: Int, for time: Int = .zero) {
+    mutating func onMissed(for time: Int) {
+        missed += 0
+        timeSpent += time
+        
+        spentAttempts += 1
+    }
+    
+    mutating func onAnswered(score: Int, for time: Int) {
         self.score += score
         timeSpent += time
-        spentAttempts += 1
         
         if score > .zero {
-            successAttempts += 1
+            correct += 1
         }
+        
+        spentAttempts += 1
     }
     
     mutating func onFinished() {
@@ -78,7 +87,8 @@ extension DartsGame: Codable {
         self.snapshotsJsonName  = try container.decode(String.self, forKey: .snapshotsJsonName)
         self.score              = try container.decode(Int.self, forKey: .score)
         self.spentAttempts      = try container.decode(Int.self, forKey: .spentAttempts)
-        self.successAttempts    = try container.decode(Int.self, forKey: .successAttempts)
+        self.correct            = try container.decode(Int.self, forKey: .correct)
+        self.missed             = try container.decode(Int.self, forKey: .missed)
         self.timeSpent          = try container.decode(Int.self, forKey: .timeSpent)
         
         let dateDecodingStrategy = ISO8601DateFormatter()
@@ -93,7 +103,8 @@ extension DartsGame: Codable {
         case snapshotsJsonName
         case score
         case spentAttempts
-        case successAttempts
+        case correct
+        case missed
         case timeSpent
         case dateTime
     }

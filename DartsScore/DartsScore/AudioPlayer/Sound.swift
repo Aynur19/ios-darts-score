@@ -13,7 +13,7 @@ protocol Sound {
     func getFileName() -> String
     func getFileExtension() -> String
     
-    func getVolume() -> Float
+    var volume: Float { get }
     func getNumberOfLoops() -> Int
     func enableRate() -> Bool
     func getRate() -> Float
@@ -28,7 +28,6 @@ extension Sound {
         SoundFileExtension.mp3.rawValue
     }
     
-    func getVolume() -> Float { 1 }
     func getNumberOfLoops() -> Int { 0 }
     func enableRate() -> Bool { false }
     func getRate() -> Float { 1 }
