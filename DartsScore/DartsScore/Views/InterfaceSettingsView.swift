@@ -93,6 +93,13 @@ struct InterfaceSettingsView: View {
         dartsHitsVM.replaceDarts(newDarts: dartMissesIsEnabled ? darts[0] : darts[1])
     }
     
+    private func updateDartView() {
+        dartsHitsVM.updateDartView(
+            imageName: dartImageName,
+            size: dartSize
+        )
+    }
+    
     private func setDarts() {
         darts.append(MockData.getDartsGameSnapshotsList().snapshots[0].darts)
         darts.append(MockData.getDartsGameSnapshotsList().snapshots[1].darts)
@@ -156,7 +163,7 @@ struct InterfaceSettingsView: View {
             step: 1,
             buttonsContainerBackground: Palette.btnPrimary.opacity(0.25),
             labelView: { value in
-                Text("label_DartSize \(value)") // Размер попадания:
+                Text("label_DartSize \(value)")
             },
             dividerView: { StaticUI.hWheelPickerDivider }
         )
@@ -177,7 +184,7 @@ struct InterfaceSettingsView: View {
                     get: { self.dartMissesIsEnabled },
                     set: { newValue in onChangedDartMissesIsEnabled(isEnabled: newValue) }
                 ),
-                label: { Text("Включить промахи") }
+                label: { Text("label_MissesEnable") } // Включить промахи
             )
             .toggleStyle(
                 ImageToggleStyle(
@@ -200,41 +207,6 @@ struct InterfaceSettingsView: View {
         DartsTargetView()
             .environmentObject(dartsTargetVM)
             .overlay { DartsHitsView().environmentObject(dartsHitsVM) }
-    }
-}
-
-extension InterfaceSettingsView {
-    private func updateDartView() {
-        dartsHitsVM.updateDartView(
-            imageName: dartImageName,
-            size: dartSize
-        )
-    }
-    
-    private func setDartImageNameIdx() {
-        print("InterfaceSettingsView.\(#function)")
-        print("    dartImageName: \(dartImageName)")
-        guard let idx = Defaults.dartImageNamesData.firstIndex(of: dartImageName) else {
-            return onChangedDartImageNameIdx(idx: Defaults.dartImageNameIdx)
-        }
-        
-        print("___idx: \(idx)")
-        onChangedDartImageNameIdx(idx: idx)
-    }
-
-    private func reset() {
-        let frameWidth = DartsConstants.getDartsTargetWidth(windowsSize: windowSize)
-        
-        dartsTargetVM.reset(frameWidth: frameWidth)
-        dartsHitsVM.reset(
-            dartsTarget: dartsTargetVM.model,
-            missesIsEnabled: true,
-            dartSize: dartSize,
-            dartImageName: dartImageName
-        )
-        
-//        dartsHitsVM.updateDarts()
-//        updateDarts()
     }
 }
 

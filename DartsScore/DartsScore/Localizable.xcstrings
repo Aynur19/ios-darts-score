@@ -398,6 +398,22 @@
         }
       }
     },
+    "label_MissesEnable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable misses"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить промахи"
+          }
+        }
+      }
+    },
     "label_Preview" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -649,9 +665,6 @@
       }
     },
     "Без ответов: " : {
-
-    },
-    "Включить промахи" : {
 
     },
     "Время: " : {
