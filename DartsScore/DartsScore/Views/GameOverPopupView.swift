@@ -121,7 +121,7 @@ struct TestGameOverView: View {
             VStack {
                 Spacer()
                 
-                DartsTargetView(dartsTargetPalette: .classic)
+                DartsTargetView()
                     .environmentObject(dartsTargetVM)
                 
                 Button {

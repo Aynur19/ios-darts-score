@@ -167,7 +167,7 @@ struct DartsGameView: View {
     
     private var dartsView: some View {
         ZStack {
-            DartsTargetView(dartsTargetPalette: .classic)
+            DartsTargetView()
                 .environmentObject(dartsTargetVM)
                 .overlay {
                     DartsHitsView()
@@ -177,7 +177,7 @@ struct DartsGameView: View {
                 .animation(.linear(duration: Constants.opacityAnimationDuration.x2), value: rotation)
                 .opacity(dartsTargetSide1IsShow ? 1 : 0)
             
-            DartsTargetView(dartsTargetPalette: .classic)
+            DartsTargetView()
                 .environmentObject(dartsTargetVM)
                 .overlay {
                     DartsHitsView()
@@ -268,9 +268,9 @@ extension DartsGameView {
     private func resetGame(isRestart: Bool = false) {
         print("DartsGameView.\(#function)")
         if isRestart {
-            gameVM.restart(appSettings: appSettingsVM.model)
+            gameVM.restart(appSettings: appSettingsVM.settings)
         } else {
-            gameVM.reset(appSettings: appSettingsVM.model)
+            gameVM.reset(appSettings: appSettingsVM.settings)
         }
         
         timerVM.reset(
@@ -285,8 +285,8 @@ extension DartsGameView {
         dartsHitsVM.reset(
             dartsTarget: dartsTargetVM.model,
             missesIsEnabled: gameVM.game.dartsWithMiss,
-            dartSize: appSettingsVM.model.dartSize,
-            dartImageName: appSettingsVM.model.dartImageName
+            dartSize: appSettingsVM.interfaceSettings.dartSize,
+            dartImageName: appSettingsVM.interfaceSettings.dartImageName
         )
         
         answersIsShow = false

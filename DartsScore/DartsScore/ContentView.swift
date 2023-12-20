@@ -27,13 +27,15 @@ struct ContentView: View {
 //                    .toolbarBackground(.visible, for: .tabBar)
 //                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
+                SettingsView()
+                    .environmentObject(appSettingsVM)
 //                SettingsView(appSettings: appSettingsVM.model)
-//                    .tabItem {
-//                        Label("viewTitle_AppSettings", systemImage: "gear")
-//
-//                    }
-//                    .toolbarBackground(.visible, for: .tabBar)
-//                    .toolbarBackground(Palette.tabBar, for: .tabBar)
+                    .tabItem {
+                        Label("viewTitle_AppSettings", systemImage: "gear")
+
+                    }
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
             }
 //            .onAppear {
 //                DispatchQueue.global().async {

@@ -33,7 +33,9 @@ final class DartsGameViewModel: ObservableObject {
         JsonCache.loadGame(from: AppConstants.gameJsonName)
         ?? .init(attempts: appSettings.attempts,
                  timeForAnswer: appSettings.timeForAnswer,
-                 dartsWithMiss: appSettings.dartsWithMiss)
+                 dartsWithMiss: true//appSettings.dartsWithMiss
+        )
+        
     }
     
     var remainingAttempts: Int {
@@ -52,7 +54,7 @@ final class DartsGameViewModel: ObservableObject {
         JsonCache.deleteFile(name: AppConstants.gameJsonName)
         game = .init(attempts: appSettings.attempts,
                      timeForAnswer: appSettings.timeForAnswer,
-                     dartsWithMiss: appSettings.dartsWithMiss)
+                     dartsWithMiss: true) // TODO: fix
         snapshots = .init(game.id)
         
         state = .idle

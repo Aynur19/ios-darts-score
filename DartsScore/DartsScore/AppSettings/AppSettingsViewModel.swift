@@ -9,15 +9,17 @@ import SwiftUI
 import Combine
 
 final class AppSettingsViewModel: ObservableObject {
-    @Published private(set) var model: AppSettings
+    @Published private(set) var settings: AppSettings
+    @Published private(set) var interfaceSettings: AppInterfaceSettings
     @Published private(set) var soundSettings: AppSoundSettings
     
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
         print("AppSettingsViewModel.\(#function)")
-        model = .init()
+        settings = .init()
         soundSettings = .init()
+        interfaceSettings = .init()
         
         NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
             .sink { [weak self] _ in
@@ -34,21 +36,29 @@ final class AppSettingsViewModel: ObservableObject {
         prepareSounds()
     }
     
+    func update() {
+        print("AppSettingsViewModel.\(#function)")
+        print("  interfaceSettings: \(interfaceSettings)")
+        interfaceSettings.update()
+        
+        print("  interfaceSettings: \(interfaceSettings)")
+    }
+    
     func save(settingsVM: SettingsViewModel) {
         print("AppSettingsViewModel.\(#function)")
         
-        print("  model: \(model)")
-        model = AppSettings(
+        print("  model: \(settings)")
+        settings = AppSettings(
             attempts: settingsVM.attempts,
-            timeForAnswer: settingsVM.timeForAnswer.secToMs,
-            dartsWithMiss: settingsVM.dartsWithMiss,
-            dartImageName: settingsVM.dartImageName,
-            dartSize: settingsVM.dartSize,
-            dartsTargetPalette: .classic
+            timeForAnswer: settingsVM.timeForAnswer.secToMs//,
+//            dartsWithMiss: settingsVM.dartsWithMiss,
+//            dartImageName: settingsVM.dartImageName,
+//            dartSize: settingsVM.dartSize,
+//            dartsTargetPalette: .classic
         )
         
-        model.save()
-        print("  model: \(model)")
+        settings.save()
+        print("  model: \(settings)")
     }
     
     func prepareSounds() {

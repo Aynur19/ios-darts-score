@@ -7,46 +7,42 @@
 
 import SwiftUI
 
+fileprivate enum SettingsSubviews: String {
+    case interface
+    case sound
+}
+
 struct SettingsView: View {
     private typealias Constants = AppConstants
     
     @Environment(\.mainWindowSize) var windowsSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
-    @ObservedObject var settingsVM: SettingsViewModel
+//    @ObservedObject var settingsVM: SettingsViewModel
+    
+    @State private var path = NavigationPath()
     
     @State private var appearDatetimeId: String = ""
     
-    init(appSettings: AppSettings) {
-        print("AppSettingsView.\(#function)")
-        settingsVM = .init(appSettings: appSettings)
-    }
+//    init(appSettings: AppSettings) {
+//        print("AppSettingsView.\(#function)")
+////        settingsVM = .init(appSettings: appSettings)
+//    }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             ZStack {
                 Palette.background
                     .ignoresSafeArea()
                 
                 ScrollView {
                     VStack(spacing: 20) {
-                        attemptsSettings
-                        timeForAnswerSettings
-                        dartsWithMissSettings
-                        hitImageSettings
-                        hitSizeSettings
+//                        attemptsSettings
+//                        timeForAnswerSettings
+//                        dartsWithMissSettings
                         
-//                        DartsTargetView(
-//                            .init(AppConstants.dartsFrameWidth),
-//                            dartsTargetPalette: .classic
-//                        )
-//                        .overlay {
-//                            DartsHitsView(
-//                                settingsVM.darts,
-//                                dartSize: CGFloat(settingsVM.dartSize),
-//                                dartImageName: settingsVM.dartImageName
-//                            )
-//                        }
+                        interfaceSettingsButton
+//                        soundSettingsButton
                     }
                     .foregroundStyle(Palette.btnPrimary)
                     .font(.headline)
@@ -55,8 +51,9 @@ struct SettingsView: View {
             }
             .onAppear {
                 appearDatetimeId = Date().description
+                appSettingsVM.update()
             }
-            .onDisappear { cancelSettings() }
+//            .onDisappear { cancelSettings() }
 //            .onDisappear {
 //                appSettingsVM.resetSettings()
 //            }
@@ -68,26 +65,36 @@ struct SettingsView: View {
                         .foregroundStyle(Palette.bgText)
                 }
                 
-                
-                ToolbarItem(placement: .cancellationAction) {
-                    Button {
-                        resetSettings()
-                    } label: {
-                        Text("Reset")
-                    }
-                    .disabled(settingsVM.isDefaults)
-                }
-                
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        saveSettings()
-                    } label: {
-                        Text("Save")
-                    }
-                    .disabled(!settingsVM.isChanged)
-                }
+//                
+//                ToolbarItem(placement: .cancellationAction) {
+//                    Button {
+//                        resetSettings()
+//                    } label: {
+//                        Text("Reset")
+//                    }
+//                    .disabled(settingsVM.isDefaults)
+//                }
+//                
+//                ToolbarItem(placement: .confirmationAction) {
+//                    Button {
+//                        saveSettings()
+//                    } label: {
+//                        Text("Save")
+//                    }
+//                    .disabled(!settingsVM.isChanged)
+//                }
             }
-
+            .navigationDestination(for: SettingsSubviews.self) { settingsSubview in
+                switch settingsSubview {
+                    case .interface:
+                        InterfaceSettingsView(settings: appSettingsVM.interfaceSettings)
+                    case .sound:
+                        SoundSettingsView()
+                }
+//                if let game = statsVM.getGame(gameIdx) {
+//                    GameAnswersView(game, stats: MockData.getDartsGameSnapshotsList())
+//                }
+            }
         }
     }
     
@@ -124,146 +131,180 @@ struct SettingsView: View {
         Palette.btnPrimary
     }
     
-    private var attemptsSettings: some View {
-        VStack {
-            HStack {
-                Text("Количество попыток за игру")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(settingsVM.attempts)")
-                    .multilineTextAlignment(.trailing)
-            }
-            
-            HStaticSegmentedPickerView(
-                data: Constants.attemptsCountData,
-                value: $settingsVM.attempts,
-                backgroundColor: UIColor(Palette.btnPrimary.opacity(0.2)),
-                selectedSegmentTintColor: UIColor(Palette.btnPrimary),
-                selectedForecroundColor: UIColor(Palette.btnPrimaryText),
-                normalForegroundColor: UIColor(Palette.btnPrimary)
-            ) { item in
-                Text("\(item)")
-            }
-            .id(appearDatetimeId)
-//            .id(appSettingsVM.id)
-        }
-        .padding()
-        .overlay { glowingOutline }
-    }
+//    private var attemptsSettings: some View {
+//        VStack {
+//            HStack {
+//                Text("Количество попыток за игру")
+//                    .frame(maxWidth: .infinity, alignment: .leading)
+//                Text("\(settingsVM.attempts)")
+//                    .multilineTextAlignment(.trailing)
+//            }
+//            
+//            HStaticSegmentedPickerView(
+//                data: Constants.attemptsCountData,
+//                value: $settingsVM.attempts,
+//                backgroundColor: UIColor(Palette.btnPrimary.opacity(0.2)),
+//                selectedSegmentTintColor: UIColor(Palette.btnPrimary),
+//                selectedForecroundColor: UIColor(Palette.btnPrimaryText),
+//                normalForegroundColor: UIColor(Palette.btnPrimary)
+//            ) { item in
+//                Text("\(item)")
+//            }
+//            .id(appearDatetimeId)
+////            .id(appSettingsVM.id)
+//        }
+//        .padding()
+//        .overlay { glowingOutline }
+//    }
     
-    private var timeForAnswerSettings: some View {
-        VStack {
-            HStack {
-                Text("Время на ответ")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(settingsVM.timeForAnswer) сек.")
-                    .multilineTextAlignment(.trailing)
-            }
-            
-            hWheelPickerCursor
-            
-            HWheelPickerView(
-                data: Constants.timesForAnswerData,
-                valueIdx: $settingsVM.timeForAnswerIdx,
-                contentSize: .init(width: 64, height: 32)
-            ) { item in
-                Text("\(item)")
-            } dividerView: {
-                hWheelPickerDivider
-            } backgroundView: {
-                hWheelPickerBackground
-            } maskView: {
-                hWheelPickerMask
-            }
-            .frame(minHeight: 32)
-        }
-        .padding()
-        .overlay { glowingOutline }
-    }
+//    private var timeForAnswerSettings: some View {
+//        VStack {
+//            HStack {
+//                Text("Время на ответ")
+//                    .frame(maxWidth: .infinity, alignment: .leading)
+//                Text("\(settingsVM.timeForAnswer.msToSec) сек.")
+//                    .multilineTextAlignment(.trailing)
+//            }
+//            
+//            hWheelPickerCursor
+//            
+//            HWheelPickerView(
+//                data: Constants.timesForAnswerData,
+//                valueIdx: $settingsVM.timeForAnswerIdx,
+//                contentSize: .init(width: 64, height: 32)
+//            ) { item in
+//                Text("\(item.msToSec)")
+//            } dividerView: {
+//                hWheelPickerDivider
+//            } backgroundView: {
+//                hWheelPickerBackground
+//            } maskView: {
+//                hWheelPickerMask
+//            }
+//            .frame(minHeight: 32)
+//        }
+//        .padding()
+//        .overlay { glowingOutline }
+//    }
+//    
+//    private var dartsWithMissSettings: some View {
+//        VStack(spacing: 20) {
+//            Toggle(isOn: $settingsVM.dartsWithMiss) {
+//                Text("Включить промахи")
+//            }
+//            .toggleStyle(
+//                ImageToggleStyle { isOn in
+//                    Circle()
+//                        .fill(Palette.btnPrimary)
+//                        .overlay {
+//                            Image(systemName: isOn ? "checkmark" : "xmark")
+//                                .foregroundStyle(Palette.btnPrimaryText)
+//                        }
+//                        .padding(2)
+//                } backgroundChange: { isOn in
+//                    isOn ? Palette.btnPrimary.opacity(0.5) : Color(.systemGray4)
+//                }
+//            )
+//        }
+//        .padding()
+//        .overlay { glowingOutline }
+//    }
     
-    private var dartsWithMissSettings: some View {
-        VStack(spacing: 20) {
-            Toggle(isOn: $settingsVM.dartsWithMiss) {
-                Text("Включить промахи")
-            }
-            .toggleStyle(
-                ImageToggleStyle { isOn in
-                    Circle()
-                        .fill(Palette.btnPrimary)
-                        .overlay {
-                            Image(systemName: isOn ? "checkmark" : "xmark")
-                                .foregroundStyle(Palette.btnPrimaryText)
-                        }
-                        .padding(2)
-                } backgroundChange: { isOn in
-                    isOn ? Palette.btnPrimary.opacity(0.5) : Color(.systemGray4)
-                }
-            )
-        }
-        .padding()
-        .overlay { glowingOutline }
-    }
-    
-    private var hitImageSettings: some View {
-        VStack {
-            HStack {
-                Text("Изображение попадания")
-                Spacer()
-                
-                settingsVM.dartImageName.image(size: 20)
-            }
-            
-            hWheelPickerCursor
-            
-            HWheelPickerView(
-                data: Constants.dartImageNamesData,
-                valueIdx: $settingsVM.dartImageNameIdx,
-                contentSize: .init(width: 64, height: 32)
-            ) { item in
-                item.image(size: 20)
-            } dividerView: {
-                hWheelPickerDivider
-            } backgroundView: {
-                hWheelPickerBackground
-            } maskView: {
-                hWheelPickerMask
-            }
-            .frame(minHeight: 32)
-        }
-        .padding()
-        .overlay { glowingOutline }
-    }
-    
-    private var hitSizeSettings: some View {
-        HStepperView(
-            value: $settingsVM.dartSize,
-            range: 10...40,
-            step: 1,
-            buttonsContainerBackground: Palette.btnPrimary.opacity(0.25),
-            labelView: { value in
-                Text("Размер попадания: \(value)")
+    private var interfaceSettingsButton: some View {
+        Button(
+            action: {
+                path.append(SettingsSubviews.interface)
             },
-            dividerView: {
-                Rectangle()
-                    .fill(Palette.btnPrimary)
-                    .frame(width: 1.5, height: 20)
+            label: {
+                HStack {
+                    Text("Настройки интерфейса")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
             }
         )
         .padding()
-        .overlay { glowingOutline }
+        .glowingOutline()
     }
     
-    private func saveSettings() {
-        appSettingsVM.save(settingsVM: settingsVM)
-        settingsVM.checkChangesAndDefaults()
+    private var soundSettingsButton: some View {
+        Button(
+            action: {
+                path.append(SettingsSubviews.sound)
+            },
+            label: {
+                HStack {
+                    Text("Настройки звука")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+            }
+        )
+        .padding()
+        .glowingOutline()
     }
     
-    private func cancelSettings() {
-        settingsVM.cancel()
-    }
+//    private var hitImageSettings: some View {
+//        VStack {
+//            HStack {
+//                Text("Изображение попадания")
+//                Spacer()
+//                
+//                settingsVM.dartImageName.image(size: 20)
+//            }
+//            
+//            hWheelPickerCursor
+//            
+//            HWheelPickerView(
+//                data: Constants.dartImageNamesData,
+//                valueIdx: $settingsVM.dartImageNameIdx,
+//                contentSize: .init(width: 64, height: 32)
+//            ) { item in
+//                item.image(size: 20)
+//            } dividerView: {
+//                hWheelPickerDivider
+//            } backgroundView: {
+//                hWheelPickerBackground
+//            } maskView: {
+//                hWheelPickerMask
+//            }
+//            .frame(minHeight: 32)
+//        }
+//        .padding()
+//        .overlay { glowingOutline }
+//    }
+//    
+//    private var hitSizeSettings: some View {
+//        HStepperView(
+//            value: $settingsVM.dartSize,
+//            range: 10...40,
+//            step: 1,
+//            buttonsContainerBackground: Palette.btnPrimary.opacity(0.25),
+//            labelView: { value in
+//                Text("Размер попадания: \(value)")
+//            },
+//            dividerView: {
+//                Rectangle()
+//                    .fill(Palette.btnPrimary)
+//                    .frame(width: 1.5, height: 20)
+//            }
+//        )
+//        .padding()
+//        .overlay { glowingOutline }
+//    }
     
-    private func resetSettings() {
-        settingsVM.reset()
-    }
+//    private func saveSettings() {
+//        appSettingsVM.save(settingsVM: settingsVM)
+//        settingsVM.checkChangesAndDefaults()
+//    }
+//    
+//    private func cancelSettings() {
+//        settingsVM.cancel()
+//    }
+//    
+//    private func resetSettings() {
+//        settingsVM.reset()
+//    }
     
 //    private func toDefaultSettings() {
 ////        settingsVM.toDefault()
@@ -274,11 +315,15 @@ private struct TestAppSettingsView: View {
     @StateObject var appSettingsVM = AppSettingsViewModel()
     
     var body: some View {
-        TabView {
-            SettingsView(appSettings: appSettingsVM.model)
-                .environmentObject(appSettingsVM)
-                .toolbarBackground(.visible, for: .tabBar)
-                .toolbarBackground(Palette.tabBar, for: .tabBar)
+        GeometryReader { geometry in
+            TabView {
+                SettingsView()
+//                SettingsView(appSettings: appSettingsVM.settings)
+                    .environment(\.mainWindowSize, geometry.size)
+                    .environmentObject(appSettingsVM)
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
+            }
         }
     }
 }

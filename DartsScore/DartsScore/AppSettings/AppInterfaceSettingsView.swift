@@ -18,13 +18,15 @@ struct AppInterfaceDefaultSettings {
     
     static let dartSize = 30
     
+    static let dartMissesIsEnabled = true
+    
     static let dartsTargetPalette: DartsTargetPalette = .classic
 }
 
 enum AppInterfaceSettingsKeys: String {        
     case dartImageName
     case dartSize
-    
+    case dartMissesIsEnabled
     case dartsTargetPalette
 }
 
@@ -36,7 +38,7 @@ struct AppInterfaceSettings {
     
     private(set) var dartImageName: DartImageName
     private(set) var dartSize: Int
-    
+    private(set) var dartMissesIsEnabled: Bool
     private(set) var dartsTargetPalette: DartsTargetPalette
     
     init() {
@@ -44,42 +46,17 @@ struct AppInterfaceSettings {
         
         dartImageName       = Self.loadDartImageName()
         dartSize            = userDefaults.integer(forKey: Keys.dartSize.rawValue)
+        dartMissesIsEnabled = userDefaults.bool(forKey: Keys.dartMissesIsEnabled.rawValue)
         dartsTargetPalette  = Self.loadDartsTargetPalette()
     }
-    
-//    init(
-//        dartImageName: Bool,
-//        dartSize: Double,
-//        dartsTargetPalette: Bool,
-//        timerEndSoundVolume: Double,
-//        targetRotationSoundIsEnabled: Bool,
-//        targetRotationSoundVolume: Double,
-//        gameResultSoundIsEnabled: Bool,
-//        gameGoodResultSoundVolume: Double,
-//        gameBadResultSoundVolume: Double
-//    ) {
-//        print("AppSettings.\(#function)")
-//        
-//        self.tapSoundIsEnabled = tapSoundIsEnabled
-//        self.tapSoundVolume = tapSoundVolume
-//        
-//        self.timerEndSoundIsEnabled = timerEndSoundIsEnabled
-//        self.timerEndSoundVolume = timerEndSoundVolume
-//        
-//        self.targetRotationSoundIsEnabled = targetRotationSoundIsEnabled
-//        self.targetRotationSoundVolume = targetRotationSoundVolume
-//        
-//        self.gameResultSoundIsEnabled = gameResultSoundIsEnabled
-//        self.gameGoodResultSoundVolume = gameGoodResultSoundVolume
-//        self.gameBadResultSoundVolume = gameBadResultSoundVolume
-//    }
     
     private static func registerSettings() {
         UserDefaults.standard.register(
             defaults: [
                 Keys.dartImageName.rawValue: Defaults.dartImageName.rawValue,
-                Keys.dartSize.rawValue: Defaults.dartSize,
-                Keys.dartsTargetPalette.rawValue: Defaults.dartsTargetPalette.rawValue
+                Keys.dartSize.rawValue:             Defaults.dartSize,
+                Keys.dartMissesIsEnabled.rawValue:  Defaults.dartMissesIsEnabled,
+                Keys.dartsTargetPalette.rawValue:   Defaults.dartsTargetPalette.rawValue
             ]
         )
     }
@@ -87,7 +64,23 @@ struct AppInterfaceSettings {
     func save() {
         userDefaults.setValue(dartImageName.rawValue, forKey: Keys.dartImageName.rawValue)
         userDefaults.setValue(dartSize, forKey: Keys.dartSize.rawValue)
+        userDefaults.setValue(dartMissesIsEnabled, forKey: Keys.dartMissesIsEnabled.rawValue)
         userDefaults.setValue(dartsTargetPalette.rawValue, forKey: Keys.dartsTargetPalette.rawValue)
+    }
+    
+    mutating func update() {
+        dartImageName       = Self.loadDartImageName()
+        dartSize            = userDefaults.integer(forKey: Keys.dartSize.rawValue)
+        dartMissesIsEnabled = userDefaults.bool(forKey: Keys.dartMissesIsEnabled.rawValue)
+        dartsTargetPalette  = Self.loadDartsTargetPalette()
+    }
+    
+    var dartImageNameIdx: Int {
+        guard let idx = Defaults.dartImageNamesData.firstIndex(of: dartImageName) else {
+            return Defaults.dartImageNameIdx
+        }
+        
+        return idx
     }
     
     private static func loadDartImageName() -> DartImageName {

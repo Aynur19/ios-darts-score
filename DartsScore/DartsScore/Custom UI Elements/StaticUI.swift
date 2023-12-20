@@ -30,4 +30,24 @@ struct StaticUI {
             endPoint: .trailing
         )
     }
+    
+    static var hWheelPickerDivider: some View {
+        Rectangle()
+            .fill(Palette.btnPrimary)
+            .frame(width: 1.5, height: 20)
+    }
+    
+    static func toggleImageButtonChange(isOn: Bool) -> some View {
+        Circle()
+            .fill(Palette.btnPrimary)
+            .overlay {
+                Image(systemName: isOn ? "checkmark" : "xmark")
+                    .foregroundStyle(Palette.btnPrimaryText)
+            }
+            .padding(2)
+    }
+    
+    static func toggleImageBackgroundChange(isOn: Bool) -> Color {
+        isOn ? Palette.btnPrimary.opacity(0.5) : Color(.systemGray4)
+    }
 }

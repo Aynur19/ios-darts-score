@@ -43,7 +43,7 @@ struct DartsConstants {
     static let rotationAngle = Angle.degrees(Double(360 / points.count / 2))
     static let dartsCount = 3
     
-    static func getDartsTargetWidth(windowsSize: CGSize, hPadding: CGFloat = 32) -> CGFloat {
+    static func getDartsTargetWidth(windowsSize: CGSize, hPadding: CGFloat = 24) -> CGFloat {
         windowsSize.width - hPadding.x2
     }
     

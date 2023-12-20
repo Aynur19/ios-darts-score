@@ -18,13 +18,13 @@ final class SettingsViewModel: ObservableObject {
     @Published var timeForAnswerIdx: Int { didSet { updateTimeForAnswer() } }
     @Published private(set) var timeForAnswer: Int
     
-    @Published var dartsWithMiss: Bool { didSet { updateDarts() } }
-    @Published private(set) var darts: [Dart]
-    
-    @Published var dartImageNameIdx: Int { didSet { updateDartImageName() } }
-    @Published private(set) var dartImageName: DartImageName
-    
-    @Published var dartSize: Int { didSet { checkChangesAndDefaults() } }
+//    @Published var dartsWithMiss: Bool { didSet { updateDarts() } }
+//    @Published private(set) var darts: [Dart]
+//    
+//    @Published var dartImageNameIdx: Int { didSet { updateDartImageName() } }
+//    @Published private(set) var dartImageName: DartImageName
+//    
+//    @Published var dartSize: Int { didSet { checkChangesAndDefaults() } }
     
     private let appSettings: AppSettings
     private let snapshots = MockData.getDartsGameSnapshotsList().snapshots
@@ -37,13 +37,13 @@ final class SettingsViewModel: ObservableObject {
         self.timeForAnswerIdx = Self.getTimeForAnswerIdx(appSettings.timeForAnswer)
         self.timeForAnswer = appSettings.timeForAnswer.msToSec
         
-        self.dartsWithMiss = appSettings.dartsWithMiss
-        self.darts = appSettings.dartsWithMiss ? snapshots[0].darts : snapshots[1].darts
-        
-        self.dartImageNameIdx = Self.getDartImageNameIdx(appSettings.dartImageName)
-        self.dartImageName = appSettings.dartImageName
-        
-        self.dartSize = appSettings.dartSize
+//        self.dartsWithMiss = appSettings.dartsWithMiss
+//        self.darts = appSettings.dartsWithMiss ? snapshots[0].darts : snapshots[1].darts
+//        
+//        self.dartImageNameIdx = Self.getDartImageNameIdx(appSettings.dartImageName)
+//        self.dartImageName = appSettings.dartImageName
+//        
+//        self.dartSize = appSettings.dartSize
         self.appSettings = appSettings
         
         checkChangesAndDefaults()
@@ -65,47 +65,47 @@ final class SettingsViewModel: ObservableObject {
     func checkChanges() {
         isChanged = appSettings.attempts != attempts
         || appSettings.timeForAnswer.msToSec != timeForAnswer
-        || appSettings.dartsWithMiss != dartsWithMiss
-        || appSettings.dartImageName != dartImageName
-        || appSettings.dartSize != dartSize
+//        || appSettings.dartsWithMiss != dartsWithMiss
+//        || appSettings.dartImageName != dartImageName
+//        || appSettings.dartSize != dartSize
     }
     
     func checkDefaults() {
         isDefaults = attempts == Constants.defaultAttempts
         && timeForAnswer == Constants.defaultTimeForAnswer
-        && dartsWithMiss == Constants.defaultDartsWithMiss
-        && dartImageName == Constants.defaultDartImageName
-        && dartSize == Constants.defaultDartSize
+//        && dartsWithMiss == Constants.defaultDartsWithMiss
+//        && dartImageName == Constants.defaultDartImageName
+//        && dartSize == Constants.defaultDartSize
     }
     
     func cancel() {
         attempts = appSettings.attempts
         timeForAnswerIdx = Self.getTimeForAnswerIdx(appSettings.timeForAnswer)
-        dartsWithMiss = appSettings.dartsWithMiss
-        dartImageNameIdx = Self.getDartImageNameIdx(appSettings.dartImageName)
-        dartSize = appSettings.dartSize
+//        dartsWithMiss = appSettings.dartsWithMiss
+//        dartImageNameIdx = Self.getDartImageNameIdx(appSettings.dartImageName)
+//        dartSize = appSettings.dartSize
     }
     
     func reset() {
         attempts = Constants.defaultAttempts
         timeForAnswerIdx = Constants.defaultTimeForAnswerIdx
-        dartsWithMiss = Constants.defaultDartsWithMiss
-        dartImageNameIdx = Constants.defaultDartImageNameIdx
-        dartSize = Constants.defaultDartSize
+//        dartsWithMiss = Constants.defaultDartsWithMiss
+//        dartImageNameIdx = Constants.defaultDartImageNameIdx
+//        dartSize = Constants.defaultDartSize
     }
     
-    private func updateDarts() {
-        darts = dartsWithMiss ? snapshots[0].darts : snapshots[1].darts
-        checkChangesAndDefaults()
-    }
+//    private func updateDarts() {
+//        darts = dartsWithMiss ? snapshots[0].darts : snapshots[1].darts
+//        checkChangesAndDefaults()
+//    }
     
     private func updateTimeForAnswer() {
         timeForAnswer = Constants.timesForAnswerData[timeForAnswerIdx]
         checkChangesAndDefaults()
     }
     
-    private func updateDartImageName() {
-        dartImageName = Constants.dartImageNamesData[dartImageNameIdx]
-        checkChangesAndDefaults()
-    }
+//    private func updateDartImageName() {
+//        dartImageName = Constants.dartImageNamesData[dartImageNameIdx]
+//        checkChangesAndDefaults()
+//    }
 }

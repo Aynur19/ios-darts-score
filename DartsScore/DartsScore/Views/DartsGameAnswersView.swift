@@ -76,7 +76,7 @@ struct GameAnswersView: View {
         TabView(selection: $index) {
             ForEach(snapshots) { snapshot in
                 VStack(spacing: 32) {
-                    DartsTargetView(dartsTargetPalette: .classic)
+                    DartsTargetView()
                         .environmentObject(dartsTargetVM)
                         .overlay {
                             DartsHitsView()
@@ -117,7 +117,11 @@ struct GameAnswersView: View {
 }
 
 extension GameAnswersView {
-    private var appSettings: AppSettings { appSettingsVM.model }
+    private var settings: AppSettings { appSettingsVM.settings }
+    
+    private var interfaceSettings: AppInterfaceSettings { appSettingsVM.interfaceSettings }
+    
+    private var soundSettings: AppSoundSettings { appSettingsVM.soundSettings }
     
     private var snapshots: [DartsGameSnapshot] { snapshotsVM.model.snapshots }
     
@@ -129,9 +133,9 @@ extension GameAnswersView {
         dartsTargetVM.reset(frameWidth: frameWidth)
         dartsHitsVM.reset(
             dartsTarget: dartsTarget,
-            missesIsEnabled: appSettings.dartsWithMiss,
-            dartSize: appSettings.dartSize,
-            dartImageName: appSettings.dartImageName
+            missesIsEnabled: interfaceSettings.dartMissesIsEnabled,
+            dartSize: interfaceSettings.dartSize,
+            dartImageName: interfaceSettings.dartImageName
         )
     }
     

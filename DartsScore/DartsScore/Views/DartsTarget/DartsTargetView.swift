@@ -11,11 +11,7 @@ struct DartsTargetView: View {
     @EnvironmentObject var dartsTargetVM: DartsTargetViewModel
     
     private let sectorsCount = DartsConstants.points.count
-    private let dartsTargetPalette: DartsTargetPalette
-    
-    init(dartsTargetPalette: DartsTargetPalette) {
-        self.dartsTargetPalette = dartsTargetPalette
-    }
+    private let dartsTargetPalette: DartsTargetPalette = .classic
     
     var body: some View {
         Circle()
@@ -218,7 +214,7 @@ private struct TestDartsTargetView: View {
                 .ignoresSafeArea()
             
             VStack {
-                DartsTargetView(dartsTargetPalette: .classic)
+                DartsTargetView()
                     .environmentObject(dartsTargetVM)
                     .overlay {
                         DartsHitsView()
