@@ -114,7 +114,7 @@ struct AppSoundSettings {
                 
                 Keys.gameResultSoundIsEnabled.rawValue: Defaults.gameResultSoundIsEnabled,
                 Keys.gameGoodResultSoundVolume.rawValue: Defaults.gameGoodResultSoundVolume,
-                Keys.gameBadResultSoundVolume.rawValue: Defaults.gameBadResultSoundVolume,
+                Keys.gameBadResultSoundVolume.rawValue: Defaults.gameBadResultSoundVolume
             ]
         )
     }

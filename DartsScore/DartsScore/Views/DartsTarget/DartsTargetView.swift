@@ -219,11 +219,11 @@ private struct TestDartsTargetView: View {
             
             VStack {
                 DartsTargetView(dartsTargetPalette: .classic)
+                    .environmentObject(dartsTargetVM)
                     .overlay {
                         DartsHitsView()
                             .environmentObject(dartsHitsVM)
                     }
-                    .environmentObject(dartsTargetVM)
                 
                 Spacer()
                 

@@ -10,8 +10,8 @@ import SwiftUI
 class DartsHitsViewModel: ObservableObject {
     private(set) var dartsTarget: DartsTarget
     private(set) var missesIsEnabled: Bool
-    private(set) var dartSize: CGFloat
-    private(set) var dartImageName: DartImageName
+    @Published private(set) var dartSize: CGFloat
+    @Published private(set) var dartImageName: DartImageName
     
     @Published private(set) var darts = [Dart]()
     @Published private(set) var score: Int = .zero
@@ -127,5 +127,10 @@ extension DartsHitsViewModel {
         darts.append(contentsOf: newDarts)
         
         updateScore()
+    }
+    
+    func updateDartView(imageName: DartImageName, size: Int) {
+        dartImageName = imageName
+        dartSize = CGFloat(size)
     }
 }

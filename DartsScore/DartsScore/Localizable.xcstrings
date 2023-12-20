@@ -193,6 +193,38 @@
         }
       }
     },
+    "label_DartImage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dart image"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изображение дротика"
+          }
+        }
+      }
+    },
+    "label_DartSize %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dart size: %lld"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Размер дротика: %lld"
+          }
+        }
+      }
+    },
     "label_DartsTargetRotationSound" : {
       "localizations" : {
         "en" : {
@@ -365,6 +397,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Промах"
+          }
+        }
+      }
+    },
+    "label_Preview" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Предпросмотр"
           }
         }
       }
@@ -555,6 +603,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дартс"
+          }
+        }
+      }
+    },
+    "viewTitle_InterfaceSettings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interface settings"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки интерфейса"
           }
         }
       }

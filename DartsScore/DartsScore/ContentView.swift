@@ -13,19 +13,19 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView {
-                DartsGameView()
-                    .tabItem {
-                        Label("viewTitle_Darts", systemImage: "gamecontroller")
-                    }
-                    .toolbarBackground(.visible, for: .tabBar)
-                    .toolbarBackground(Palette.tabBar, for: .tabBar)
+//                DartsGameView()
+//                    .tabItem {
+//                        Label("viewTitle_Darts", systemImage: "gamecontroller")
+//                    }
+//                    .toolbarBackground(.visible, for: .tabBar)
+//                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
-                DartsGameResultsView()
-                    .tabItem {
-                        Label("viewTitle_Statistics", systemImage: "trophy")
-                    }
-                    .toolbarBackground(.visible, for: .tabBar)
-                    .toolbarBackground(Palette.tabBar, for: .tabBar)
+//                DartsGameResultsView()
+//                    .tabItem {
+//                        Label("viewTitle_Statistics", systemImage: "trophy")
+//                    }
+//                    .toolbarBackground(.visible, for: .tabBar)
+//                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
 //                SettingsView(appSettings: appSettingsVM.model)
 //                    .tabItem {
@@ -58,7 +58,7 @@ private struct TestContentView: View {
     var body: some View {
         GeometryReader { geometry in
             ContentView()
-                .environment(\.mainWindowSize, geometry.size)
+//                .environment(\.mainWindowSize, geometry.size)
                 .environmentObject(appSettingsVM)
         }
     }
