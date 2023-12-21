@@ -28,7 +28,7 @@ struct DartsGameView: View {
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
     @StateObject var timerVM = CountdownTimerViewModel(
-        AppConstants.defaultTimeForAnswer,
+        AppDefaultSettings.timeForAnswer,
         timeLeftToNotify: AppConstants.timerTimeLeftToNotify
     )
     
@@ -42,9 +42,9 @@ struct DartsGameView: View {
     
     @StateObject var dartsHitsVM = DartsHitsViewModel(
         dartsTarget: .init(frameWidth: AppConstants.defaultDartsTargetWidth),
-        missesIsEnabled: AppConstants.defaultDartsWithMiss,
-        dartSize: AppConstants.defaultDartSize,
-        dartImageName: AppConstants.defaultDartImageName
+        missesIsEnabled: AppInterfaceDefaultSettings.dartMissesIsEnabled,
+        dartSize: AppInterfaceDefaultSettings.dartSize,
+        dartImageName: AppInterfaceDefaultSettings.dartImageName
     )
     
     @State private var isDartsTargetSide1 = true

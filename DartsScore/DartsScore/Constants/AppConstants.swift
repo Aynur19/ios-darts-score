@@ -21,28 +21,28 @@ class AppConstants: ObservableObject {
     static let defaultDartsTargetWidth: CGFloat = 350
     
     // default data
-    static let attemptsCountData = [5, 10, 15, 20]
-    static let defaultAttemptsIdx = 1
-    static let defaultAttempts = attemptsCountData[defaultAttemptsIdx]
-    
-    static let timesForAnswerData = [10_000, 15_000, 20_000, 25_000, 30_000,
-                                     35_000, 40_000, 45_000, 50_000, 55_000, 60_000]
-    static let defaultTimeForAnswerIdx = timesForAnswerData.count - 1
-    static let defaultTimeForAnswer = timesForAnswerData[defaultTimeForAnswerIdx]
-    
-    static let defaultDartsWithMiss = true
-    
-    static let dartImageNamesData: [DartImageName] = [
-        .dart1, .dart2, .dart3, .dart4, .dart5, .dart6, .dart7,
-        .dartFlipH1, .dartFlipH2,
-        .dart1Rotate180
-    ]
-    
-    static let defaultDartImageNameIdx = 0
-    static let defaultDartImageName = dartImageNamesData[defaultDartImageNameIdx]
-    static let defaultDartSize = 26
-    
-    static let defaultDartsTargetPalette: DartsTargetPalette = .classic
+//    static let attemptsCountData = [5, 10, 15, 20]
+//    static let defaultAttemptsIdx = 1
+//    static let defaultAttempts = attemptsCountData[defaultAttemptsIdx]
+//    
+//    static let timesForAnswerData = [10_000, 15_000, 20_000, 25_000, 30_000,
+//                                     35_000, 40_000, 45_000, 50_000, 55_000, 60_000]
+//    static let defaultTimeForAnswerIdx = timesForAnswerData.count - 1
+//    static let defaultTimeForAnswer = timesForAnswerData[defaultTimeForAnswerIdx]
+//    
+//    static let defaultDartsWithMiss = true
+//    
+//    static let dartImageNamesData: [DartImageName] = [
+//        .dart1, .dart2, .dart3, .dart4, .dart5, .dart6, .dart7,
+//        .dartFlipH1, .dartFlipH2,
+//        .dart1Rotate180
+//    ]
+//    
+//    static let defaultDartImageNameIdx = 0
+//    static let defaultDartImageName = dartImageNamesData[defaultDartImageNameIdx]
+//    static let defaultDartSize = 26
+//    
+//    static let defaultDartsTargetPalette: DartsTargetPalette = .classic
 
     
     // MARK: Timer options
@@ -63,10 +63,10 @@ class AppConstants: ObservableObject {
     
     static let timerTimeLeftToNotify: Int = 5300
     
-    static func getScoreForSuccesAnswer(timeForAnswer: Int, time: Int) -> Int {
-        let xCoef = Float(AppConstants.defaultTimeForAnswer.msToSec) / Float(timeForAnswer.msToSec)
-        let score = Float(AppConstants.defaultTimeForAnswer.msToSec - time.msToSec)
-        
-        return Int(xCoef * score)
-    }
+//    static func getScoreForSuccesAnswer(timeForAnswer: Int, time: Int) -> Int {
+//        let xCoef = Float(AppConstants.defaultTimeForAnswer.msToSec) / Float(timeForAnswer.msToSec)
+//        let score = Float(AppConstants.defaultTimeForAnswer.msToSec - time.msToSec)
+//        
+//        return Int(xCoef * score)
+//    }
 }

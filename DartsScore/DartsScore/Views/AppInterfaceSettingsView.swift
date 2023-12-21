@@ -27,9 +27,9 @@ struct AppInterfaceSettingsView: View {
 
     @StateObject var dartsHitsVM = DartsHitsViewModel(
         dartsTarget: .init(frameWidth: AppConstants.defaultDartsTargetWidth),
-        missesIsEnabled: AppConstants.defaultDartsWithMiss,
-        dartSize: AppConstants.defaultDartSize,
-        dartImageName: AppConstants.defaultDartImageName
+        missesIsEnabled: Defaults.dartMissesIsEnabled,
+        dartSize: Defaults.dartSize,
+        dartImageName: Defaults.dartImageName
     )
 
     @AppStorage(Keys.dartImageName.rawValue)

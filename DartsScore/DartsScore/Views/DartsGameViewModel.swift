@@ -139,7 +139,10 @@ final class DartsGameViewModel: ObservableObject {
     
     private func getScoreForAnswer(expected: Int, actual: Int, time: Int) -> Int {
         if expected == actual {
-            return AppConstants.getScoreForSuccesAnswer(timeForAnswer: game.timeForAnswer, time: time)
+            return AppDefaultSettings.getScoreForSuccesAnswer(
+                timeForAnswer: game.timeForAnswer,
+                time: time
+            )
         }
         
         return .zero

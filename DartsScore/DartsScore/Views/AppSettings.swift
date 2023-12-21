@@ -22,6 +22,13 @@ struct AppDefaultSettings {
         
         return idx
     }
+
+    static func getScoreForSuccesAnswer(timeForAnswer: Int, time: Int) -> Int {
+        let xCoef = Float(timeForAnswer) / Float(timeForAnswer)
+        let score = Float(Self.timeForAnswer - time)
+        
+        return Int(xCoef * score).msToSec
+    }
 }
 
 enum AppSettingsKeys: String {

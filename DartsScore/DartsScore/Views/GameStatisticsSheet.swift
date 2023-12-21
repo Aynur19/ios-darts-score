@@ -19,7 +19,7 @@ struct GameStatisticsSheet: View {
     
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
-    init(_ game: DartsGame, _ snapshots: DartsGameSnapshotsList) {
+    init(game: DartsGame, snapshots: DartsGameSnapshotsList) {
         self.game = game
         self.snapshots = snapshots
     }
@@ -39,26 +39,12 @@ struct GameStatisticsSheet: View {
         }
     }
     
+    // MARK: Game Stats
     private var gameStats: some View {
         HStack {
-            VStack(alignment: .leading, spacing: Constants.vSpacing) {
-                Text("label_GameScore")
-                Text("label_GameTime")
-                Text("label_Attempts")
-                Text("label_SuccessAnswers")
-                Text("label_SkippedAnswer")
-                Text("label_GameDate")
-            }
-            
+            gameStatsLabels
             Spacer()
-            VStack(alignment: .trailing, spacing: Constants.vSpacing) {
-                Text(String(game.score))
-                Text("\(getTime(time: game.timeSpent)) suffix_Seconds")
-                Text(String(game.attempts))
-                Text(String(game.correct))
-                Text(String(game.missed))
-                Text(dateTimeStr)
-            }
+            gameStatsValues
         }
         .frame(maxWidth: .infinity)
         .foregroundStyle(Palette.btnPrimary)
@@ -68,6 +54,29 @@ struct GameStatisticsSheet: View {
         .padding(.horizontal)
     }
     
+    private var gameStatsLabels: some View {
+        VStack(alignment: .leading, spacing: Constants.vSpacing) {
+            Text("label_GameScore")
+            Text("label_GameTime")
+            Text("label_Attempts")
+            Text("label_SuccessAnswers")
+            Text("label_SkippedAnswer")
+            Text("label_GameDate")
+        }
+    }
+    
+    private var gameStatsValues: some View {
+        VStack(alignment: .trailing, spacing: Constants.vSpacing) {
+            Text(String(game.score))
+            Text("\(getTime(time: game.timeSpent)) suffix_Seconds")
+            Text(String(game.attempts))
+            Text(String(game.correct))
+            Text(String(game.missed))
+            Text(dateTimeStr)
+        }
+    }
+    
+    // MARK: Game Answers Stats
     private var gameAnswersState: some View {
         ForEach(snapshots.snapshots) { snapshot in
             gameAnswerStats(snapshot, idx: snapshot.id)
@@ -78,36 +87,9 @@ struct GameStatisticsSheet: View {
         VStack {
             Text("label_Answer \(idx + 1)")
             HStack {
-                VStack(alignment: .leading, spacing: Constants.vSpacing) {
-                    Text("label_HitPoints")
-                    ForEach(snapshot.darts.indices, id: \.self) { dartIdx in
-                        Text("\tlabel_Hit \(dartIdx + 1) ")
-                    }
-                    Text("label_UserAnswer")
-                    Text("label_AnswerTimeSpent")
-                    Text("label_AnswerPoints")
-                }
-                
+                gameAnswerStatsLabels(snapshot)
                 Spacer()
-                
-                VStack(alignment: .trailing, spacing: Constants.vSpacing) {
-                    Text(String(snapshot.expected))
-                    ForEach(snapshot.darts.indices, id: \.self) { dartIdx in
-                        let dart = snapshot.darts[dartIdx]
-                        if dart.sector.points > .zero {
-                            Text(dart.sector.description)
-                        } else {
-                            Text("label_Miss")
-                        }
-                    }
-                    if snapshot.actual >= .zero {
-                        Text(String(snapshot.actual))
-                    } else {
-                        Text("label_SkippedAnswer")
-                    }
-                    Text("\(getTime(time: snapshot.time)) suffix_Seconds")
-                    Text(String(snapshot.score))
-                }
+                gameAnswerStatsValues(snapshot)
             }
             .frame(maxWidth: .infinity)
             .padding()
@@ -117,6 +99,39 @@ struct GameStatisticsSheet: View {
             .padding(.horizontal)
         }
         .foregroundStyle(Palette.btnSecondary)
+    }
+    
+    private func gameAnswerStatsLabels(_ snapshot: DartsGameSnapshot) -> some View {
+        VStack(alignment: .leading, spacing: Constants.vSpacing) {
+            Text("label_HitPoints")
+            ForEach(snapshot.darts.indices, id: \.self) { dartIdx in
+                Text("\tlabel_Hit \(dartIdx + 1) ")
+            }
+            Text("label_UserAnswer")
+            Text("label_AnswerTimeSpent")
+            Text("label_AnswerPoints")
+        }
+    }
+    
+    private func gameAnswerStatsValues(_ snapshot: DartsGameSnapshot) -> some View {
+        VStack(alignment: .trailing, spacing: Constants.vSpacing) {
+            Text(String(snapshot.expected))
+            ForEach(snapshot.darts) { dart in
+                getDartSectorDescription(sector: dart.sector)
+            }
+            
+            getUserAnswer(userAnswer: snapshot.actual)
+            Text("\(getTime(time: snapshot.time)) suffix_Seconds")
+            Text(String(snapshot.score))
+        }
+    }
+    
+    private func getDartSectorDescription(sector: DartsSector) -> some View {
+        sector.points > .zero ? Text(sector.description) : Text("label_Miss")
+    }
+    
+    private func getUserAnswer(userAnswer: Int) -> some View {
+        userAnswer >= .zero ? Text("\(userAnswer)") : Text("label_SkippedAnswer")
     }
     
     private func getTime(time: Int) -> String {
@@ -132,6 +147,8 @@ struct GameStatisticsSheet: View {
 }
 
 #Preview {
-    GameStatisticsSheet(MockData.getDartsGameStats().items[0],
-                             MockData.getDartsGameSnapshotsList())
+    GameStatisticsSheet(
+        game: MockData.getDartsGameStats().items[0],
+        snapshots: MockData.getDartsGameSnapshotsList()
+    )
 }

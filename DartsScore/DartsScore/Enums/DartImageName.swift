@@ -54,16 +54,16 @@ enum DartImageName: String {
     }
 }
 
-private struct TestDartImageView: View {
-    var body: some View {
-        VStack {
-            ForEach(AppConstants.dartImageNamesData, id: \.self) { item in
-                item.image(size: 32)
-            }
-        }
-    }
-}
-
-#Preview {
-    TestDartImageView()
-}
+//private struct TestDartImageView: View {
+//    var body: some View {
+//        VStack {
+//            ForEach(AppConstants.dartImageNamesData, id: \.self) { item in
+//                item.image(size: 32)
+//            }
+//        }
+//    }
+//}
+//
+//#Preview {
+//    TestDartImageView()
+//}

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A82D6CF12B0F4A64006CF50A /* DartsGameAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */; };
-		A82D6CF32B0FC16C006CF50A /* DartsGameAnswersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF22B0FC16B006CF50A /* DartsGameAnswersView.swift */; };
+		A82D6CF32B0FC16C006CF50A /* GameAnswersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF22B0FC16B006CF50A /* GameAnswersView.swift */; };
 		A82D6CF52B126C8E006CF50A /* DartsHitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF42B126C8E006CF50A /* DartsHitsView.swift */; };
 		A8742F922B0E79E50026E07F /* DartsGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F912B0E79E50026E07F /* DartsGameView.swift */; };
 		A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */; };
@@ -100,7 +100,7 @@
 
 /* Begin PBXFileReference section */
 		A82D6CF02B0F4A64006CF50A /* DartsGameAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameAnswerView.swift; sourceTree = "<group>"; };
-		A82D6CF22B0FC16B006CF50A /* DartsGameAnswersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameAnswersView.swift; sourceTree = "<group>"; };
+		A82D6CF22B0FC16B006CF50A /* GameAnswersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAnswersView.swift; sourceTree = "<group>"; };
 		A82D6CF42B126C8E006CF50A /* DartsHitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsHitsView.swift; sourceTree = "<group>"; };
 		A8742F912B0E79E50026E07F /* DartsGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameView.swift; sourceTree = "<group>"; };
 		A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameViewModel.swift; sourceTree = "<group>"; };
@@ -416,7 +416,7 @@
 		A8DB72892B1A311B001145BF /* GameAnswers */ = {
 			isa = PBXGroup;
 			children = (
-				A82D6CF22B0FC16B006CF50A /* DartsGameAnswersView.swift */,
+				A82D6CF22B0FC16B006CF50A /* GameAnswersView.swift */,
 				A8DB72832B1A2F80001145BF /* DartsGameAnswersViewModel.swift */,
 				A8DB727A2B18600D001145BF /* GameStatisticsSheet.swift */,
 			);
@@ -656,7 +656,7 @@
 				A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */,
 				A8DB72932B1B9775001145BF /* HStaticSegmentedPickerView.swift in Sources */,
 				A8A827352B0E4AD200AD1BD0 /* DartsGame.swift in Sources */,
-				A82D6CF32B0FC16C006CF50A /* DartsGameAnswersView.swift in Sources */,
+				A82D6CF32B0FC16C006CF50A /* GameAnswersView.swift in Sources */,
 				A8E1E13C2B32218000059BBB /* AppInterfaceSettingsView.swift in Sources */,
 				A8F14F832B2A3D0B00C4E1FD /* Sound.swift in Sources */,
 				A8DB72802B1A2E31001145BF /* DartsGameResultsViewModel.swift in Sources */,

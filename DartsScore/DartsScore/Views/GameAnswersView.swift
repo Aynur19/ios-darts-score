@@ -1,5 +1,5 @@
 //
-//  DartsGameAnswersView.swift
+//  GameAnswersView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 23.11.2023.
@@ -17,9 +17,9 @@ struct GameAnswersView: View {
 
     @StateObject var dartsHitsVM = DartsHitsViewModel(
         dartsTarget: .init(frameWidth: AppConstants.defaultDartsTargetWidth),
-        missesIsEnabled: AppConstants.defaultDartsWithMiss,
-        dartSize: AppConstants.defaultDartSize,
-        dartImageName: AppConstants.defaultDartImageName
+        missesIsEnabled: AppInterfaceDefaultSettings.dartMissesIsEnabled,
+        dartSize: AppInterfaceDefaultSettings.dartSize,
+        dartImageName: AppInterfaceDefaultSettings.dartImageName
     )
     
     @ObservedObject var snapshotsVM: DartsGameAnswersViewModel
@@ -28,7 +28,6 @@ struct GameAnswersView: View {
     @State private var detailsIsShowed = false
     
     init(_ game: DartsGame, stats: DartsGameSnapshotsList) {
-        print("GameAnswersView.\(#function)")
         snapshotsVM = .init(game)
     }
     
@@ -46,20 +45,25 @@ struct GameAnswersView: View {
                 snapshotsIndexView
                 Spacer(minLength: 64)
                 
-                Button {
-                    detailsIsShowed = true
-                } label: {
-                    Text("label_Details")
-                }
+                Button(
+                    action: { detailsIsShowed = true },
+                    label: { Text("label_Details") }
+                )
                 
                 Spacer(minLength: 32)
             }
-            .blurredSheet(.init(.ultraThinMaterial), show: $detailsIsShowed) {
-                
-            } content: {
-                GameStatisticsSheet(snapshotsVM.game, snapshotsVM.model)
+            .blurredSheet(
+                .init(.ultraThinMaterial),
+                show: $detailsIsShowed,
+                onDissmiss: {},
+                content: {
+                    GameStatisticsSheet(
+                        game: snapshotsVM.game,
+                        snapshots: snapshotsVM.model
+                    )
                     .presentationDetents([.medium, .fraction(0.95)])
-            }
+                }
+            )
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
