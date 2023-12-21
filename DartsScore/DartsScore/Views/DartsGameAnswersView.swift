@@ -57,7 +57,7 @@ struct GameAnswersView: View {
             .blurredSheet(.init(.ultraThinMaterial), show: $detailsIsShowed) {
                 
             } content: {
-                DartsGameStatisticsSheet(snapshotsVM.game, snapshotsVM.model)
+                GameStatisticsSheet(snapshotsVM.game, snapshotsVM.model)
                     .presentationDetents([.medium, .fraction(0.95)])
             }
         }

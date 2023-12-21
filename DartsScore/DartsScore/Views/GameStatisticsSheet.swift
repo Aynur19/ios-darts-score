@@ -1,5 +1,5 @@
 //
-//  DartsGameStatisticsSheet.swift
+//  GameStatisticsSheet.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 30.11.2023.
@@ -7,7 +7,13 @@
 
 import SwiftUI
 
-struct DartsGameStatisticsSheet: View {
+private struct GameStatisticsSheetConstants {
+    static let vSpacing: CGFloat = 16
+}
+
+struct GameStatisticsSheet: View {
+    private typealias Constants = GameStatisticsSheetConstants
+    
     private let game: DartsGame
     private let snapshots: DartsGameSnapshotsList
     
@@ -22,10 +28,10 @@ struct DartsGameStatisticsSheet: View {
         VStack {
             Text("sheetTitle_DetailedGameStats")
                 .font(.title2)
-                .padding(16)
+                .padding()
+            
             ScrollView {
                 VStack {
-                    
                     gameStats
                     gameAnswersState
                 }
@@ -35,33 +41,31 @@ struct DartsGameStatisticsSheet: View {
     
     private var gameStats: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: Constants.vSpacing) {
                 Text("label_GameScore")
                 Text("label_GameTime")
                 Text("label_Attempts")
                 Text("label_SuccessAnswers")
+                Text("label_SkippedAnswer")
                 Text("label_GameDate")
             }
             
             Spacer()
-            VStack(alignment: .trailing, spacing: 16) {
+            VStack(alignment: .trailing, spacing: Constants.vSpacing) {
                 Text(String(game.score))
-                Text("\(AppConstants.timerTextFormat.msStr(game.timeSpent)) suffix_Seconds")
+                Text("\(getTime(time: game.timeSpent)) suffix_Seconds")
                 Text(String(game.attempts))
                 Text(String(game.correct))
+                Text(String(game.missed))
                 Text(dateTimeStr)
             }
         }
         .frame(maxWidth: .infinity)
         .foregroundStyle(Palette.btnPrimary)
-        .padding(.horizontal, 16)
-        .padding(.vertical, 16)
-        .overlay {
-            RoundedRectangle(cornerRadius: 24)
-                .stroke(Palette.btnPrimary, lineWidth: 2)
-        }
-        .padding(.vertical, 16)
-        .padding(.horizontal, 32)
+        .padding()
+        .glowingOutline()
+        .padding()
+        .padding(.horizontal)
     }
     
     private var gameAnswersState: some View {
@@ -74,7 +78,7 @@ struct DartsGameStatisticsSheet: View {
         VStack {
             Text("label_Answer \(idx + 1)")
             HStack {
-                VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: Constants.vSpacing) {
                     Text("label_HitPoints")
                     ForEach(snapshot.darts.indices, id: \.self) { dartIdx in
                         Text("\tlabel_Hit \(dartIdx + 1) ")
@@ -86,32 +90,37 @@ struct DartsGameStatisticsSheet: View {
                 
                 Spacer()
                 
-                VStack(alignment: .trailing, spacing: 16) {
+                VStack(alignment: .trailing, spacing: Constants.vSpacing) {
                     Text(String(snapshot.expected))
                     ForEach(snapshot.darts.indices, id: \.self) { dartIdx in
                         let dart = snapshot.darts[dartIdx]
-                        if dart.sector.points > 0 {
+                        if dart.sector.points > .zero {
                             Text(dart.sector.description)
                         } else {
                             Text("label_Miss")
                         }
                     }
-                    Text(String(snapshot.actual))
-                    Text("\(AppConstants.timerTextFormat.msStr(snapshot.time)) suffix_Seconds")
+                    if snapshot.actual >= .zero {
+                        Text(String(snapshot.actual))
+                    } else {
+                        Text("label_SkippedAnswer")
+                    }
+                    Text("\(getTime(time: snapshot.time)) suffix_Seconds")
                     Text(String(snapshot.score))
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 16)
-            .overlay {
-                RoundedRectangle(cornerRadius: 24)
-                    .stroke(Palette.btnSecondary, lineWidth: 2)
-            }
-            .padding(.horizontal, 32)
-            .padding(.bottom, 16)
+            .padding()
+            .glowingOutline(color: Palette.btnSecondary)
+            .padding(.bottom)
+            .padding(.horizontal)
+            .padding(.horizontal)
         }
         .foregroundStyle(Palette.btnSecondary)
+    }
+    
+    private func getTime(time: Int) -> String {
+        AppConstants.timerTextFormat.msStr(time)
     }
     
     private var dateTimeStr: String {
@@ -123,6 +132,6 @@ struct DartsGameStatisticsSheet: View {
 }
 
 #Preview {
-    DartsGameStatisticsSheet(MockData.getDartsGameStats().items[0],
+    GameStatisticsSheet(MockData.getDartsGameStats().items[0],
                              MockData.getDartsGameSnapshotsList())
 }
