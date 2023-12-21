@@ -82,7 +82,7 @@ struct AppSettingsView: View {
             case .interface:
                 AppInterfaceSettingsView(settings: appSettingsVM.interfaceSettings)
             case .sound:
-                SoundSettingsView()
+                AppSoundSettingsView()
         }
     }
     

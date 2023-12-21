@@ -59,7 +59,7 @@
 		A8DB72932B1B9775001145BF /* HStaticSegmentedPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */; };
 		A8DB72952B1CE217001145BF /* HWheelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72942B1CE217001145BF /* HWheelPickerView.swift */; };
 		A8E1E1332B3085BD00059BBB /* AppSoundSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */; };
-		A8E1E1382B3165C700059BBB /* SoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1372B3165C700059BBB /* SoundSettingsView.swift */; };
+		A8E1E1382B3165C700059BBB /* AppSoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1372B3165C700059BBB /* AppSoundSettingsView.swift */; };
 		A8E1E13A2B31749700059BBB /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1392B31749700059BBB /* DoubleExt.swift */; };
 		A8E1E13C2B32218000059BBB /* AppInterfaceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E13B2B32218000059BBB /* AppInterfaceSettingsView.swift */; };
 		A8E1E13E2B3222D900059BBB /* AppInterfaceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E13D2B3222D900059BBB /* AppInterfaceSettings.swift */; };
@@ -156,7 +156,7 @@
 		A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStaticSegmentedPickerView.swift; sourceTree = "<group>"; };
 		A8DB72942B1CE217001145BF /* HWheelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HWheelPickerView.swift; sourceTree = "<group>"; };
 		A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundSettings.swift; sourceTree = "<group>"; };
-		A8E1E1372B3165C700059BBB /* SoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsView.swift; sourceTree = "<group>"; };
+		A8E1E1372B3165C700059BBB /* AppSoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundSettingsView.swift; sourceTree = "<group>"; };
 		A8E1E1392B31749700059BBB /* DoubleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
 		A8E1E13B2B32218000059BBB /* AppInterfaceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceSettingsView.swift; sourceTree = "<group>"; };
 		A8E1E13D2B3222D900059BBB /* AppInterfaceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceSettings.swift; sourceTree = "<group>"; };
@@ -442,7 +442,8 @@
 				A8DB72902B1B00E7001145BF /* AppSettingsView.swift */,
 				A8E1E13D2B3222D900059BBB /* AppInterfaceSettings.swift */,
 				A8E1E13B2B32218000059BBB /* AppInterfaceSettingsView.swift */,
-				A8E1E1372B3165C700059BBB /* SoundSettingsView.swift */,
+				A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */,
+				A8E1E1372B3165C700059BBB /* AppSoundSettingsView.swift */,
 				A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */,
 			);
 			name = Settings;
@@ -470,7 +471,6 @@
 			isa = PBXGroup;
 			children = (
 				A8DB728E2B1B00A3001145BF /* AppSettingsViewModel.swift */,
-				A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */,
 			);
 			path = AppSettings;
 			sourceTree = "<group>";
@@ -706,7 +706,7 @@
 				A82D6CF12B0F4A64006CF50A /* DartsGameAnswerView.swift in Sources */,
 				A8A827372B0E4B0200AD1BD0 /* AppConstants.swift in Sources */,
 				A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */,
-				A8E1E1382B3165C700059BBB /* SoundSettingsView.swift in Sources */,
+				A8E1E1382B3165C700059BBB /* AppSoundSettingsView.swift in Sources */,
 				A8F14F9E2B2F858400C4E1FD /* GameOverPopupView.swift in Sources */,
 				A8F14F7C2B29FA5B00C4E1FD /* SettingsViewModel.swift in Sources */,
 				A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */,

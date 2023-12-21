@@ -1,5 +1,5 @@
 //
-//  SoundSettingsView.swift
+//  AppSoundSettingsView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 19.12.2023.
@@ -7,9 +7,18 @@
 
 import SwiftUI
 
-struct SoundSettingsView: View {
+private struct AppSoundSettingsViewConstants {
+    static let vSpacing: CGFloat = 20
+    static let hSpacing: CGFloat = 32
+    static let vSpasingInner: CGFloat = 16
+    
+    static let soundVolumeRange: ClosedRange<Double> = 0...1
+}
+
+struct AppSoundSettingsView: View {
     private typealias Defaults = AppSoundDefaultSettings
     private typealias Keys = AppSoundSettingsKeys
+    private typealias Constants = AppSoundSettingsViewConstants
     
     @AppStorage(Keys.tapSoundIsEnabled.rawValue) 
     var tapSoundIsEnabled = Defaults.tapSoundIsEnabled
@@ -44,7 +53,7 @@ struct SoundSettingsView: View {
                 .ignoresSafeArea()
             
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(spacing: Constants.vSpacing) {
                     tapSoundSettings
                     timerEndSoundSettings
                     dartsTargetRotationSoundSettings
@@ -57,31 +66,25 @@ struct SoundSettingsView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("viewTitle_SoundSettings")
-                    .font(.title)
-                    .foregroundStyle(Palette.bgText)
-            }
+            StaticUI.toolbarTitle { Text("viewTitle_SoundSettings") }
         }
     }
     
+    // MARK: Tap Sound
     private var tapSoundSettings: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: Constants.vSpasingInner) {
             toggleButton(
                 isOn: $tapSoundIsEnabled,
                 label: { Text("label_TapSound") }
             )
             
-            HStack(spacing: 32) {
+            HStack(spacing: Constants.hSpacing) {
                 Slider(
                     value: Binding(
                         get: { self.tapSoundVolume },
-                        set: { newValue in
-                            self.tapSoundVolume = newValue
-                            changeSoundVolume(tapSound)
-                        }
+                        set: { newValue in onChangeTapSoundVolume(volume: newValue) }
                     ),
-                    in: 0...1
+                    in: Constants.soundVolumeRange
                 )
                 .disabled(!tapSoundIsEnabled)
                 
@@ -96,23 +99,26 @@ struct SoundSettingsView: View {
         .glowingOutline()
     }
     
+    private func onChangeTapSoundVolume(volume: Double) {
+        self.tapSoundVolume = volume
+        changeSoundVolume(tapSound)
+    }
+    
+    // MARK: Timer End Sound
     private var timerEndSoundSettings: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: Constants.vSpasingInner) {
             toggleButton(
                 isOn: $timerEndSoundIsEnabled,
                 label: { Text("label_TamerEndSound") }
             )
             
-            HStack(spacing: 32) {
+            HStack(spacing: Constants.hSpacing) {
                 Slider(
                     value: Binding(
                         get: { self.timerEndSoundVolume },
-                        set: { newValue in
-                            self.timerEndSoundVolume = newValue
-                            changeSoundVolume(timerEndSound)
-                        }
+                        set: { newValue in onChangeTimerEndSoundVolume(volume: newValue) }
                     ),
-                    in: 0...1
+                    in: Constants.soundVolumeRange
                 )
                 .disabled(!timerEndSoundIsEnabled)
                 
@@ -127,22 +133,26 @@ struct SoundSettingsView: View {
         .glowingOutline()
     }
     
+    private func onChangeTimerEndSoundVolume(volume: Double) {
+        self.timerEndSoundVolume = volume
+        changeSoundVolume(timerEndSound)
+    }
+    
+    // MARK: Target Rotation Sound
     private var dartsTargetRotationSoundSettings: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: Constants.vSpasingInner) {
             toggleButton(
                 isOn: $targetRotationSoundIsEnabled,
                 label: { Text("label_DartsTargetRotationSound") }
             )
             
-            HStack(spacing: 32) {
+            HStack(spacing: Constants.hSpacing) {
                 Slider(
                     value: Binding(
                         get: { self.targetRotationSoundVolume },
-                        set: { newValue in
-                            self.targetRotationSoundVolume = newValue
-                            changeSoundVolume(dartsTargetRotationSound)
-                        }),
-                    in: 0...1
+                        set: { newValue in onChangeTargetRotationSoundVolume(volume: newValue) }
+                    ),
+                    in: Constants.soundVolumeRange
                 )
                 .disabled(!targetRotationSoundIsEnabled)
                 
@@ -156,72 +166,93 @@ struct SoundSettingsView: View {
         .padding()
         .glowingOutline()
     }
+    
+    private func onChangeTargetRotationSoundVolume(volume: Double) {
+        self.targetRotationSoundVolume = volume
+        changeSoundVolume(dartsTargetRotationSound)
+    }
 
+    // MARK: Game Result Sound
     private var gameResultSoundSettings: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: Constants.vSpasingInner) {
             toggleButton(
                 isOn: $gameResultSoundIsEnabled,
                 label: { Text("label_GameResultSound") }
             )
             
-            HStack(spacing: 20) {
-                Image(systemName: "hand.thumbsdown")
-                Slider(
-                    value: Binding(
-                        get: { self.gameBadResultSoundVolume },
-                        set: { newValue in
-                            self.gameBadResultSoundVolume = newValue
-                            changeSoundVolume(gameBadResultSound)
-                        }
-                    ),
-                    in: 0...1
-                )
-                .disabled(!gameResultSoundIsEnabled)
-                
-                soundButton(
-                    isOn: gameResultSoundIsEnabled,
-                    volume: gameBadResultSoundVolume,
-                    action: { playAndStopSound(gameBadResultSound) }
-                )
-            }
+            gameGoodSoundVolumeSettings
+            gameBadSoundvolumeSettings
+            gameResultSoundIImageDescriptions
+        }
+        .padding()
+        .glowingOutline()
+    }
+    
+    private var gameBadSoundvolumeSettings: some View {
+        HStack(spacing: Constants.hSpacing) {
+            Image(systemName: "hand.thumbsdown")
+            Slider(
+                value: Binding(
+                    get: { self.gameBadResultSoundVolume },
+                    set: { newValue in onChangeGameBadResultSoundVolume(volume: newValue) }
+                ),
+                in: Constants.soundVolumeRange
+            )
+            .disabled(!gameResultSoundIsEnabled)
             
-            HStack(spacing: 20) {
-                Image(systemName: "hand.thumbsup")
-                Slider(
-                    value: Binding(
-                        get: { self.gameGoodResultSoundVolume },
-                        set: { newValue in
-                            self.gameGoodResultSoundVolume = newValue
-                            changeSoundVolume(gameGoodResultSound)
-                        }
-                    ),
-                    in: 0...1
-                )
-                .disabled(!gameResultSoundIsEnabled)
-                
-                soundButton(
-                    isOn: gameResultSoundIsEnabled,
-                    volume: gameGoodResultSoundVolume,
-                    action: { playAndStopSound(gameGoodResultSound) }
-                )
-            }
+            soundButton(
+                isOn: gameResultSoundIsEnabled,
+                volume: gameBadResultSoundVolume,
+                action: { playAndStopSound(gameBadResultSound) }
+            )
+        }
+    }
+    
+    private var gameGoodSoundVolumeSettings: some View {
+        HStack(spacing: Constants.hSpacing) {
+            Image(systemName: "hand.thumbsup")
+            Slider(
+                value: Binding(
+                    get: { self.gameGoodResultSoundVolume },
+                    set: { newValue in onChangeGameGoodResultSoundVolume(volume: newValue) }
+                ),
+                in: Constants.soundVolumeRange
+            )
+            .disabled(!gameResultSoundIsEnabled)
             
-            HStack(spacing: 20) {
-                Image(systemName: "hand.thumbsdown")
-                Text("label_GameBadResultSound")
-                Spacer()
-            }
-            .font(.caption)
-            
-            HStack(spacing: 20) {
+            soundButton(
+                isOn: gameResultSoundIsEnabled,
+                volume: gameGoodResultSoundVolume,
+                action: { playAndStopSound(gameGoodResultSound) }
+            )
+        }
+    }
+    
+    private var gameResultSoundIImageDescriptions: some View {
+        VStack(spacing: Constants.vSpacing.half) {
+            HStack(spacing: Constants.hSpacing.half) {
                 Image(systemName: "hand.thumbsup")
                 Text("label_GameGoodResultSound")
                 Spacer()
             }
-            .font(.caption)
+            
+            HStack(spacing: Constants.hSpacing.half) {
+                Image(systemName: "hand.thumbsdown")
+                Text("label_GameBadResultSound")
+                Spacer()
+            }
         }
-        .padding()
-        .glowingOutline()
+        .font(.caption)
+    }
+    
+    private func onChangeGameGoodResultSoundVolume(volume: Double) {
+        gameGoodResultSoundVolume = volume
+        changeSoundVolume(gameGoodResultSound)
+    }
+    
+    private func onChangeGameBadResultSoundVolume(volume: Double) {
+        gameBadResultSoundVolume = volume
+        changeSoundVolume(gameBadResultSound)
     }
     
     private var tapSound: Sound {
@@ -243,9 +274,7 @@ struct SoundSettingsView: View {
     private var gameBadResultSound: Sound {
         GameBadResultSound(volume: gameBadResultSoundVolume.float)
     }
-}
-
-extension SoundSettingsView {
+    
     private func playAndStopSound(_ sound: Sound) {
         Task {
             await MainActor.run {
@@ -264,10 +293,7 @@ extension SoundSettingsView {
         }
     }
     
-    private func toggleButton(
-        isOn: Binding<Bool>,
-        @ViewBuilder label: () -> Text
-    ) -> some View {
+    private func toggleButton( isOn: Binding<Bool>, @ViewBuilder label: () -> Text) -> some View {
         Toggle(
             isOn: isOn,
             label: { label() }
@@ -284,11 +310,7 @@ extension SoundSettingsView {
         )
     }
     
-    private func soundButton(
-        isOn: Bool,
-        volume: Double,
-        action: @escaping () -> Void = { }
-    ) -> some View {
+    private func soundButton(isOn: Bool, volume: Double, action: @escaping () -> Void = {}) -> some View {
         Button(
             action: { action() },
             label: {
@@ -339,7 +361,7 @@ extension SoundSettingsView {
 private struct TestSoundSettingsView: View {
     var body: some View {
         NavigationStack {
-            SoundSettingsView()
+            AppSoundSettingsView()
         }
     }
 }
