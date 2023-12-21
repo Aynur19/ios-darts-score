@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-fileprivate enum SettingsSubviews: String {
+private enum SettingsSubviews: String {
     case interface
     case sound
 }
 
 private struct AppSettingsViewConstants {
-    static let vSpacing: CGFloat = 20
+    static let vSpacing: CGFloat = 16
 }
 
 struct AppSettingsView: View {
@@ -80,7 +80,7 @@ struct AppSettingsView: View {
     private func getSettingsView(subviewName: SettingsSubviews) -> some View {
         switch subviewName {
             case .interface:
-                InterfaceSettingsView(settings: appSettingsVM.interfaceSettings)
+                AppInterfaceSettingsView(settings: appSettingsVM.interfaceSettings)
             case .sound:
                 SoundSettingsView()
         }
@@ -128,7 +128,7 @@ struct AppSettingsView: View {
                     get: { self.timeForAnswerIdx },
                     set: { newValue in onChangedTimeForAnswerIdx(newValue) }
                 ),
-                contentSize: StaticUI.HWheelPickerConcentSize,
+                contentSize: StaticUI.HWheelPickerContentSize,
                 contentView: { item in
                     Text("\(item.msToSec)")
                 },

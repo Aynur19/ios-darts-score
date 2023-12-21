@@ -13,13 +13,18 @@ struct AppInterfaceDefaultSettings {
         .dartFlipH1, .dartFlipH2,
         .dart1Rotate180
     ]
-    static let dartImageNameIdx = 0
-    static let dartImageName = dartImageNamesData[dartImageNameIdx]
+    static let dartImageName = dartImageNamesData[0]
+    
+    static func getDartImageNameIdx(dartImageName: DartImageName) -> Int {
+        guard let idx = dartImageNamesData.firstIndex(of: dartImageName) else {
+            return 0
+        }
+        
+        return idx
+    }
     
     static let dartSize = 30
-    
     static let dartMissesIsEnabled = true
-    
     static let dartsTargetPalette: DartsTargetPalette = .classic
 }
 
@@ -73,14 +78,6 @@ struct AppInterfaceSettings {
         dartSize            = userDefaults.integer(forKey: Keys.dartSize.rawValue)
         dartMissesIsEnabled = userDefaults.bool(forKey: Keys.dartMissesIsEnabled.rawValue)
         dartsTargetPalette  = Self.loadDartsTargetPalette()
-    }
-    
-    var dartImageNameIdx: Int {
-        guard let idx = Defaults.dartImageNamesData.firstIndex(of: dartImageName) else {
-            return Defaults.dartImageNameIdx
-        }
-        
-        return idx
     }
     
     private static func loadDartImageName() -> DartImageName {

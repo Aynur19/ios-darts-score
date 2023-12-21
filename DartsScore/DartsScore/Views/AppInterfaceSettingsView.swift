@@ -1,5 +1,5 @@
 //
-//  InterfaceSettingsView.swift
+//  AppInterfaceSettingsView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 19.12.2023.
@@ -7,9 +7,17 @@
 
 import SwiftUI
 
-struct InterfaceSettingsView: View {
+private struct AppInterfaceSettingsViewConstants {
+    static let vSpacing: CGFloat = 16
+    static let dartImageSize: CGFloat = 20
+    
+    static let dartSizeRange: ClosedRange<Int> = 20...40
+}
+
+struct AppInterfaceSettingsView: View {
     private typealias Defaults = AppInterfaceDefaultSettings
     private typealias Keys = AppInterfaceSettingsKeys
+    private typealias Constants = AppInterfaceSettingsViewConstants
     
     @Environment(\.mainWindowSize) var windowSize
     
@@ -38,7 +46,7 @@ struct InterfaceSettingsView: View {
     @State private var darts: [[Dart]] = []
     
     init(settings: AppInterfaceSettings) {
-        let dartImageIdx = Self.getDartImageNameIdx(dartImageName: settings.dartImageName)
+        let dartImageIdx = Defaults.getDartImageNameIdx(dartImageName: settings.dartImageName)
         
         dartImageNameIdx    = dartImageIdx
         dartImageName       = Defaults.dartImageNamesData[dartImageIdx]
@@ -54,7 +62,7 @@ struct InterfaceSettingsView: View {
                 .ignoresSafeArea()
             
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(spacing: Constants.vSpacing) {
                     dartImageSettings
                     dartSizeSettings
                     dartsWithMissSettings
@@ -67,11 +75,7 @@ struct InterfaceSettingsView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("viewTitle_InterfaceSettings")
-                    .font(.title)
-                    .foregroundStyle(Palette.bgText)
-            }
+            StaticUI.toolbarTitle { Text("viewTitle_InterfaceSettings") }
         }
         .onAppear { onAppear() }
     }
@@ -111,7 +115,7 @@ struct InterfaceSettingsView: View {
             HStack {
                 Text("label_DartImage")
                 Spacer()
-                dartImageName.image(size: 20)
+                dartImageName.image(size: Constants.dartImageSize)
             }
             
             StaticUI.hWheelPickerCursor
@@ -122,26 +126,18 @@ struct InterfaceSettingsView: View {
                     get: { self.dartImageNameIdx },
                     set: { newValue in onChangedDartImageNameIdx(idx: newValue) }
                 ),
-                contentSize: .init(width: 64, height: 32),
+                contentSize: StaticUI.HWheelPickerContentSize,
                 contentView: { item in
-                    item.image(size: 20)
+                    item.image(size: Constants.dartImageSize)
                 },
                 dividerView: { Palette.btnPrimary },
                 backgroundView: { StaticUI.hWheelPickerBackground },
                 maskView: { StaticUI.hWheelPickerMask }
             )
-            .frame(minHeight: 32)
+            .frame(minHeight: StaticUI.HWheelPickerViewMinHeight)
         }
-        .padding(20)
+        .padding()
         .glowingOutline()
-    }
-    
-    private static func getDartImageNameIdx(dartImageName: DartImageName) -> Int {
-        guard let idx = Defaults.dartImageNamesData.firstIndex(of: dartImageName) else {
-            return Defaults.dartImageNameIdx
-        }
-        
-        return idx
     }
     
     private func onChangedDartImageNameIdx(idx: Int) {
@@ -159,15 +155,15 @@ struct InterfaceSettingsView: View {
                 get: { self.dartSize },
                 set: { newValue in onChangedDartSize(size: newValue) }
             ),
-            range: 20...40,
+            range: Constants.dartSizeRange,
             step: 1,
-            buttonsContainerBackground: Palette.btnPrimary.opacity(0.25),
+            buttonsContainerBackground: StaticUI.hStepperViewBackground,
             labelView: { value in
                 Text("label_DartSize \(value)")
             },
             dividerView: { StaticUI.hWheelPickerDivider }
         )
-        .padding(20)
+        .padding()
         .glowingOutline()
     }
     
@@ -178,21 +174,19 @@ struct InterfaceSettingsView: View {
     
     // MARK: Dart Misses Switcher
     private var dartsWithMissSettings: some View {
-        VStack(spacing: 20) {
-            Toggle(
-                isOn: Binding(
-                    get: { self.dartMissesIsEnabled },
-                    set: { newValue in onChangedDartMissesIsEnabled(isEnabled: newValue) }
-                ),
-                label: { Text("label_MissesEnable") } // Включить промахи
+        Toggle(
+            isOn: Binding(
+                get: { self.dartMissesIsEnabled },
+                set: { newValue in onChangedDartMissesIsEnabled(isEnabled: newValue) }
+            ),
+            label: { Text("label_MissesEnable") }
+        )
+        .toggleStyle(
+            ImageToggleStyle(
+                buttonChange: { isOn in StaticUI.toggleImageButtonChange(isOn: isOn) },
+                backgroundChange: { isOn in StaticUI.toggleImageBackgroundChange(isOn: isOn) }
             )
-            .toggleStyle(
-                ImageToggleStyle(
-                    buttonChange: { isOn in StaticUI.toggleImageButtonChange(isOn: isOn) },
-                    backgroundChange: { isOn in StaticUI.toggleImageBackgroundChange(isOn: isOn) }
-                )
-            )
-        }
+        )
         .padding()
         .glowingOutline()
     }
@@ -216,7 +210,7 @@ private struct TestInterfaceSettingsView: View {
         GeometryReader { geometry in
             TabView {
                 NavigationStack {
-                    InterfaceSettingsView(settings: appSettingsVM.interfaceSettings)
+                    AppInterfaceSettingsView(settings: appSettingsVM.interfaceSettings)
                         .environment(\.mainWindowSize, geometry.size)
                 }
                 .toolbarBackground(.visible, for: .tabBar)

@@ -37,9 +37,13 @@ struct StaticUI {
             .frame(width: 1.5, height: 20)
     }
     
-    static var HWheelPickerConcentSize: CGSize { .init(width: 64, height: 32) }
+    static var HWheelPickerContentSize: CGSize { .init(width: 64, height: 32) }
     
     static var HWheelPickerViewMinHeight: CGFloat { 32 }
+    
+    static var hStepperViewBackground: Color {
+        Palette.btnPrimary.opacity(0.25)
+    }
     
     static func toggleImageButtonChange(isOn: Bool) -> some View {
         Circle()
@@ -53,5 +57,13 @@ struct StaticUI {
     
     static func toggleImageBackgroundChange(isOn: Bool) -> Color {
         isOn ? Palette.btnPrimary.opacity(0.5) : Color(.systemGray4)
+    }
+    
+    static func toolbarTitle(@ViewBuilder title: () -> Text) -> ToolbarItem<Void, some View> {
+        ToolbarItem(placement: .principal) {
+            title()
+                .font(.title)
+                .foregroundStyle(Palette.bgText)
+        }
     }
 }

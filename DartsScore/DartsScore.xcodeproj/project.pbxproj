@@ -61,8 +61,8 @@
 		A8E1E1332B3085BD00059BBB /* AppSoundSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */; };
 		A8E1E1382B3165C700059BBB /* SoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1372B3165C700059BBB /* SoundSettingsView.swift */; };
 		A8E1E13A2B31749700059BBB /* DoubleExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1392B31749700059BBB /* DoubleExt.swift */; };
-		A8E1E13C2B32218000059BBB /* InterfaceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E13B2B32218000059BBB /* InterfaceSettingsView.swift */; };
-		A8E1E13E2B3222D900059BBB /* AppInterfaceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E13D2B3222D900059BBB /* AppInterfaceSettingsView.swift */; };
+		A8E1E13C2B32218000059BBB /* AppInterfaceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E13B2B32218000059BBB /* AppInterfaceSettingsView.swift */; };
+		A8E1E13E2B3222D900059BBB /* AppInterfaceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E13D2B3222D900059BBB /* AppInterfaceSettings.swift */; };
 		A8E1E1402B3228C600059BBB /* StaticUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E13F2B3228C600059BBB /* StaticUI.swift */; };
 		A8EA84922B14A800009FBDB5 /* DartsGameSnapshotsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84912B14A800009FBDB5 /* DartsGameSnapshotsList.swift */; };
 		A8EA84942B14C521009FBDB5 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EA84932B14C521009FBDB5 /* MockData.swift */; };
@@ -158,8 +158,8 @@
 		A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundSettings.swift; sourceTree = "<group>"; };
 		A8E1E1372B3165C700059BBB /* SoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundSettingsView.swift; sourceTree = "<group>"; };
 		A8E1E1392B31749700059BBB /* DoubleExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExt.swift; sourceTree = "<group>"; };
-		A8E1E13B2B32218000059BBB /* InterfaceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceSettingsView.swift; sourceTree = "<group>"; };
-		A8E1E13D2B3222D900059BBB /* AppInterfaceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceSettingsView.swift; sourceTree = "<group>"; };
+		A8E1E13B2B32218000059BBB /* AppInterfaceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceSettingsView.swift; sourceTree = "<group>"; };
+		A8E1E13D2B3222D900059BBB /* AppInterfaceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInterfaceSettings.swift; sourceTree = "<group>"; };
 		A8E1E13F2B3228C600059BBB /* StaticUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticUI.swift; sourceTree = "<group>"; };
 		A8EA84912B14A800009FBDB5 /* DartsGameSnapshotsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameSnapshotsList.swift; sourceTree = "<group>"; };
 		A8EA84932B14C521009FBDB5 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -438,8 +438,10 @@
 		A8DB728B2B1B001F001145BF /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				A8F14F792B29CC4100C4E1FD /* AppSettings.swift */,
 				A8DB72902B1B00E7001145BF /* AppSettingsView.swift */,
-				A8E1E13B2B32218000059BBB /* InterfaceSettingsView.swift */,
+				A8E1E13D2B3222D900059BBB /* AppInterfaceSettings.swift */,
+				A8E1E13B2B32218000059BBB /* AppInterfaceSettingsView.swift */,
 				A8E1E1372B3165C700059BBB /* SoundSettingsView.swift */,
 				A8F14F7B2B29FA5B00C4E1FD /* SettingsViewModel.swift */,
 			);
@@ -467,10 +469,8 @@
 		A8F14F962B2B99D500C4E1FD /* AppSettings */ = {
 			isa = PBXGroup;
 			children = (
-				A8F14F792B29CC4100C4E1FD /* AppSettings.swift */,
 				A8DB728E2B1B00A3001145BF /* AppSettingsViewModel.swift */,
 				A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */,
-				A8E1E13D2B3222D900059BBB /* AppInterfaceSettingsView.swift */,
 			);
 			path = AppSettings;
 			sourceTree = "<group>";
@@ -660,7 +660,7 @@
 				A8DB72932B1B9775001145BF /* HStaticSegmentedPickerView.swift in Sources */,
 				A8A827352B0E4AD200AD1BD0 /* DartsGame.swift in Sources */,
 				A82D6CF32B0FC16C006CF50A /* DartsGameAnswersView.swift in Sources */,
-				A8E1E13C2B32218000059BBB /* InterfaceSettingsView.swift in Sources */,
+				A8E1E13C2B32218000059BBB /* AppInterfaceSettingsView.swift in Sources */,
 				A8F14F832B2A3D0B00C4E1FD /* Sound.swift in Sources */,
 				A8DB72802B1A2E31001145BF /* DartsGameResultsViewModel.swift in Sources */,
 				A8A827272B0E433200AD1BD0 /* DartsConstants.swift in Sources */,
@@ -714,7 +714,7 @@
 				A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */,
 				A8A827332B0E4A8500AD1BD0 /* DartsGameSnapshot.swift in Sources */,
 				A8F14F7A2B29CC4100C4E1FD /* AppSettings.swift in Sources */,
-				A8E1E13E2B3222D900059BBB /* AppInterfaceSettingsView.swift in Sources */,
+				A8E1E13E2B3222D900059BBB /* AppInterfaceSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
