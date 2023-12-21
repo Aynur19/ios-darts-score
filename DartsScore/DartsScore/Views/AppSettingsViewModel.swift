@@ -16,7 +16,6 @@ final class AppSettingsViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
-        print("AppSettingsViewModel.\(#function)")
         settings = .init()
         soundSettings = .init()
         interfaceSettings = .init()
@@ -37,49 +36,26 @@ final class AppSettingsViewModel: ObservableObject {
     }
     
     func update() {
-        print("AppSettingsViewModel.\(#function)")
-        print("  interfaceSettings: \(interfaceSettings)")
-        
         settings.update()
         interfaceSettings.update()
         soundSettings.update()
         
-        
-        print("  interfaceSettings: \(interfaceSettings)")
+        prepareSounds()
     }
-    
-//    func save(settingsVM: SettingsViewModel) {
-//        print("AppSettingsViewModel.\(#function)")
-//        
-//        print("  model: \(settings)")
-//        settings = AppSettings(
-//            attempts: settingsVM.attempts,
-//            timeForAnswer: settingsVM.timeForAnswer.secToMs//,
-////            dartsWithMiss: settingsVM.dartsWithMiss,
-////            dartImageName: settingsVM.dartImageName,
-////            dartSize: settingsVM.dartSize,
-////            dartsTargetPalette: .classic
-//        )
-//        
-//        settings.save()
-//        print("  model: \(settings)")
-//    }
     
     func prepareSounds() {
         Task {
             await MainActor.run {
-//                SoundManager.shared.prepare(UserTapSound())
-//                SoundManager.shared.prepare(TimerEndSound())
-//                SoundManager.shared.prepare(DartsTargetRotationSound())
-//                SoundManager.shared.prepare(GoodGameResultSound())
-//                SoundManager.shared.prepare(BadGameResultSound())
+                SoundManager.shared.prepare(UserTapSound(volume: soundSettings.tapSoundVolume.float))
+                SoundManager.shared.prepare(TimerEndSound(volume: soundSettings.timerEndSoundVolume.float))
+                SoundManager.shared.prepare(DartsTargetRotationSound(volume: soundSettings.targetRotationSoundVolume.float))
+                SoundManager.shared.prepare(GameGoodResultSound(volume: soundSettings.gameGoodResultSoundVolume.float))
+                SoundManager.shared.prepare(GameBadResultSound(volume: soundSettings.gameBadResultSoundVolume.float))
             }
         }
     }
 
     func stopSounds() {
-        Task {
-            await MainActor.run { SoundManager.shared.stop() }
-        }
+        Task { await MainActor.run { SoundManager.shared.stop() } }
     }
 }
