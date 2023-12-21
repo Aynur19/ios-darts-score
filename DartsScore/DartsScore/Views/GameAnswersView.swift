@@ -7,7 +7,16 @@
 
 import SwiftUI
 
+private struct GameAnswersViewConstants {
+    static let vSpacing: CGFloat = 32
+    static let hSpacing: CGFloat = 12
+    static let indexHSpacing: CGFloat = 4
+    static let indexSize: CGFloat = 12
+}
+
 struct GameAnswersView: View {
+    private typealias Constants = GameAnswersViewConstants
+    
     @Environment(\.mainWindowSize) var windowSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
@@ -27,7 +36,7 @@ struct GameAnswersView: View {
     @State private var index = 0
     @State private var detailsIsShowed = false
     
-    init(_ game: DartsGame, stats: DartsGameSnapshotsList) {
+    init(game: DartsGame) {
         snapshotsVM = .init(game)
     }
     
@@ -36,50 +45,40 @@ struct GameAnswersView: View {
             Palette.background
                 .ignoresSafeArea()
             
-            VStack {
-                Text("label_Answer \(index + 1)")
-                    .font(.headline)
-                    .bold()
-                
+            VStack(spacing: Constants.vSpacing) {
+                titleView
                 snapshotsView
                 snapshotsIndexView
-                Spacer(minLength: 64)
-                
-                Button(
-                    action: { detailsIsShowed = true },
-                    label: { Text("label_Details") }
-                )
-                
-                Spacer(minLength: 32)
+                Spacer()
+                detailsButtonView
             }
+            .padding(.top)
             .blurredSheet(
                 .init(.ultraThinMaterial),
                 show: $detailsIsShowed,
                 onDissmiss: {},
-                content: {
-                    GameStatisticsSheet(
-                        game: snapshotsVM.game,
-                        snapshots: snapshotsVM.model
-                    )
-                    .presentationDetents([.medium, .fraction(0.95)])
-                }
+                content: { gameAnswersSheet }
             )
         }
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("viewTitle_AnswersHistory")
-                    .font(.title2)
-                    .foregroundStyle(Palette.bgText)
-            }
+        .toolbar { 
+            StaticUI.toolbarTitle { Text("viewTitle_AnswersHistory") }
         }
         .onAppear { reset() }
     }
     
+    private var titleView: some View {
+        Text("label_Answer \(answerIdx)")
+            .font(.headline)
+            .bold()
+    }
+    
+    private var answerIdx: Int { index + 1 }
+    
     private var snapshotsView: some View {
         TabView(selection: $index) {
             ForEach(snapshots) { snapshot in
-                VStack(spacing: 32) {
+                VStack {
                     DartsTargetView()
                         .environmentObject(dartsTargetVM)
                         .overlay {
@@ -90,7 +89,9 @@ struct GameAnswersView: View {
                                 }
                         }
                     
+                    Spacer()
                     answersView(snapshot)
+                        .padding(.vertical)
                 }
             }
         }
@@ -98,31 +99,47 @@ struct GameAnswersView: View {
     }
     
     private func answersView(_ snapshot: DartsGameSnapshot) -> some View {
-        HStack(spacing: 10) {
+        HStack(spacing: Constants.hSpacing) {
             ForEach(snapshot.answers, id: \.self) { answer in
-                let answerColor = getAnswerColor(answer, 
-                                                 actual: snapshot.actual,
-                                                 expected: snapshot.expected)
+                let answerColor = getAnswerColor(
+                    answer,
+                    actual: snapshot.actual,
+                    expected: snapshot.expected
+                )
+                
                 DartsGameAnswerView(score: answer, color: answerColor)
             }
         }
     }
     
     private var snapshotsIndexView: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<snapshots.count, id: \.self) { index in
+        HStack(spacing: Constants.indexHSpacing) {
+            ForEach(snapshots.indices, id: \.self) { index in
                 Circle()
                     .fill(getTabIndexColor(index))
-                    .frame(width: 12)
+                    .frame(width: Constants.indexSize)
                     .scaleEffect(index == self.index ? 1 : 0.75)
             }
         }
     }
+    
+    private var detailsButtonView: some View {
+        Button(
+            action: { detailsIsShowed = true },
+            label: { Text("label_Details") }
+        )
+    }
+    
+    private var gameAnswersSheet: some View {
+        GameStatisticsSheet(
+            game: snapshotsVM.game,
+            snapshots: snapshotsVM.model
+        )
+        .presentationDetents([.medium, .fraction(0.95)])
+    }
 }
 
 extension GameAnswersView {
-    private var settings: AppSettings { appSettingsVM.settings }
-    
     private var interfaceSettings: AppInterfaceSettings { appSettingsVM.interfaceSettings }
     
     private var soundSettings: AppSoundSettings { appSettingsVM.soundSettings }
@@ -162,13 +179,10 @@ private struct TestGameAnswersView: View {
         GeometryReader { geometry in
             TabView {
                 NavigationStack {
-                    GameAnswersView(
-                        MockData.getDartsGameStats().items[0],
-                        stats: MockData.getDartsGameSnapshotsList()
-                    )
-                    .navigationBarTitleDisplayMode(.inline)
-                    .environment(\.mainWindowSize, geometry.size)
-                    .environmentObject(appSettingsVM)
+                    GameAnswersView( game: MockData.getDartsGameStats().items[0])
+                        .navigationBarTitleDisplayMode(.inline)
+                        .environment(\.mainWindowSize, geometry.size)
+                        .environmentObject(appSettingsVM)
                 }
                 
             }

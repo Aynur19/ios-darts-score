@@ -52,7 +52,7 @@ struct DartsGameResultsView: View {
             }
             .navigationDestination(for: String.self) { gameIdx in
                 if let game = statsVM.getGame(gameIdx) {
-                    GameAnswersView(game, stats: MockData.getDartsGameSnapshotsList())
+                    GameAnswersView(game: game)
                 }
             }
         }
