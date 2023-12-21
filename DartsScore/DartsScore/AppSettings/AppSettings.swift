@@ -7,119 +7,60 @@
 
 import Foundation
 
-struct AppSettings {
-    private typealias Constants = AppConstants
+struct AppDefaultSettings {
+    static let attemptsCountData = [5, 10, 15, 20]
+    static let attempts = attemptsCountData[1]
     
-    private enum AppSettingsKeys: String {
-        case attempts
-        case timeForAnswer
-//        case dartsWithMiss
-//        
-//        case dartImageName
-//        case dartSize
-//        case dartColor
-//        
-//        case dartsTargetPalette
+    static let timesForAnswerData = [10_000, 15_000, 20_000, 25_000, 30_000,
+                                     35_000, 40_000, 45_000, 50_000, 55_000, 60_000]
+    static let timeForAnswer = timesForAnswerData[1]
+    
+    static func getTimeAnswerIdx(value: Int) -> Int {
+        guard let idx = timesForAnswerData.firstIndex(of: value) else {
+            return 1
+        }
+        
+        return idx
     }
+}
 
-    private let defaults = UserDefaults.standard
+enum AppSettingsKeys: String {
+    case attempts
+    case timeForAnswer
+}
+
+struct AppSettings {
+    private typealias Defaults = AppDefaultSettings
+    private typealias Keys = AppSettingsKeys
     
-    let attempts: Int
-    let timeForAnswer: Int
-//    let dartsWithMiss: Bool
-//    let dartImageName: DartImageName
-//    let dartSize: Int
-//    let dartsTargetPalette: DartsTargetPalette
+    private let userDefaults = UserDefaults.standard
+    
+    private(set) var attempts: Int
+    private(set) var timeForAnswer: Int
     
     init() {
-        print("AppSettings.\(#function)")
-        
         Self.registerSettings()
         
-        attempts            = defaults.integer(forKey: AppSettingsKeys.attempts.rawValue)
-        timeForAnswer       = defaults.integer(forKey: AppSettingsKeys.timeForAnswer.rawValue)
-//        dartsWithMiss       = defaults.bool(forKey: AppSettingsKeys.dartsWithMiss.rawValue)
-//        dartImageName       = Self.loadDartImageName()
-//        dartSize            = defaults.integer(forKey: AppSettingsKeys.dartSize.rawValue)
-//        dartsTargetPalette  = Self.loadDartsTargetPalette()
-    }
-    
-    init(
-        attempts: Int,
-        timeForAnswer: Int//,
-//        dartsWithMiss: Bool,
-//        dartImageName: DartImageName,
-//        dartSize: Int,
-//        dartsTargetPalette: DartsTargetPalette
-    ) {
-        print("AppSettings.\(#function)")
-        
-        self.attempts = attempts
-        self.timeForAnswer = timeForAnswer
-//        self.dartsWithMiss = dartsWithMiss
-//        self.dartImageName = dartImageName
-//        self.dartSize = dartSize
-//        self.dartsTargetPalette = dartsTargetPalette
-    }
-    
-    func save() {
-        print("  AppSettings.\(#function)")
-        
-        defaults.setValue(attempts, forKey: AppSettingsKeys.attempts.rawValue)
-        defaults.setValue(timeForAnswer, forKey: AppSettingsKeys.timeForAnswer.rawValue)
-//        defaults.setValue(dartsWithMiss, forKey: AppSettingsKeys.dartsWithMiss.rawValue)
-//        defaults.setValue(dartImageName.rawValue, forKey: AppSettingsKeys.dartImageName.rawValue)
-//        defaults.setValue(dartSize, forKey: AppSettingsKeys.dartSize.rawValue)
-//        
-//        defaults.setValue(dartsTargetPalette.rawValue, forKey: AppSettingsKeys.dartsTargetPalette.rawValue)
+        attempts        = userDefaults.integer(forKey: Keys.attempts.rawValue)
+        timeForAnswer   = userDefaults.integer(forKey: Keys.timeForAnswer.rawValue)
     }
     
     private static func registerSettings() {
-        print("  AppSettings.\(#function)")
         UserDefaults.standard.register(
             defaults: [
-                AppSettingsKeys.attempts.rawValue: Constants.defaultAttempts,
-                AppSettingsKeys.timeForAnswer.rawValue: Constants.defaultTimeForAnswer,
-//                AppSettingsKeys.dartsWithMiss.rawValue: Constants.defaultDartsWithMiss,
-//                AppSettingsKeys.dartImageName.rawValue: Constants.defaultDartImageName.rawValue,
-//                AppSettingsKeys.dartSize.rawValue: Constants.defaultDartSize,
-//                AppSettingsKeys.dartsTargetPalette.rawValue: Constants.defaultDartsTargetPalette.rawValue
+                Keys.attempts.rawValue: Defaults.attempts,
+                Keys.timeForAnswer.rawValue: Defaults.timeForAnswer
             ]
         )
     }
     
-    private static func saveColor(_ codableColor: CodableColor, key: String) {
-        print("  AppSettings.\(#function)")
-        if let encodedData = try? JSONEncoder().encode(codableColor) {
-            UserDefaults.standard.set(encodedData, forKey: key)
-        }
-    }
-
-    private static func loadColor(for key: String) -> CodableColor? {
-        print("  AppSettings.\(#function)")
-        guard let loadedData = UserDefaults.standard.data(forKey: key),
-              let codableColor = try? JSONDecoder().decode(CodableColor.self, from: loadedData) else {
-            return nil
-        }
-        
-        return codableColor
+    func save() {
+        userDefaults.setValue(attempts, forKey: Keys.attempts.rawValue)
+        userDefaults.setValue(timeForAnswer, forKey: Keys.timeForAnswer.rawValue)
     }
     
-//    private static func loadDartsTargetPalette() -> DartsTargetPalette {
-//        print("  AppSettings.\(#function)")
-//        guard let rawValue = UserDefaults.standard.string(forKey: AppSettingsKeys.dartsTargetPalette.rawValue) else {
-//            return Constants.defaultDartsTargetPalette
-//        }
-//        
-//        return .init(rawValue: rawValue) ?? Constants.defaultDartsTargetPalette
-//    }
-//    
-//    private static func loadDartImageName() -> DartImageName {
-//        print("  AppSettings.\(#function)")
-//        guard let rawValue = UserDefaults.standard.string(forKey: AppSettingsKeys.dartImageName.rawValue) else {
-//            return Constants.defaultDartImageName
-//        }
-//        
-//        return .init(rawValue: rawValue) ?? Constants.defaultDartImageName
-//    }
+    mutating func update() {
+        attempts        = userDefaults.integer(forKey: Keys.attempts.rawValue)
+        timeForAnswer   = userDefaults.integer(forKey: Keys.timeForAnswer.rawValue)
+    }
 }

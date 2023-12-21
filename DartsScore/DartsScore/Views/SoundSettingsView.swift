@@ -58,7 +58,7 @@ struct SoundSettingsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("viewTitle_SoundSettings") // Настройки звука
+                Text("viewTitle_SoundSettings")
                     .font(.title)
                     .foregroundStyle(Palette.bgText)
             }
@@ -69,7 +69,7 @@ struct SoundSettingsView: View {
         VStack(spacing: 16) {
             toggleButton(
                 isOn: $tapSoundIsEnabled,
-                label: { Text("label_TapSound") } // Нажатие / тап по кнопке
+                label: { Text("label_TapSound") }
             )
             
             HStack(spacing: 32) {
@@ -100,7 +100,7 @@ struct SoundSettingsView: View {
         VStack(spacing: 16) {
             toggleButton(
                 isOn: $timerEndSoundIsEnabled,
-                label: { Text("label_TamerEndSound") } // Окончание таймера
+                label: { Text("label_TamerEndSound") }
             )
             
             HStack(spacing: 32) {
@@ -131,7 +131,7 @@ struct SoundSettingsView: View {
         VStack(spacing: 16) {
             toggleButton(
                 isOn: $targetRotationSoundIsEnabled,
-                label: { Text("label_DartsTargetRotationSound") } // Поворот мишени
+                label: { Text("label_DartsTargetRotationSound") }
             )
             
             HStack(spacing: 32) {
@@ -161,7 +161,7 @@ struct SoundSettingsView: View {
         VStack(spacing: 16) {
             toggleButton(
                 isOn: $gameResultSoundIsEnabled,
-                label: { Text("label_GameResultSound") } // Результат игры
+                label: { Text("label_GameResultSound") }
             )
             
             HStack(spacing: 20) {
@@ -208,15 +208,17 @@ struct SoundSettingsView: View {
             
             HStack(spacing: 20) {
                 Image(systemName: "hand.thumbsdown")
-                Text("label_GameBadResultSound") // - звук при плохом результате
+                Text("label_GameBadResultSound")
                 Spacer()
             }
+            .font(.caption)
             
             HStack(spacing: 20) {
                 Image(systemName: "hand.thumbsup")
-                Text("label_GameGoodResultSound") // - звук при хорошем результате
+                Text("label_GameGoodResultSound")
                 Spacer()
             }
+            .font(.caption)
         }
         .padding()
         .glowingOutline()

@@ -73,33 +73,6 @@ struct AppSoundSettings {
         gameBadResultSoundVolume    = userDefaults.double(forKey: Keys.gameBadResultSoundVolume.rawValue)
     }
     
-    init(
-        tapSoundIsEnabled: Bool,
-        tapSoundVolume: Double,
-        timerEndSoundIsEnabled: Bool,
-        timerEndSoundVolume: Double,
-        targetRotationSoundIsEnabled: Bool,
-        targetRotationSoundVolume: Double,
-        gameResultSoundIsEnabled: Bool,
-        gameGoodResultSoundVolume: Double,
-        gameBadResultSoundVolume: Double
-    ) {
-        print("AppSettings.\(#function)")
-        
-        self.tapSoundIsEnabled = tapSoundIsEnabled
-        self.tapSoundVolume = tapSoundVolume
-        
-        self.timerEndSoundIsEnabled = timerEndSoundIsEnabled
-        self.timerEndSoundVolume = timerEndSoundVolume
-        
-        self.targetRotationSoundIsEnabled = targetRotationSoundIsEnabled
-        self.targetRotationSoundVolume = targetRotationSoundVolume
-        
-        self.gameResultSoundIsEnabled = gameResultSoundIsEnabled
-        self.gameGoodResultSoundVolume = gameGoodResultSoundVolume
-        self.gameBadResultSoundVolume = gameBadResultSoundVolume
-    }
-    
     private static func registerSettings() {
         UserDefaults.standard.register(
             defaults: [
@@ -132,5 +105,20 @@ struct AppSoundSettings {
         userDefaults.setValue(gameResultSoundIsEnabled, forKey: Keys.gameResultSoundIsEnabled.rawValue)
         userDefaults.setValue(gameGoodResultSoundVolume, forKey: Keys.gameGoodResultSoundVolume.rawValue)
         userDefaults.setValue(gameBadResultSoundVolume, forKey: Keys.gameBadResultSoundVolume.rawValue)
+    }
+    
+    mutating func update() {
+        tapSoundIsEnabled   = userDefaults.bool(forKey: Keys.tapSoundIsEnabled.rawValue)
+        tapSoundVolume      = userDefaults.double(forKey: Keys.tapSoundVolume.rawValue)
+        
+        timerEndSoundIsEnabled  = userDefaults.bool(forKey: Keys.timerEndSoundIsEnabled.rawValue)
+        timerEndSoundVolume     = userDefaults.double(forKey: Keys.timerEndSoundVolume.rawValue)
+        
+        targetRotationSoundIsEnabled    = userDefaults.bool(forKey: Keys.targetRotationSoundIsEnabled.rawValue)
+        targetRotationSoundVolume       = userDefaults.double(forKey: Keys.targetRotationSoundVolume.rawValue)
+        
+        gameResultSoundIsEnabled    = userDefaults.bool(forKey: Keys.gameResultSoundIsEnabled.rawValue)
+        gameGoodResultSoundVolume   = userDefaults.double(forKey: Keys.gameGoodResultSoundVolume.rawValue)
+        gameBadResultSoundVolume    = userDefaults.double(forKey: Keys.gameBadResultSoundVolume.rawValue)
     }
 }

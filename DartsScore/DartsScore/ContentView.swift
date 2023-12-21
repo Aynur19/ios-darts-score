@@ -27,7 +27,7 @@ struct ContentView: View {
 //                    .toolbarBackground(.visible, for: .tabBar)
 //                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
-                SettingsView()
+                AppSettingsView(settings: appSettingsVM.settings)
                     .environmentObject(appSettingsVM)
 //                SettingsView(appSettings: appSettingsVM.model)
                     .tabItem {

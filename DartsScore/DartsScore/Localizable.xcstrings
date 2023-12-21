@@ -45,6 +45,22 @@
     "%lld" : {
 
     },
+    "%lld suffix_Seconds" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sec"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld сек."
+          }
+        }
+      }
+    },
     "btnLabel_Restart" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -170,6 +186,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Попытки"
+          }
+        }
+      }
+    },
+    "label_AttemptsForGame" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attempts per game"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Попытки за игру"
           }
         }
       }
@@ -382,6 +414,22 @@
         }
       }
     },
+    "label_InterfaceSettings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interface"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Внешний вид"
+          }
+        }
+      }
+    },
     "label_Miss" : {
       "localizations" : {
         "en" : {
@@ -448,6 +496,22 @@
         }
       }
     },
+    "label_SoundSettings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sound"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Звук"
+          }
+        }
+      }
+    },
     "label_SuccessAnswers" : {
       "localizations" : {
         "en" : {
@@ -509,6 +573,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Время"
+          }
+        }
+      }
+    },
+    "label_TimeForAnswer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time to answer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время на ответ"
           }
         }
       }
@@ -671,12 +751,6 @@
 
     },
     "Можно и лучше!" : {
-
-    },
-    "Настройки звука" : {
-
-    },
-    "Настройки интерфейса" : {
 
     },
     "Очков: " : {

@@ -37,6 +37,10 @@ struct StaticUI {
             .frame(width: 1.5, height: 20)
     }
     
+    static var HWheelPickerConcentSize: CGSize { .init(width: 64, height: 32) }
+    
+    static var HWheelPickerViewMinHeight: CGFloat { 32 }
+    
     static func toggleImageButtonChange(isOn: Bool) -> some View {
         Circle()
             .fill(Palette.btnPrimary)

@@ -39,27 +39,31 @@ final class AppSettingsViewModel: ObservableObject {
     func update() {
         print("AppSettingsViewModel.\(#function)")
         print("  interfaceSettings: \(interfaceSettings)")
+        
+        settings.update()
         interfaceSettings.update()
+        soundSettings.update()
+        
         
         print("  interfaceSettings: \(interfaceSettings)")
     }
     
-    func save(settingsVM: SettingsViewModel) {
-        print("AppSettingsViewModel.\(#function)")
-        
-        print("  model: \(settings)")
-        settings = AppSettings(
-            attempts: settingsVM.attempts,
-            timeForAnswer: settingsVM.timeForAnswer.secToMs//,
-//            dartsWithMiss: settingsVM.dartsWithMiss,
-//            dartImageName: settingsVM.dartImageName,
-//            dartSize: settingsVM.dartSize,
-//            dartsTargetPalette: .classic
-        )
-        
-        settings.save()
-        print("  model: \(settings)")
-    }
+//    func save(settingsVM: SettingsViewModel) {
+//        print("AppSettingsViewModel.\(#function)")
+//        
+//        print("  model: \(settings)")
+//        settings = AppSettings(
+//            attempts: settingsVM.attempts,
+//            timeForAnswer: settingsVM.timeForAnswer.secToMs//,
+////            dartsWithMiss: settingsVM.dartsWithMiss,
+////            dartImageName: settingsVM.dartImageName,
+////            dartSize: settingsVM.dartSize,
+////            dartsTargetPalette: .classic
+//        )
+//        
+//        settings.save()
+//        print("  model: \(settings)")
+//    }
     
     func prepareSounds() {
         Task {
