@@ -31,13 +31,21 @@ struct GameAnswersView: View {
         dartImageName: AppInterfaceDefaultSettings.dartImageName
     )
     
-    @ObservedObject var snapshotsVM: DartsGameAnswersViewModel
-    
     @State private var index = 0
     @State private var detailsIsShowed = false
     
+    private let game: DartsGame
+    private let snapshots: DartsGameSnapshotsList
+    
     init(game: DartsGame) {
-        snapshotsVM = .init(game)
+        self.game = game
+        self.snapshots = Self.getSnapshots(game)
+    }
+    
+    private static func getSnapshots(_ game: DartsGame) -> DartsGameSnapshotsList {
+        if isPreview { return MockData.getDartsGameSnapshotsList() }
+
+        return JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
     }
     
     var body: some View {
@@ -77,7 +85,7 @@ struct GameAnswersView: View {
     
     private var snapshotsView: some View {
         TabView(selection: $index) {
-            ForEach(snapshots) { snapshot in
+            ForEach(snapshots.snapshots) { snapshot in
                 VStack {
                     DartsTargetView()
                         .environmentObject(dartsTargetVM)
@@ -114,7 +122,7 @@ struct GameAnswersView: View {
     
     private var snapshotsIndexView: some View {
         HStack(spacing: Constants.indexHSpacing) {
-            ForEach(snapshots.indices, id: \.self) { index in
+            ForEach(snapshots.snapshots.indices, id: \.self) { index in
                 Circle()
                     .fill(getTabIndexColor(index))
                     .frame(width: Constants.indexSize)
@@ -132,8 +140,8 @@ struct GameAnswersView: View {
     
     private var gameAnswersSheet: some View {
         GameStatisticsSheet(
-            game: snapshotsVM.game,
-            snapshots: snapshotsVM.model
+            game: game,
+            snapshots: snapshots
         )
         .presentationDetents([.medium, .fraction(0.95)])
     }
@@ -143,8 +151,6 @@ extension GameAnswersView {
     private var interfaceSettings: AppInterfaceSettings { appSettingsVM.interfaceSettings }
     
     private var soundSettings: AppSoundSettings { appSettingsVM.soundSettings }
-    
-    private var snapshots: [DartsGameSnapshot] { snapshotsVM.model.snapshots }
     
     private var dartsTarget: DartsTarget { dartsTargetVM.model }
     
