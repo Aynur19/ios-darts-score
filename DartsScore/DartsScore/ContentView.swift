@@ -20,7 +20,7 @@ struct ContentView: View {
 //                    .toolbarBackground(.visible, for: .tabBar)
 //                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
-//                DartsGameResultsView()
+//                GamesResultsView()
 //                    .tabItem {
 //                        Label("viewTitle_Statistics", systemImage: "trophy")
 //                    }

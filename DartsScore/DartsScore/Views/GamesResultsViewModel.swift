@@ -1,5 +1,5 @@
 //
-//  DartsGameResultsViewModel.swift
+//  GamesResultsViewModel.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 01.12.2023.
@@ -7,16 +7,11 @@
 
 import SwiftUI
 
-final class DartsGameResultsViewModel: ObservableObject {
-    @Published private(set) var model: DartsGameStats
-    
-    init() {
-        print("DartsGameResultsViewModel.\(#function)")
-        model = DartsGameResultsViewModel.getModel()
-    }
+final class GamesResultsViewModel: ObservableObject {
+    @Published private(set) var model = GamesResultsViewModel.getModel()
     
     func refresh() {
-        model = DartsGameResultsViewModel.getModel()
+        model = Self.getModel()
     }
     
     private static func getModel() -> DartsGameStats {

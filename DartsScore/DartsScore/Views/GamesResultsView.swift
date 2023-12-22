@@ -1,5 +1,5 @@
 //
-//  DartsGameResultsView.swift
+//  GamesResultsView.swift
 //  DartsScore
 //
 //  Created by Aynur Nasybullin on 2023.11.22.
@@ -14,18 +14,11 @@ private struct DartsGameResultsViewConstants {
     static let rowCornerRadius: CGFloat = 20
 }
 
-struct DartsGameResultsView: View {
+struct GamesResultsView: View {
     private typealias Constants = DartsGameResultsViewConstants
     
-    @EnvironmentObject var appSettingsVM: AppSettingsViewModel
-//    @StateObject var appSettings = AppSettingsVM.shared
-    @StateObject var statsVM = DartsGameResultsViewModel()
-    
+    @StateObject var statsVM = GamesResultsViewModel()
     @State private var path = NavigationPath()
-    
-    init() {
-        print("DartsGameResultsView.\(#function)")
-    }
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -35,27 +28,24 @@ struct DartsGameResultsView: View {
                 
                 VStack {
                     headers
-                        .padding(.horizontal, Constants.hPadding)
-                    statisticsList
-                }
-                .onAppear {
-                    statsVM.refresh()
+                    resultsList
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("viewTitle_Statistics")
-                        .font(.title2)
-                        .foregroundStyle(Palette.bgText)
-                }
+                StaticUI.toolbarTitle { Text("viewTitle_Statistics") }
             }
             .navigationDestination(for: String.self) { gameIdx in
                 if let game = statsVM.getGame(gameIdx) {
                     GameAnswersView(game: game)
                 }
             }
+            .onAppear { onAppear() }
         }
+    }
+    
+    private func onAppear() {
+        statsVM.refresh()
     }
     
     private var headers: some View {
@@ -69,17 +59,17 @@ struct DartsGameResultsView: View {
         }
         .font(.headline)
         .foregroundStyle(Palette.bgText)
-        .padding(.trailing, 32)
+        .padding(.trailing, Constants.hPadding)
+        .padding(.horizontal, Constants.hPadding)
     }
     
-    private var statisticsList: some View {
+    private var resultsList: some View {
         ScrollView {
             ForEach(statsVM.model.items) { game in
-                Button(action: {
-                    path.append(game.id)
-                }, label: {
-                    row(game)
-                })
+                Button(
+                    action: { path.append(game.id) },
+                    label: { row(game) }
+                )
                 .foregroundStyle(Color.black)
                 .padding(.horizontal, Constants.hPadding.half)
             }
@@ -109,6 +99,22 @@ struct DartsGameResultsView: View {
     }
 }
 
+private struct TestGamesResultsView: View {
+    @StateObject var appSettingsVM = AppSettingsViewModel()
+    
+    var body: some View {
+        GeometryReader { geometry in
+            TabView {
+                GamesResultsView()
+                    .environment(\.mainWindowSize, geometry.size)
+                    .environmentObject(appSettingsVM)
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
+            }
+        }
+    }
+}
+
 #Preview {
-    DartsGameResultsView()
+    TestGamesResultsView()
 }
