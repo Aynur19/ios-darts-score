@@ -39,9 +39,6 @@
         }
       }
     },
-    "%@ сек." : {
-
-    },
     "%lld" : {
 
     },
@@ -222,6 +219,38 @@
         }
       }
     },
+    "label_BadResult" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bad result... 😔🫣😱 "
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Плохой результат... 😔🫣😱"
+          }
+        }
+      }
+    },
+    "label_CorrectAnswers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correct "
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правильно"
+          }
+        }
+      }
+    },
     "label_DartImage" : {
       "localizations" : {
         "en" : {
@@ -382,6 +411,22 @@
         }
       }
     },
+    "label_GoodResult" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good result! 😊🥳😎"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Хороший результат! 😊🥳😎"
+          }
+        }
+      }
+    },
     "label_HitPoints" : {
       "localizations" : {
         "en" : {
@@ -410,6 +455,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сколько очков на мишени?"
+          }
+        }
+      }
+    },
+    "label_IncorrectAnswers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incorrect"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неправильно"
           }
         }
       }
@@ -508,6 +569,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Без ответа"
+          }
+        }
+      }
+    },
+    "label_SkippedAnswers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skipped"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пропущено"
           }
         }
       }
@@ -644,8 +721,21 @@
     "Options" : {
 
     },
-    "POPUP" : {
-
+    "popupTitle_Results" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Results"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Результаты"
+          }
+        }
+      }
     },
     "RESET" : {
 
@@ -772,30 +862,6 @@
           }
         }
       }
-    },
-    "Без ответов: " : {
-
-    },
-    "Время: " : {
-
-    },
-    "Можно и лучше!" : {
-
-    },
-    "Очков: " : {
-
-    },
-    "Попыток: " : {
-
-    },
-    "Правильных: " : {
-
-    },
-    "Результаты" : {
-
-    },
-    "Хороший результат!" : {
-
     }
   },
   "version" : "1.0"

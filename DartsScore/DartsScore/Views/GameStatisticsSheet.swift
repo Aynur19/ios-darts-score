@@ -60,7 +60,7 @@ struct GameStatisticsSheet: View {
             Text("label_GameTime")
             Text("label_Attempts")
             Text("label_SuccessAnswers")
-            Text("label_SkippedAnswer")
+            Text("label_SkippedAnswers")
             Text("label_GameDate")
         }
     }
@@ -71,7 +71,7 @@ struct GameStatisticsSheet: View {
             Text("\(getTime(time: game.timeSpent)) suffix_Seconds")
             Text(String(game.attempts))
             Text(String(game.correct))
-            Text(String(game.missed))
+            Text(String(game.skipped))
             Text(dateTimeStr)
         }
     }

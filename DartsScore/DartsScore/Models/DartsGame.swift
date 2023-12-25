@@ -13,13 +13,13 @@ struct DartsGame: Identifiable {
     let id: String
     let attempts: Int
     let timeForAnswer: Int
-    let dartsWithMiss: Bool
+    let missesIsEnabled: Bool
     let snapshotsJsonName: String
     
     private(set) var score: Int = .zero
     private(set) var spentAttempts: Int = .zero
     private(set) var correct: Int = .zero
-    private(set) var missed: Int = .zero
+    private(set) var skipped: Int = .zero
     private(set) var timeSpent: Int = .zero
     private(set) var dateTime: Date = .now
     
@@ -27,12 +27,12 @@ struct DartsGame: Identifiable {
         _ id: String = UUID().uuidString,
         attempts: Int,
         timeForAnswer: Int,
-        dartsWithMiss: Bool
+        missesIsEnabled: Bool
     ) {
         self.id = id
         self.attempts = attempts
         self.timeForAnswer = timeForAnswer
-        self.dartsWithMiss = dartsWithMiss
+        self.missesIsEnabled = missesIsEnabled
         self.snapshotsJsonName = snapshotsJsonNamePrefix + id
     }
     
@@ -40,13 +40,13 @@ struct DartsGame: Identifiable {
         id: String = UUID().uuidString,
         attempts: Int,
         timeForAnswer: Int,
-        dartsWithMiss: Bool,
+        missesIsEnabled: Bool,
         score: Int,
         successAttempts: Int,
         timeSpent: Int,
         dateTime: Date
     ) {
-        self.init(id, attempts: attempts, timeForAnswer: timeForAnswer, dartsWithMiss: dartsWithMiss)
+        self.init(id, attempts: attempts, timeForAnswer: timeForAnswer, missesIsEnabled: missesIsEnabled)
         self.score = score
         self.correct = successAttempts
         self.timeSpent = timeSpent
@@ -54,7 +54,7 @@ struct DartsGame: Identifiable {
     }
     
     mutating func onMissed(for time: Int) {
-        missed += 0
+        skipped += 1
         timeSpent += time
         
         spentAttempts += 1
@@ -74,6 +74,14 @@ struct DartsGame: Identifiable {
     mutating func onFinished() {
         dateTime = .now
     }
+    
+    var isGoodGame: Bool {
+        correct >= spentAttempts - correct
+    }
+    
+    var misses: Int {
+        spentAttempts - correct - skipped
+    }
 }
 
 extension DartsGame: Codable {
@@ -83,12 +91,12 @@ extension DartsGame: Codable {
         self.id                 = try container.decode(String.self, forKey: .id)
         self.attempts           = try container.decode(Int.self, forKey: .attempts)
         self.timeForAnswer      = try container.decode(Int.self, forKey: .timeForAnswer)
-        self.dartsWithMiss      = try container.decode(Bool.self, forKey: .dartsWithMiss)
+        self.missesIsEnabled    = try container.decode(Bool.self, forKey: .missesIsEnabled)
         self.snapshotsJsonName  = try container.decode(String.self, forKey: .snapshotsJsonName)
         self.score              = try container.decode(Int.self, forKey: .score)
         self.spentAttempts      = try container.decode(Int.self, forKey: .spentAttempts)
         self.correct            = try container.decode(Int.self, forKey: .correct)
-        self.missed             = try container.decode(Int.self, forKey: .missed)
+        self.skipped            = try container.decode(Int.self, forKey: .skipped)
         self.timeSpent          = try container.decode(Int.self, forKey: .timeSpent)
         
         let dateDecodingStrategy = ISO8601DateFormatter()
@@ -99,12 +107,12 @@ extension DartsGame: Codable {
         case id
         case attempts
         case timeForAnswer
-        case dartsWithMiss
+        case missesIsEnabled
         case snapshotsJsonName
         case score
         case spentAttempts
         case correct
-        case missed
+        case skipped
         case timeSpent
         case dateTime
     }

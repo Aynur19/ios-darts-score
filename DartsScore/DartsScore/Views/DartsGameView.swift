@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import AVFoundation
 
 private struct DartsGameViewConstants {
     static let opacityAnimationDuration: CGFloat = 0.5
@@ -33,7 +32,9 @@ struct DartsGameView: View {
     )
     
     @StateObject var gameVM = DartsGameViewModel(
-        appSettings: .init()
+        attempts: AppDefaultSettings.attempts,
+        timeForAnswer: AppDefaultSettings.timeForAnswer,
+        missesIsEnabled: AppInterfaceDefaultSettings.dartMissesIsEnabled
     )
     
     @StateObject var dartsTargetVM = DartsTargetViewModel(
@@ -68,15 +69,7 @@ struct DartsGameView: View {
                 gameView
                 
                 if gameOverViewIsShow {
-                    GameOverPopupView(
-                        action: { gameOverBtnAction() }
-                    )
-                    .environmentObject(gameVM)
-                    .transition(.asymmetric(insertion: .scale, removal: .opacity))
-                    .zIndex(1)
-                    .onAppear {
-                        gameVM.playResultSound()
-                    }
+                    resultsPopup
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -111,6 +104,7 @@ struct DartsGameView: View {
         ) { _ in stopGame() }
     }
     
+    // MARK: Darts Game
     private var gameView: some View {
         ZStack {
             VStack {
@@ -248,12 +242,29 @@ struct DartsGameView: View {
         Button { restartGame() } label: { Text("btnLabel_Restart") }
             .buttonStyle(PrimaryButtonStyle())
     }
+    
+    // MARK: Game Results Popup
+    private var resultsPopup: some View {
+        GameOverPopup(
+            game: gameVM.game,
+            action: { popupAction() }
+        )
+        .transition(.asymmetric(insertion: .scale, removal: .opacity))
+        .zIndex(1)
+        .onAppear { gameVM.playResultSound() }
+    }
 }
 
 extension DartsGameView {
     private var dartsTargetWidth: CGFloat {
         DartsConstants.getDartsTargetWidth(windowsSize: windowSize)
     }
+    
+    private var appSettings: AppSettings { appSettingsVM.settings }
+    
+    private var interfaceSettings: AppInterfaceSettings { appSettingsVM.interfaceSettings }
+    
+    private var soundSettings: AppSoundSettings { appSettingsVM.soundSettings }
     
     private func showUI(_ gameState: DartsGameViewModel.GameState) {
         startBtnIsShow          = gameState == .idle
@@ -267,11 +278,12 @@ extension DartsGameView {
     
     private func resetGame(isRestart: Bool = false) {
         print("DartsGameView.\(#function)")
-        if isRestart {
-            gameVM.restart(appSettings: appSettingsVM.settings)
-        } else {
-            gameVM.reset(appSettings: appSettingsVM.settings)
-        }
+        gameVM.reset(
+            attempts: appSettings.attempts,
+            timeForAnswer: appSettings.timeForAnswer,
+            missesIsEnabled: interfaceSettings.dartMissesIsEnabled,
+            isRestart: isRestart
+        )
         
         timerVM.reset(
             gameVM.game.timeForAnswer,
@@ -284,7 +296,7 @@ extension DartsGameView {
         
         dartsHitsVM.reset(
             dartsTarget: dartsTargetVM.model,
-            missesIsEnabled: gameVM.game.dartsWithMiss,
+            missesIsEnabled: gameVM.game.missesIsEnabled,
             dartSize: appSettingsVM.interfaceSettings.dartSize,
             dartImageName: appSettingsVM.interfaceSettings.dartImageName
         )
@@ -310,7 +322,7 @@ extension DartsGameView {
     
     private func playTimerSound(_ isNotified: Bool) {
         if isNotified {
-//            SoundManager.shared.play(TimerEndSound())
+            SoundManager.shared.play(TimerEndSound(volume: soundSettings.timerEndSoundVolume.float))
         }
     }
     
@@ -393,7 +405,7 @@ extension DartsGameView {
         }
     }
     
-    private func gameOverBtnAction() {
+    private func popupAction() {
         gameVM.stopResultSound()
         withAnimation {
             gameOverViewIsShow = false

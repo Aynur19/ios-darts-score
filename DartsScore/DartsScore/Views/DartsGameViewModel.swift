@@ -21,40 +21,55 @@ final class DartsGameViewModel: ObservableObject {
     @Published private(set) var state: GameState = .idle
     @Published private(set) var currentAnswers = [Int]()
     
-    init(appSettings: AppSettings) {
+    init(attempts: Int, timeForAnswer: Int, missesIsEnabled: Bool) {
         print("DartsGameViewModel.\(#function)")
         
-        let game = Self.loadGame(appSettings: appSettings)
+        let game = Self.loadGame(
+            attempts: attempts,
+            timeForAnswer: timeForAnswer,
+            missesIsEnabled: missesIsEnabled
+        )
         self.game = game
         self.snapshots = .init(game.id)
     }
     
-    private static func loadGame(appSettings: AppSettings) -> DartsGame {
+    private static func loadGame(attempts: Int, timeForAnswer: Int, missesIsEnabled: Bool) -> DartsGame {
         JsonCache.loadGame(from: AppConstants.gameJsonName)
-        ?? .init(attempts: appSettings.attempts,
-                 timeForAnswer: appSettings.timeForAnswer,
-                 dartsWithMiss: true//appSettings.dartsWithMiss
-        )
-        
+        ?? .init(attempts: attempts,
+                 timeForAnswer: timeForAnswer,
+                 missesIsEnabled: missesIsEnabled)
     }
     
     var remainingAttempts: Int {
         game.attempts - game.spentAttempts
     }
+    
+    func reset(attempts: Int, timeForAnswer: Int, missesIsEnabled: Bool, isRestart: Bool = false) {
+        if isRestart {
+            restart(attempts: attempts, timeForAnswer: timeForAnswer, missesIsEnabled: missesIsEnabled)
+            return
+        }
+            
+        reset(attempts: attempts, timeForAnswer: timeForAnswer, missesIsEnabled: missesIsEnabled)
+    }
 
-    func reset(appSettings: AppSettings) {
-        game = Self.loadGame(appSettings: appSettings)
+    private func reset(attempts: Int, timeForAnswer: Int, missesIsEnabled: Bool) {
+        game = Self.loadGame(
+            attempts: attempts,
+            timeForAnswer: timeForAnswer,
+            missesIsEnabled: missesIsEnabled
+        )
         snapshots = JsonCache.loadGameSnapshotsList(from: game.snapshotsJsonName, gameId: game.id)
     
         state = game.spentAttempts == .zero ? .idle : .stoped
     }
     
-    func restart(appSettings: AppSettings) {
+    private func restart(attempts: Int, timeForAnswer: Int, missesIsEnabled: Bool) {
         playTapSound()
         JsonCache.deleteFile(name: AppConstants.gameJsonName)
-        game = .init(attempts: appSettings.attempts,
-                     timeForAnswer: appSettings.timeForAnswer,
-                     dartsWithMiss: true) // TODO: fix
+        game = .init(attempts: attempts,
+                     timeForAnswer: timeForAnswer,
+                     missesIsEnabled: missesIsEnabled)
         snapshots = .init(game.id)
         
         state = .idle
@@ -84,8 +99,6 @@ final class DartsGameViewModel: ObservableObject {
     }
     
     func onMissed(expected: Int, darts: [Dart]) {
-        let timeForCurrentAnswer = game.timeForAnswer
-        
         let answerSnapshot = DartsGameSnapshot(
             id: snapshots.snapshots.count,
             expected: expected,

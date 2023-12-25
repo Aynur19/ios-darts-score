@@ -13,23 +13,23 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView {
-//                DartsGameView()
-//                    .tabItem {
-//                        Label("viewTitle_Darts", systemImage: "gamecontroller")
-//                    }
-//                    .toolbarBackground(.visible, for: .tabBar)
-//                    .toolbarBackground(Palette.tabBar, for: .tabBar)
+                DartsGameView()
+                    .tabItem {
+                        Label("viewTitle_Darts", systemImage: "gamecontroller")
+                    }
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
-//                GamesResultsView()
-//                    .tabItem {
-//                        Label("viewTitle_Statistics", systemImage: "trophy")
-//                    }
-//                    .toolbarBackground(.visible, for: .tabBar)
-//                    .toolbarBackground(Palette.tabBar, for: .tabBar)
+                GamesResultsView()
+                    .environmentObject(appSettingsVM)
+                    .tabItem {
+                        Label("viewTitle_Statistics", systemImage: "trophy")
+                    }
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
                 AppSettingsView(settings: appSettingsVM.settings)
                     .environmentObject(appSettingsVM)
-//                SettingsView(appSettings: appSettingsVM.model)
                     .tabItem {
                         Label("viewTitle_AppSettings", systemImage: "gear")
 
