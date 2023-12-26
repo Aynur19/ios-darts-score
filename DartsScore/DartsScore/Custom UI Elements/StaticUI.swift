@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct StaticUI {
+    static var background: some View {
+        Palette.background.ignoresSafeArea()
+    }
+    
     static var hWheelPickerCursor: some View {
         Image(systemName: "arrowtriangle.down.fill")
             .resizable()

@@ -9,21 +9,18 @@ import SwiftUI
 
 private struct DartsGameViewConstants {
     static let opacityAnimationDuration: CGFloat = 0.5
-    static let darts3DRotationAxis: (x: CGFloat, y: CGFloat, z: CGFloat) = (x: 0, y: 1, z: 0)
     
-    static let answersSpasing: CGFloat = 10
     static let buttonsVSpasing: CGFloat = 32
     static let buttonsHPadding: CGFloat = 64
     static let labelsVSpacing: CGFloat = 20
-    static let rotationAngle: Double = 180
-    
-    static let dartsTargetHPadding: CGFloat = 32
 }
 
 struct DartsGameView: View {
     private typealias Constants = DartsGameViewConstants
     
-    @Environment(\.mainWindowSize) var windowSize
+    private let notifyCenter = NotificationCenter.default
+    
+    @Environment(\.dartsTargetSize) var dartsTargetSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
     @StateObject var timerVM = CountdownTimerViewModel(
@@ -48,14 +45,13 @@ struct DartsGameView: View {
         dartImageName: AppInterfaceDefaultSettings.dartImageName
     )
     
-    @State private var isDartsTargetSide1 = true
     @State private var rotation: Double = .zero
     
     @State private var gameStopedViewIsShow = false
     @State private var gameOverViewIsShow = false
     
-    @State private var dartsTargetSide1IsShow = false
-    @State private var dartsTargetSide2IsShow = false
+    @State private var showSide1 = true
+    @State private var showSide2 = false
     
     @State private var answersIsShow = true
     @State private var startBtnIsShow = true
@@ -63,45 +59,55 @@ struct DartsGameView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Palette.background
-                    .ignoresSafeArea()
-                
+                StaticUI.background
                 gameView
-                
-                if gameOverViewIsShow {
-                    resultsPopup
-                }
+                resultsPopup
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("viewTitle_Darts")
-                        .font(.title)
-                        .foregroundStyle(Palette.bgText)
-                }
+                StaticUI.toolbarTitle { Text("viewTitle_Darts") }
             }
         }
         .onAppear { resetGame() }
         .onDisappear { stopGame() }
-        .onReceive(timerVM.$isNotified) { isNotified in
-            playTimerSound(isNotified)
-        }
-        .onReceive(timerVM.$state) { newState in
-            onTimerStateChange(state: newState)
-        }
         .onReceive(gameVM.$state) { gameState in
             showUI(gameState)
         }
-        .onReceive(
-            NotificationCenter.default.publisher(
-                for: UIApplication.willResignActiveNotification
-            )
-        ) { _ in stopGame() }
-        .onReceive(
-            NotificationCenter.default.publisher(
-                for: UIApplication.willTerminateNotification
-            )
-        ) { _ in stopGame() }
+        .onReceive(notifyCenter.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            stopGame()
+        }
+        .onReceive(notifyCenter.publisher(for: UIApplication.willTerminateNotification)) { _ in
+            stopGame()
+        }
+    }
+    
+    // MARK: Timer
+    private var timerView: some View {
+        GameTimerView()
+            .environmentObject(timerVM)
+            .frame(width: 64)
+            .onReceive(timerVM.$state) { newState in
+                onTimerStateChanged(state: newState)
+            }
+            .onReceive(timerVM.$isNotified) { isNotified in
+                onTimerIsNotified(isNotified)
+            }
+    }
+    
+    private func onTimerStateChanged(state: CountdownTimerState) {
+        if state == .finished {
+            nextAttempt()
+        }
+    }
+    
+    private func onTimerIsNotified(_ isNotified: Bool) {
+        if isNotified {
+            SoundManager.shared.play(TimerEndSound(volume: soundSettings.timerEndSoundVolume.float))
+        }
+    }
+    
+    private func stopTimerSound() {
+        SoundManager.shared.stop(TimerEndSound(volume: soundSettings.timerEndSoundVolume.float))
     }
     
     // MARK: Darts Game
@@ -110,13 +116,11 @@ struct DartsGameView: View {
             VStack {
                 topView
                 dartsView
-                    .frame(width: dartsTargetWidth, height: dartsTargetWidth)
-
+                
                 ZStack {
                     gameViewButtons
                     gameStopedViewButtons
                 }
-                
                 Spacer()
             }
         }
@@ -137,67 +141,20 @@ struct DartsGameView: View {
             .foregroundStyle(Palette.bgText)
     }
     
-    private var timerView: some View {
-        CountdownTimerCircleProgressBar(
-            lineWidth: AppConstants.timerCircleLineWidth,
-            backForegroundStyle: {
-                AppConstants.timerCircleDownColor
-                    .opacity(AppConstants.timerCiclreDownOpacity)
-            },
-            frontForegroundStyle: {
-                Palette.options1
-                    .opacity(AppConstants.timerCiclreUpOpacity)
-            },
-            contentView: {
-                Text(TimerStringFormat.secMs.msStr(timerVM.counter))
-                    .font(.headline)
-                    .bold()
-                    .foregroundStyle(Palette.options1)
-            }
-        )
-        .environmentObject(timerVM)
-        .frame(width: 64)
-    }
-    
     private var dartsView: some View {
-        ZStack {
-            DartsTargetView()
-                .environmentObject(dartsTargetVM)
-                .overlay {
-                    DartsHitsView()
-                        .environmentObject(dartsHitsVM)
-                }
-                .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
-                .animation(.linear(duration: Constants.opacityAnimationDuration.x2), value: rotation)
-                .opacity(dartsTargetSide1IsShow ? 1 : 0)
-            
-            DartsTargetView()
-                .environmentObject(dartsTargetVM)
-                .overlay {
-                    DartsHitsView()
-                        .environmentObject(dartsHitsVM)
-                }
-                .rotation3DEffect(.degrees(Constants.rotationAngle), axis: Constants.darts3DRotationAxis)
-                .rotation3DEffect(.degrees(rotation), axis: Constants.darts3DRotationAxis)
-                .animation(.linear(duration: Constants.opacityAnimationDuration.x2), value: rotation)
-                .opacity(dartsTargetSide2IsShow ? 1 : 0)
-        }
+        RotatedDartsTargetView(
+            size: dartsTargetSize,
+            rotation: $rotation,
+            showSide1: $showSide1,
+            showSide2: $showSide2
+        )
+        .environmentObject(dartsTargetVM)
+        .environmentObject(dartsHitsVM)
     }
     
     private var answers: some View {
-        VStack(spacing: 20) {
-            Text("label_HowHitPoins")
-                .font(.headline)
-                .foregroundStyle(Palette.bgText)
-            
-            HStack(spacing: Constants.answersSpasing) {
-                ForEach(gameVM.currentAnswers, id: \.self) { answer in
-                    DartsGameAnswerView(
-                        score: answer,
-                        onAnswered: { nextAttempt(answer: answer) }
-                    )
-                }
-            }
+        GameAnswersListView(answers: gameVM.currentAnswers) { answer in
+            nextAttempt(answer: answer)
         }
         .opacity(answersIsShow ? 1 : 0)
         .animation(.linear(duration: Constants.opacityAnimationDuration), value: answersIsShow)
@@ -214,10 +171,13 @@ struct DartsGameView: View {
     }
     
     private var startButton: some View {
-        Button { startGame() } label: { Text("btnLabel_Start") }
-            .buttonStyle(PrimaryButtonStyle())
-            .opacity(startBtnIsShow ? 1 : 0)
-            .animation(.linear(duration: Constants.opacityAnimationDuration), value: startBtnIsShow)
+        Button(
+            action: { startGame() },
+            label: { Text("btnLabel_Start") }
+        )
+        .buttonStyle(PrimaryButtonStyle())
+        .opacity(startBtnIsShow ? 1 : 0)
+        .animation(.linear(duration: Constants.opacityAnimationDuration), value: startBtnIsShow)
     }
     
     private var gameStopedViewButtons: some View {
@@ -228,38 +188,42 @@ struct DartsGameView: View {
             Spacer()
         }
         .padding(.horizontal, Constants.buttonsHPadding)
-        
         .opacity(gameStopedViewIsShow ? 1 : 0)
         .animation(.linear(duration: Constants.opacityAnimationDuration), value: gameStopedViewIsShow)
     }
     
     private var resumeButton: some View {
-        Button { startGame() } label: { Text("btnLabel_Resume") }
-            .buttonStyle(PrimaryButtonStyle())
+        Button(
+            action: { startGame() },
+            label: { Text("btnLabel_Resume") }
+        )
+        .buttonStyle(PrimaryButtonStyle())
     }
     
     private var restartButton: some View {
-        Button { restartGame() } label: { Text("btnLabel_Restart") }
-            .buttonStyle(PrimaryButtonStyle())
+        Button(
+            action: { resetGame(isRestart: true) },
+            label: { Text("btnLabel_Restart") }
+        )
+        .buttonStyle(PrimaryButtonStyle())
     }
     
     // MARK: Game Results Popup
+    @ViewBuilder
     private var resultsPopup: some View {
-        GameOverPopup(
-            game: gameVM.game,
-            action: { popupAction() }
-        )
-        .transition(.asymmetric(insertion: .scale, removal: .opacity))
-        .zIndex(1)
-        .onAppear { gameVM.playResultSound() }
+        if gameOverViewIsShow {
+            GameOverPopup(
+                game: gameVM.game,
+                action: { popupAction() }
+            )
+            .transition(.asymmetric(insertion: .scale, removal: .opacity))
+            .zIndex(1)
+            .onAppear { gameVM.playResultSound() }
+        }
     }
 }
 
 extension DartsGameView {
-    private var dartsTargetWidth: CGFloat {
-        DartsConstants.getDartsTargetWidth(windowsSize: windowSize)
-    }
-    
     private var appSettings: AppSettings { appSettingsVM.settings }
     
     private var interfaceSettings: AppInterfaceSettings { appSettingsVM.interfaceSettings }
@@ -271,13 +235,7 @@ extension DartsGameView {
         gameStopedViewIsShow    = gameState == .stoped
     }
     
-    private func restartGame() {
-        print("DartsGameView.\(#function)")
-        resetGame(isRestart: true)
-    }
-    
     private func resetGame(isRestart: Bool = false) {
-        print("DartsGameView.\(#function)")
         gameVM.reset(
             attempts: appSettings.attempts,
             timeForAnswer: appSettings.timeForAnswer,
@@ -291,7 +249,7 @@ extension DartsGameView {
         )
         
         dartsTargetVM.reset(
-            frameWidth: dartsTargetWidth
+            frameWidth: dartsTargetSize
         )
         
         dartsHitsVM.reset(
@@ -302,38 +260,20 @@ extension DartsGameView {
         )
         
         answersIsShow = false
-        showDartsSide()
+        showSide1 = true
+        showSide2 = false
     }
     
     private func startGame() {
-        print("DartsGameView.\(#function)")
         gameVM.start()
         timerVM.start()
-        
         updateAnswers()
     }
     
     private func updateAnswers() {
-        print("DartsGameView.\(#function)")
         dartsHitsVM.updateDarts()
         gameVM.generateAnswers(expectedScore: dartsHitsVM.score)
         answersIsShow = true
-    }
-    
-    private func playTimerSound(_ isNotified: Bool) {
-        if isNotified {
-            SoundManager.shared.play(TimerEndSound(volume: soundSettings.timerEndSoundVolume.float))
-        }
-    }
-    
-    private func stopTimerSound() {
-//        SoundManager.shared.stop(TimerEndSound())
-    }
-    
-    private func onTimerStateChange(state: CountdownTimerState) {
-        if state == .finished {
-            nextAttempt()
-        }
     }
     
     private func nextAttempt(answer: Int? = .none) {
@@ -353,7 +293,6 @@ extension DartsGameView {
             )
         }
         
-        rotateDarts()
         answersIsShow = false
         
         if gameVM.state == .processing {
@@ -363,30 +302,21 @@ extension DartsGameView {
         }
     }
     
-    private func rotateDarts() {
-        print("DartsGameView.\(#function)")
-        isDartsTargetSide1.toggle()
-        rotation += Constants.rotationAngle
-        
-//        SoundManager.shared.play(DartsTargetRotationSound())
-    }
-    
     private func continueGame() {
-        print("DartsGameView.\(#function)")
+        rotation += 180
+        
         Task {
             try? await Task.sleep(nanoseconds: 500_000_000)
-            showDartsSide()
             
-            await MainActor.run { updateAnswers() }
+            await MainActor.run {
+                showSide1.toggle()
+                showSide2.toggle()
+                updateAnswers()
+            }
         }
         
         timerVM.reset()
         timerVM.start()
-    }
-    
-    private func showDartsSide() {
-        dartsTargetSide1IsShow = isDartsTargetSide1
-        dartsTargetSide2IsShow = !isDartsTargetSide1
     }
     
     private func stopGame() {
@@ -407,16 +337,12 @@ extension DartsGameView {
     
     private func popupAction() {
         gameVM.stopResultSound()
+        
         withAnimation {
             gameOverViewIsShow = false
         }
-        restartGame()
-    }
-    
-    private func onTimerStateChanged(state: CountdownTimerState) {
-        if state == .finished {
-            
-        }
+        
+        resetGame(isRestart: true)
     }
 }
 
@@ -427,7 +353,8 @@ private struct TestDartsGameView: View {
         GeometryReader { geometry in
             TabView {
                 DartsGameView()
-                    .environment(\.mainWindowSize, geometry.size)
+                    .environment(\.dartsTargetSize,
+                                  DartsConstants.getDartsTargetWidth(windowsSize: geometry.size))
                     .environmentObject(appSettingsVM)
                     .tabItem {
                         Label("viewTitle_Darts", systemImage: "gamecontroller")

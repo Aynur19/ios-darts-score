@@ -115,7 +115,7 @@ struct GameAnswersView: View {
                     expected: snapshot.expected
                 )
                 
-                DartsGameAnswerView(score: answer, color: answerColor)
+                GameAnswerView(score: answer, color: answerColor)
             }
         }
     }

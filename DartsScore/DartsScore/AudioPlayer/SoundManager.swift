@@ -99,7 +99,7 @@ final class SoundManager: NSObject, AVAudioPlayerDelegate {
         let excludedUrls = excludedSounds.compactMap { $0.url }
         
         if excludedUrls.isEmpty {
-            audioPlayers.forEach { url, player in
+            audioPlayers.forEach { _, player in
                 player.stop()
             }
         } else {
@@ -114,16 +114,6 @@ final class SoundManager: NSObject, AVAudioPlayerDelegate {
             player.stop()
         }
     }
-    
-//    func stop() {
-//        audioPlayers.forEach { url, player in
-//            player.stop()
-//        }
-//        
-//        duplicateAudioPlayers.forEach { player in
-//            player.stop()
-//        }
-//    }
     
     func stop(_ sound: Sound, onPause: Bool = false) {
         guard let url = sound.url,

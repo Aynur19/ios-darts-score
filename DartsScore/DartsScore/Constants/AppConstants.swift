@@ -48,11 +48,11 @@ class AppConstants: ObservableObject {
     // MARK: Timer options
     static let timerCircleLineWidth: CGFloat = 8
 
-    static let timerCircleDownColor: Color = .gray
-    static let timerCiclreDownOpacity: CGFloat = 0.3
+//    static let timerCircleDownColor: Color = .gray
+//    static let timerCiclreDownOpacity: CGFloat = 0.3
 
     static let timerCircleUpColor: Color = .green
-    static let timerCiclreUpOpacity: CGFloat = 1
+//    static let timerCiclreUpOpacity: CGFloat = 1
     static let timerCircleUpRotation: Angle = .degrees(-90)
 
     static let timerAnimationDuration: CGFloat = 0.2
