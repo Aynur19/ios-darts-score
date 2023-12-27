@@ -35,9 +35,9 @@ struct AppSettingsView: View {
     
     init(settings: AppSettings) {
         let timeForAnswerIdx = Defaults.getTimeAnswerIdx(value: settings.timeForAnswer)
-        
         self.timeForAnswerIdx = timeForAnswerIdx
         self.timeForAnswer = Defaults.timesForAnswerData[timeForAnswerIdx]
+        
         self.attempts = settings.attempts
     }
     
@@ -59,16 +59,11 @@ struct AppSettingsView: View {
                     .padding()
                 }
             }
-            .onAppear {
-                appSettingsVM.update()
-            }
+            .onAppear { appSettingsVM.update() }
+            .onDisappear { appSettingsVM.update() }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("viewTitle_AppSettings")
-                        .font(.title2)
-                        .foregroundStyle(Palette.bgText)
-                }
+                StaticUI.toolbarTitle { Text("viewTitle_AppSettings") }
             }
             .navigationDestination(for: SettingsSubviews.self) { settingsSubview in
                 getSettingsView(subviewName: settingsSubview)

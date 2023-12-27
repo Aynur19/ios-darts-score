@@ -236,6 +236,8 @@ extension DartsGameView {
     }
     
     private func resetGame(isRestart: Bool = false) {
+        appSettingsVM.update()
+        
         gameVM.reset(
             attempts: appSettings.attempts,
             timeForAnswer: appSettings.timeForAnswer,
@@ -320,10 +322,11 @@ extension DartsGameView {
     }
     
     private func stopGame() {
-        timerVM.stop()
+        timerVM.reset()
         gameVM.stop()
         
-        SoundManager.shared.stop()
+        answersIsShow = false
+        dartsHitsVM.reset()
     }
     
     private func finishGame() {

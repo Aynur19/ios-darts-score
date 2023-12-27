@@ -43,6 +43,11 @@ class DartsHitsViewModel: ObservableObject {
         score = .zero
     }
     
+    func reset() {
+        darts.removeAll()
+        score = .zero
+    }
+    
     func updateDarts() {
         generateDarts()
         updateScore()

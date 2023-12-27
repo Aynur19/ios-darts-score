@@ -19,7 +19,7 @@ struct AppInterfaceSettingsView: View {
     private typealias Keys = AppInterfaceSettingsKeys
     private typealias Constants = AppInterfaceSettingsViewConstants
     
-    @Environment(\.mainWindowSize) var windowSize
+    @Environment(\.dartsTargetSize) var targetSize
     
     @StateObject var dartsTargetVM = DartsTargetViewModel(
         frameWidth: AppConstants.defaultDartsTargetWidth
@@ -81,9 +81,7 @@ struct AppInterfaceSettingsView: View {
     }
     
     private func onAppear() {
-        let frameWidth = DartsConstants.getDartsTargetWidth(windowsSize: windowSize)
-        
-        dartsTargetVM.reset(frameWidth: frameWidth)
+        dartsTargetVM.reset(frameWidth: targetSize)
         dartsHitsVM.reset(
             dartsTarget: dartsTargetVM.model,
             missesIsEnabled: dartMissesIsEnabled,
@@ -200,7 +198,9 @@ struct AppInterfaceSettingsView: View {
     private var dartsPreview: some View {
         DartsTargetView()
             .environmentObject(dartsTargetVM)
-            .overlay { DartsHitsView().environmentObject(dartsHitsVM) }
+            .overlay {
+                DartsHitsView().environmentObject(dartsHitsVM)
+            }
     }
 }
 
