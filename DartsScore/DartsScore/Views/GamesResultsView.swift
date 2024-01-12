@@ -70,58 +70,15 @@ struct GamesResultsView: View {
                 VStack {
                     ForEach(statsVM.model.items) { game in
                         VGradientView(
-                            contentView: {
-                                Text("Game")
-                                    .padding()
-                            },
+                            contentView: { row(game) },
                             parentSize: geometry.size
                         )
                     }
                     .clipShape(Capsule())
-                    .padding()
-                    
-                    //                    Spacer()
+                    .padding(.horizontal)
                 }
-                //                            .frame(maxWidth: .infinity)
-                //                            .background { Palette.background }
-                //                            .foregroundStyle(Color.clear)
-                //                        RoundedRectangle(cornerRadius: 20)
-                //                            .stroke(Color.clear, lineWidth: 2)
-                //                            .frame(height: 32)
-                //                            .background {
-                //                                Text("Game")
-                //                            }
-                //                        Text("Game")
-                //                            .frame(maxWidth: .infinity)
-                ////                            .background { Palette.background }
-                //                            .overlay {
-                //                                RoundedRectangle(cornerRadius: 20.0)
-                //                                    .stroke( Color.clear )
-                //                            }
-                //                            .glowingOutline(color: .clear)
-                //                        Button(
-                //                            action: { path.append(game.id) },
-                //                            label: { row(game) }
-                //                        )
-                ////                        .foregroundStyle(Color.clear)
-                //
-                //                        //
-                //                    }
-                //                            .background { Color.clear }
-                //                .mask {
-                //                    LinearGradient(
-                //                        colors: [.green, .red],
-                //                        startPoint: .top,
-                //                        endPoint: .bottom
-                //                    )
-                //                }
-                //                    .padding(.horizontal, Constants.hPadding.half)
-                //                }
             }
             .frame(maxWidth: .infinity)
-            //            .background { Color.clear }
-            
-            //        .background { Color.clear }
         }
     }
     
@@ -136,26 +93,9 @@ struct GamesResultsView: View {
                 .frame(maxWidth: .infinity)
             Image(systemName: Constants.chevronName)
         }
-        //        .background { Palette.background }
-        //        .foregroundStyle(Palette.btnPrimaryText)
         .padding(.vertical, Constants.vPadding)
         .padding(.horizontal)
-        //        .background { Color.clear }
-        //        .clipShape(RoundedRectangle(cornerRadius: Constants.rowCornerRadius))
-        .background { Palette.background
-            
-            //            LinearGradient(
-            //                colors: [.green, .red],
-            //                startPoint: .top,
-            //                endPoint: .bottom
-            //            )
-        }
-        .mask(RoundedRectangle(cornerRadius: 20))
-        
-        //        .glowingOutline(color: .clear)
-        //        .cornerRadius(20)
-        
-        
+        .foregroundStyle(Palette.background)
     }
     
     private func attemptsStr(_ allAttempts: Int, success: Int) -> String {
