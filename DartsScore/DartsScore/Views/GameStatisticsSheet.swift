@@ -135,7 +135,7 @@ struct GameStatisticsSheet: View {
     }
     
     private func getTime(time: Int) -> String {
-        AppConstants.timerTextFormat.msStr(time)
+        TimerStringFormat.secMs.msStr(time)
     }
     
     private var dateTimeStr: String {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum DartsRadiuses {
+enum DartsRadius {
     case x2
     case x3
     case baseBig
@@ -47,7 +47,7 @@ struct DartsConstants {
         windowsSize.width - hPadding.x2
     }
     
-    static func getRadius(_ frameWidth: CGFloat, _ radiusType: DartsRadiuses) -> CGFloat {
+    static func getRadius(_ frameWidth: CGFloat, _ radiusType: DartsRadius) -> CGFloat {
         let resolution = frameWidth.half / targetRadius
         
         switch radiusType {

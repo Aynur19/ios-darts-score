@@ -193,11 +193,11 @@ final class DartsGameViewModel: ObservableObject {
         game.correct >= game.attempts - game.correct
     }
     
-    private var resultSound: Sound {
-        isGoodReasult ? GameGoodResultSound(volume: 1) : GameBadResultSound(volume: 1)
+    private var resultSound: SoundEnum {
+        isGoodReasult ? .gameGoodResult : .gameBadResult
     }
     
     private func playTapSound() {
-        Task { await MainActor.run { SoundManager.shared.play(UserTapSound(volume: 1)) } }
+        Task { await MainActor.run { SoundManager.shared.play(.userTap) } }
     }
 }

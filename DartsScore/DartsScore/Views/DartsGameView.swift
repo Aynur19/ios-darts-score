@@ -25,7 +25,7 @@ struct DartsGameView: View {
     
     @StateObject var timerVM = CountdownTimerViewModel(
         AppDefaultSettings.timeForAnswer,
-        timeLeftToNotify: AppConstants.timerTimeLeftToNotify
+        timeLeftToNotify: AppConstants.timerNotifyTime
     )
     
     @StateObject var gameVM = DartsGameViewModel(
@@ -35,11 +35,11 @@ struct DartsGameView: View {
     )
     
     @StateObject var dartsTargetVM = DartsTargetViewModel(
-        frameWidth: AppConstants.defaultDartsTargetWidth
+        frameWidth: AppConstants.dartsTargetWidth
     )
     
     @StateObject var dartsHitsVM = DartsHitsViewModel(
-        dartsTarget: .init(frameWidth: AppConstants.defaultDartsTargetWidth),
+        dartsTarget: .init(frameWidth: AppConstants.dartsTargetWidth),
         missesIsEnabled: AppInterfaceDefaultSettings.dartMissesIsEnabled,
         dartSize: AppInterfaceDefaultSettings.dartSize,
         dartImageName: AppInterfaceDefaultSettings.dartImageName
@@ -102,12 +102,12 @@ struct DartsGameView: View {
     
     private func onTimerIsNotified(_ isNotified: Bool) {
         if isNotified {
-            SoundManager.shared.play(TimerEndSound(volume: soundSettings.timerEndSoundVolume.float))
+            SoundManager.shared.play(.timerEnd)
         }
     }
     
     private func stopTimerSound() {
-        SoundManager.shared.stop(TimerEndSound(volume: soundSettings.timerEndSoundVolume.float))
+        SoundManager.shared.stop(.timerEnd)
     }
     
     // MARK: Darts Game
@@ -221,6 +221,16 @@ struct DartsGameView: View {
             .onAppear { gameVM.playResultSound() }
         }
     }
+    
+    private func popupAction() {
+        gameVM.stopResultSound()
+        
+        withAnimation {
+            gameOverViewIsShow = false
+        }
+        
+        resetGame(isRestart: true)
+    }
 }
 
 extension DartsGameView {
@@ -247,7 +257,7 @@ extension DartsGameView {
         
         timerVM.reset(
             gameVM.game.timeForAnswer,
-            timeLeftToNotify: AppConstants.timerTimeLeftToNotify
+            timeLeftToNotify: AppConstants.timerNotifyTime
         )
         
         dartsTargetVM.reset(
@@ -336,16 +346,6 @@ extension DartsGameView {
         withAnimation {
             gameOverViewIsShow = true
         }
-    }
-    
-    private func popupAction() {
-        gameVM.stopResultSound()
-        
-        withAnimation {
-            gameOverViewIsShow = false
-        }
-        
-        resetGame(isRestart: true)
     }
 }
 

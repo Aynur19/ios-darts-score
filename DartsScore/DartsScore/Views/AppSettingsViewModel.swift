@@ -46,11 +46,7 @@ final class AppSettingsViewModel: ObservableObject {
     func prepareSounds() {
         Task {
             await MainActor.run {
-                SoundManager.shared.prepare(UserTapSound(volume: soundSettings.tapSoundVolume.float))
-                SoundManager.shared.prepare(TimerEndSound(volume: soundSettings.timerEndSoundVolume.float))
-                SoundManager.shared.prepare(DartsTargetRotationSound(volume: soundSettings.targetRotationSoundVolume.float))
-                SoundManager.shared.prepare(GameGoodResultSound(volume: soundSettings.gameGoodResultSoundVolume.float))
-                SoundManager.shared.prepare(GameBadResultSound(volume: soundSettings.gameBadResultSoundVolume.float))
+                SoundManager.shared.prepare(settings: soundSettings)
             }
         }
     }

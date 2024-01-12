@@ -43,6 +43,10 @@ struct DartsGameStats: Identifiable {
         
         return isAdded
     }
+    
+    mutating func sortByScore() {
+        items.sort { $0.score > $1.score }
+    }
 }
 
 extension DartsGameStats: Codable {

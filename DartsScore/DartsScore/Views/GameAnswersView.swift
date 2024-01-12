@@ -21,11 +21,11 @@ struct GameAnswersView: View {
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
     @StateObject var dartsTargetVM = DartsTargetViewModel(
-        frameWidth: AppConstants.defaultDartsTargetWidth
+        frameWidth: AppConstants.dartsTargetWidth
     )
 
     @StateObject var dartsHitsVM = DartsHitsViewModel(
-        dartsTarget: .init(frameWidth: AppConstants.defaultDartsTargetWidth),
+        dartsTarget: .init(frameWidth: AppConstants.dartsTargetWidth),
         missesIsEnabled: AppInterfaceDefaultSettings.dartMissesIsEnabled,
         dartSize: AppInterfaceDefaultSettings.dartSize,
         dartImageName: AppInterfaceDefaultSettings.dartImageName

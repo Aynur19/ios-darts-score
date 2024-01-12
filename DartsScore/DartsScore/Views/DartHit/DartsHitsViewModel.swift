@@ -10,6 +10,7 @@ import SwiftUI
 class DartsHitsViewModel: ObservableObject {
     private(set) var dartsTarget: DartsTarget
     private(set) var missesIsEnabled: Bool
+    
     @Published private(set) var dartSize: CGFloat
     @Published private(set) var dartImageName: DartImageName
     

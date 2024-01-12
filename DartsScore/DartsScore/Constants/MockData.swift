@@ -8,6 +8,27 @@
 import Foundation
 
 struct MockData {
+    static func generateGameStats(n: Int = 50) -> DartsGameStats {
+        var games = [DartsGame]()
+        
+        for i in 0..<n {
+            games.append(
+                .init(
+                    id: "\(i)",
+                    attempts: Int.random(in: 5...20),
+                    timeForAnswer: Int.random(in: 10...60).secToMs,
+                    missesIsEnabled: true,
+                    score: Int.random(in: 0...1000),
+                    successAttempts: Int.random(in: 5...20),
+                    timeSpent: Int.random(in: 10...600).secToMs,
+                    dateTime: .now
+                )
+            )
+        }
+        
+        return .init(items: games)
+    }
+    
     static func getDartsGameStats() -> DartsGameStats {
         .init(
             items: [
@@ -26,7 +47,7 @@ struct MockData {
                     attempts: 10,
                     timeForAnswer: 60.secToMs,
                     missesIsEnabled: true,
-                    score: 218,
+                    score: 208,
                     successAttempts: 4,
                     timeSpent: 67.secToMs,
                     dateTime: .now

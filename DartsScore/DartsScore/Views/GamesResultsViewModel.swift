@@ -12,11 +12,12 @@ final class GamesResultsViewModel: ObservableObject {
     
     func refresh() {
         model = Self.getModel()
+        sort()
     }
     
     private static func getModel() -> DartsGameStats {
         if isPreview {
-            return MockData.getDartsGameStats()
+            return MockData.generateGameStats(n: 5)
         } else {
             return JsonCache.loadDartsGameStats(from: AppConstants.statsJsonName)
         }
@@ -25,4 +26,6 @@ final class GamesResultsViewModel: ObservableObject {
     func getGame(_ idx: String) -> DartsGame? {
         model.items.first { $0.id == idx }
     }
+    
+    func sort() { model.sortByScore() }
 }

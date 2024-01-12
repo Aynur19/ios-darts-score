@@ -22,11 +22,11 @@ struct AppInterfaceSettingsView: View {
     @Environment(\.dartsTargetSize) var targetSize
     
     @StateObject var dartsTargetVM = DartsTargetViewModel(
-        frameWidth: AppConstants.defaultDartsTargetWidth
+        frameWidth: AppConstants.dartsTargetWidth
     )
 
     @StateObject var dartsHitsVM = DartsHitsViewModel(
-        dartsTarget: .init(frameWidth: AppConstants.defaultDartsTargetWidth),
+        dartsTarget: .init(frameWidth: AppConstants.dartsTargetWidth),
         missesIsEnabled: Defaults.dartMissesIsEnabled,
         dartSize: Defaults.dartSize,
         dartImageName: Defaults.dartImageName

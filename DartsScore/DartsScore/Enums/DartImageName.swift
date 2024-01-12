@@ -53,17 +53,3 @@ enum DartImageName: String {
             .frame(width: size, height: size)
     }
 }
-
-//private struct TestDartImageView: View {
-//    var body: some View {
-//        VStack {
-//            ForEach(AppConstants.dartImageNamesData, id: \.self) { item in
-//                item.image(size: 32)
-//            }
-//        }
-//    }
-//}
-//
-//#Preview {
-//    TestDartImageView()
-//}

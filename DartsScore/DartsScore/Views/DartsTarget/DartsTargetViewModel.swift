@@ -17,4 +17,26 @@ final class DartsTargetViewModel: ObservableObject {
     func reset(frameWidth: CGFloat) {
         model.update(frameWidth: frameWidth)
     }
+    
+    lazy var numbersDistance: CGFloat = {
+        model.maxRadius * DartsConstants.symbolsDistanceCoef
+    }()
+    
+    func getInnerRadiuses(_ isBaseSector: Bool) -> [CGFloat] {
+        var result = [CGFloat]()
+        
+        result.append(isBaseSector ? model.points25Radius : model.baseSmallRadius)
+        result.append(isBaseSector ? model.x3Radius : model.baseBigRadius)
+        
+        return result
+    }
+    
+    func getOutherRadiuses(_ isBaseSector: Bool) -> [CGFloat] {
+        var result = [CGFloat]()
+        
+        result.append(isBaseSector ? model.baseSmallRadius : model.x3Radius)
+        result.append(isBaseSector ? model.baseBigRadius : model.x2Radius)
+        
+        return result
+    }
 }

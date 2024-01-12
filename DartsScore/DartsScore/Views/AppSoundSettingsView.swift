@@ -91,7 +91,7 @@ struct AppSoundSettingsView: View {
                 soundButton(
                     isOn: tapSoundIsEnabled,
                     volume: tapSoundVolume,
-                    action: { playAndStopSound(tapSound) }
+                    action: { playAndStopSound(.userTap) }
                 )
             }
         }
@@ -100,8 +100,8 @@ struct AppSoundSettingsView: View {
     }
     
     private func onChangeTapSoundVolume(volume: Double) {
-        self.tapSoundVolume = volume
-        changeSoundVolume(tapSound)
+        tapSoundVolume = volume
+        changeSoundVolume(.userTap, volume: volume.float)
     }
     
     // MARK: Timer End Sound
@@ -125,7 +125,7 @@ struct AppSoundSettingsView: View {
                 soundButton(
                     isOn: timerEndSoundIsEnabled,
                     volume: timerEndSoundVolume,
-                    action: { playAndStopSound(timerEndSound) }
+                    action: { playAndStopSound(.timerEnd) }
                 )
             }
         }
@@ -134,8 +134,8 @@ struct AppSoundSettingsView: View {
     }
     
     private func onChangeTimerEndSoundVolume(volume: Double) {
-        self.timerEndSoundVolume = volume
-        changeSoundVolume(timerEndSound)
+        timerEndSoundVolume = volume
+        changeSoundVolume(.timerEnd, volume: volume.float)
     }
     
     // MARK: Target Rotation Sound
@@ -159,7 +159,7 @@ struct AppSoundSettingsView: View {
                 soundButton(
                     isOn: targetRotationSoundIsEnabled,
                     volume: targetRotationSoundVolume,
-                    action: { playAndStopSound(dartsTargetRotationSound) }
+                    action: { playAndStopSound(.dartsTargetRotation) }
                 )
             }
         }
@@ -168,8 +168,8 @@ struct AppSoundSettingsView: View {
     }
     
     private func onChangeTargetRotationSoundVolume(volume: Double) {
-        self.targetRotationSoundVolume = volume
-        changeSoundVolume(dartsTargetRotationSound)
+        targetRotationSoundVolume = volume
+        changeSoundVolume(.dartsTargetRotation, volume: volume.float)
     }
 
     // MARK: Game Result Sound
@@ -203,7 +203,7 @@ struct AppSoundSettingsView: View {
             soundButton(
                 isOn: gameResultSoundIsEnabled,
                 volume: gameBadResultSoundVolume,
-                action: { playAndStopSound(gameBadResultSound) }
+                action: { playAndStopSound(.gameBadResult) }
             )
         }
     }
@@ -223,7 +223,7 @@ struct AppSoundSettingsView: View {
             soundButton(
                 isOn: gameResultSoundIsEnabled,
                 volume: gameGoodResultSoundVolume,
-                action: { playAndStopSound(gameGoodResultSound) }
+                action: { playAndStopSound(.gameGoodResult) }
             )
         }
     }
@@ -247,48 +247,28 @@ struct AppSoundSettingsView: View {
     
     private func onChangeGameGoodResultSoundVolume(volume: Double) {
         gameGoodResultSoundVolume = volume
-        changeSoundVolume(gameGoodResultSound)
+        changeSoundVolume(.gameGoodResult, volume: volume.float)
     }
     
     private func onChangeGameBadResultSoundVolume(volume: Double) {
         gameBadResultSoundVolume = volume
-        changeSoundVolume(gameBadResultSound)
+        changeSoundVolume(.gameBadResult, volume: volume.float)
     }
     
-    private var tapSound: Sound {
-        UserTapSound(volume: tapSoundVolume.float)
-    }
-    
-    private var timerEndSound: Sound {
-        TimerEndSound(volume: timerEndSoundVolume.float)
-    }
-    
-    private var dartsTargetRotationSound: Sound {
-        DartsTargetRotationSound(volume: targetRotationSoundVolume.float)
-    }
-    
-    private var gameGoodResultSound: Sound {
-        GameGoodResultSound(volume: gameGoodResultSoundVolume.float)
-    }
-    
-    private var gameBadResultSound: Sound {
-        GameBadResultSound(volume: gameBadResultSoundVolume.float)
-    }
-    
-    private func playAndStopSound(_ sound: Sound) {
+    private func playAndStopSound(_ soundId: SoundEnum) {
         Task {
             await MainActor.run {
-                SoundManager.shared.stop(excludedSounds: [sound])
-                SoundManager.shared.playAndStop(sound: sound)
+                SoundManager.shared.stop(excludedSoundsIds: [soundId])
+                SoundManager.shared.playAndStop(soundId: soundId)
             }
         }
     }
     
-    private func changeSoundVolume(_ sound: Sound) {
+    private func changeSoundVolume(_ soundId: SoundEnum, volume: Float) {
         Task {
             await MainActor.run {
-                let player = SoundManager.shared.getAudioPlayer(sound, notBusy: false)
-                player?.volume = sound.volume
+                let player = SoundManager.shared.getAudioPlayer(soundId, notBusy: false)
+                player?.volume = volume
             }
         }
     }

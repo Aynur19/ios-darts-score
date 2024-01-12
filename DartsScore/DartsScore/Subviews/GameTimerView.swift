@@ -12,7 +12,7 @@ struct GameTimerView: View {
     
     var body: some View {
         CountdownTimerCircleProgressBar(
-            lineWidth: AppConstants.timerCircleLineWidth,
+            lineWidth: 8,
             backForegroundStyle: { Color.gray .opacity(0.3) },
             frontForegroundStyle: { Palette.options1 },
             contentView: {

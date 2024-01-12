@@ -8,11 +8,6 @@
 import SwiftUI
 
 extension CGPoint {
-    static var center: Self {
-        .init(x: UIScreen.main.bounds.midX,
-              y: UIScreen.main.bounds.midY)
-    }
-    
     static func getCenter(from geometry: GeometryProxy) -> CGPoint {
         .init(x: geometry.size.width / 2, y: geometry.size.height / 2)
     }

@@ -64,4 +64,3 @@ struct GlowingOutline: ViewModifier {
             }
     }
 }
-

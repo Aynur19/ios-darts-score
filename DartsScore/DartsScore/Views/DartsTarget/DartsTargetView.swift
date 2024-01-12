@@ -53,10 +53,9 @@ struct DartsTargetView: View {
     private func dartsNumbers(at center: CGPoint) -> some View {
         ForEach(DartsConstants.points.indices, id: \.self) { sectorIdx in
             let angle = -CGFloat(sectorIdx).x2 * .pi / CGFloat(DartsConstants.points.count)
-            let distance = dartsTarget.maxRadius * DartsConstants.symbolsDistanceCoef
             
-            let x = center.x + cos(angle) * distance
-            let y = center.y + sin(angle) * distance
+            let x = center.x + cos(angle) * dartsTargetVM.numbersDistance
+            let y = center.y + sin(angle) * dartsTargetVM.numbersDistance
             
             Text(String(DartsConstants.points[sectorIdx]))
                 .position(x: x, y: y)
@@ -69,11 +68,8 @@ struct DartsTargetView: View {
     private func sector(in center: CGPoint, isEven: Bool = true, isBaseSector: Bool = true) -> some View {
         let checkNumber: Int = isEven ? .zero : 1
         
-        let innerRadius1 = isBaseSector ? dartsTarget.points25Radius : dartsTarget.baseSmallRadius
-        let outherRadius1 = isBaseSector ? dartsTarget.baseSmallRadius : dartsTarget.x3Radius
-        
-        let innerRadius2 = isBaseSector ? dartsTarget.x3Radius : dartsTarget.baseBigRadius
-        let outherRadius2 = isBaseSector ? dartsTarget.baseBigRadius : dartsTarget.x2Radius
+        let innerRadiuses = dartsTargetVM.getInnerRadiuses(isBaseSector)
+        let outherRadiuses = dartsTargetVM.getOutherRadiuses(isBaseSector)
         
         return ZStack {
             Path { path in
@@ -82,16 +78,16 @@ struct DartsTargetView: View {
                         in: center,
                         startAngle: -dartsTarget.rotationAngle,
                         endAngle: dartsTarget.rotationAngle,
-                        innerRadius: innerRadius1,
-                        outerRadius: outherRadius1
+                        innerRadius: innerRadiuses[0],
+                        outerRadius: outherRadiuses[0]
                     ))
                     
                     path.addPath(sectorPath(
                         in: center,
                         startAngle: -dartsTarget.rotationAngle,
                         endAngle: dartsTarget.rotationAngle,
-                        innerRadius: innerRadius2,
-                        outerRadius: outherRadius2
+                        innerRadius: innerRadiuses[1],
+                        outerRadius: outherRadiuses[1]
                     ))
                 }
                 
@@ -104,16 +100,16 @@ struct DartsTargetView: View {
                         in: center,
                         startAngle: startAngle - dartsTarget.rotationAngle,
                         endAngle: endAngle - dartsTarget.rotationAngle,
-                        innerRadius: innerRadius1,
-                        outerRadius: outherRadius1
+                        innerRadius: innerRadiuses[0],
+                        outerRadius: outherRadiuses[0]
                     ))
                     
                     path.addPath(sectorPath(
                         in: center,
                         startAngle: startAngle - dartsTarget.rotationAngle,
                         endAngle: endAngle - dartsTarget.rotationAngle,
-                        innerRadius: innerRadius2,
-                        outerRadius: outherRadius2
+                        innerRadius: innerRadiuses[1],
+                        outerRadius: outherRadiuses[1]
                     ))
                 }
             }
