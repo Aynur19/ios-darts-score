@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ios_swiftui_examples
 
 struct GameTimerView: View {
     @EnvironmentObject var timerVM: CountdownTimerViewModel

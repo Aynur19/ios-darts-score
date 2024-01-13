@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ios_swiftui_examples
 
 private struct DartsGameViewConstants {
     static let opacityAnimationDuration: CGFloat = 0.5

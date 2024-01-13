@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ios_swiftui_examples
 
 private struct GameStatisticsSheetConstants {
     static let vSpacing: CGFloat = 16

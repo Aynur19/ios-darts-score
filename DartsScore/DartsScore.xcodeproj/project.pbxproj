@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A817C6ED2B53026200CD2808 /* ios-swiftui-examples in Frameworks */ = {isa = PBXBuildFile; productRef = A817C6EC2B53026200CD2808 /* ios-swiftui-examples */; };
 		A82366182B4460F000984F2C /* VGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82366172B4460F000984F2C /* VGradientView.swift */; };
 		A82D6CF12B0F4A64006CF50A /* GameAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF02B0F4A64006CF50A /* GameAnswerView.swift */; };
 		A82D6CF32B0FC16C006CF50A /* GameAnswersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF22B0FC16B006CF50A /* GameAnswersView.swift */; };
@@ -42,11 +43,8 @@
 		A8A8273B2B0E4EA200AD1BD0 /* DartsTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8273A2B0E4EA200AD1BD0 /* DartsTargetView.swift */; };
 		A8A8273E2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8273D2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift */; };
 		A8AAD55C2B39D5DA006C1172 /* BluredPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AAD55B2B39D5DA006C1172 /* BluredPopup.swift */; };
-		A8C12F3C2B0E08B100940A64 /* TimerStringFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */; };
-		A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */; };
 		A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F422B0E0D5F00940A64 /* IntExt.swift */; };
 		A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */; };
-		A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */; };
 		A8DA53FB2B239B4C003BD9BC /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53FA2B239B4C003BD9BC /* ColorExt.swift */; };
 		A8DA53FF2B24A272003BD9BC /* DartsTargetPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53FE2B24A272003BD9BC /* DartsTargetPalette.swift */; };
 		A8DA54012B24AE08003BD9BC /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54002B24AE08003BD9BC /* CodableColor.swift */; };
@@ -144,11 +142,8 @@
 		A8A8273A2B0E4EA200AD1BD0 /* DartsTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsTargetView.swift; sourceTree = "<group>"; };
 		A8A8273D2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsHitsViewModel.swift; sourceTree = "<group>"; };
 		A8AAD55B2B39D5DA006C1172 /* BluredPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluredPopup.swift; sourceTree = "<group>"; };
-		A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerStringFormat.swift; sourceTree = "<group>"; };
-		A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerViewModel.swift; sourceTree = "<group>"; };
 		A8C12F422B0E0D5F00940A64 /* IntExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExt.swift; sourceTree = "<group>"; };
 		A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt64Ext.swift; sourceTree = "<group>"; };
-		A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerCircleProgressBar.swift; sourceTree = "<group>"; };
 		A8DA53FA2B239B4C003BD9BC /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		A8DA53FE2B24A272003BD9BC /* DartsTargetPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsTargetPalette.swift; sourceTree = "<group>"; };
 		A8DA54002B24AE08003BD9BC /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
@@ -196,6 +191,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A817C6ED2B53026200CD2808 /* ios-swiftui-examples in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,16 +327,6 @@
 			path = DartsTarget;
 			sourceTree = "<group>";
 		};
-		A8C12F3A2B0E088E00940A64 /* CountdownTimer */ = {
-			isa = PBXGroup;
-			children = (
-				A8C12F3B2B0E08B000940A64 /* TimerStringFormat.swift */,
-				A8C12F3F2B0E0C9B00940A64 /* CountdownTimerViewModel.swift */,
-				A8C12F462B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift */,
-			);
-			path = CountdownTimer;
-			sourceTree = "<group>";
-		};
 		A8C12F412B0E0D3100940A64 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,7 +375,6 @@
 		A8DA54112B28E750003BD9BC /* Custom UI Elements */ = {
 			isa = PBXGroup;
 			children = (
-				A8C12F3A2B0E088E00940A64 /* CountdownTimer */,
 				A8AAD55B2B39D5DA006C1172 /* BluredPopup.swift */,
 				A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */,
 				A8DA54072B25A5A1003BD9BC /* HStepperView.swift */,
@@ -514,6 +499,9 @@
 			dependencies = (
 			);
 			name = DartsScore;
+			packageProductDependencies = (
+				A817C6EC2B53026200CD2808 /* ios-swiftui-examples */,
+			);
 			productName = DartsScore;
 			productReference = A88776142B0DEEFF005B746B /* DartsScore.app */;
 			productType = "com.apple.product-type.application";
@@ -587,6 +575,9 @@
 				ru,
 			);
 			mainGroup = A887760B2B0DEEFF005B746B;
+			packageReferences = (
+				A817C6EB2B53026200CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-examples" */,
+			);
 			productRefGroup = A88776152B0DEEFF005B746B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -670,12 +661,10 @@
 				A8742F922B0E79E50026E07F /* DartsGameView.swift in Sources */,
 				A8DB727D2B18E912001145BF /* AppIconView.swift in Sources */,
 				A85ECE5A2B3AC7F60091A3C8 /* GameAnswersListView.swift in Sources */,
-				A8C12F3C2B0E08B100940A64 /* TimerStringFormat.swift in Sources */,
 				A8EA84942B14C521009FBDB5 /* MockData.swift in Sources */,
 				A8EA84922B14A800009FBDB5 /* DartsGameSnapshotsList.swift in Sources */,
 				A8F14F912B2B951300C4E1FD /* SoundManager.swift in Sources */,
 				A8742F9C2B0E87EC0026E07F /* GamesResultsView.swift in Sources */,
-				A8C12F402B0E0C9B00940A64 /* CountdownTimerViewModel.swift in Sources */,
 				A8EA84982B15C27F009FBDB5 /* PrimaryButtonStyle.swift in Sources */,
 				A8A827252B0E42D600AD1BD0 /* DartsSector.swift in Sources */,
 				A8DB728F2B1B00A3001145BF /* AppSettingsViewModel.swift in Sources */,
@@ -712,7 +701,6 @@
 				A8A827292B0E436C00AD1BD0 /* CGFloatExt.swift in Sources */,
 				A82D6CF12B0F4A64006CF50A /* GameAnswerView.swift in Sources */,
 				A8A827372B0E4B0200AD1BD0 /* AppConstants.swift in Sources */,
-				A8C12F472B0E143D00940A64 /* CountdownTimerCircleProgressBar.swift in Sources */,
 				A8E1E1382B3165C700059BBB /* AppSoundSettingsView.swift in Sources */,
 				A8F14F9E2B2F858400C4E1FD /* GameOverPopup.swift in Sources */,
 				A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */,
@@ -1066,6 +1054,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A817C6EB2B53026200CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-examples" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Aynur19/ios-swiftui-examples";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A817C6EC2B53026200CD2808 /* ios-swiftui-examples */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A817C6EB2B53026200CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-examples" */;
+			productName = "ios-swiftui-examples";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A887760C2B0DEEFF005B746B /* Project object */;
 }

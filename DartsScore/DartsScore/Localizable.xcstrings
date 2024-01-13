@@ -122,9 +122,6 @@
         }
       }
     },
-    "Game" : {
-
-    },
     "Item 1" : {
 
     },
@@ -749,9 +746,6 @@
         }
       }
     },
-    "RESET" : {
-
-    },
     "sheetTitle_DetailedGameStats" : {
       "localizations" : {
         "en" : {
@@ -767,12 +761,6 @@
           }
         }
       }
-    },
-    "START" : {
-
-    },
-    "STOP" : {
-
     },
     "UPDATE" : {
 
