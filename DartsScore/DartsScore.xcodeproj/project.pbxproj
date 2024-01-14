@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A817C6ED2B53026200CD2808 /* ios-swiftui-examples in Frameworks */ = {isa = PBXBuildFile; productRef = A817C6EC2B53026200CD2808 /* ios-swiftui-examples */; };
+		A817C6F32B53C81500CD2808 /* SwiftUIComponents4iOS in Frameworks */ = {isa = PBXBuildFile; productRef = A817C6F22B53C81500CD2808 /* SwiftUIComponents4iOS */; };
 		A82366182B4460F000984F2C /* VGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82366172B4460F000984F2C /* VGradientView.swift */; };
 		A82D6CF12B0F4A64006CF50A /* GameAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF02B0F4A64006CF50A /* GameAnswerView.swift */; };
 		A82D6CF32B0FC16C006CF50A /* GameAnswersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82D6CF22B0FC16B006CF50A /* GameAnswersView.swift */; };
@@ -189,7 +189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A817C6ED2B53026200CD2808 /* ios-swiftui-examples in Frameworks */,
+				A817C6F32B53C81500CD2808 /* SwiftUIComponents4iOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,7 +497,7 @@
 			);
 			name = DartsScore;
 			packageProductDependencies = (
-				A817C6EC2B53026200CD2808 /* ios-swiftui-examples */,
+				A817C6F22B53C81500CD2808 /* SwiftUIComponents4iOS */,
 			);
 			productName = DartsScore;
 			productReference = A88776142B0DEEFF005B746B /* DartsScore.app */;
@@ -573,7 +573,7 @@
 			);
 			mainGroup = A887760B2B0DEEFF005B746B;
 			packageReferences = (
-				A817C6EB2B53026200CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-examples" */,
+				A817C6F12B53C81500CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-components" */,
 			);
 			productRefGroup = A88776152B0DEEFF005B746B /* Products */;
 			projectDirPath = "";
@@ -1052,9 +1052,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A817C6EB2B53026200CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-examples" */ = {
+		A817C6F12B53C81500CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-components" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Aynur19/ios-swiftui-examples";
+			repositoryURL = "https://github.com/Aynur19/ios-swiftui-components";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -1063,10 +1063,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A817C6EC2B53026200CD2808 /* ios-swiftui-examples */ = {
+		A817C6F22B53C81500CD2808 /* SwiftUIComponents4iOS */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A817C6EB2B53026200CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-examples" */;
-			productName = "ios-swiftui-examples";
+			package = A817C6F12B53C81500CD2808 /* XCRemoteSwiftPackageReference "ios-swiftui-components" */;
+			productName = SwiftUIComponents4iOS;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

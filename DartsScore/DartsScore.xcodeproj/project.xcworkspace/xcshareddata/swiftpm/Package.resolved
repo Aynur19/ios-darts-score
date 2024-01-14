@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "ios-swiftui-examples",
+      "identity" : "ios-swiftui-components",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Aynur19/ios-swiftui-examples",
+      "location" : "https://github.com/Aynur19/ios-swiftui-components",
       "state" : {
         "branch" : "main",
-        "revision" : "c4701fc2b1f19d369f13bb27ad4e00e8f32601aa"
+        "revision" : "60924837488d0f0d873799cb8df827a724dfd83a"
       }
     }
   ],

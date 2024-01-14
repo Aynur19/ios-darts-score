@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import ios_swiftui_examples
-
+import SwiftUIComponents4iOS
 
 private struct DartsGameResultsViewConstants {
     static let chevronName = "chevron.right"
