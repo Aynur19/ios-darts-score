@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIComponents4iOS
 
 private enum SettingsSubviews: String {
     case interface
