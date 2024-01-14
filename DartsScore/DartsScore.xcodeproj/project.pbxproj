@@ -42,7 +42,6 @@
 		A8A827392B0E4B9E00AD1BD0 /* DartsGameStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A827382B0E4B9E00AD1BD0 /* DartsGameStats.swift */; };
 		A8A8273B2B0E4EA200AD1BD0 /* DartsTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8273A2B0E4EA200AD1BD0 /* DartsTargetView.swift */; };
 		A8A8273E2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A8273D2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift */; };
-		A8AAD55C2B39D5DA006C1172 /* BluredPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AAD55B2B39D5DA006C1172 /* BluredPopup.swift */; };
 		A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F422B0E0D5F00940A64 /* IntExt.swift */; };
 		A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */; };
 		A8DA53FB2B239B4C003BD9BC /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA53FA2B239B4C003BD9BC /* ColorExt.swift */; };
@@ -141,7 +140,6 @@
 		A8A827382B0E4B9E00AD1BD0 /* DartsGameStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameStats.swift; sourceTree = "<group>"; };
 		A8A8273A2B0E4EA200AD1BD0 /* DartsTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsTargetView.swift; sourceTree = "<group>"; };
 		A8A8273D2B0E4ED500AD1BD0 /* DartsHitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsHitsViewModel.swift; sourceTree = "<group>"; };
-		A8AAD55B2B39D5DA006C1172 /* BluredPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluredPopup.swift; sourceTree = "<group>"; };
 		A8C12F422B0E0D5F00940A64 /* IntExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExt.swift; sourceTree = "<group>"; };
 		A8C12F442B0E0F8900940A64 /* UInt64Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UInt64Ext.swift; sourceTree = "<group>"; };
 		A8DA53FA2B239B4C003BD9BC /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
@@ -375,7 +373,6 @@
 		A8DA54112B28E750003BD9BC /* Custom UI Elements */ = {
 			isa = PBXGroup;
 			children = (
-				A8AAD55B2B39D5DA006C1172 /* BluredPopup.swift */,
 				A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */,
 				A8DA54072B25A5A1003BD9BC /* HStepperView.swift */,
 				A8DB72942B1CE217001145BF /* HWheelPickerView.swift */,
@@ -688,7 +685,6 @@
 				A8DA540D2B28AAA4003BD9BC /* DartImageName.swift in Sources */,
 				A8A827392B0E4B9E00AD1BD0 /* DartsGameStats.swift in Sources */,
 				A8F14F9C2B2E14A200C4E1FD /* DartsTargetViewModel.swift in Sources */,
-				A8AAD55C2B39D5DA006C1172 /* BluredPopup.swift in Sources */,
 				A85ECE5E2B3AEA980091A3C8 /* RotatedDartsTargetView.swift in Sources */,
 				A8A8272F2B0E49AB00AD1BD0 /* Dart.swift in Sources */,
 				A887761A2B0DEEFF005B746B /* ContentTabView.swift in Sources */,

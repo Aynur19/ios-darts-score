@@ -22,7 +22,11 @@ struct GameOverPopup: View {
     }
     
     var body: some View {
-        BluredPopup { content }
+        BluredPopup {
+            content
+        }
+        .padding(.horizontal, 40)
+        .padding(.vertical, 256)
     }
     
     private var content: some View {
