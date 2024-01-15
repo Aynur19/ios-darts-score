@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIComponents4iOS
 
 struct ContentTabView: View {
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
@@ -13,20 +14,20 @@ struct ContentTabView: View {
     var body: some View {
         ZStack {
             TabView {
-                TabItemView(
-                    contentView: { DartsGameView() },
-                    labelView: { Label("viewTitle_Darts", systemImage: "gamecontroller") }
-                )
+                DartsGameView()
+                    .tabItem { Label("viewTitle_Darts", systemImage: "gamecontroller") }
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
-                TabItemView(
-                    contentView: { GamesResultsView() },
-                    labelView: { Label("viewTitle_Statistics", systemImage: "trophy") }
-                )
+                GamesResultsView()
+                    .tabItem { Label("viewTitle_Statistics", systemImage: "trophy") }
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
                 
-                TabItemView(
-                    contentView: { AppSettingsView(settings: appSettingsVM.settings) },
-                    labelView: { Label("viewTitle_AppSettings", systemImage: "gear") }
-                )
+                AppSettingsView(settings: appSettingsVM.settings)
+                    .tabItem { Label("viewTitle_AppSettings", systemImage: "gear") }
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Palette.tabBar, for: .tabBar)
             }
         }
     }
