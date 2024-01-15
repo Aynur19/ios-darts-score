@@ -49,7 +49,6 @@
 		A8DA54012B24AE08003BD9BC /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54002B24AE08003BD9BC /* CodableColor.swift */; };
 		A8DA54042B24F3DF003BD9BC /* ScrollViewOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54032B24F3DF003BD9BC /* ScrollViewOffsetKey.swift */; };
 		A8DA54062B251A4A003BD9BC /* ImageToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */; };
-		A8DA54082B25A5A1003BD9BC /* HStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA54072B25A5A1003BD9BC /* HStepperView.swift */; };
 		A8DA540D2B28AAA4003BD9BC /* DartImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */; };
 		A8DA54102B28D2F3003BD9BC /* UserTapSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8DA540F2B28D2F2003BD9BC /* UserTapSound.mp3 */; };
 		A8DB72722B161402001145BF /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72712B161402001145BF /* Palette.swift */; };
@@ -146,7 +145,6 @@
 		A8DA54002B24AE08003BD9BC /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 		A8DA54032B24F3DF003BD9BC /* ScrollViewOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewOffsetKey.swift; sourceTree = "<group>"; };
 		A8DA54052B251A4A003BD9BC /* ImageToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToggleStyle.swift; sourceTree = "<group>"; };
-		A8DA54072B25A5A1003BD9BC /* HStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStepperView.swift; sourceTree = "<group>"; };
 		A8DA540C2B28AAA4003BD9BC /* DartImageName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartImageName.swift; sourceTree = "<group>"; };
 		A8DA540F2B28D2F2003BD9BC /* UserTapSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = UserTapSound.mp3; sourceTree = "<group>"; };
 		A8DB72712B161402001145BF /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
@@ -371,7 +369,6 @@
 		A8DA54112B28E750003BD9BC /* Custom UI Elements */ = {
 			isa = PBXGroup;
 			children = (
-				A8DA54072B25A5A1003BD9BC /* HStepperView.swift */,
 				A8DB72942B1CE217001145BF /* HWheelPickerView.swift */,
 				A8E1E13F2B3228C600059BBB /* StaticUI.swift */,
 				A85ECE612B3B54340091A3C8 /* TabItemView.swift */,
@@ -670,7 +667,6 @@
 				A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */,
 				A8F14F9A2B2E12FA00C4E1FD /* DartsTarget.swift in Sources */,
 				A8C12F452B0E0F8900940A64 /* UInt64Ext.swift in Sources */,
-				A8DA54082B25A5A1003BD9BC /* HStepperView.swift in Sources */,
 				A85ECE622B3B54340091A3C8 /* TabItemView.swift in Sources */,
 				A8DA53FF2B24A272003BD9BC /* DartsTargetPalette.swift in Sources */,
 				A85ECE5C2B3ACCD90091A3C8 /* GameTimerView.swift in Sources */,
