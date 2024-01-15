@@ -17,9 +17,6 @@
         }
       }
     },
-    "%@" : {
-
-    },
     "%@ suffix_Seconds" : {
       "localizations" : {
         "en" : {
@@ -105,9 +102,6 @@
           }
         }
       }
-    },
-    "Current value: %lld" : {
-
     },
     "Dart sector 1: %lldx%lld" : {
       "localizations" : {
