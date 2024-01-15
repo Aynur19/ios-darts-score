@@ -60,7 +60,6 @@
 		A8DB72802B1A2E31001145BF /* GamesResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB727F2B1A2E30001145BF /* GamesResultsViewModel.swift */; };
 		A8DB728F2B1B00A3001145BF /* AppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB728E2B1B00A3001145BF /* AppSettingsViewModel.swift */; };
 		A8DB72912B1B00E7001145BF /* AppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72902B1B00E7001145BF /* AppSettingsView.swift */; };
-		A8DB72932B1B9775001145BF /* HStaticSegmentedPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */; };
 		A8DB72952B1CE217001145BF /* HWheelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DB72942B1CE217001145BF /* HWheelPickerView.swift */; };
 		A8E1E1332B3085BD00059BBB /* AppSoundSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */; };
 		A8E1E1382B3165C700059BBB /* AppSoundSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E1E1372B3165C700059BBB /* AppSoundSettingsView.swift */; };
@@ -159,7 +158,6 @@
 		A8DB727F2B1A2E30001145BF /* GamesResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesResultsViewModel.swift; sourceTree = "<group>"; };
 		A8DB728E2B1B00A3001145BF /* AppSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModel.swift; sourceTree = "<group>"; };
 		A8DB72902B1B00E7001145BF /* AppSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsView.swift; sourceTree = "<group>"; };
-		A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HStaticSegmentedPickerView.swift; sourceTree = "<group>"; };
 		A8DB72942B1CE217001145BF /* HWheelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HWheelPickerView.swift; sourceTree = "<group>"; };
 		A8E1E1322B3085BD00059BBB /* AppSoundSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundSettings.swift; sourceTree = "<group>"; };
 		A8E1E1372B3165C700059BBB /* AppSoundSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundSettingsView.swift; sourceTree = "<group>"; };
@@ -373,7 +371,6 @@
 		A8DA54112B28E750003BD9BC /* Custom UI Elements */ = {
 			isa = PBXGroup;
 			children = (
-				A8DB72922B1B9775001145BF /* HStaticSegmentedPickerView.swift */,
 				A8DA54072B25A5A1003BD9BC /* HStepperView.swift */,
 				A8DB72942B1CE217001145BF /* HWheelPickerView.swift */,
 				A8E1E13F2B3228C600059BBB /* StaticUI.swift */,
@@ -646,7 +643,6 @@
 				A8742F992B0E7A650026E07F /* DataCacheError.swift in Sources */,
 				A8F14F952B2B97FA00C4E1FD /* SoundEnums.swift in Sources */,
 				A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */,
-				A8DB72932B1B9775001145BF /* HStaticSegmentedPickerView.swift in Sources */,
 				A8A827352B0E4AD200AD1BD0 /* DartsGame.swift in Sources */,
 				A82D6CF32B0FC16C006CF50A /* GameAnswersView.swift in Sources */,
 				A8E1E13C2B32218000059BBB /* AppInterfaceSettingsView.swift in Sources */,

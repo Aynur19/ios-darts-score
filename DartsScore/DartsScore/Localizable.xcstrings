@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
     "\tlabel_Hit %lld " : {
       "localizations" : {
         "en" : {
@@ -726,9 +723,6 @@
           }
         }
       }
-    },
-    "Options" : {
-
     },
     "popupTitle_Results" : {
       "localizations" : {

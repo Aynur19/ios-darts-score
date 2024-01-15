@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIComponents4iOS
 
 private struct AppInterfaceSettingsViewConstants {
     static let vSpacing: CGFloat = 16
