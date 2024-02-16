@@ -116,6 +116,8 @@ struct GameOverPopup: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestGameOverView: View {
     @StateObject var dartsTargetVM = DartsTargetViewModel(frameWidth: 350)
     @State private var popupIsShow = false
@@ -160,6 +162,4 @@ private struct TestGameOverView: View {
     }
 }
 
-#Preview {
-    TestGameOverView()
-}
+#Preview { TestGameOverView() }

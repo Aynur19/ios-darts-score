@@ -16,13 +16,12 @@ struct AppDefaultSettings {
     static let timeForAnswer = timesForAnswerData[1]
     
     static func getTimeAnswerIdx(value: Int) -> Int {
-        guard let idx = timesForAnswerData.firstIndex(of: value) else {
-            return 1
-        }
+        guard let idx = timesForAnswerData.firstIndex(of: value) else { return 1 }
         
         return idx
     }
 
+    /// Function for calculating the number of points for each answer given by the user.
     static func getScoreForSuccesAnswer(timeForAnswer: Int, time: Int) -> Int {
         let xCoef = Float(timeForAnswer) / Float(timeForAnswer)
         let score = Float(Self.timeForAnswer - time)

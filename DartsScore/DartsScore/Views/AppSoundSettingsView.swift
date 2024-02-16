@@ -20,31 +20,31 @@ struct AppSoundSettingsView: View {
     private typealias Keys = AppSoundSettingsKeys
     private typealias Constants = AppSoundSettingsViewConstants
     
-    @AppStorage(Keys.tapSoundIsEnabled.rawValue) 
+    @AppStorage(Keys.tapSoundIsEnabled.rawValue)
     var tapSoundIsEnabled = Defaults.tapSoundIsEnabled
     
     @AppStorage(Keys.tapSoundVolume.rawValue)
     var tapSoundVolume = Defaults.tapSoundVolume
     
-    @AppStorage(Keys.timerEndSoundIsEnabled.rawValue) 
+    @AppStorage(Keys.timerEndSoundIsEnabled.rawValue)
     var timerEndSoundIsEnabled = Defaults.timerEndSoundIsEnabled
     
     @AppStorage(Keys.timerEndSoundVolume.rawValue)
     var timerEndSoundVolume = Defaults.timerEndSoundVolume
     
-    @AppStorage(Keys.targetRotationSoundIsEnabled.rawValue) 
+    @AppStorage(Keys.targetRotationSoundIsEnabled.rawValue)
     var targetRotationSoundIsEnabled = Defaults.targetRotationSoundIsEnabled
     
-    @AppStorage(Keys.targetRotationSoundVolume.rawValue) 
+    @AppStorage(Keys.targetRotationSoundVolume.rawValue)
     var targetRotationSoundVolume = Defaults.targetRotationSoundVolume
     
-    @AppStorage(Keys.gameResultSoundIsEnabled.rawValue) 
+    @AppStorage(Keys.gameResultSoundIsEnabled.rawValue)
     var gameResultSoundIsEnabled = Defaults.gameResultSoundIsEnabled
     
-    @AppStorage(Keys.gameGoodResultSoundVolume.rawValue) 
+    @AppStorage(Keys.gameGoodResultSoundVolume.rawValue)
     var gameGoodResultSoundVolume = Defaults.gameGoodResultSoundVolume
     
-    @AppStorage(Keys.gameBadResultSoundVolume.rawValue) 
+    @AppStorage(Keys.gameBadResultSoundVolume.rawValue)
     var gameBadResultSoundVolume = Defaults.gameBadResultSoundVolume
     
     var body: some View {
@@ -69,6 +69,7 @@ struct AppSoundSettingsView: View {
             StaticUI.toolbarTitle { Text("viewTitle_SoundSettings") }
         }
     }
+    
     
     // MARK: Tap Sound
     private var tapSoundSettings: some View {
@@ -104,6 +105,7 @@ struct AppSoundSettingsView: View {
         changeSoundVolume(.userTap, volume: volume.float)
     }
     
+    
     // MARK: Timer End Sound
     private var timerEndSoundSettings: some View {
         VStack(spacing: Constants.vSpasingInner) {
@@ -138,6 +140,7 @@ struct AppSoundSettingsView: View {
         changeSoundVolume(.timerEnd, volume: volume.float)
     }
     
+    
     // MARK: Target Rotation Sound
     private var dartsTargetRotationSoundSettings: some View {
         VStack(spacing: Constants.vSpasingInner) {
@@ -171,7 +174,8 @@ struct AppSoundSettingsView: View {
         targetRotationSoundVolume = volume
         changeSoundVolume(.dartsTargetRotation, volume: volume.float)
     }
-
+    
+    
     // MARK: Game Result Sound
     private var gameResultSoundSettings: some View {
         VStack(spacing: Constants.vSpasingInner) {
@@ -254,7 +258,11 @@ struct AppSoundSettingsView: View {
         gameBadResultSoundVolume = volume
         changeSoundVolume(.gameBadResult, volume: volume.float)
     }
-    
+}
+ 
+
+// MARK: General Funcs & UI Elements
+extension AppSoundSettingsView {
     private func playAndStopSound(_ soundId: SoundEnum) {
         Task {
             await MainActor.run {
@@ -294,11 +302,8 @@ struct AppSoundSettingsView: View {
         Button(
             action: { action() },
             label: {
-                soundButtonImage(
-                    isOn: isOn,
-                    volume: volume
-                )
-                .font(.title2)
+                soundButtonImage(isOn: isOn, volume: volume)
+                    .font(.title2)
             }
         )
         .disabled(!isOn)
@@ -338,6 +343,8 @@ struct AppSoundSettingsView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestSoundSettingsView: View {
     var body: some View {
         NavigationStack {
@@ -346,6 +353,4 @@ private struct TestSoundSettingsView: View {
     }
 }
 
-#Preview {
-    TestSoundSettingsView()
-}
+#Preview { TestSoundSettingsView() }

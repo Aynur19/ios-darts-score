@@ -234,6 +234,7 @@ struct DartsGameView: View {
     }
 }
 
+// MARK: Funcs and settings
 extension DartsGameView {
     private var appSettings: AppSettings { appSettingsVM.settings }
     
@@ -350,6 +351,8 @@ extension DartsGameView {
     }
 }
 
+
+// MARK: Preview
 private struct TestDartsGameView: View {
     @StateObject var appSettingsVM = AppSettingsViewModel()
     
@@ -370,6 +373,4 @@ private struct TestDartsGameView: View {
     }
 }
 
-#Preview {
-    TestDartsGameView()
-}
+#Preview { TestDartsGameView() }

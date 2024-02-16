@@ -40,6 +40,7 @@ struct GameStatisticsSheet: View {
         }
     }
     
+    
     // MARK: Game Stats
     private var gameStats: some View {
         HStack {
@@ -76,6 +77,7 @@ struct GameStatisticsSheet: View {
             Text(dateTimeStr)
         }
     }
+    
     
     // MARK: Game Answers Stats
     private var gameAnswersState: some View {
@@ -147,6 +149,8 @@ struct GameStatisticsSheet: View {
     }
 }
 
+
+// MARK: Preview
 #Preview {
     GameStatisticsSheet(
         game: MockData.getDartsGameStats().items[0],

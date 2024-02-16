@@ -28,15 +28,29 @@ struct DartsConstants {
     static let maxScore = 180
     
     // MARK: Sizes
-    static let targetRadius: CGFloat = 225              // Общий радиус
-    static let xWidth: CGFloat = 8                      // Внутренняя ширина колец «даблов» и «треблов»
+    /// Total target radius
+    static let targetRadius: CGFloat = 225
     
-    static let bullEyeRadius: CGFloat = 12.7 / 2        // Внутренний диаметр «яблочка»
-    static let centralCircleRadius: CGFloat = 31.8 / 2  // Внутренний диаметр внешнего центрального кольца
-    static let x2Radius: CGFloat = 170                  // Расстояние от центра до внешней стороны кольца «даблов»
-    static let x3Radius: CGFloat = 107                  // Расстояние от центра до внешней стороны кольца «треблов»
-    static let wireThickness: CGFloat = 1.5             // Толщина проволоки
-    static let wireRadius: CGFloat = 185                // Максимальный радиус проволки    
+    /// Internal width of double and treble rings.
+    static let xWidth: CGFloat = 8
+    
+    /// Inner diameter of the bull's eye.
+    static let bullEyeRadius: CGFloat = 12.7 / 2
+    
+    /// Inner diameter of outer center ring.
+    static let centralCircleRadius: CGFloat = 31.8 / 2
+    
+    /// The distance from the center to the outside of the double ring.
+    static let x2Radius: CGFloat = 170
+    
+    /// The distance from the center to the outside of the treble ring.
+    static let x3Radius: CGFloat = 107
+    
+    /// Wire thickness.
+    static let wireThickness: CGFloat = 1.5
+    
+    /// Maximum wire radius.
+    static let wireRadius: CGFloat = 185            
     static let circleWireRadiuses = 6
     
     static let symbolsDistanceCoef: CGFloat = 0.87

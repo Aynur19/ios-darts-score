@@ -102,6 +102,8 @@ struct GamesResultsView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestGamesResultsView: View {
     @StateObject var appSettingsVM = AppSettingsViewModel()
     
@@ -118,6 +120,4 @@ private struct TestGamesResultsView: View {
     }
 }
 
-#Preview {
-    TestGamesResultsView()
-}
+#Preview { TestGamesResultsView() }

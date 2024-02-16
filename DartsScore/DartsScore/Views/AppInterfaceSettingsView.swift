@@ -108,6 +108,7 @@ struct AppInterfaceSettingsView: View {
         darts.append(MockData.getDartsGameSnapshotsList().snapshots[1].darts)
     }
     
+    
     // MARK: Dart Image
     private var dartImageSettings: some View {
         VStack {
@@ -147,6 +148,7 @@ struct AppInterfaceSettingsView: View {
         updateDartView()
     }
     
+    
     // MARK: Dart Size
     private var dartSizeSettings: some View {
         HStepperView(
@@ -170,6 +172,7 @@ struct AppInterfaceSettingsView: View {
         dartSize = size
         updateDartView()
     }
+    
     
     // MARK: Dart Misses Switcher
     private var dartsWithMissSettings: some View {
@@ -195,7 +198,8 @@ struct AppInterfaceSettingsView: View {
         dartsHitsVM.replaceDarts(newDarts: isEnabled ? darts[0] : darts[1])
     }
 
-    // MARK: Preview
+    
+    // MARK: Target Preview
     private var dartsPreview: some View {
         DartsTargetView()
             .environmentObject(dartsTargetVM)
@@ -205,6 +209,8 @@ struct AppInterfaceSettingsView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestInterfaceSettingsView: View {
     @StateObject var appSettingsVM = AppSettingsViewModel()
     var body: some View {
@@ -221,6 +227,4 @@ private struct TestInterfaceSettingsView: View {
     }
 }
 
-#Preview {
-    TestInterfaceSettingsView()
-}
+#Preview { TestInterfaceSettingsView() }

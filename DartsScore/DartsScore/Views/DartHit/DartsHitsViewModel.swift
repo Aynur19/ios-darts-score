@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class DartsHitsViewModel: ObservableObject {
+final class DartsHitsViewModel: ObservableObject {
     private(set) var dartsTarget: DartsTarget
     private(set) var missesIsEnabled: Bool
     

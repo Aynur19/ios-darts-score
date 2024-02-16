@@ -82,7 +82,8 @@ struct AppSettingsView: View {
         }
     }
     
-    // MARK: Attemts
+    
+    // MARK: Attemts Settings
     private var attemptsSettings: some View {
         VStack {
             HStack {
@@ -107,7 +108,8 @@ struct AppSettingsView: View {
         .glowingOutline()
     }
     
-    // MARK: Time For Answer
+    
+    // MARK: Time For Answer Settings
     private var timeForAnswerSettings: some View {
         VStack {
             HStack {
@@ -143,6 +145,7 @@ struct AppSettingsView: View {
         timeForAnswer = Defaults.timesForAnswerData[newValue]
     }
     
+    
     // MARK: Interface Settings
     private var interfaceSettingsButton: some View {
         Button(
@@ -164,6 +167,7 @@ struct AppSettingsView: View {
             Image(systemName: "chevron.right")
         }
     }
+    
     
     // MARK: Sound Settings
     private var soundSettingsButton: some View {
@@ -188,6 +192,8 @@ struct AppSettingsView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestAppSettingsView: View {
     @StateObject var appSettingsVM = AppSettingsViewModel()
     
@@ -204,6 +210,4 @@ private struct TestAppSettingsView: View {
     }
 }
 
-#Preview {
-    TestAppSettingsView()
-}
+#Preview { TestAppSettingsView() }

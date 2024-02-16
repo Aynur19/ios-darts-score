@@ -30,6 +30,8 @@ struct DartsHitsView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestDartsHitsView: View {
     @StateObject var dartsHitsVM = DartsHitsViewModel(
         dartsTarget: .init(frameWidth: 350),
@@ -43,15 +45,12 @@ private struct TestDartsHitsView: View {
             DartsHitsView()
                 .environmentObject(dartsHitsVM)
             
-            Button {
-                dartsHitsVM.updateDarts()
-            } label: {
-                Text("UPDATE DARTS")
-            }
+            Button(
+                action: { dartsHitsVM.updateDarts() },
+                label: { Text("UPDATE DARTS") }
+            )
         }
     }
 }
 
-#Preview {
-    TestDartsHitsView()
-}
+#Preview { TestDartsHitsView() }

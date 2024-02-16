@@ -15,7 +15,6 @@
 		A85ECE5C2B3ACCD90091A3C8 /* GameTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85ECE5B2B3ACCD90091A3C8 /* GameTimerView.swift */; };
 		A85ECE5E2B3AEA980091A3C8 /* RotatedDartsTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85ECE5D2B3AEA980091A3C8 /* RotatedDartsTargetView.swift */; };
 		A85ECE602B3B45480091A3C8 /* EnvironmentKVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85ECE5F2B3B45480091A3C8 /* EnvironmentKVO.swift */; };
-		A85ECE642B3D964E0091A3C8 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85ECE632B3D964E0091A3C8 /* SwiftUIView.swift */; };
 		A8742F922B0E79E50026E07F /* DartsGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F912B0E79E50026E07F /* DartsGameView.swift */; };
 		A8742F942B0E79F30026E07F /* DartsGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */; };
 		A8742F972B0E7A470026E07F /* JsonCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8742F962B0E7A470026E07F /* JsonCache.swift */; };
@@ -104,7 +103,6 @@
 		A85ECE5B2B3ACCD90091A3C8 /* GameTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimerView.swift; sourceTree = "<group>"; };
 		A85ECE5D2B3AEA980091A3C8 /* RotatedDartsTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotatedDartsTargetView.swift; sourceTree = "<group>"; };
 		A85ECE5F2B3B45480091A3C8 /* EnvironmentKVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentKVO.swift; sourceTree = "<group>"; };
-		A85ECE632B3D964E0091A3C8 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		A8742F912B0E79E50026E07F /* DartsGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameView.swift; sourceTree = "<group>"; };
 		A8742F932B0E79F30026E07F /* DartsGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DartsGameViewModel.swift; sourceTree = "<group>"; };
 		A8742F962B0E7A470026E07F /* JsonCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonCache.swift; sourceTree = "<group>"; };
@@ -403,7 +401,6 @@
 				A8742F9B2B0E87EC0026E07F /* GamesResultsView.swift */,
 				A8DB727F2B1A2E30001145BF /* GamesResultsViewModel.swift */,
 				A8DB72892B1A311B001145BF /* GameAnswers */,
-				A85ECE632B3D964E0091A3C8 /* SwiftUIView.swift */,
 			);
 			name = GameResults;
 			sourceTree = "<group>";
@@ -672,7 +669,6 @@
 				A8C12F432B0E0D5F00940A64 /* IntExt.swift in Sources */,
 				A8A827332B0E4A8500AD1BD0 /* DartsGameSnapshot.swift in Sources */,
 				A8F14F7A2B29CC4100C4E1FD /* AppSettings.swift in Sources */,
-				A85ECE642B3D964E0091A3C8 /* SwiftUIView.swift in Sources */,
 				A8E1E13E2B3222D900059BBB /* AppInterfaceSettings.swift in Sources */,
 				A85ECE602B3B45480091A3C8 /* EnvironmentKVO.swift in Sources */,
 			);

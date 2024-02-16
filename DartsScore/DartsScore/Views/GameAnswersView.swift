@@ -178,6 +178,8 @@ extension GameAnswersView {
     }
 }
 
+
+// MARK: Preview
 private struct TestGameAnswersView: View {
     @StateObject var appSettingsVM = AppSettingsViewModel()
     
@@ -198,6 +200,4 @@ private struct TestGameAnswersView: View {
     }
 }
 
-#Preview {
-    TestGameAnswersView()
-}
+#Preview { TestGameAnswersView() }

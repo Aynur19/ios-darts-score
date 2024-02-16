@@ -64,6 +64,7 @@ struct DartsTargetView: View {
         }
     }
     
+    
     // MARK: Sector View
     private func sector(in center: CGPoint, isEven: Bool = true, isBaseSector: Bool = true) -> some View {
         let checkNumber: Int = isEven ? .zero : 1
@@ -195,6 +196,8 @@ struct DartsTargetView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestDartsTargetView: View {
     @StateObject var dartsTargetVM = DartsTargetViewModel(frameWidth: 350)
     @ObservedObject var dartsHitsVM =  DartsHitsViewModel(
@@ -247,6 +250,4 @@ private struct TestDartsTargetView: View {
     private var darts: [Dart] { dartsHitsVM.darts }
 }
 
-#Preview {
-    TestDartsTargetView()
-}
+#Preview { TestDartsTargetView() }
