@@ -43,10 +43,12 @@ struct DartsConstants {
     static let rotationAngle = Angle.degrees(Double(360 / points.count / 2))
     static let dartsCount = 3
     
+    /// Getting the size (width) of a dartboard.
     static func getDartsTargetWidth(windowsSize: CGSize, hPadding: CGFloat = 24) -> CGFloat {
         windowsSize.width - hPadding.x2
     }
     
+    /// Getting the radius for the target sector or dividing wire.
     static func getRadius(_ frameWidth: CGFloat, _ radiusType: DartsRadius) -> CGFloat {
         let resolution = frameWidth.half / targetRadius
         
@@ -61,6 +63,7 @@ struct DartsConstants {
         }
     }
     
+    /// Getting wire thickness.
     static func getWireLineWidth(_ frameWidth: CGFloat) -> CGFloat {
         frameWidth.half / DartsConstants.targetRadius * DartsConstants.wireThickness
     }

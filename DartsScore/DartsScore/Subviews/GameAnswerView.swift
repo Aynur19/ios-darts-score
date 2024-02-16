@@ -48,6 +48,6 @@ struct GameAnswerView: View {
     }
 }
 
-#Preview {
-    GameAnswerView(score: 180)
-}
+
+// MARK: Preview
+#Preview { GameAnswerView(score: 180) }

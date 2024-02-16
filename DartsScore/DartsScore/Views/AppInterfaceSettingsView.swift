@@ -125,7 +125,7 @@ struct AppInterfaceSettingsView: View {
                     get: { self.dartImageNameIdx },
                     set: { newValue in onChangedDartImageNameIdx(idx: newValue) }
                 ),
-                contentSize: StaticUI.HWheelPickerContentSize,
+                contentSize: StaticUI.hWheelPickerContentSize,
                 contentView: { item in
                     item.image(size: Constants.dartImageSize)
                 },
@@ -133,7 +133,7 @@ struct AppInterfaceSettingsView: View {
                 backgroundView: { StaticUI.hWheelPickerBackground },
                 maskView: { StaticUI.hWheelPickerMask }
             )
-            .frame(minHeight: StaticUI.HWheelPickerViewMinHeight)
+            .frame(minHeight: StaticUI.hWheelPickerViewMinHeight)
         }
         .padding()
         .glowingOutline()

@@ -31,7 +31,6 @@ final class SoundManager: NSObject {
         volume = settings.timerEndSoundIsEnabled ? settings.timerEndSoundVolume.float : 0
         prepare(.timerEnd, volume: volume)
         
-        
         volume = settings.targetRotationSoundIsEnabled ? settings.targetRotationSoundVolume.float : 0
         prepare(.dartsTargetRotation, volume: volume)
         

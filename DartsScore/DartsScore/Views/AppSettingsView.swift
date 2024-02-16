@@ -124,7 +124,7 @@ struct AppSettingsView: View {
                     get: { self.timeForAnswerIdx },
                     set: { newValue in onChangedTimeForAnswerIdx(newValue) }
                 ),
-                contentSize: StaticUI.HWheelPickerContentSize,
+                contentSize: StaticUI.hWheelPickerContentSize,
                 contentView: { item in
                     Text("\(item.msToSec)")
                 },
@@ -132,7 +132,7 @@ struct AppSettingsView: View {
                 backgroundView: { StaticUI.hWheelPickerBackground },
                 maskView: { StaticUI.hWheelPickerMask }
             )
-            .frame(minHeight: StaticUI.HWheelPickerViewMinHeight )
+            .frame(minHeight: StaticUI.hWheelPickerViewMinHeight )
         }
         .padding()
         .glowingOutline()

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GameAnswersListView: View {
-    
     private let answers: [Int]
     private let onAnswered: (Int) -> Void
     
@@ -38,6 +37,8 @@ struct GameAnswersListView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestGameAnswersListView: View {
     @State private var answers = [Int]()
     @State private var message = ""
@@ -53,11 +54,10 @@ private struct TestGameAnswersListView: View {
             Text(message)
             Spacer()
             
-            Button {
-                updateAnswers()
-            } label: {
-                Text("UPDATE ANSWERS")
-            }
+            Button(
+                action: { updateAnswers() },
+                label: { Text("UPDATE ANSWERS") }
+            )
             Spacer()
         }
     }
@@ -75,6 +75,4 @@ private struct TestGameAnswersListView: View {
     }
 }
 
-#Preview {
-    TestGameAnswersListView()
-}
+#Preview { TestGameAnswersListView() }

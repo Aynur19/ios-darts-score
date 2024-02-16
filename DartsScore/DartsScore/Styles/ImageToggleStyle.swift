@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ImageToggleStyle<ButtonViewType>: ToggleStyle
 where ButtonViewType: View {
-    
     @ViewBuilder private var buttonChange: (Bool) -> ButtonViewType
     @ViewBuilder private var backgroundChange: (Bool) -> Color
 
@@ -46,7 +45,6 @@ where ButtonViewType: View {
             .overlay {
                 buttonChange(configuration.isOn)
                     .offset(x: configuration.isOn ? xOffset : -xOffset)
-
             }
             .frame(width: frameSize.width, height: frameSize.height)
             .onTapGesture {
@@ -61,6 +59,8 @@ where ButtonViewType: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestImageToggleStyleView: View {
     let question = "Some question..."
     @State private var isOn = false
@@ -91,6 +91,4 @@ private struct TestImageToggleStyleView: View {
     }
 }
 
-#Preview {
-    TestImageToggleStyleView()
-}
+#Preview { TestImageToggleStyleView() }

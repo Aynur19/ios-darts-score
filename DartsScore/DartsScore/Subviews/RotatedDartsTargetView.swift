@@ -55,6 +55,8 @@ struct RotatedDartsTargetView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestRotatedDartsTargetView: View {
     @StateObject var dartsTargetVM = DartsTargetViewModel(frameWidth: 350)
     @StateObject var dartsHitsVM = DartsHitsViewModel(
@@ -85,11 +87,10 @@ private struct TestRotatedDartsTargetView: View {
                 
                 Spacer()
                 
-                Button {
-                    action()
-                } label: {
-                    Text("UPDATE")
-                }
+                Button(
+                    action: { action() },
+                    label: { Text("UPDATE") }
+                )
                 Spacer()
             }
         }
@@ -111,6 +112,4 @@ private struct TestRotatedDartsTargetView: View {
     }
 }
 
-#Preview {
-    TestRotatedDartsTargetView()
-}
+#Preview { TestRotatedDartsTargetView() }

@@ -22,19 +22,17 @@ struct PrimaryButtonStyle: ButtonStyle {
     }
 }
 
+// MARK: Preview
 private struct TestPrimaryButtonStyleView: View {
     var body: some View {
         VStack {
-            Button {
-                
-            } label: {
-                Text("btnLabel_Start")
-            }
+            Button(
+                action: { },
+                label: { Text("btnLabel_Start") }
+            )
             .buttonStyle(PrimaryButtonStyle())
         }
     }
 }
 
-#Preview {
-    TestPrimaryButtonStyleView()
-}
+#Preview { TestPrimaryButtonStyleView() }

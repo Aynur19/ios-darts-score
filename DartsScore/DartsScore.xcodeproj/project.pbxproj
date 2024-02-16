@@ -201,11 +201,11 @@
 		A82D6CF82B13AFC2006CF50A /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				A8DB727C2B18E911001145BF /* AppIconView.swift */,
 				A82D6CF02B0F4A64006CF50A /* GameAnswerView.swift */,
 				A85ECE592B3AC7F60091A3C8 /* GameAnswersListView.swift */,
 				A85ECE5B2B3ACCD90091A3C8 /* GameTimerView.swift */,
 				A85ECE5D2B3AEA980091A3C8 /* RotatedDartsTargetView.swift */,
+				A8E1E13F2B3228C600059BBB /* StaticUI.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -245,6 +245,7 @@
 				A8DB72772B173AA9001145BF /* Info.plist */,
 				A88776172B0DEEFF005B746B /* DartsScoreApp.swift */,
 				A88776192B0DEEFF005B746B /* ContentTabView.swift */,
+				A8DB727C2B18E911001145BF /* AppIconView.swift */,
 				A8F14F972B2BA4F300C4E1FD /* Constants */,
 				A8DA540E2B28D289003BD9BC /* Sounds */,
 				A8F14F7F2B2A35BA00C4E1FD /* AudioPlayer */,
@@ -256,7 +257,6 @@
 				A8DB727E2B1A2DAC001145BF /* Views */,
 				A82D6CF82B13AFC2006CF50A /* Subviews */,
 				A8DA54122B28E83D003BD9BC /* Styles */,
-				A8DA54112B28E750003BD9BC /* Custom UI Elements */,
 				A887761B2B0DEF02005B746B /* Assets.xcassets */,
 				A887761D2B0DEF02005B746B /* Preview Content */,
 				A8DB72782B177680001145BF /* Localizable.xcstrings */,
@@ -355,14 +355,6 @@
 				A8F14F7D2B2A17EC00C4E1FD /* TimerEndSound.mp3 */,
 			);
 			path = Sounds;
-			sourceTree = "<group>";
-		};
-		A8DA54112B28E750003BD9BC /* Custom UI Elements */ = {
-			isa = PBXGroup;
-			children = (
-				A8E1E13F2B3228C600059BBB /* StaticUI.swift */,
-			);
-			path = "Custom UI Elements";
 			sourceTree = "<group>";
 		};
 		A8DA54122B28E83D003BD9BC /* Styles */ = {

@@ -27,8 +27,12 @@ struct GameTimerView: View {
     }
 }
 
+
+// MARK: Preview
 private struct TestGameTimerView: View {
-    @StateObject var timerVM = CountdownTimerViewModel(20.secToMs, timeLeftToNotify: 5.secToMs)
+    @StateObject var timerVM = CountdownTimerViewModel(
+        20.secToMs, timeLeftToNotify: 5.secToMs
+    )
     
     var body: some View {
         GameTimerView()
@@ -36,6 +40,4 @@ private struct TestGameTimerView: View {
     }
 }
 
-#Preview {
-    TestGameTimerView()
-}
+#Preview { TestGameTimerView() }

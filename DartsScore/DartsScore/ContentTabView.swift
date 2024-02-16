@@ -47,6 +47,4 @@ private struct TestContentView: View {
     }
 }
 
-#Preview {
-    TestContentView()
-}
+#Preview { TestContentView() }

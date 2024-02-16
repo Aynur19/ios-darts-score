@@ -58,7 +58,7 @@ struct AppInterfaceSettings {
     private static func registerSettings() {
         UserDefaults.standard.register(
             defaults: [
-                Keys.dartImageName.rawValue: Defaults.dartImageName.rawValue,
+                Keys.dartImageName.rawValue:        Defaults.dartImageName.rawValue,
                 Keys.dartSize.rawValue:             Defaults.dartSize,
                 Keys.dartMissesIsEnabled.rawValue:  Defaults.dartMissesIsEnabled,
                 Keys.dartsTargetPalette.rawValue:   Defaults.dartsTargetPalette.rawValue
