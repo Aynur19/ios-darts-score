@@ -69,7 +69,7 @@ struct GamesResultsView: View {
                 VStack {
                     ForEach(statsVM.model.items) { game in
                         VGradientView(
-                            contentView: { row(game) },
+                            contentView: { rowBtn(game) },
                             parentSize: geometry.size
                         )
                     }
@@ -79,6 +79,13 @@ struct GamesResultsView: View {
             }
             .frame(maxWidth: .infinity)
         }
+    }
+    
+    private func rowBtn(_ game: DartsGame) -> some View {
+        Button(
+            action: { path.append(game.id) },
+            label: { row(game) }
+        )
     }
     
     private func row(_ game: DartsGame) -> some View {

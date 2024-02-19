@@ -128,22 +128,17 @@ private struct TestGameOverView: View {
             Palette.background
                 .ignoresSafeArea()
             
-            VStack {
-                Spacer()
-                
+            VStack(spacing: 130) {
                 DartsTargetView()
                     .environmentObject(dartsTargetVM)
-                
-                Spacer()
                 
                 Button(
                     action: { popupAction() },
                     label: { Text(btnLabel) }
                 )
-                
-                Spacer()
             }
             
+            Spacer()
             if popupIsShow {
                 GameOverPopup(
                     game: MockData.getDartsGameStats().items[0],

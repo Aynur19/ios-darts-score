@@ -113,17 +113,25 @@ struct DartsGameView: View {
     
     // MARK: Darts Game
     private var gameView: some View {
-        ZStack {
-            VStack {
-                topView
-                dartsView
-                
-                ZStack {
-                    gameViewButtons
-                    gameStopedViewButtons
-                }
-                Spacer()
-            }
+        VStack(spacing: 32) {
+            topView
+            dartsView
+            
+            buttons
+                .frame(minHeight: 200)
+        }
+    }
+    
+    @ViewBuilder
+    private var buttons: some View {
+        switch  gameVM.state {
+            case .processing:
+                answers
+            case .stoped:
+                gameStopedViewButtons
+            default:
+                startButton
+                    .padding(.horizontal, Constants.buttonsHPadding)
         }
     }
     
@@ -161,16 +169,6 @@ struct DartsGameView: View {
         .animation(.linear(duration: Constants.opacityAnimationDuration), value: answersIsShow)
     }
     
-    private var gameViewButtons: some View {
-        VStack(spacing: Constants.buttonsVSpasing) {
-            Spacer()
-            answers
-            startButton
-                .padding(.horizontal, Constants.buttonsHPadding)
-            Spacer()
-        }
-    }
-    
     private var startButton: some View {
         Button(
             action: { startGame() },
@@ -183,10 +181,8 @@ struct DartsGameView: View {
     
     private var gameStopedViewButtons: some View {
         VStack(spacing: Constants.buttonsVSpasing) {
-            Spacer()
             resumeButton
             restartButton
-            Spacer()
         }
         .padding(.horizontal, Constants.buttonsHPadding)
         .opacity(gameStopedViewIsShow ? 1 : 0)
@@ -217,8 +213,8 @@ struct DartsGameView: View {
                 game: gameVM.game,
                 action: { popupAction() }
             )
-            .transition(.asymmetric(insertion: .scale, removal: .opacity))
-            .zIndex(1)
+            .transition(.asymmetric(insertion: .opacity, removal: .opacity))
+            .zIndex(10)
             .onAppear { gameVM.playResultSound() }
         }
     }
@@ -274,8 +270,6 @@ extension DartsGameView {
         )
         
         answersIsShow = false
-        showSide1 = true
-        showSide2 = false
     }
     
     private func startGame() {

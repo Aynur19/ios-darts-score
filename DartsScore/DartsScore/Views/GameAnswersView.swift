@@ -86,7 +86,7 @@ struct GameAnswersView: View {
     private var snapshotsView: some View {
         TabView(selection: $index) {
             ForEach(snapshots.snapshots) { snapshot in
-                VStack {
+                VStack(spacing: 32) {
                     DartsTargetView()
                         .environmentObject(dartsTargetVM)
                         .overlay {
@@ -97,7 +97,6 @@ struct GameAnswersView: View {
                                 }
                         }
                     
-                    Spacer()
                     answersView(snapshot)
                         .padding(.vertical)
                 }
@@ -136,6 +135,7 @@ struct GameAnswersView: View {
             action: { detailsIsShowed = true },
             label: { Text("label_Details") }
         )
+        .padding(.bottom, 32)
     }
     
     private var gameAnswersSheet: some View {
