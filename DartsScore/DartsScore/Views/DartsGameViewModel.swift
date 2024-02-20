@@ -21,9 +21,7 @@ final class DartsGameViewModel: ObservableObject {
     @Published private(set) var state: GameState = .idle
     @Published private(set) var currentAnswers = [Int]()
     
-    init(attempts: Int, timeForAnswer: Int, missesIsEnabled: Bool) {
-        print("DartsGameViewModel.\(#function)")
-        
+    init(attempts: Int, timeForAnswer: Int, missesIsEnabled: Bool) {        
         let game = Self.loadGame(
             attempts: attempts,
             timeForAnswer: timeForAnswer,
@@ -67,9 +65,7 @@ final class DartsGameViewModel: ObservableObject {
     private func restart(attempts: Int, timeForAnswer: Int, missesIsEnabled: Bool) {
         playTapSound()
         JsonCache.deleteFile(name: AppConstants.gameJsonName)
-        game = .init(attempts: attempts,
-                     timeForAnswer: timeForAnswer,
-                     missesIsEnabled: missesIsEnabled)
+        game = .init(attempts: attempts, timeForAnswer: timeForAnswer, missesIsEnabled: missesIsEnabled)
         snapshots = .init(game.id)
         
         state = .idle

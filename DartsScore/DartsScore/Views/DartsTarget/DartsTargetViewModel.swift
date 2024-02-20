@@ -18,9 +18,7 @@ final class DartsTargetViewModel: ObservableObject {
         model.update(frameWidth: frameWidth)
     }
     
-    lazy var numbersDistance: CGFloat = {
-        model.maxRadius * DartsConstants.symbolsDistanceCoef
-    }()
+    var numbersDistance: CGFloat { model.numbersDistance }
     
     func getInnerRadiuses(_ isBaseSector: Bool) -> [CGFloat] {
         var result = [CGFloat]()

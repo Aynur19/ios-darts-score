@@ -26,6 +26,8 @@ struct DartsTarget {
     private(set) var baseBigRadius: CGFloat = .zero
     private(set) var wireRadius: CGFloat = .zero
     
+    private(set) var numbersDistance: CGFloat = .zero
+    
     init(frameWidth: CGFloat) {
         update(frameWidth: frameWidth)
     }
@@ -43,6 +45,7 @@ struct DartsTarget {
         baseSmallRadius = DartsConstants.getRadius(frameWidth, .baseSmall)
         baseBigRadius = DartsConstants.getRadius(frameWidth, .baseBig)
         wireRadius = DartsConstants.getRadius(frameWidth, .wire)
+        numbersDistance = maxRadius * DartsConstants.symbolsDistanceCoef
     }
     
     func getRadius(_ idx: Int) -> CGFloat {

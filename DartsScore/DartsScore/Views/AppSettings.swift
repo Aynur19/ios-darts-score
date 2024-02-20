@@ -23,10 +23,10 @@ struct AppDefaultSettings {
 
     /// Function for calculating the number of points for each answer given by the user.
     static func getScoreForSuccesAnswer(timeForAnswer: Int, time: Int) -> Int {
-        let xCoef = Float(timeForAnswer) / Float(timeForAnswer)
+        let xCoef = Float(Self.timeForAnswer) / Float(timeForAnswer)
         let score = Float(Self.timeForAnswer - time)
         
-        return Int(xCoef * score).msToSec
+        return Int(xCoef * score / 100)
     }
 }
 

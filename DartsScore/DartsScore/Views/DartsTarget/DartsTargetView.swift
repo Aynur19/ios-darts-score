@@ -51,19 +51,25 @@ struct DartsTargetView: View {
     private var dartsTarget: DartsTarget { dartsTargetVM.model }
     
     private func dartsNumbers(at center: CGPoint) -> some View {
-        ForEach(DartsConstants.points.indices, id: \.self) { sectorIdx in
-            let angle = -CGFloat(sectorIdx).x2 * .pi / CGFloat(DartsConstants.points.count)
+        return ForEach(DartsConstants.points.indices, id: \.self) { sectorIdx in
             
-            let x = center.x + cos(angle) * dartsTargetVM.numbersDistance
-            let y = center.y + sin(angle) * dartsTargetVM.numbersDistance
+            let position = getNumberPosition(at: center, for: sectorIdx)
             
             Text(String(DartsConstants.points[sectorIdx]))
-                .position(x: x, y: y)
+                .position(position)
                 .foregroundColor(dartsTargetPalette.dartsSectorNumberColor)
                 .bold()
         }
     }
     
+    private func getNumberPosition(at center: CGPoint, for idx: Int) -> CGPoint {
+        let angle = -CGFloat(idx).x2 * .pi / CGFloat(DartsConstants.points.count)
+        
+        let x = center.x + cos(angle) * dartsTargetVM.numbersDistance
+        let y = center.y + sin(angle) * dartsTargetVM.numbersDistance
+        
+        return .init(x: x, y: y)
+    }
     
     // MARK: Sector View
     private func sector(in center: CGPoint, isEven: Bool = true, isBaseSector: Bool = true) -> some View {
@@ -222,11 +228,10 @@ private struct TestDartsTargetView: View {
                 
                 Spacer()
                 
-                Button {
-                    dartsHitsVM.updateDarts()
-                } label: {
-                    Text("UPDATE DARTS")
-                }
+                Button(
+                    action: { dartsHitsVM.updateDarts() },
+                    label: { Text("UPDATE DARTS") }
+                )
                 
                 Spacer()
                 

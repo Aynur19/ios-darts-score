@@ -17,7 +17,7 @@ private struct GameAnswersViewConstants {
 struct GameAnswersView: View {
     private typealias Constants = GameAnswersViewConstants
     
-    @Environment(\.mainWindowSize) var windowSize
+    @Environment(\.dartsTargetSize) var dartsTargetSize
     @EnvironmentObject var appSettingsVM: AppSettingsViewModel
     
     @StateObject var dartsTargetVM = DartsTargetViewModel(
@@ -53,12 +53,15 @@ struct GameAnswersView: View {
             Palette.background
                 .ignoresSafeArea()
             
-            VStack(spacing: Constants.vSpacing) {
+            VStack {
                 titleView
+                Spacer()
                 snapshotsView
+                Spacer()
                 snapshotsIndexView
                 Spacer()
                 detailsButtonView
+                Spacer()
             }
             .padding(.top)
             .blurredSheet(
@@ -86,7 +89,8 @@ struct GameAnswersView: View {
     private var snapshotsView: some View {
         TabView(selection: $index) {
             ForEach(snapshots.snapshots) { snapshot in
-                VStack(spacing: 32) {
+                VStack {
+                    Spacer()
                     DartsTargetView()
                         .environmentObject(dartsTargetVM)
                         .overlay {
@@ -97,6 +101,7 @@ struct GameAnswersView: View {
                                 }
                         }
                     
+                    Spacer()
                     answersView(snapshot)
                         .padding(.vertical)
                 }
@@ -155,9 +160,7 @@ extension GameAnswersView {
     private var dartsTarget: DartsTarget { dartsTargetVM.model }
     
     private func reset() {
-        let frameWidth = DartsConstants.getDartsTargetWidth(windowsSize: windowSize)
-        
-        dartsTargetVM.reset(frameWidth: frameWidth)
+        dartsTargetVM.reset(frameWidth: dartsTargetSize)
         dartsHitsVM.reset(
             dartsTarget: dartsTarget,
             missesIsEnabled: interfaceSettings.dartMissesIsEnabled,
@@ -189,7 +192,8 @@ private struct TestGameAnswersView: View {
                 NavigationStack {
                     GameAnswersView( game: MockData.getDartsGameStats().items[0])
                         .navigationBarTitleDisplayMode(.inline)
-                        .environment(\.mainWindowSize, geometry.size)
+                        .environment(\.dartsTargetSize,
+                                      DartsConstants.getDartsTargetWidth(windowsSize: geometry.size))
                         .environmentObject(appSettingsVM)
                 }
                 
