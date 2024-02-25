@@ -1,3 +1,6 @@
+<h1 class="project-name">{{ page.title | default: site.title }}</h1>
+[description]
+
 # Darts Score App
 
 Учебный проект по разработке мобильного приложения под iOS: 
