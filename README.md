@@ -1,4 +1,7 @@
 <h1 class="project-name">{{ title }}</h1>
+<h1 class="project-name">{{ site.title }}</h1>
+<h1 class="project-name">{{ page.title }}</h1>
+<h1 class="project-name">{{ title }}</h1>
 [description]
 
 # Darts Score App
