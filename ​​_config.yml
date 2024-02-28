@@ -1,3 +1,6 @@
+---
+layout: default
+---
 remote_theme: pages-themes/cayman@v0.2.0
 title: Darts Score App
 description: Учебный проект по разработке мобильного приложения под iOS
