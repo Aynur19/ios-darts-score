@@ -40,7 +40,7 @@
 		)
 	));
 
-	$size-header-width: 35%;
+	$size-header-width: 20%;
 	$size-header-pad: 4em;
 
 /* Basic */
@@ -888,7 +888,7 @@
 		}
 
 		p {
-			font-size: 0.8em;
+			font-size: 1.25em;
 			line-height: 1.5em;
 			margin: 0;
 		}
@@ -1428,7 +1428,7 @@
 
 			ul {
 				&.actions {
-					margin: 0 0 _size(element-margin) 0;
+					margin: 0 0 0.5em 0;
 
 					li {
 						display: block;
