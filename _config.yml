@@ -1,4 +1,4 @@
-title: Site title
+title: Darts Score App
 description: Site description
 
 include: [_layouts, _saas, _libs, _includes]
